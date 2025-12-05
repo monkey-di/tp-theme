@@ -77,11 +77,21 @@
             </div>
         </div>
 
-        <!-- Slider Progress Indicator -->
-        <div class="hero__slider-progress mt-auto mb-4 w-full z-10">
-            <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white',
-                'bar_color' => 'bg-secondary'
+        <!-- Slider Controls -->
+        <div class="hero__slider-controls mt-auto mb-4 w-full flex justify-between items-end z-10">
+            <!-- Mobile Progress -->
+            <div class="w-full md:hidden">
+                <?php get_template_part('template-parts/components/slider-progress', null, [
+                    'track_color' => 'bg-white',
+                    'bar_color' => 'bg-secondary'
+                ]); ?>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <?php get_template_part('template-parts/components/slider-navigation', null, [
+                'prev_class' => 'hero-prev',
+                'next_class' => 'hero-next',
+                'color'      => 'text-primary'
             ]); ?>
         </div>
     </div>

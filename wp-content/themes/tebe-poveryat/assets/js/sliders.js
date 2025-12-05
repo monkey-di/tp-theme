@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Hero Slider
     if (document.querySelector('.hero__slider')) {
-        const heroSliderProgress = document.querySelector('.hero__slider-progress .slider-progress-bar');
+        const heroSliderProgress = document.querySelector('.hero__slider-controls .slider-progress-bar'); // Updated selector
         const heroSwiper = new Swiper('.hero__slider', {
             loop: true,
             autoplay: {
@@ -16,9 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 el: heroSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.hero-next',
+                prevEl: '.hero-prev',
+            },
             on: {
                 init: function () {
-                    heroSliderProgress.style.opacity = 1;
+                    if(heroSliderProgress) heroSliderProgress.style.opacity = 1;
                 },
             }
         });
@@ -38,9 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 el: friendsSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.friends-next',
+                prevEl: '.friends-prev',
+            },
             on: {
                 init: function () {
-                    friendsSliderProgress.style.opacity = 1;
+                    if(friendsSliderProgress) friendsSliderProgress.style.opacity = 1;
                 },
             }
         });
@@ -56,16 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 600,
-            slidesPerView: 'auto', // Show as many as fit
-            spaceBetween: 16,      // Gap between slides
-            centeredSlides: true,  // Center the active slide
+            slidesPerView: 'auto', 
+            spaceBetween: 16,      
+            centeredSlides: true,  
             pagination: {
                 el: mediaSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.media-next',
+                prevEl: '.media-prev',
+            },
             on: {
                 init: function () {
-                    mediaSliderProgress.style.opacity = 1;
+                    if(mediaSliderProgress) mediaSliderProgress.style.opacity = 1;
                 },
             }
         });
@@ -85,9 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 el: materialsSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.materials-next',
+                prevEl: '.materials-prev',
+            },
             on: {
                 init: function () {
-                    materialsSliderProgress.style.opacity = 1;
+                    if(materialsSliderProgress) materialsSliderProgress.style.opacity = 1;
                 },
             }
         });
@@ -107,9 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 el: historiesSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.histories-next',
+                prevEl: '.histories-prev',
+            },
             on: {
                 init: function () {
-                    historiesSliderProgress.style.opacity = 1;
+                    if(historiesSliderProgress) historiesSliderProgress.style.opacity = 1;
                 },
             }
         });
@@ -129,9 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 el: teamSliderProgress,
                 type: 'progressbar',
             },
+            navigation: {
+                nextEl: '.team-next',
+                prevEl: '.team-prev',
+            },
             on: {
                 init: function () {
-                    teamSliderProgress.style.opacity = 1;
+                    if(teamSliderProgress) teamSliderProgress.style.opacity = 1;
                 },
             }
         });

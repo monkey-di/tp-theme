@@ -120,12 +120,24 @@
             </div>
         </div>
 
-        <!-- Slider Progress -->
-        <div class="histories__progress">
-            <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white/20',
-                'bar_color' => 'bg-white'
-            ]); ?>
+        <!-- Slider Controls -->
+        <div class="histories__controls flex justify-between items-center">
+            <!-- Mobile Progress -->
+            <div class="histories__progress w-full md:hidden">
+                <?php get_template_part('template-parts/components/slider-progress', null, [
+                    'track_color' => 'bg-white/20',
+                    'bar_color' => 'bg-white'
+                ]); ?>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex w-full justify-end">
+                <?php get_template_part('template-parts/components/slider-navigation', null, [
+                    'prev_class' => 'histories-prev',
+                    'next_class' => 'histories-next',
+                    'color'      => 'text-white'
+                ]); ?>
+            </div>
         </div>
 
         <!-- "All Histories" Button -->

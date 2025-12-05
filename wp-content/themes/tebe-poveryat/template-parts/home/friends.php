@@ -63,12 +63,24 @@
             </div>
         </div>
 
-        <!-- Slider Progress Indicator -->
-        <div class="friends__progress">
-            <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white',
-                'bar_color' => 'bg-secondary'
-            ]); ?>
+        <!-- Slider Controls -->
+        <div class="friends__controls flex justify-between items-center mt-4">
+            <!-- Mobile Progress -->
+            <div class="friends__progress w-full md:hidden">
+                <?php get_template_part('template-parts/components/slider-progress', null, [
+                    'track_color' => 'bg-white',
+                    'bar_color' => 'bg-secondary'
+                ]); ?>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex w-full justify-end">
+                <?php get_template_part('template-parts/components/slider-navigation', null, [
+                    'prev_class' => 'friends-prev',
+                    'next_class' => 'friends-next',
+                    'color'      => 'text-primary'
+                ]); ?>
+            </div>
         </div>
 
     </div>

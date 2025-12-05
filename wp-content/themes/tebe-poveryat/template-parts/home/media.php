@@ -73,12 +73,24 @@
             </div>
         </div>
 
-        <!-- Slider Progress -->
-        <div class="media__progress">
-            <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white/20',
-                'bar_color' => 'bg-white'
-            ]); ?>
+        <!-- Slider Controls -->
+        <div class="media__controls flex justify-between items-center">
+            <!-- Mobile Progress -->
+            <div class="media__progress w-full md:hidden">
+                <?php get_template_part('template-parts/components/slider-progress', null, [
+                    'track_color' => 'bg-white/20',
+                    'bar_color' => 'bg-white'
+                ]); ?>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex w-full justify-center mt-4">
+                <?php get_template_part('template-parts/components/slider-navigation', null, [
+                    'prev_class' => 'media-prev',
+                    'next_class' => 'media-next',
+                    'color'      => 'text-white'
+                ]); ?>
+            </div>
         </div>
 
     </div>

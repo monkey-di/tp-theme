@@ -119,12 +119,24 @@
             </div>
         </div>
 
-        <!-- Slider Progress Indicator -->
-        <div class="materials__progress mt-8">
-            <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white/20',
-                'bar_color' => 'bg-secondary'
-            ]); ?>
+        <!-- Slider Controls -->
+        <div class="materials__controls flex justify-between items-center mt-8">
+            <!-- Mobile Progress -->
+            <div class="materials__progress w-full md:hidden">
+                <?php get_template_part('template-parts/components/slider-progress', null, [
+                    'track_color' => 'bg-white/20',
+                    'bar_color' => 'bg-secondary'
+                ]); ?>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex w-full justify-end">
+                <?php get_template_part('template-parts/components/slider-navigation', null, [
+                    'prev_class' => 'materials-prev',
+                    'next_class' => 'materials-next',
+                    'color'      => 'text-primary'
+                ]); ?>
+            </div>
         </div>
 
         <!-- "View All" Button -->
