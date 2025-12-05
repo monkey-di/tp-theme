@@ -3,9 +3,9 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
     // Hero Slider
-    if (document.querySelector('.hero__container')) {
+    if (document.querySelector('.hero__slider')) {
         const heroSliderProgress = document.querySelector('.hero__slider-progress .slider-progress-bar');
-        const heroSwiper = new Swiper('.hero__container', {
+        const heroSwiper = new Swiper('.hero__slider', {
             loop: true,
             autoplay: {
                 delay: 5000,
@@ -132,28 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
             on: {
                 init: function () {
                     teamSliderProgress.style.opacity = 1;
-                },
-            }
-        });
-    }
-
-    // Projects Slider
-    if (document.querySelector('.projects__container.swiper')) { // Targeting the Swiper container directly
-        const projectsSliderProgress = document.querySelector('.projects__slider-progress .slider-progress-bar');
-        const projectsSwiper = new Swiper('.projects__container.swiper', {
-            loop: true,
-            autoplay: {
-                delay: 7000,
-                disableOnInteraction: false,
-            },
-            speed: 800,
-            pagination: {
-                el: projectsSliderProgress,
-                type: 'progressbar',
-            },
-            on: {
-                init: function () {
-                    projectsSliderProgress.style.opacity = 1;
                 },
             }
         });
