@@ -1,0 +1,21 @@
+{
+  "name": "tebe-poveryat-theme",
+  "version": "1.0.0",
+  "description": "WordPress theme with Tailwind CSS",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --minify",
+    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --watch"
+  },
+  "keywords": [
+    "wordpress",
+    "theme",
+    "tailwindcss"
+  ],
+  "author": "monkey-di",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0-alpha.14",
+    "tailwindcss": "^4.0.0-alpha.14"
+  }
+}

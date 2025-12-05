@@ -1,0 +1,22 @@
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+*.log
+.htaccess
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Theme specific
+wp-content/themes/tebe-poveryat/node_modules/
+wp-content/themes/tebe-poveryat/vendor/

@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Fonts */
+@font-face {
+  font-family: 'Akrobat';
+  src: url('../../assets/fonts/Akrobat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akrobat';
+  src: url('../../assets/fonts/Akrobat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akrobat';
+  src: url('../../assets/fonts/Akrobat-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Akrobat';
+  src: url('../../assets/fonts/Akrobat-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ura Bum Bum SP';
+  src: url('../../assets/fonts/UraBumBumSP.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-primary: #6063a6;
+  --color-secondary: #d98b99;
+  --color-base: #fef1ec;
+  --color-contrast: #1e1e1e;
+  
+  --font-geologica: "Geologica", sans-serif;
+  --font-akrobat: "Akrobat", sans-serif;
+  --font-ura: "Ura Bum Bum SP", display;
+
+  --color-teal: #1c5358;
+  --color-sky: #6bbad9;
+  --color-primary-dark: #36569f;
+  --color-peach: #f2c995;
+  --color-dark-grey: #261E35;
+  --color-slate-green: #6C858A;
+  --color-rust-orange: #D16F42;
+  --color-brick-red: #C9493A;
+  --color-light-red: #D27878;
+  --color-plum-grey: #90687D;
+  --color-sand-yellow: #E9B977;
+  --color-pastel-yellow: #F4DDC7;
+}
+
+/* 
+  В v4 конфиг (theme, plugins) можно писать прямо здесь.
+  WordPress специфичные классы можно добавить ниже.
+*/
+
+body {
+    @apply bg-base text-contrast font-geologica;
+}
+
+h1, .h1 {
+    @apply font-ura text-[73px] leading-[69.35px] uppercase;
+}
+
+h2, .h2 {
+    @apply font-ura text-[32px] leading-[30.4px] uppercase;
+}
+
+/* Akrobat headers from design */
+h3, .h3 {
+    @apply font-akrobat text-[40px] font-extrabold uppercase leading-10;
+}
+
+h4, .h4 {
+    @apply font-akrobat text-4xl font-extrabold leading-9;
+}
+
+h5, .h5 {
+    @apply font-akrobat text-[32px] font-extrabold uppercase leading-8;
+}
+
+h6, .h6 {
+    @apply font-akrobat text-[26px] font-extrabold leading-[26px];
+}
