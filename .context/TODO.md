@@ -1,32 +1,32 @@
 # Задачи проекта Tebe Poveryat (Theme)
 
 ## 🎨 Дизайн и Верстка (Главная)
-> Статус: **Mobile Draft (Прототипы)**. Верстка готова, требует Адаптива.
+> Статус: **Mobile Layout Complete (Prototypes)**. Слайдеры работают. Требуется адаптив под Desktop.
 
 - [x] **Header:** Mobile ready.
-- [x] **Hero:** Mobile layout ready.
-- [x] **Donation:** Mobile layout ready (Form).
+- [x] **Hero:** Mobile layout + Swiper Slider ready.
+- [x] **Donation:** Mobile layout ready (Form + UI Kit).
 - [x] **About Us:** Mobile layout ready.
-- [x] **Projects:** Mobile layout ready.
-- [x] **Friends:** Mobile layout ready.
-- [x] **Media:** Mobile layout ready.
-- [x] **Materials:** Mobile layout ready.
-- [x] **Histories:** Mobile layout ready.
-- [x] **Team:** Mobile layout ready.
-- [x] **Footer:** Mobile layout ready.
+- [x] **Projects:** Mobile layout ready (Static, NOT a slider).
+- [x] **Friends:** Mobile layout + Swiper Slider ready.
+- [x] **Media:** Mobile layout + Swiper Slider ready.
+- [x] **Materials:** Mobile layout + Swiper Slider ready.
+- [x] **Histories:** Mobile layout + Swiper Slider ready.
+- [x] **Team:** Mobile layout + Swiper Slider ready.
+- [x] **Footer:** Mobile layout ready (UI Kit applied).
 
 ## 🛠 Рефакторинг и Компоненты (UI Kit)
-- [x] **UI Kit Extraction:** Компоненты выделены в `template-parts/components/`.
-    - [x] `button.php` (Primary, Secondary, Outline, White)
-    - [x] `link-more.php` (Ссылка "Читать далее")
-    - [x] `input-with-button.php` (Поле подписки)
-    - [x] `slider-progress.php` (Индикатор прогресса)
-- [ ] **Адаптив (Desktop):** Пройтись по всем файлам в `template-parts/home/` и добавить стили `md:`, `lg:`.
+- [x] **UI Kit Extraction:**
+    - [x] `button.php`
+    - [x] `link-more.php`
+    - [x] `input-with-button.php`
+    - [x] `slider-progress.php`
+- [ ] **Адаптив (Desktop):** Пройтись по всем файлам в `template-parts/home/` и добавить стили `md:`, `lg:` (Grid, Flex changes).
 
 ## ⚡ Функционал (JS/PHP)
 - [~] **Мобильное меню (JS):** Базовое открытие работает.
-- [x] **Слайдеры (JS):** Подключен Swiper.js и инициализирован во всех секциях.
-- [ ] **Формы:** PHP-обработчики.
+- [x] **Слайдеры (JS):** Swiper.js интегрирован (локально). Hero, Friends, Media, Materials, Histories, Team — слайдеры работают и зациклены.
+- [ ] **Формы:** PHP-обработчики для донатов и подписки.
 
 ## 📄 Другие страницы
 - [ ] **Single Post (`single.php`):** Шаблон поста.
@@ -35,5 +35,5 @@
 
 ## 🏗 Инфраструктура
 - [x] Git initialized & pushed.
-- [x] Documentation updated.
-- [x] Swiper.js installed via npm and copied to assets.
+- [x] Swiper installed via npm & copied to assets.
+- [x] Critical error in functions.php fixed.
