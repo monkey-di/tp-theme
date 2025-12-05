@@ -4,8 +4,9 @@
   "description": "WordPress theme with Tailwind CSS",
   "main": "index.js",
   "scripts": {
-    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --minify",
-    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --watch"
+    "copy-assets": "cp node_modules/swiper/swiper-bundle.min.js assets/vendor/swiper/ && cp node_modules/swiper/swiper-bundle.min.css assets/vendor/swiper/",
+    "build": "npm run copy-assets && npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --minify",
+    "dev": "npm run copy-assets && npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/output.css --watch"
   },
   "keywords": [
     "wordpress",
@@ -17,5 +18,8 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.0.0-alpha.14",
     "tailwindcss": "^4.0.0-alpha.14"
+  },
+  "dependencies": {
+    "swiper": "^11.0.0"
   }
 }

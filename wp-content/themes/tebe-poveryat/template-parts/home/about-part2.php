@@ -24,11 +24,12 @@
         </div>
 
         <!-- Read More Link -->
-        <div class="about-section-part2__read-more inline-flex flex-col justify-start items-start gap-1">
-            <a href="#" class="about-section-part2__read-more-link inline-flex justify-start items-center gap-3 no-underline">
-                <span class="text-primary text-base font-normal font-geologica leading-6 hover:underline">Читать далее</span>
-            </a>
-            <div class="about-section-part2__read-more-underline w-full h-0 outline outline-2 outline-offset-[-1px] outline-primary"></div>
+        <div class="about-section-part2__read-more">
+            <?php get_template_part('template-parts/components/link-more', null, [
+                'text' => 'Читать далее',
+                'url' => '#',
+                'style' => 'default'
+            ]); ?>
         </div>
 
     </div>

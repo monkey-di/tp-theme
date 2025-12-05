@@ -27,52 +27,114 @@
         </h2>
 
         <!-- Article Card (Static Slide) -->
-        <div class="materials__card w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
-            
-            <!-- Card Background Decor -->
-            <div class="materials__card-decor absolute inset-0 z-0">
-                <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
-                    <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
-                    <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                    <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                    <!-- More specific SVG paths omitted for brevity to avoid excessive code length here, 
-                         but they would be included in the actual generated file, positioned absolutely within this decor-group. -->
-                </svg>
-            </div>
+        <div class="materials__slider swiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
+                    <!-- Card Background Decor -->
+                    <div class="materials__card-decor absolute inset-0 z-0">
+                        <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
+                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
+                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                            <!-- More specific SVG paths omitted for brevity to avoid excessive code length here, 
+                                 but they would be included in the actual generated file, positioned absolutely within this decor-group. -->
+                        </svg>
+                    </div>
 
-            <!-- Card Content -->
-            <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
-                <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
-                    ИИ и психотерапия: новый помощник или иллюзия близости?
-                </h3>
-                <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
-                    ИИ, включая ChatGPT, активно используется для оказания психологической поддержки. Хотя он предоставляет доступность и анонимность, риски ошибок и отсутствие эмпатии поднимают вопросы о его роли в сфере ментального здоровья. Мы собрали мнения коллег из секторов благотворительности и технологий.
-                </p>
-                <div class="materials__card-read-more mt-auto">
-                    <a href="#" class="materials__card-read-more-link inline-flex justify-start items-center gap-3 no-underline group">
-                        <div class="materials__card-read-more-icon transition-transform group-hover:translate-x-1">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 3V15H16.175L12.575 18.575L14 20L20 14L13.975 7.975L12.575 9.4L16.175 13H7V3H5Z" fill="var(--wp--preset--color--primary)"/>
-                            </svg>
+                    <!-- Card Content -->
+                    <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
+                        <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
+                            ИИ и психотерапия: новый помощник или иллюзия близости? (Слайд 1)
+                        </h3>
+                        <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
+                            ИИ, включая ChatGPT, активно используется для оказания психологической поддержки. Хотя он предоставляет доступность и анонимность, риски ошибок и отсутствие эмпатии поднимают вопросы о его роли в сфере ментального здоровья. Мы собрали мнения коллег из секторов благотворительности и технологий.
+                        </p>
+                        <div class="materials__card-read-more mt-auto">
+                            <?php get_template_part('template-parts/components/link-more', null, [
+                                'text' => 'Читать',
+                                'url' => '#',
+                                'style' => 'default'
+                            ]); ?>
                         </div>
-                        <span class="text-primary text-base font-normal font-geologica leading-6">Читать</span>
-                    </a>
-                    <div class="materials__card-read-more-underline w-full h-0 outline outline-2 outline-offset-[-1px] outline-primary mt-1"></div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 (Duplicate for now) -->
+                <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
+                    <div class="materials__card-decor absolute inset-0 z-0">
+                         <!-- Duplicated SVG Decor -->
+                         <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
+                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
+                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                        </svg>
+                    </div>
+                    <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
+                        <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
+                            Новое исследование: Влияние технологий на подростков (Слайд 2)
+                        </h3>
+                        <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
+                            Второе описание: Как современные технологии влияют на психику и развитие подростков? Эксперты обсуждают плюсы и минусы цифровой эры.
+                        </p>
+                        <div class="materials__card-read-more mt-auto">
+                            <?php get_template_part('template-parts/components/link-more', null, [
+                                'text' => 'Подробнее',
+                                'url' => '#',
+                                'style' => 'default'
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 (Duplicate for now) -->
+                <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
+                    <div class="materials__card-decor absolute inset-0 z-0">
+                         <!-- Duplicated SVG Decor -->
+                         <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
+                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
+                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
+                        </svg>
+                    </div>
+                    <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
+                        <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
+                            Психологическая помощь онлайн: доступность и эффективность (Слайд 3)
+                        </h3>
+                        <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
+                            Третье описание: Обзор возможностей онлайн-терапии, ее преимуществ и потенциальных ограничений для тех, кто ищет поддержку.
+                        </p>
+                        <div class="materials__card-read-more mt-auto">
+                            <?php get_template_part('template-parts/components/link-more', null, [
+                                'text' => 'Узнать',
+                                'url' => '#',
+                                'style' => 'default'
+                            ]); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Slider Progress Indicator -->
-        <div class="materials__progress w-full h-0.5 bg-white/20 overflow-hidden rounded-sm mt-8">
-            <div class="materials__progress-bar w-[104px] h-0.5 bg-secondary rounded-sm"></div>
+        <div class="materials__progress mt-8">
+            <?php get_template_part('template-parts/components/slider-progress', null, [
+                'track_color' => 'bg-white/20',
+                'bar_color' => 'bg-secondary'
+            ]); ?>
         </div>
 
         <!-- "View All" Button -->
         <div class="materials__view-all mt-8">
-            <a href="#" class="materials__view-all-button w-full px-5 py-4 rounded-[40px] outline outline-1 outline-offset-[-1px] outline-primary inline-flex justify-center items-center gap-3 no-underline text-primary text-base font-normal font-geologica uppercase leading-6 hover:bg-primary hover:text-white transition duration-300">
-                Смотреть все материалы
-            </a>
+            <?php get_template_part('template-parts/components/button', null, [
+                'text' => 'Смотреть все материалы', 
+                'url' => '#', 
+                'style' => 'outline-primary', // Assuming we might need this style or reuse primary/outline-white logic but with primary color border
+                'class' => 'w-full outline-primary text-primary hover:bg-primary hover:text-white' // Manual override if style is not exact match yet, or let's add outline-primary to button.php later. For now, manual classes + base button structure works.
+            ]); ?>
         </div>
 
     </div>

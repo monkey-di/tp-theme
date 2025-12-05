@@ -71,10 +71,14 @@ if ( file_exists( $mobile_menu_path ) ) {
         <!-- Subscription Form -->
         <div class="footer__subscribe flex flex-col gap-3">
             <p class="text-white text-base font-light font-geologica leading-6">Подпишитесь на рассылку, чтобы не пропустить новости о нашей работе</p>
-            <div class="footer__subscribe-input-group self-stretch pl-4 pr-1 py-1 bg-white rounded-[20px] flex justify-between items-center">
-                <input type="email" placeholder="example@mail.com" class="footer__subscribe-email flex-grow bg-transparent text-contrast text-base font-normal font-geologica leading-6 placeholder-contrast focus:outline-none" />
-                <button type="submit" class="footer__subscribe-button h-12 px-5 py-4 bg-secondary rounded-[20px] text-white text-[13px] font-normal font-geologica uppercase leading-5 hover:bg-secondary-dark transition">Подписаться</button>
-            </div>
+            <?php get_template_part('template-parts/components/input-with-button', null, [
+                'type' => 'email',
+                'name' => 'subscribe_email',
+                'placeholder' => 'example@mail.com',
+                'button_text' => 'Подписаться',
+                'submit' => true,
+                'state' => 'default' // Можно поменять на 'error' или 'disabled' для тестирования
+            ]); ?>
             <label class="footer__subscribe-checkbox flex items-start gap-2 cursor-pointer">
                 <input type="checkbox" class="footer__subscribe-checkbox-input hidden" />
                 <span class="footer__subscribe-checkbox-custom w-6 h-6 rounded border-2 border-white flex-shrink-0 flex items-center justify-center">
@@ -88,10 +92,10 @@ if ( file_exists( $mobile_menu_path ) ) {
 
         <!-- Navigation Links -->
         <div class="footer__nav flex flex-col gap-2">
-            <a href="#" class="footer__nav-link w-full px-4 py-3 rounded-[20px] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center text-white text-base font-normal font-geologica leading-6 no-underline hover:bg-white/10 transition">Проекты</a>
-            <a href="#" class="footer__nav-link w-full px-4 py-3 rounded-[20px] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center text-white text-base font-normal font-geologica leading-6 no-underline hover:bg-white/10 transition">Отчеты</a>
-            <a href="#" class="footer__nav-link w-full px-4 py-3 rounded-[20px] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center text-white text-base font-normal font-geologica leading-6 no-underline hover:bg-white/10 transition">О нас</a>
-            <a href="#" class="footer__nav-link w-full px-4 py-3 rounded-[20px] outline outline-1 outline-offset-[-1px] outline-white inline-flex justify-start items-center text-white text-base font-normal font-geologica leading-6 no-underline hover:bg-white/10 transition">Реквизиты</a>
+            <?php get_template_part('template-parts/components/button', null, ['text' => 'Проекты', 'url' => '#', 'style' => 'outline-white', 'class' => 'w-full text-left justify-start', 'size' => 'md']); ?>
+            <?php get_template_part('template-parts/components/button', null, ['text' => 'Отчеты', 'url' => '#', 'style' => 'outline-white', 'class' => 'w-full text-left justify-start', 'size' => 'md']); ?>
+            <?php get_template_part('template-parts/components/button', null, ['text' => 'О нас', 'url' => '#', 'style' => 'outline-white', 'class' => 'w-full text-left justify-start', 'size' => 'md']); ?>
+            <?php get_template_part('template-parts/components/button', null, ['text' => 'Реквизиты', 'url' => '#', 'style' => 'outline-white', 'class' => 'w-full text-left justify-start', 'size' => 'md']); ?>
         </div>
 
         <!-- Document Links -->

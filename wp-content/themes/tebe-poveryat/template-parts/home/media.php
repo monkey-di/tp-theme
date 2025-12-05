@@ -36,35 +36,49 @@
         </h2>
 
         <!-- Slider Cards -->
-        <div class="media__slider flex gap-4 overflow-x-auto pb-4 snap-x">
-            
-            <!-- Card 1: Forbes (ish) -->
-            <div class="media__card flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center snap-center">
-                <div class="w-[140px] h-[47px] relative flex items-center justify-center">
-                    <!-- SVG Logo Placeholders -->
-                    <svg width="100%" height="100%" viewBox="0 0 136 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M80.8764 22.3101V27.3501H82.2295V23.6646H94.4993V27.3501H95.8538V22.3101H93.6906V0.00130254H84.5633C84.5633 9.50047 84.2592 15.1473 82.8728 22.3121H80.8777L80.8764 22.3101Z" fill="#1C5358"/>
-                        <rect x="0" y="0" width="136" height="28" fill="#1C5358" fill-opacity="0.1"/> <!-- Placeholder box -->
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1C5358" font-size="12">MEDIA LOGO</text>
-                    </svg>
+        <div class="media__slider swiper">
+            <div class="swiper-wrapper">
+                <!-- Card 1: Forbes (ish) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[140px] h-[47px] relative flex items-center justify-center">
+                        <!-- SVG Logo Placeholders -->
+                        <svg width="100%" height="100%" viewBox="0 0 136 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M80.8764 22.3101V27.3501H82.2295V23.6646H94.4993V27.3501H95.8538V22.3101H93.6906V0.00130254H84.5633C84.5633 9.50047 84.2592 15.1473 82.8728 22.3121H80.8777L80.8764 22.3101Z" fill="#1C5358"/>
+                            <rect x="0" y="0" width="136" height="28" fill="#1C5358" fill-opacity="0.1"/> <!-- Placeholder box -->
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1C5358" font-size="12">MEDIA LOGO 1</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 2: The Village (ish) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[95px] h-[27px] relative flex items-center justify-center">
+                        <svg width="100%" height="100%" viewBox="0 0 95 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23.4505 0.509434V26.5755H16.6036V16.217H6.84685V26.5755H0V0.509434H6.84685V10.1887H16.6036V0.509434H23.4505ZM54.2613 13.5C54.2613 21.2264 49.6396 27 41.0811 27C32.6081 27 27.9009 21.2264 27.9009 13.5C27.9865 5.77358 32.6081 0 41.0811 0C49.6396 0 54.2613 5.77358 54.2613 13.5Z" fill="#1C5358"/>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1C5358" font-size="12">MEDIA LOGO 2</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Card 3: Another (ish) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[140px] h-[47px] relative flex items-center justify-center">
+                        <svg width="100%" height="100%" viewBox="0 0 136 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M80.8764 22.3101V27.3501H82.2295V23.6646H94.4993V27.3501H95.8538V22.3101H93.6906V0.00130254H84.5633C84.5633 9.50047 84.2592 15.1473 82.8728 22.3121H80.8777L80.8764 22.3101Z" fill="#1C5358"/>
+                            <rect x="0" y="0" width="136" height="28" fill="#1C5358" fill-opacity="0.1"/>
+                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1C5358" font-size="12">MEDIA LOGO 3</text>
+                        </svg>
+                    </div>
                 </div>
             </div>
-
-            <!-- Card 2: The Village (ish) -->
-            <div class="media__card flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center snap-center">
-                <div class="w-[95px] h-[27px] relative flex items-center justify-center">
-                     <svg width="100%" height="100%" viewBox="0 0 95 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M23.4505 0.509434V26.5755H16.6036V16.217H6.84685V26.5755H0V0.509434H6.84685V10.1887H16.6036V0.509434H23.4505ZM54.2613 13.5C54.2613 21.2264 49.6396 27 41.0811 27C32.6081 27 27.9009 21.2264 27.9009 13.5C27.9865 5.77358 32.6081 0 41.0811 0C49.6396 0 54.2613 5.77358 54.2613 13.5Z" fill="#1C5358"/>
-                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#1C5358" font-size="12">MEDIA LOGO</text>
-                    </svg>
-                </div>
-            </div>
-
         </div>
 
         <!-- Slider Progress -->
-        <div class="media__progress w-full h-0.5 bg-white/20 overflow-hidden rounded-sm">
-            <div class="media__progress-bar w-[104px] h-0.5 bg-white rounded-sm"></div>
+        <div class="media__progress">
+            <?php get_template_part('template-parts/components/slider-progress', null, [
+                'track_color' => 'bg-white/20',
+                'bar_color' => 'bg-white'
+            ]); ?>
         </div>
 
     </div>

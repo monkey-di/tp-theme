@@ -41,17 +41,17 @@ function tebe_poveryat_scripts_styles() {
 		true 
 	);
 
-	wp_enqueue_script(
-		'tebe-poveryat-main',
-		get_theme_file_uri( '/assets/js/main.js' ),
-		['tebe-poveryat-slider'], 
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
-}
-add_action( 'wp_enqueue_scripts', 'tebe_poveryat_scripts_styles' );
-
-/**
+	    // Main Script
+	    wp_enqueue_script( 'tp-main', get_template_directory_uri() . '/assets/js/main.js', [], '1.0.0', true );
+	
+	        // Swiper (Local)
+	        wp_enqueue_style( 'swiper-css', get_template_directory_uri() . '/assets/vendor/swiper/swiper-bundle.min.css', [], '11.0.0' );
+	        wp_enqueue_script( 'swiper-js', get_template_directory_uri() . '/assets/vendor/swiper/swiper-bundle.min.js', [], '11.0.0', true );
+	    
+	        // Sliders Init
+	        wp_enqueue_script( 'tp-sliders', get_template_directory_uri() . '/assets/js/sliders.js', ['swiper-js'], '1.0.0', true );
+	    }
+	    add_action( 'wp_enqueue_scripts', 'tebe_poveryat_scripts' );/**
  * Enqueue Google Fonts.
  */
 function tebe_poveryat_fonts() {
