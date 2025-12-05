@@ -1,45 +1,37 @@
 # Задачи проекта Tebe Poveryat (Theme)
 
 ## 🎨 Дизайн и Верстка (Главная)
-- [x] **Header:** Mobile version + Burger Menu layout.
-- [x] **Mobile Menu Overlay:** Layout ready.
-- [x] **Hero:** Mobile layout.
-- [x] **Donation:** Mobile layout (Form).
-- [x] **About Us (Part 1 & 2):** Mobile layout.
-- [x] **Projects (Campaign):** Mobile layout.
-- [x] **Friends:** Mobile layout (Slider card).
-- [x] **Media (Social):** Mobile layout (Slider card).
-- [x] **Materials:** Mobile layout (Card).
-- [x] **Histories:** Mobile layout (Card).
-- [x] **Team:** Mobile layout (Card).
-- [x] **Footer:** Mobile layout.
+> Статус: **Прототипы (Mobile First Draft)**. Требуется доработка деталей, логики и адаптива.
+
+- [x] **Header:** Structure ready. Needs logic for Burger & transparent/sticky states.
+- [x] **Mobile Menu Overlay:** Layout ready. Needs JS logic & polish.
+- [x] **Hero:** Mobile layout draft. Needs: Slider logic (Swiper), pixel-perfect check.
+- [x] **Donation:** Mobile layout draft. Needs: Form logic, custom select input, pixel-perfect.
+- [x] **About Us (Part 1 & 2):** Mobile layout draft. Needs: correct icons, maybe slider logic for stats?
+- [x] **Projects (Campaign):** Mobile layout draft. Needs: Slider logic? (if dynamic).
+- [x] **Friends:** Mobile layout draft. Needs: Slider logic (Swiper).
+- [x] **Media (Social):** Mobile layout draft. Needs: Slider logic (Swiper), real logos.
+- [x] **Materials:** Mobile layout draft. Needs: Slider logic, real content query.
+- [x] **Histories:** Mobile layout draft. Needs: Slider logic (Swiper).
+- [x] **Team:** Mobile layout draft. Needs: Slider logic (Swiper).
+- [x] **Footer:** Mobile layout draft. Needs: Form logic.
 
 ## 🛠 Рефакторинг и Компоненты (UI Kit)
-- [ ] **UI Kit Refactoring:** Выделить повторяющиеся элементы в `template-parts/components/`:
-    - [ ] `button-primary.php` (Синяя кнопка)
-    - [ ] `button-outline.php` (Прозрачная с обводкой)
-    - [ ] `link-read-more.php` (Ссылка "Читать далее" с иконкой и подчеркиванием)
-    - [ ] `section-title.php` (Заголовки Ura Bum Bum SP)
-    - [ ] `slider-controls.php` (Индикатор прогресса)
-- [ ] **Адаптив:** Добавить классы `md:`, `lg:`, `xl:` для всех секций (сейчас всё mobile-first).
+- [ ] **UI Kit Extraction:** Выделить повторяющиеся элементы из текущих шаблонов в `template-parts/components/`:
+    - [ ] `button.php` (Primary, Secondary, Outline)
+    - [ ] `link-arrow.php` (Ссылка "Читать далее" с иконкой)
+    - [ ] `section-heading.php` (Заголовки Ura Bum Bum SP)
+    - [ ] `slider-progress.php` (Индикатор прогресса)
+    - [ ] `card-wrapper.php` (Обертка карточки)
+- [ ] **Адаптив (Desktop):** Пройтись по всем секциям и добавить `md:`, `lg:` стили.
 
 ## ⚡ Функционал (JS/PHP)
-- [x] **Мобильное меню (JS):** Базовая логика открытия/закрытия реализована.
-- [ ] **Слайдеры (JS):** Подключить Swiper.js и инициализировать слайдеры в секциях:
-    - Hero
-    - Friends
-    - Media
-    - Materials
-    - Histories
-    - Team
-- [ ] **Формы (PHP):** Обработка отправки формы донатов и подписки (интеграция с плагином или API).
-
-## 📄 Другие страницы
-- [ ] **Single Post (`single.php`):** Шаблон для отдельной новости/статьи.
-- [ ] **Page (`page.php`):** Шаблон для текстовых страниц.
-- [ ] **404 (`404.php`):** Страница ошибки.
+- [~] **Мобильное меню (JS):** Базовая логика есть. Нужно: блокировка скролла, анимация иконки бургера.
+- [ ] **Слайдеры (JS):** Подключить **Swiper.js** и оживить секции: Hero, Friends, Media, Materials, Histories, Team.
+- [ ] **Формы:** PHP-обработчики для донатов и подписки.
 
 ## 🏗 Инфраструктура
 - [x] Tailwind CSS v4 Setup.
-- [x] Fonts connected (Geologica, Akrobat, Ura Bum Bum SP).
-- [x] Classic Theme Structure migration (`front-page.php`, `template-parts/`).
+- [x] Fonts connected.
+- [x] Classic Theme Structure.
+- [x] Git repo initialized.
