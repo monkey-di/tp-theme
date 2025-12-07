@@ -99,7 +99,8 @@
         <!-- Submit Button -->
         <?php get_template_part('template-parts/components/button', null, [
             'text' => 'Помочь',
-            'type' => 'submit'
+            'submit' => true,
+            'class' => 'w-full'
         ]); ?>
 
     </div>
