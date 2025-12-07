@@ -16,7 +16,11 @@ yarn-error.log
 .vscode/
 *.swp
 .DS_Store
+.claude/
 
 # Theme specific
 wp-content/themes/tebe-poveryat/node_modules/
 wp-content/themes/tebe-poveryat/vendor/
+
+# Root
+/package-lock.json
