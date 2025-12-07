@@ -70,31 +70,33 @@
   WordPress специфичные классы можно добавить ниже.
 */
 
-body {
-    @apply bg-base text-contrast font-geologica;
-}
+@layer base {
+  body {
+      @apply bg-base text-contrast font-geologica;
+  }
 
-h1, .h1 {
-    @apply font-ura text-[73px] leading-[69.35px] uppercase;
-}
+  h1, .h1 {
+      @apply font-ura text-[73px] leading-[69.35px] uppercase;
+  }
 
-h2, .h2 {
-    @apply font-ura text-[32px] leading-[30.4px] uppercase;
-}
+  h2, .h2 {
+      @apply font-ura text-[32px] leading-[30.4px] uppercase;
+  }
 
-/* Akrobat headers from design */
-h3, .h3 {
-    @apply font-akrobat text-[40px] font-extrabold uppercase leading-10;
-}
+  /* Akrobat headers from design */
+  h3, .h3 {
+      @apply font-akrobat text-[40px] font-extrabold uppercase leading-10;
+  }
 
-h4, .h4 {
-    @apply font-akrobat text-4xl font-extrabold leading-9;
-}
+  h4, .h4 {
+      @apply font-akrobat text-4xl font-extrabold leading-9;
+  }
 
-h5, .h5 {
-    @apply font-akrobat text-[32px] font-extrabold uppercase leading-8;
-}
+  h5, .h5 {
+      @apply font-akrobat text-[32px] font-extrabold uppercase leading-8;
+  }
 
-h6, .h6 {
-    @apply font-akrobat text-[26px] font-extrabold leading-[26px];
+  h6, .h6 {
+      @apply font-akrobat text-[26px] font-extrabold leading-[26px];
+  }
 }

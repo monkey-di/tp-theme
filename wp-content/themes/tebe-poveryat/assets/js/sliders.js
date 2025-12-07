@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Hero Slider
     if (document.querySelector('.hero__slider')) {
-        const heroSliderProgress = document.querySelector('.hero__slider-controls .slider-progress-bar'); // Updated selector
+        const heroSliderProgress = document.querySelector('.hero__slider-controls .slider-progress'); // Updated selector
         const heroSwiper = new Swiper('.hero__slider', {
             loop: true,
             autoplay: {
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Friends Slider
     if (document.querySelector('.friends__slider')) {
-        const friendsSliderProgress = document.querySelector('.friends__progress .slider-progress-bar');
+        const friendsSliderProgress = document.querySelector('.friends__progress .slider-progress');
         const friendsSwiper = new Swiper('.friends__slider', {
             loop: true,
             autoplay: {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Media Slider
     if (document.querySelector('.media__slider')) {
-        const mediaSliderProgress = document.querySelector('.media__progress .slider-progress-bar');
+        const mediaSliderProgress = document.querySelector('.media__progress .slider-progress');
         const mediaSwiper = new Swiper('.media__slider', {
             loop: true,
             autoplay: {
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Materials Slider
     if (document.querySelector('.materials__slider')) {
-        const materialsSliderProgress = document.querySelector('.materials__progress .slider-progress-bar');
+        const materialsSliderProgress = document.querySelector('.materials__progress .slider-progress');
         const materialsSwiper = new Swiper('.materials__slider', {
             loop: true,
             autoplay: {
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Histories Slider
     if (document.querySelector('.histories__slider')) {
-        const historiesSliderProgress = document.querySelector('.histories__progress .slider-progress-bar');
+        const historiesSliderProgress = document.querySelector('.histories__progress .slider-progress');
         const historiesSwiper = new Swiper('.histories__slider', {
             loop: true,
             autoplay: {
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Team Slider
     if (document.querySelector('.team__slider')) {
-        const teamSliderProgress = document.querySelector('.team__progress .slider-progress-bar');
+        const teamSliderProgress = document.querySelector('.team__progress .slider-progress');
         const teamSwiper = new Swiper('.team__slider', {
             loop: true,
             autoplay: {

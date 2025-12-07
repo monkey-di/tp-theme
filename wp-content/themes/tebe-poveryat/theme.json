@@ -172,7 +172,7 @@
 							"text": "var(--wp--preset--color--contrast)"
 						},
 						"typography": {
-							"textDecoration": "underline"
+							"textDecoration": "none"
 						},
 						":hover": {
 							"color": {
@@ -304,6 +304,9 @@
 			"link": {
 				"color": {
 					"text": "var(--wp--preset--color--contrast)"
+				},
+				"typography": {
+					"textDecoration": "none"
 				},
 				":hover": {
 					"color": {
