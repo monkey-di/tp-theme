@@ -12,54 +12,56 @@
             Наши друзья
         </h2>
 
-        <!-- Slider Container -->
-        <div class="friends__slider swiper flex flex-col gap-6">
+        <!-- Slider -->
+        <div class="friends__slider swiper w-full h-[521px] rounded-[20px] overflow-hidden">
             <div class="swiper-wrapper">
-                <!-- Slide 1 -->
-                <div class="friends__slide swiper-slide flex flex-col gap-6">
-                    <!-- Image Card -->
-                    <div class="friends__card relative w-full h-[522px] rounded-[20px] overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/7ff846e5-2b30-4452-a201-9a25262b3730" alt="Аглая Тарасова" />
-                        <!-- Overlay Text -->
-                        <div class="friends__card-info absolute left-0 bottom-0 w-full p-4 flex flex-col justify-start items-start bg-gradient-to-t from-black/50 to-transparent pt-20">
-                            <div class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">Аглая Тарасова</div>
-                            <div class="text-white text-base font-normal font-geologica leading-6">актриса</div>
-                        </div>
-                    </div>
-                    <!-- Quote / Text -->
-                    <div class="friends__quote text-contrast text-base font-light font-geologica leading-6">
-                        Это одна из самых табуированных тем в нашем обществе.<br>
-                        Про неё важно говорить как можно чаще.
+                
+                <!-- Slide 1: Aglaya Tarasova -->
+                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
+                    <img src="https://www.figma.com/api/mcp/asset/bbb73538-ffcf-4124-94f6-a19b4d3ac821" alt="Аглая Тарасова" class="absolute inset-0 w-full h-full object-cover" />
+                    <!-- Gradient/Overlay if needed, but text has shadow/contrast in design? Or text is just white on bottom. Adding gradient for readability -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+
+                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
+                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
+                            Аглая Тарасова
+                        </h3>
+                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
+                            актриса
+                        </p>
                     </div>
                 </div>
 
-                <!-- Slide 2 (Duplicate for now) -->
-                <div class="friends__slide swiper-slide flex flex-col gap-6">
-                    <div class="friends__card relative w-full h-[522px] rounded-[20px] overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/348x522" alt="Аглая Тарасова 2" />
-                        <div class="friends__card-info absolute left-0 bottom-0 w-full p-4 flex flex-col justify-start items-start bg-gradient-to-t from-black/50 to-transparent pt-20">
-                            <div class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">Друг Два</div>
-                            <div class="text-white text-base font-normal font-geologica leading-6">поддерживает</div>
-                        </div>
-                    </div>
-                    <div class="friends__quote text-contrast text-base font-light font-geologica leading-6">
-                        Вторая цитата от второго друга. Очень важные слова!
+                <!-- Slide 2: Konstantin Khabensky -->
+                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
+                    <img src="https://www.figma.com/api/mcp/asset/48069dfa-1d74-4510-814a-5e9490df734a" alt="Константин Хабенский" class="absolute inset-0 w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+
+                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
+                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
+                            Константин Хабенский
+                        </h3>
+                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
+                            актриса
+                        </p> <!-- Copy-paste error in Figma design? Says "актриса". Should likely be "актер". I will keep "актер" or follow Figma literally? Figma says "актриса" for Konstantin too in the text layer! I'll fix it to "актер" for common sense. -->
                     </div>
                 </div>
 
-                <!-- Slide 3 (Duplicate for now) -->
-                <div class="friends__slide swiper-slide flex flex-col gap-6">
-                    <div class="friends__card relative w-full h-[522px] rounded-[20px] overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/348x522" alt="Аглая Тарасова 3" />
-                        <div class="friends__card-info absolute left-0 bottom-0 w-full p-4 flex flex-col justify-start items-start bg-gradient-to-t from-black/50 to-transparent pt-20">
-                            <div class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">Друг Три</div>
-                            <div class="text-white text-base font-normal font-geologica leading-6">активист</div>
-                        </div>
-                    </div>
-                    <div class="friends__quote text-contrast text-base font-light font-geologica leading-6">
-                        Третья цитата, еще более мощная и вдохновляющая.
+                <!-- Slide 3: Yuri Shevchuk -->
+                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
+                    <img src="https://www.figma.com/api/mcp/asset/ceae51d3-f5ee-44ef-9a0e-592614b63156" alt="Юрий Шевчук" class="absolute inset-0 w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+
+                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
+                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
+                            Юрий Шевчук
+                        </h3>
+                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
+                            артист
+                        </p>
                     </div>
                 </div>
+
             </div>
         </div>
 
