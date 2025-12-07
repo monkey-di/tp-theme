@@ -42,28 +42,51 @@
         </h2>
 
         <!-- Slider Cards -->
-        <div class="media__slider swiper">
+        <div class="media__slider swiper w-full min-w-0">
             <div class="swiper-wrapper">
-                <!-- Card 1 -->
-                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                
+                <!-- Card 1: Snob? (Frame) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
                     <div class="w-[140px] h-[47px] relative flex items-center justify-center">
-                        <img src="https://www.figma.com/api/mcp/asset/6d1a7059-44fb-400f-ad3e-0ced2a566951" alt="Logo 1" class="w-full h-full object-contain" />
+                        <img src="https://www.figma.com/api/mcp/asset/bb8e6aa8-be2d-41be-b175-19f783772020" alt="СМИ 1" class="w-full h-full object-contain" />
                     </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                <!-- Card 2: Novochag -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[150px] h-[21px] relative flex items-center justify-center">
+                        <img src="https://www.figma.com/api/mcp/asset/1d546a68-ada4-4eea-8861-555d2af57034" alt="Новый Очаг" class="w-full h-full object-contain" />
+                    </div>
+                </div>
+
+                <!-- Card 3: Forbes? (Frame1) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[145px] h-[33px] relative flex items-center justify-center">
+                        <img src="https://www.figma.com/api/mcp/asset/79d2f1dd-2c7a-4ef0-8100-b05bed435e8d" alt="Forbes" class="w-full h-full object-contain" />
+                    </div>
+                </div>
+
+                <!-- Card 4: Knife (Frame2) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
                     <div class="w-[95px] h-[27px] relative flex items-center justify-center">
-                        <img src="https://www.figma.com/api/mcp/asset/bfc60519-0187-4ca1-b553-d8be8cb17cd0" alt="Logo 2" class="w-full h-full object-contain" />
+                        <img src="https://www.figma.com/api/mcp/asset/693f1a7e-d9ef-4e7e-ba85-06fccfb08798" alt="Нож" class="w-full h-full object-contain" />
                     </div>
                 </div>
 
-                <!-- Card 3 (Duplicate of 1 for now) -->
-                <div class="media__card swiper-slide flex-shrink-0 w-[180px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
-                    <div class="w-[140px] h-[47px] relative flex items-center justify-center">
-                        <img src="https://www.figma.com/api/mcp/asset/6d1a7059-44fb-400f-ad3e-0ced2a566951" alt="Logo 3" class="w-full h-full object-contain" />
+                <!-- Card 5: Download 1 -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[147px] h-[32px] relative flex items-center justify-center">
+                        <img src="https://www.figma.com/api/mcp/asset/3dfc2e48-e6a0-42ce-aebe-3ec4b2c16dbf" alt="СМИ 5" class="w-full h-full object-contain" />
                     </div>
                 </div>
+
+                <!-- Card 6: Takie Dela (Frame3) -->
+                <div class="media__card swiper-slide flex-shrink-0 w-full md:w-[215px] h-[87px] p-5 bg-white rounded-[20px] flex justify-center items-center">
+                    <div class="w-[69px] h-[39px] relative flex items-center justify-center">
+                        <img src="https://www.figma.com/api/mcp/asset/99cbb63b-f7f3-4918-9402-0aff2d465402" alt="Такие Дела" class="w-full h-full object-contain" />
+                    </div>
+                </div>
+
             </div>
         </div>
 

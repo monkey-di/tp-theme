@@ -64,9 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 600,
-            slidesPerView: 'auto', 
-            spaceBetween: 16,      
-            centeredSlides: true,  
+            slidesPerView: 1, 
+            spaceBetween: 16,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    spaceBetween: 20
+                }
+            },     
             pagination: {
                 el: mediaSliderProgress,
                 type: 'progressbar',
@@ -119,6 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 850,
+            slidesPerView: 1,
+            spaceBetween: 16,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    spaceBetween: 20
+                }
+            },
             pagination: {
                 el: historiesSliderProgress,
                 type: 'progressbar',
@@ -145,13 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 900,
+            slidesPerView: 1,
+            spaceBetween: 16,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    spaceBetween: 20
+                }
+            },
             pagination: {
                 el: teamSliderProgress,
                 type: 'progressbar',
-            },
-            navigation: {
-                nextEl: '.team-next',
-                prevEl: '.team-prev',
             },
             on: {
                 init: function () {
