@@ -33,12 +33,16 @@
 
     <!-- Top Wave -->
     <div class="donation-form__decor-svg donation-form__decor-svg--top-wave absolute left-0 top-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/967ba312-a289-4770-9ace-66a5c6ec67cb" alt="" class="w-full h-[32px] object-cover" />
+        <svg width="100%" height="32" viewBox="0 0 380 32" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M380 0C380 8.48693 359.982 16.6263 324.35 22.6274C288.718 28.6286 240.391 32 190 32C139.609 32 91.2816 28.6286 55.6497 22.6274C20.0178 16.6263 7.60885e-06 8.48693 0 6.18078e-06L190 0H380Z" fill="var(--wp--preset--color--base)"/>
+        </svg>
     </div>
 
     <!-- Bottom Wave -->
     <div class="donation-form__decor-svg donation-form__decor-svg--bottom-wave absolute left-0 bottom-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/967ba312-a289-4770-9ace-66a5c6ec67cb" alt="" class="w-full h-[32px] object-cover scale-y-[-1]" />
+        <svg width="100%" height="32" viewBox="0 0 380 32" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M380 32C380 23.5131 359.982 15.3737 324.35 9.37258C288.718 3.37142 240.391 0 190 0C139.609 0 91.2816 3.37142 55.6497 9.37258C20.0178 15.3737 7.60885e-06 23.5131 0 32L190 32H380Z" fill="var(--wp--preset--color--base)"/>
+        </svg>
     </div>
 
     <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16">

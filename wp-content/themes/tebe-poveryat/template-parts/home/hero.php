@@ -34,8 +34,7 @@
                         <?php get_template_part('template-parts/components/link-more', null, [
                             'text' => 'Узнать больше о нас',
                             'url' => '#',
-                            'style' => 'hero',
-                            'icon_src' => 'https://www.figma.com/api/mcp/asset/846c5a98-866e-4ee3-b30b-73a1e3fc30eb'
+                            'style' => 'hero'
                         ]); ?>
                     </div>
                 </div>
@@ -53,8 +52,7 @@
                         <?php get_template_part('template-parts/components/link-more', null, [
                             'text' => 'Узнать больше 2',
                             'url' => '#',
-                            'style' => 'hero',
-                            'icon_src' => 'https://www.figma.com/api/mcp/asset/846c5a98-866e-4ee3-b30b-73a1e3fc30eb'
+                            'style' => 'hero'
                         ]); ?>
                     </div>
                 </div>
@@ -72,8 +70,7 @@
                         <?php get_template_part('template-parts/components/link-more', null, [
                             'text' => 'Узнать больше 3',
                             'url' => '#',
-                            'style' => 'hero',
-                            'icon_src' => 'https://www.figma.com/api/mcp/asset/846c5a98-866e-4ee3-b30b-73a1e3fc30eb'
+                            'style' => 'hero'
                         ]); ?>
                     </div>
                 </div>

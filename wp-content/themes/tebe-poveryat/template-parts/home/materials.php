@@ -49,8 +49,7 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Читать',
                                 'url' => '#',
-                                'style' => 'default',
-                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
+                                'style' => 'default'
                             ]); ?>
                         </div>
                     </div>
@@ -72,8 +71,7 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Подробнее',
                                 'url' => '#',
-                                'style' => 'default',
-                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
+                                'style' => 'default'
                             ]); ?>
                         </div>
                     </div>
@@ -95,8 +93,7 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Узнать',
                                 'url' => '#',
-                                'style' => 'default',
-                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
+                                'style' => 'default'
                             ]); ?>
                         </div>
                     </div>
