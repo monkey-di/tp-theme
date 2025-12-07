@@ -14,12 +14,12 @@
             <!-- Overlayed Text: Name and Title -->
             <div class="about-section-part2__overlay-text absolute left-0 bottom-4 w-full px-4 text-white">
                 <h3 class="text-h3 font-extrabold font-akrobat uppercase leading-10 mb-0">Юлия Кулешова</h3>
-                <p class="text-base font-normal font-geologica leading-6">директор</p>
+                <p class="text-[16px] font-normal font-geologica leading-[1.5]">директор</p>
             </div>
         </div>
 
         <!-- Description Text -->
-        <div class="about-section-part2__description text-contrast text-base font-light font-geologica leading-6">
+        <div class="about-section-part2__description text-contrast text-[16px] font-light font-geologica leading-[1.5] line-clamp-5">
             <p>Мне очень хочется, чтобы общество перешагнуло через эту ступень и начало создавать большую образовательную и реабилитационную структуру на всю страну. В «Тебе поверят» мы делаем так, чтобы о проблеме узнавало как можно больше людей, чтобы пережившие получали поддержку, а родители знали, чему учить детей, чтобы они знали, что такое «личные границы».</p>
         </div>
 

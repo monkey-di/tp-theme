@@ -43,5 +43,9 @@ switch ($style) {
         </div>
     </a>
     <!-- Underline -->
-    <div class="self-stretch h-0 outline outline-2 outline-offset-[-1px] outline-primary transition-opacity duration-300 group-hover:opacity-0"></div>
+    <div class="h-0 relative shrink-0 w-full">
+        <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+            <img alt="" class="block max-w-none size-full" src="https://www.figma.com/api/mcp/asset/951c45f8-d506-4d92-b9f0-86b6802b524c" />
+        </div>
+    </div>
 </div>

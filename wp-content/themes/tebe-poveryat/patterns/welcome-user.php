@@ -13,7 +13,7 @@ $date = date_i18n( 'j F Y' );
 
 <!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"backgroundColor":"primary","textColor":"base","layout":{"type":"constrained"}} -->
 <div class="wp-block-group has-base-color has-primary-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)">
-    <!-- wp:columns -->
+    <!-- wp:columns -->underline hover:no-underline decoration-solid text-white
     <div class="wp-block-columns">
         <!-- wp:column -->
         <div class="wp-block-column">

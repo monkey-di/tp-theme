@@ -268,16 +268,16 @@
 					"text": "var(--wp--preset--color--primary)"
 				}
 			},
-						"cite": {
-							"color": {
-								"text": "var(--wp--preset--color--primary)"
-							}
-						},
-						"link": {
-							"typography": {
-								"textDecoration": "none"
-							}
-						}		},
+												"cite": {
+													"color": {
+														"text": "var(--wp--preset--color--primary)"
+													}
+												},
+												"link": {
+													"typography": {
+														"textDecoration": "none"
+													}
+												}		},
 		"spacing": {
 			"padding": {
 				"right": "var(--wp--preset--spacing--50)",

@@ -64,8 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 600,
-            slidesPerView: 1, 
-            spaceBetween: 16,
+            slidesPerView: 'auto', 
+            spaceBetween: 16,      
+            centeredSlides: true,  
             breakpoints: {
                 768: {
                     slidesPerView: 'auto',

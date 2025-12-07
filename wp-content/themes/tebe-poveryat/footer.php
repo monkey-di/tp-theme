@@ -5,16 +5,10 @@
  * This template is loaded by get_footer().
  */
 
-// Mobile Menu Overlay (Rendered via do_blocks to support WP blocks inside)
-// Это уже не нужно здесь, так как мы перешли на классику, и do_blocks не используется для parts/
-// Но сохраняю для демонстрации, что можно было бы вызвать, если бы это был паттерн.
+// Mobile Menu Overlay
 $mobile_menu_path = get_theme_file_path( '/parts/mobile-menu-overlay.html' );
 if ( file_exists( $mobile_menu_path ) ) {
-    // В классическом режиме WP-комментарии (блоки) внутри HTML-файлов
-    // не обрабатываются автоматически как блоки.
-    // Если бы это было нужно, пришлось бы вручную парсить и рендерить.
-    // Пока оставим просто HTML для JS, без do_blocks.
-    // echo file_get_contents( $mobile_menu_path ); // Render as plain HTML for JS to grab
+    readfile( $mobile_menu_path );
 }
 ?>
 

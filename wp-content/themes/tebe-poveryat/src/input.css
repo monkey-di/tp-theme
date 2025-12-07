@@ -72,7 +72,11 @@
 
 @layer base {
   body {
-      @apply bg-base text-contrast font-geologica;
+      @apply bg-base text-contrast font-geologica text-[16px] leading-[1.5];
+  }
+
+  p {
+      @apply text-[16px] leading-[1.5];
   }
 
   h1, .h1 {
