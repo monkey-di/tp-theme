@@ -97,7 +97,10 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="donation-form__submit-button w-full px-5 py-4 bg-primary/40 rounded-[40px] text-white text-base font-normal font-geologica uppercase leading-6 hover:bg-primary transition duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">Помочь</button>
+        <?php get_template_part('template-parts/components/button', null, [
+            'text' => 'Помочь',
+            'type' => 'submit'
+        ]); ?>
 
     </div>
 </section>
