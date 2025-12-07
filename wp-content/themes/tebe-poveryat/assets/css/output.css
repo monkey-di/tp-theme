@@ -34,6 +34,7 @@
     --font-weight-medium: 500;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
+    --leading-tight: 1.25;
     --radius-sm: 0.25rem;
     --radius-xl: 0.75rem;
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -246,6 +247,9 @@
   .top-\[3\.01\%\] {
     top: 3.01%;
   }
+  .top-\[20px\] {
+    top: 20px;
+  }
   .top-\[23\.53\%\] {
     top: 23.53%;
   }
@@ -272,6 +276,9 @@
   }
   .right-\[10\.22\%\] {
     right: 10.22%;
+  }
+  .right-\[20px\] {
+    right: 20px;
   }
   .right-\[39\.25px\] {
     right: 39.25px;
@@ -371,6 +378,9 @@
   }
   .my-5 {
     margin-block: calc(var(--spacing) * 5);
+  }
+  .-mt-2 {
+    margin-top: calc(var(--spacing) * -2);
   }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
@@ -495,6 +505,9 @@
   .h-\[64px\] {
     height: 64px;
   }
+  .h-\[80px\] {
+    height: 80px;
+  }
   .h-\[84px\] {
     height: 84px;
   }
@@ -581,6 +594,9 @@
   }
   .w-\[70px\] {
     width: 70px;
+  }
+  .w-\[80px\] {
+    width: 80px;
   }
   .w-\[95px\] {
     width: 95px;
@@ -1131,6 +1147,9 @@
   .text-\[26px\] {
     font-size: 26px;
   }
+  .text-\[28px\] {
+    font-size: 28px;
+  }
   .text-\[32px\] {
     font-size: 32px;
   }
@@ -1142,6 +1161,9 @@
   }
   .text-\[50px\] {
     font-size: 50px;
+  }
+  .text-\[56px\] {
+    font-size: 56px;
   }
   .text-\[73px\] {
     font-size: 73px;
@@ -1174,6 +1196,10 @@
     --tw-leading: calc(var(--spacing) * 10);
     line-height: calc(var(--spacing) * 10);
   }
+  .leading-\[0\.85\] {
+    --tw-leading: 0.85;
+    line-height: 0.85;
+  }
   .leading-\[0\.95\] {
     --tw-leading: 0.95;
     line-height: 0.95;
@@ -1201,6 +1227,10 @@
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
+  }
+  .leading-tight {
+    --tw-leading: var(--leading-tight);
+    line-height: var(--leading-tight);
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
@@ -1351,12 +1381,19 @@
     outline-style: var(--tw-outline-style);
     outline-width: 2px;
   }
+  .outline-\[4px\] {
+    outline-style: var(--tw-outline-style);
+    outline-width: 4px;
+  }
   .outline-\[6px\] {
     outline-style: var(--tw-outline-style);
     outline-width: 6px;
   }
   .outline-offset-\[-1px\] {
     outline-offset: -1px;
+  }
+  .outline-offset-\[-2px\] {
+    outline-offset: -2px;
   }
   .outline-offset-\[-3px\] {
     outline-offset: -3px;
