@@ -37,7 +37,7 @@ switch ( $state ) {
         break;
     default: // default / focus
         $wrapper_classes .= ' bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary';
-        $input_classes   .= ' text-primary placeholder-primary/40';
+        $input_classes   .= ' text-contrast placeholder-contrast/40'; // Changed from text-primary
         $is_disabled      = '';
         break;
 }
@@ -52,7 +52,7 @@ switch ( $state ) {
         <?php echo $is_disabled; ?>
     >
     
-    <button type="submit" class="h-12 px-5 py-4 bg-primary/60 rounded-[20px] flex justify-center items-center gap-3 hover:bg-primary transition duration-300 flex-shrink-0" <?php echo $is_disabled; ?>>
+    <button type="submit" class="h-12 px-5 py-4 bg-secondary rounded-[20px] flex justify-center items-center gap-3 hover:bg-secondary/80 transition duration-300 flex-shrink-0" <?php echo $is_disabled; ?>>
         <span class="text-white text-[13px] font-normal font-geologica uppercase leading-5">
             <?php echo esc_html( $button_text ); ?>
         </span>

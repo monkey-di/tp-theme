@@ -8,9 +8,7 @@
     
     <!-- Bottom Wave -->
     <div class="team-section__wave team-section__wave--bottom absolute left-0 bottom-0 z-10 w-full">
-        <svg width="100%" height="32" viewBox="0 0 380 32" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M380 32C380 23.5131 359.982 15.3737 324.35 9.37258C288.718 3.37142 240.391 0 190 0C139.609 0 91.2816 3.37142 55.6497 9.37258C20.0178 15.3737 7.60885e-06 23.5131 0 32L190 32H380Z" fill="var(--wp--preset--color--primary)"/>
-        </svg>
+        <img src="https://www.figma.com/api/mcp/asset/dcd1a811-3883-4478-be2b-3c52e5fa7c08" alt="" class="w-full h-[32px] object-cover scale-y-[-1]" />
     </div>
 
     <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col gap-8">
@@ -27,7 +25,7 @@
                 <div class="team__card swiper-slide w-full bg-white rounded-[20px] overflow-hidden shadow-lg">
                     <!-- Image Container -->
                     <div class="team__card-image relative w-full h-[480px] rounded-[20px] overflow-hidden bg-gray-200">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/340x480" alt="Ксения Шашунова" />
+                        <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/4664c46b-d4e7-435d-83e9-d4e7488d9279" alt="Ксения Шашунова" />
                         <!-- Name & Role Overlay -->
                         <div class="absolute left-0 bottom-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent pt-20">
                             <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">
@@ -58,7 +56,7 @@
                 <!-- Slide 2 (Duplicate for now) -->
                 <div class="team__card swiper-slide w-full bg-white rounded-[20px] overflow-hidden shadow-lg">
                     <div class="team__card-image relative w-full h-[480px] rounded-[20px] overflow-hidden bg-gray-200">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/340x480" alt="Ирина Смирнова" />
+                        <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/4664c46b-d4e7-435d-83e9-d4e7488d9279" alt="Ирина Смирнова" />
                         <div class="absolute left-0 bottom-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent pt-20">
                             <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">
                                 Ирина Смирнова
@@ -85,7 +83,7 @@
                 <!-- Slide 3 (Duplicate for now) -->
                 <div class="team__card swiper-slide w-full bg-white rounded-[20px] overflow-hidden shadow-lg">
                     <div class="team__card-image relative w-full h-[480px] rounded-[20px] overflow-hidden bg-gray-200">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/340x480" alt="Алексей Волков" />
+                        <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/4664c46b-d4e7-435d-83e9-d4e7488d9279" alt="Алексей Волков" />
                         <div class="absolute left-0 bottom-0 w-full p-4 bg-gradient-to-t from-black/60 to-transparent pt-20">
                             <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">
                                 Алексей Волков

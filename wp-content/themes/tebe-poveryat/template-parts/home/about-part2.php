@@ -9,11 +9,11 @@
         
         <!-- Image with Overlayed Text -->
         <div class="about-section-part2__image-wrapper relative w-full h-[522px] rounded-[20px] overflow-hidden">
-            <img class="w-full h-full object-cover" src="https://placehold.co/348x522" alt="Юлия Кулешова" />
+            <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/a62e16dc-97e9-4001-9f00-200875951d25" alt="Юлия Кулешова" />
             
             <!-- Overlayed Text: Name and Title -->
-            <div class="about-section-part2__overlay-text absolute left-4 bottom-4 w-full px-4 text-white">
-                <h3 class="text-h3 font-extrabold font-akrobat uppercase leading-10 mb-1">Юлия Кулешова</h3>
+            <div class="about-section-part2__overlay-text absolute left-0 bottom-4 w-full px-4 text-white">
+                <h3 class="text-h3 font-extrabold font-akrobat uppercase leading-10 mb-0">Юлия Кулешова</h3>
                 <p class="text-base font-normal font-geologica leading-6">директор</p>
             </div>
         </div>

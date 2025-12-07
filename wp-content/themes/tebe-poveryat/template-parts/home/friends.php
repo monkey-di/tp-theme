@@ -8,7 +8,7 @@
     <div class="friends__container container mx-auto flex flex-col gap-8">
         
         <!-- Title -->
-        <h2 class="friends__title text-primary-dark text-[32px] font-normal font-ura uppercase leading-9">
+        <h2 class="friends__title text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9">
             Наши друзья
         </h2>
 
@@ -19,7 +19,7 @@
                 <div class="friends__slide swiper-slide flex flex-col gap-6">
                     <!-- Image Card -->
                     <div class="friends__card relative w-full h-[522px] rounded-[20px] overflow-hidden">
-                        <img class="w-full h-full object-cover" src="https://placehold.co/348x522" alt="Аглая Тарасова" />
+                        <img class="w-full h-full object-cover" src="https://www.figma.com/api/mcp/asset/7ff846e5-2b30-4452-a201-9a25262b3730" alt="Аглая Тарасова" />
                         <!-- Overlay Text -->
                         <div class="friends__card-info absolute left-0 bottom-0 w-full p-4 flex flex-col justify-start items-start bg-gradient-to-t from-black/50 to-transparent pt-20">
                             <div class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-10">Аглая Тарасова</div>

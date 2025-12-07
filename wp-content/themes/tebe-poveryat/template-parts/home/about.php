@@ -8,7 +8,7 @@
     <div class="about__container container mx-auto flex flex-col gap-8">
         
         <!-- Title -->
-        <h2 class="about__title text-primary-dark text-[32px] font-normal font-ura uppercase leading-9">
+        <h2 class="about__title text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-center">
             О «Тебе поверят»
         </h2>
 

@@ -22,7 +22,7 @@
     <div class="materials__container container mx-auto px-4 relative z-10 flex flex-col gap-8">
         
         <!-- Title -->
-        <h2 class="materials__title text-primary-dark text-[32px] font-normal font-ura uppercase leading-9">
+        <h2 class="materials__title text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9">
             Полезные<br>материалы
         </h2>
 
@@ -31,22 +31,16 @@
             <div class="swiper-wrapper">
                 <!-- Slide 1 -->
                 <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
-                    <!-- Card Background Decor -->
+                    <!-- Card Background -->
                     <div class="materials__card-decor absolute inset-0 z-0">
-                        <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
-                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
-                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                            <!-- More specific SVG paths omitted for brevity to avoid excessive code length here, 
-                                 but they would be included in the actual generated file, positioned absolutely within this decor-group. -->
-                        </svg>
+                        <img src="https://www.figma.com/api/mcp/asset/69985f9e-2f6d-48d9-bdf8-e36af5d63851" alt="" class="w-full h-full object-cover" />
+                        <!-- Overlay Vectors (Simplified for now, assuming Background contains main visual or we accept simplification) -->
                     </div>
 
                     <!-- Card Content -->
                     <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
                         <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
-                            ИИ и психотерапия: новый помощник или иллюзия близости? (Слайд 1)
+                            ИИ и психотерапия: новый помощник или иллюзия близости?
                         </h3>
                         <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
                             ИИ, включая ChatGPT, активно используется для оказания психологической поддержки. Хотя он предоставляет доступность и анонимность, риски ошибок и отсутствие эмпатии поднимают вопросы о его роли в сфере ментального здоровья. Мы собрали мнения коллег из секторов благотворительности и технологий.
@@ -55,7 +49,8 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Читать',
                                 'url' => '#',
-                                'style' => 'default'
+                                'style' => 'default',
+                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
                             ]); ?>
                         </div>
                     </div>
@@ -64,17 +59,11 @@
                 <!-- Slide 2 (Duplicate for now) -->
                 <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
                     <div class="materials__card-decor absolute inset-0 z-0">
-                         <!-- Duplicated SVG Decor -->
-                         <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
-                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
-                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                        </svg>
+                        <img src="https://www.figma.com/api/mcp/asset/69985f9e-2f6d-48d9-bdf8-e36af5d63851" alt="" class="w-full h-full object-cover" />
                     </div>
                     <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
                         <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
-                            Новое исследование: Влияние технологий на подростков (Слайд 2)
+                            Новое исследование: Влияние технологий на подростков
                         </h3>
                         <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
                             Второе описание: Как современные технологии влияют на психику и развитие подростков? Эксперты обсуждают плюсы и минусы цифровой эры.
@@ -83,7 +72,8 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Подробнее',
                                 'url' => '#',
-                                'style' => 'default'
+                                'style' => 'default',
+                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
                             ]); ?>
                         </div>
                     </div>
@@ -92,17 +82,11 @@
                 <!-- Slide 3 (Duplicate for now) -->
                 <div class="materials__card swiper-slide w-full h-[348px] relative rounded-[20px] overflow-hidden shadow-lg">
                     <div class="materials__card-decor absolute inset-0 z-0">
-                         <!-- Duplicated SVG Decor -->
-                         <svg width="100%" height="100%" viewBox="0 0 348 348" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M348 0H0V348H348V0Z" fill="var(--wp--preset--color--pastel-yellow)"/>
-                            <svg class="absolute left-[218.61px] top-[287.05px]" width="33" height="39" viewBox="0 0 33 39" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.09426 0.605365C1.09426 0.605365 29.4897 -0.756707 30.851 0.605365C32.2131 1.96744 34.1821 38.1351 30.851 38.1351C27.52 38.1351 2.42641 38.1351 1.09426 38.1351C-0.237879 38.1344 -0.486351 0.677053 1.09426 0.605365Z" fill="var(--wp--preset--color--dark-grey)"/></svg>
-                            <svg class="absolute left-[199.76px] top-[256.98px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30.1657 8.26015C30.1657 8.26015 18.5209 -8.37566 6.60747 5.5701C-1.08542 14.5756 -1.47656 44.4153 2.44262 47.6531C6.3611 50.8915 15.7397 29.351 19.3888 25.2523C26.2472 17.5497 32.6149 13.0556 30.1657 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                            <svg class="absolute left-[240.50px] top-[250.50px]" width="31" height="48" viewBox="0 0 31 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.535117 8.26015C0.535117 8.26015 12.1799 -8.37566 24.0933 5.5701C31.7862 14.5756 32.1774 44.4153 28.2582 47.6531C24.3397 50.8915 14.9611 29.351 11.312 25.2523C4.45358 17.5504 -1.91411 13.0556 0.535117 8.26015Z" fill="var(--wp--preset--color--slate-green)"/></svg>
-                        </svg>
+                        <img src="https://www.figma.com/api/mcp/asset/69985f9e-2f6d-48d9-bdf8-e36af5d63851" alt="" class="w-full h-full object-cover" />
                     </div>
                     <div class="materials__card-content relative z-10 p-4 flex flex-col justify-end items-start h-full">
                         <h3 class="materials__card-title text-contrast text-h4 font-extrabold font-akrobat leading-9 mb-2">
-                            Психологическая помощь онлайн: доступность и эффективность (Слайд 3)
+                            Психологическая помощь онлайн: доступность и эффективность
                         </h3>
                         <p class="materials__card-description text-contrast text-base font-light font-geologica leading-6 mb-4">
                             Третье описание: Обзор возможностей онлайн-терапии, ее преимуществ и потенциальных ограничений для тех, кто ищет поддержку.
@@ -111,7 +95,8 @@
                             <?php get_template_part('template-parts/components/link-more', null, [
                                 'text' => 'Узнать',
                                 'url' => '#',
-                                'style' => 'default'
+                                'style' => 'default',
+                                'icon_src' => 'https://www.figma.com/api/mcp/asset/b0a347d8-70b4-4efd-a823-b3cc0f9a0960'
                             ]); ?>
                         </div>
                     </div>
