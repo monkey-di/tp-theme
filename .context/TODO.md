@@ -1,7 +1,7 @@
 # Задачи проекта Tebe Poveryat (Theme)
 
 ## 🎨 Дизайн и Верстка (Главная)
-> Статус: **Mobile Layout Synced with Figma**. Assets updated. Desktop adaptation pending.
+> Статус: **Mobile Version Completed**. Desktop adaptation pending.
 
 - [x] **Header:** Assets synced. Mobile ready.
 - [x] **Hero:** Assets synced. Mobile ready.
