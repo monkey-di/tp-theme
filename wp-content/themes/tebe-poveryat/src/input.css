@@ -104,3 +104,12 @@
       @apply font-akrobat text-[26px] font-extrabold leading-[26px];
   }
 }
+
+/* ============================================
+   SECTION STYLES - Imported from separate files
+   ============================================ */
+@import "./sections/header.css";
+@import "./sections/hero.css";
+@import "./sections/donation.css";
+@import "./sections/about.css";
+@import "./sections/friends.css";

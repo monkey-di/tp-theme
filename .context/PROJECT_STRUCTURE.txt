@@ -1,0 +1,212 @@
+TEBE POVERYAT WORDPRESS THEME - PROJECT STRUCTURE
+===================================================
+
+ROOT: D:\CODE\tp-theme\wp-content\themes\tebe-poveryat\
+
+MAIN DIRECTORIES:
+=================
+
+src/
+  └─ input.css              SOURCE CSS with Tailwind config + @theme
+
+assets/
+  ├─ css/
+  │   └─ output.css        COMPILED CSS (auto-generated - DO NOT EDIT)
+  ├─ fonts/
+  │   ├─ Akrobat/          Local font files (OTF, TTF, woff2)
+  │   └─ UraBumBumSP.otf   Display font
+  ├─ images/
+  │   └─ hero.webp         Hero section image
+  ├─ js/
+  │   ├─ main.js           Mobile menu handler
+  │   ├─ slider.js         (deprecated)
+  │   └─ sliders.js        Swiper initialization for all 6 sliders
+  ├─ vendor/
+  │   └─ swiper/           Swiper JS+CSS (auto-copied from npm)
+  ├─ current/              Screenshots
+  └─ design/               Figma export images
+
+parts/
+  └─ mobile-menu-overlay.html  Mobile menu slide-in overlay
+
+template-parts/
+  ├─ components/           Reusable UI components
+  │   ├─ button.php           (primary, secondary, white, outline-*, form-submit)
+  │   ├─ link-more.php        Learn More with arrow
+  │   ├─ input-with-button.php Email subscription input
+  │   ├─ slider-navigation.php Prev/Next arrows
+  │   └─ slider-progress.php   Progress bar
+  │
+  └─ home/                 Homepage sections (Mobile First design)
+      ├─ hero.php            Hero carousel (3 slides with Swiper)
+      ├─ donation.php        CTA donation section
+      ├─ about.php           About + stats grid
+      ├─ about-part2.php     Extended about section
+      ├─ projects.php        Projects grid (static, no carousel)
+      ├─ friends.php         Partners carousel
+      ├─ media.php           Media/gallery carousel
+      ├─ materials.php       Learning materials carousel
+      ├─ histories.php       Testimonies carousel
+      ├─ team.php            Team members carousel
+      └─ social.php          Social links section
+
+patterns/                   (Old block patterns - not used)
+  └─ home/
+
+templates_backup/           (Backup of previous templates)
+
+ROOT FILES:
+===========
+front-page.php            Homepage template (loads all sections)
+header.php                Site header with logo + mobile menu button
+footer.php                Site footer (loads mobile menu overlay)
+index.php                 Fallback template
+functions.php             Enqueue scripts/styles, theme setup
+theme.json                Block editor settings + color palette
+style.css                 Theme metadata
+package.json              npm configuration + scripts
+package-lock.json
+README.md                 Original documentation
+license.txt               Theme license
+
+CONFIGURATION:
+==============
+
+src/input.css
+  @import "tailwindcss"
+  @font-face (Akrobat, Ura Bum Bum SP)
+  @theme { colors, fonts }
+  @layer base { typography }
+
+functions.php
+  wp_enqueue_style('tebe-poveryat-tailwind', output.css)
+  wp_enqueue_script('tp-main', main.js)
+  wp_enqueue_script('tp-sliders', sliders.js)
+  wp_enqueue_style('swiper-css', swiper.css)
+  wp_enqueue_script('swiper-js', swiper.js)
+
+theme.json
+  settings.color.palette
+  settings.typography.fontFamilies
+  settings.layout
+  styles.color, styles.typography
+
+BUILD COMMANDS:
+===============
+
+Development:  npm run dev       (watch + recompile)
+Production:   npm run build     (minified output)
+Copy Assets:  npm run copy-assets (Swiper to vendor)
+
+COLORS (@theme in src/input.css):
+==================================
+primary:       #6063a6 (Purple)
+secondary:     #d98b99 (Pink)
+base:          #fef1ec (Light Beige)
+contrast:      #1e1e1e (Near Black)
+teal:          #1c5358
+sky:           #6bbad9
+peach:         #f2c995
+primary-dark:  #36569f
+
+FONTS:
+======
+Geologica     (Google Fonts - body text)
+Akrobat       (Local - headers, UI)
+Ura Bum Bum SP (Local - display, decorative)
+
+BREAKPOINTS:
+============
+Mobile:  320px+   (base)
+Tablet:  768px+   (md:)
+Desktop: 1024px+  (lg:)
+Large:   1280px+  (xl:)
+
+SWIPER SLIDERS:
+===============
+1. Hero        (.hero__slider)
+2. Friends     (.friends__slider)
+3. Media       (.media__slider)
+4. Materials   (.materials__slider)
+5. Histories   (.histories__slider)
+6. Team        (.team__slider)
+
+Each has: autoplay, navigation arrows, progress bar, breakpoints
+
+MOBILE MENU:
+============
+Trigger:  .js-open-mobile-menu (burger button in header)
+Overlay:  .mobile-menu-overlay (fixed overlay from parts/)
+Animation: translate-x-full → translate-x-0 (Tailwind classes)
+Close:    ESC key or .mobile-menu-overlay__close-btn
+Body:     Scroll locked when menu open
+
+COMPONENT SYSTEM:
+=================
+
+button.php
+  Args: text, url, style, size, state, class, submit
+  Styles: primary, secondary, white, outline-primary, outline-white, form-submit
+  Sizes: sm, md, lg
+  States: default, disabled
+  Renders: <a> if url, <button> otherwise
+
+link-more.php
+  Learn More style link with arrow icon
+  Variations: normal, hero
+
+input-with-button.php
+  Email input with embedded button
+  Used in footer subscription form
+
+slider-navigation.php
+  Prev/Next arrow buttons
+  Customizable colors
+
+slider-progress.php
+  Swiper progress bar
+  Configurable track/bar colors
+
+DEPENDENCIES:
+==============
+npm packages:
+  @tailwindcss/cli    ^4.0.0-alpha.14
+  tailwindcss         ^4.0.0-alpha.14
+  swiper              ^11.0.0
+
+WordPress:
+  No plugin dependencies
+  No advanced post types
+
+PROJECT STATUS:
+===============
+COMPLETED:
+  ✓ Mobile design (320px+)
+  ✓ All 10 sections
+  ✓ Swiper sliders
+  ✓ Mobile menu
+  ✓ UI components
+  ✓ Typography
+  ✓ Color system
+
+IN PROGRESS:
+  - Desktop adaptation (md:, lg:, xl:)
+  - Slider breakpoints
+
+NOT YET:
+  - PHP form handlers
+  - single.php
+  - Archive templates
+  - 404 page
+  - Dynamic menus
+  - SEO
+  - Search
+
+NOTES:
+======
+- Always run: npm run dev (in separate terminal)
+- Mobile-first approach: base styles for mobile, add desktop classes
+- Do NOT edit: assets/css/output.css (auto-generated)
+- Color sync: src/input.css + theme.json + components
+- Assets: Currently from Figma API (need local migration)
+- Menu: HTML overlay (not dynamic WP menu)

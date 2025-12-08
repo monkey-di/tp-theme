@@ -30,14 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Friends Slider
     if (document.querySelector('.friends__slider')) {
-        const friendsSliderProgress = document.querySelector('.friends__progress .slider-progress');
+        const quoteEl = document.getElementById('friends-quote');
+        const friendsSliderProgress = document.querySelector('.friends__mobile-progress .slider-progress');
         const friendsSwiper = new Swiper('.friends__slider', {
             loop: true,
-            autoplay: {
-                delay: 6000,
-                disableOnInteraction: false,
+            speed: 850,
+            
+            // Mobile settings
+            slidesPerView: 1,
+            spaceBetween: 16,
+            
+            // Desktop settings
+            breakpoints: {
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                    centeredSlides: true,
+                }
             },
-            speed: 800,
             pagination: {
                 el: friendsSliderProgress,
                 type: 'progressbar',
@@ -47,8 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 prevEl: '.friends-prev',
             },
             on: {
-                init: function () {
-                    if(friendsSliderProgress) friendsSliderProgress.style.opacity = 1;
+                init: function (swiper) {
+                    if (quoteEl && swiper.slides[swiper.activeIndex]) {
+                        const activeSlide = swiper.slides[swiper.activeIndex];
+                        if(activeSlide.dataset.quote) {
+                            quoteEl.textContent = activeSlide.dataset.quote;
+                        }
+                    }
+                },
+                slideChange: function (swiper) {
+                    if (quoteEl && swiper.slides[swiper.activeIndex]) {
+                        const activeSlide = swiper.slides[swiper.activeIndex];
+                         if(activeSlide.dataset.quote) {
+                            quoteEl.textContent = activeSlide.dataset.quote;
+                        }
+                    }
                 },
             }
         });
@@ -67,12 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesPerView: 'auto', 
             spaceBetween: 16,      
             centeredSlides: true,  
-            breakpoints: {
-                768: {
-                    slidesPerView: 'auto',
-                    spaceBetween: 20
-                }
-            },     
             pagination: {
                 el: mediaSliderProgress,
                 type: 'progressbar',
@@ -125,14 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 850,
-            slidesPerView: 1,
-            spaceBetween: 16,
-            breakpoints: {
-                768: {
-                    slidesPerView: 'auto',
-                    spaceBetween: 20
-                }
-            },
             pagination: {
                 el: historiesSliderProgress,
                 type: 'progressbar',
@@ -159,17 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 900,
-            slidesPerView: 1,
-            spaceBetween: 16,
-            breakpoints: {
-                768: {
-                    slidesPerView: 'auto',
-                    spaceBetween: 20
-                }
-            },
             pagination: {
                 el: teamSliderProgress,
                 type: 'progressbar',
+            },
+            navigation: {
+                nextEl: '.team-next',
+                prevEl: '.team-prev',
             },
             on: {
                 init: function () {

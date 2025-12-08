@@ -1,0 +1,140 @@
+/* ============================================
+   HEADER STYLES
+   ============================================ */
+
+@layer components {
+  /* Utility Classes for Header */
+  .header {
+    @apply w-full bg-base relative z-50;
+  }
+
+  .header__container {
+    @apply mx-auto px-4 xl:px-24 flex justify-between items-center h-[144px] xl:h-[80px];
+  }
+
+  .header__logo-link {
+    @apply flex items-center gap-[16px] flex-shrink-0 no-underline hover:opacity-80 transition;
+  }
+
+  /* Mobile Logo */
+  .header__logo-mobile {
+    @apply xl:hidden flex-shrink-0 w-[67px] h-[64px];
+  }
+
+  .header__logo-mobile img {
+    @apply w-full h-full object-contain;
+  }
+
+  /* Desktop Logo */
+  .header__logo-desktop {
+    @apply hidden xl:flex items-center gap-[16px] flex-shrink-0;
+  }
+
+  .header__logo-icon {
+    @apply flex-shrink-0 w-[60px] h-[64px];
+  }
+
+  .header__logo-icon img {
+    @apply w-full h-full object-contain;
+  }
+
+  .header__logo-text {
+    @apply flex-shrink-0 w-[164.905px] h-[16px];
+  }
+
+  .header__logo-text img {
+    @apply w-full h-full object-contain;
+  }
+
+  /* Navigation Menu (Desktop Only) */
+  .header__nav {
+    @apply hidden xl:flex items-center gap-[32px] flex-1 justify-center;
+  }
+
+  .header__nav-link {
+    @apply text-contrast font-akrobat font-bold text-[20px] leading-none no-underline;
+    @apply hover:text-primary transition duration-200;
+  }
+
+  /* Desktop Controls */
+  .header__controls {
+    @apply hidden xl:flex items-center gap-[24px];
+  }
+
+  /* Language Switcher */
+  .header__language-switcher {
+    @apply border-2 border-primary rounded-[12px] flex h-[40px] p-[2px] w-[108px] gap-0;
+  }
+
+  .header__language-btn {
+    @apply flex-1 rounded-[10px] font-akrobat font-bold text-[16px] leading-none;
+    @apply transition duration-200 cursor-pointer border-none;
+  }
+
+  .header__language-btn--active {
+    @apply bg-primary text-white;
+  }
+
+  .header__language-btn--active:hover {
+    @apply bg-primary-dark;
+  }
+
+  .header__language-btn:not(.header__language-btn--active) {
+    @apply bg-base text-primary;
+  }
+
+  .header__language-btn:not(.header__language-btn--active):hover {
+    @apply opacity-80;
+  }
+
+  /* Donate Button - Desktop */
+  .header__donate-btn {
+    @apply bg-secondary rounded-[40px] px-[20px] py-[8px] h-[60px] flex items-center gap-[8px];
+    @apply no-underline transition duration-200;
+  }
+
+  .header__donate-btn:hover {
+    @apply opacity-90;
+  }
+
+  .header__donate-icon {
+    @apply w-[20px] h-[18px] flex items-center justify-center flex-shrink-0;
+  }
+
+  .header__donate-text {
+    @apply text-white font-geologica font-normal text-[14px] leading-[1.57] uppercase whitespace-nowrap;
+  }
+
+  /* Donate Button - Mobile */
+  .header__donate-btn-mobile {
+    @apply xl:hidden w-[159px] h-10 px-3 py-2 bg-secondary rounded-[40px];
+    @apply flex justify-center items-center gap-1 no-underline transition;
+  }
+
+  .header__donate-btn-mobile:hover {
+    @apply opacity-90;
+  }
+
+  .header__donate-icon-mobile {
+    @apply w-[13px] h-[12px] flex items-center justify-center;
+  }
+
+  .header__donate-text-mobile {
+    @apply text-white text-[10px] font-normal uppercase leading-4 font-geologica;
+  }
+
+  /* Burger Menu */
+  .header__burger {
+    @apply xl:hidden w-16 h-10 p-2 bg-primary rounded-[40px];
+    @apply flex justify-center items-center gap-2 hover:opacity-90 transition;
+    @apply cursor-pointer border-none;
+  }
+
+  .header__burger-icon {
+    @apply relative w-6 h-6;
+  }
+
+  .header__burger-icon img {
+    @apply w-full h-full object-contain;
+  }
+}

@@ -4,49 +4,48 @@
  * Mobile First.
  */
 ?>
-<section class="about-section w-full bg-base pt-12 px-4 relative overflow-hidden">
-    <div class="about__container container mx-auto flex flex-col gap-8">
+<section class="about-section">
+    <div class="about__container">
         
-        <!-- Title -->
-        <h2 class="about__title text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-center">
-            О «Тебе поверят»
-        </h2>
+        <!-- Left Column (Title and Description) -->
+        <div class="flex flex-col lg:gap-10">
+            <h2 class="about__title">О «Тебе поверят»</h2>
 
-        <!-- Description Text -->
-        <div class="about__description text-contrast text-[16px] font-light font-geologica leading-[1.5] max-w-2xl">
-            <p>
-                Каждый 8-й ребёнок в мире сталкивается с сексуализированным насилием.
-            </p>
-            <p>
-                С 2018 года мы работаем над тем, чтобы заменить страх перед темой сексуализированного насилия над детьми на готовность решать эту серьёзную проблему. Если мы боимся и совсем не говорим об этом, то когда ситуация происходит, просто прячем голову в песок.
-            </p>
+            <div class="about__description">
+                <p>
+                    Каждый 8-й ребёнок в мире сталкивается с сексуализированным насилием.
+                </p>
+                <p class="mt-4">
+                    С 2018 года мы работаем над тем, чтобы заменить страх перед темой сексуализированного насилия над детьми на готовность решать эту серьёзную проблему. Если мы боимся и совсем не говорим об этом, то когда ситуация происходит, просто прячем голову в песок.
+                </p>
+            </div>
         </div>
 
-        <!-- Statistics Grid (Staggered) -->
-        <div class="about__stats flex flex-wrap gap-2 mt-4">
+        <!-- Right Column (Statistics Cards) -->
+        <div class="about__stats">
             
-            <!-- Stat 1 (Narrow) -->
-            <div class="about__stat-card w-[calc(40%-4px)] p-4 bg-primary rounded-[20px] flex flex-col justify-start items-start gap-3 text-white">
-                <div class="text-[50px] font-normal font-ura uppercase leading-[0.95]">6</div>
-                <div class="text-[16px] font-normal font-geologica leading-[1.5]">лет&nbsp;оказываем<br>помощь</div>
+            <!-- Stat 1 -->
+            <div class="about__stat-card w-[calc(40%-4px)] md:w-full bg-primary">
+                <div class="about__stat-card-number">6</div>
+                <div class="about__stat-card-text">лет&nbsp;оказываем<br>помощь</div>
             </div>
 
-            <!-- Stat 2 (Wide) -->
-            <div class="about__stat-card w-[calc(60%-4px)] p-4 bg-teal rounded-[20px] flex flex-col justify-start items-start gap-3 text-white">
-                <div class="text-[50px] font-normal font-ura uppercase leading-[0.95]">8 228</div>
-                <div class="text-[16px] font-normal font-geologica leading-[1.5]">консультаций<br>проведено</div>
+            <!-- Stat 2 -->
+            <div class="about__stat-card w-[calc(60%-4px)] md:w-full bg-teal">
+                <div class="about__stat-card-number">8 228</div>
+                <div class="about__stat-card-text">консультаций<br>проведено</div>
             </div>
 
-            <!-- Stat 3 (Wide) -->
-            <div class="about__stat-card w-[calc(60%-4px)] p-4 bg-sky rounded-[20px] flex flex-col justify-start items-start gap-3 text-white">
-                <div class="text-[50px] font-normal font-ura uppercase leading-[0.95]">2 091</div>
-                <div class="text-[16px] font-normal font-geologica leading-[1.5]">человек получили<br>помощь</div>
+            <!-- Stat 3 -->
+            <div class="about__stat-card w-[calc(60%-4px)] md:w-full bg-sky">
+                <div class="about__stat-card-number">2 091</div>
+                <div class="about__stat-card-text">человек получили<br>помощь</div>
             </div>
 
-            <!-- Stat 4 (Narrow) -->
-            <div class="about__stat-card w-[calc(40%-4px)] p-4 bg-secondary rounded-[20px] flex flex-col justify-start items-start gap-3 text-white">
-                <div class="text-[50px] font-normal font-ura uppercase leading-[0.95]">26</div>
-                <div class="text-[16px] font-normal font-geologica leading-[1.5]">человек<br>в команде</div>
+            <!-- Stat 4 -->
+            <div class="about__stat-card w-[calc(40%-4px)] md:w-full bg-secondary">
+                <div class="about__stat-card-number">26</div>
+                <div class="about__stat-card-text">человек<br>в команде</div>
             </div>
 
         </div>

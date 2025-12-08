@@ -1,0 +1,291 @@
+TECHNOLOGY STACK - TEBE POVERYAT THEME
+=======================================
+
+PROJECT TYPE
+============
+WordPress Custom Theme (Classic PHP)
+Not a full block theme - uses template-parts for component composition
+
+FRONTEND TECHNOLOGIES
+=====================
+
+CSS Framework
+  Tailwind CSS v4.0.0-alpha.14
+  - Alpha/Beta version (potential breaking changes)
+  - Configuration via @theme directive in src/input.css
+  - NOT traditional Tailwind v3 (no tailwind.config.js)
+  - BEM classes combined with Tailwind utilities
+
+Fonts
+  Geologica (Google Fonts)
+    - Used for: Body text, descriptive content
+    - Weight: 100-900
+    - Loaded: Google Fonts API
+  
+  Akrobat (Local)
+    - Used for: Headers (h3-h6), UI elements, buttons
+    - Available: Regular, Bold, ExtraBold, Black
+    - Weights: 400, 700, 800, 900
+    - Format: OTF, TTF, woff2
+  
+  Ura Bum Bum SP (Local)
+    - Used for: Large display text (h1, h2)
+    - Used for: Decorative/accent text
+    - Format: OTF
+
+JavaScript Libraries
+  Swiper.js v11.0.0
+    - Carousel/slider library
+    - Used for: 6 different sliders (Hero, Friends, Media, Materials, Histories, Team)
+    - Features: Loop, autoplay, navigation arrows, progress bar, breakpoints
+    - Source: npm, copied to assets/vendor/swiper/ during build
+  
+  Vanilla JavaScript
+    - Mobile menu toggle (main.js)
+    - Slider initialization (sliders.js)
+    - DOM manipulation, event listeners
+    - NO frameworks (Vue, React, Angular)
+
+BACKEND TECHNOLOGIES
+====================
+
+WordPress
+  Version: 6.x+
+  Theme Type: Classic PHP (template-parts based)
+  NOT: Full block theme (block.json)
+  NOT: FSE/Full Site Editing theme
+  
+PHP
+  Version: 7.4+
+  Template System: get_template_part() with arguments array
+  Enqueue System: wp_enqueue_script(), wp_enqueue_style()
+  Features Used:
+    - Theme support (title-tag, post-thumbnails, custom-logo)
+    - Template hierarchy
+    - Actions/Filters (wp_enqueue_scripts, after_setup_theme)
+  
+No Plugin Dependencies
+  - All functionality in theme files
+  - No custom post types
+  - No advanced custom fields
+  - No WooCommerce
+  - No complex WordPress features
+
+BUILD & DEVELOPMENT TOOLS
+==========================
+
+Package Manager: npm
+  - Node.js v14+ required
+  - package.json with 3 dependencies
+
+Build Tool: Tailwind CLI
+  - Command: npx @tailwindcss/cli
+  - Input: src/input.css
+  - Output: assets/css/output.css
+  - Modes: Watch (--watch) and Build (--minify)
+  
+CLI Tasks:
+  npm run dev          # Watch + recompile
+  npm run build        # Production build (minified)
+  npm run copy-assets  # Copy Swiper from node_modules
+
+Version Control: Git
+  - Repository: https://github.com/monkey-di/tp-theme
+  - Branch: master
+  - Commits tracked in git history
+
+Docker (Optional)
+  docker-compose.yml
+  Services:
+    - WordPress (latest) on port 8080
+    - MySQL 5.7
+  Volumes: Theme mounted for hot reload
+
+ARCHITECTURE DECISIONS
+======================
+
+Template-Parts Composition
+  - NOT monolithic templates
+  - Separate component files in template-parts/
+  - Front-page.php orchestrates sections
+  - get_template_part() pattern for reusability
+
+CSS Architecture
+  - Mobile-first responsive design
+  - Tailwind utilities + BEM naming
+  - Single CSS file (output.css)
+  - Color system: @theme configuration
+
+JavaScript Strategy
+  - Vanilla JS (no build processing)
+  - Swiper.js for carousels (external library)
+  - Minimal JS footprint (menu + slider init)
+  - NO frontend build (TypeScript, webpack, etc)
+
+PHP Philosophy
+  - Classic WordPress theme structure
+  - No custom WP-CLI commands
+  - No advanced PHP frameworks
+  - Simple, readable code
+
+DEPENDENCIES (npm packages)
+===========================
+
+devDependencies:
+  @tailwindcss/cli@^4.0.0-alpha.14
+  tailwindcss@^4.0.0-alpha.14
+
+dependencies:
+  swiper@^11.0.0
+
+Total: 3 direct dependencies + transitive deps
+
+EXTERNAL SERVICES
+=================
+
+Google Fonts
+  - Geologica font loaded via API
+  - URL: https://fonts.googleapis.com/...
+
+Figma API
+  - Asset images currently loaded from Figma
+  - URLs: https://www.figma.com/api/mcp/asset/...
+  - ACTION REQUIRED: Migrate to local assets
+
+DATABASE
+========
+
+WordPress Database
+  - MySQL 5.7 (docker-compose)
+  - Standard WordPress tables
+  - No custom tables
+  - No advanced post types
+
+No Custom Meta
+  - No ACF (Advanced Custom Fields)
+  - No custom taxonomies
+  - Standard post, page, attachment types
+
+FILE SYSTEM
+===========
+
+Compiled Assets
+  assets/css/output.css - Compiled, minified
+  assets/vendor/swiper/* - Runtime libraries
+
+Source Files
+  src/input.css - Tailwind source
+  assets/js/*.js - JavaScript source
+  template-parts/*.php - PHP templates
+
+Configuration
+  theme.json - Block editor settings
+  functions.php - WordPress hooks
+  package.json - npm configuration
+
+BROWSER SUPPORT
+===============
+
+Based on Tailwind CSS v4:
+  - Chrome 88+
+  - Firefox 78+
+  - Safari 14+
+  - Edge 88+
+  - NO IE11
+
+Based on Swiper.js v11:
+  - Modern browsers
+  - Mobile browsers (iOS Safari, Chrome Mobile)
+
+PERFORMANCE CONSIDERATIONS
+==========================
+
+CSS
+  - Single output.css file (minified)
+  - Tailwind purge removes unused styles
+  - Google Fonts lazy load (display=swap)
+
+JavaScript
+  - Swiper.js: ~60KB min+gzip
+  - Custom JS: <5KB
+  - Scripts loaded async (defer or footer)
+
+Images
+  - Currently from Figma API (external requests)
+  - Should be optimized locally
+  - hero.webp format
+
+Caching
+  - WordPress object cache
+  - Browser cache headers
+  - No asset versioning yet (could add)
+
+SECURITY CONSIDERATIONS
+=======================
+
+WordPress Security
+  - No known vulnerabilities in dependencies
+  - Theme follows WordPress security guidelines
+  - Input validation in form components
+  - Output escaping in templates
+
+Code Quality
+  - No linting setup (could add ESLint)
+  - No static analysis (could add PHPStan)
+  - No automated testing
+
+DEPLOYMENT
+==========
+
+Requirements
+  - PHP 7.4+
+  - WordPress 6.x+
+  - MySQL 5.7+
+  - Node.js for build (if building locally)
+
+Build Process
+  1. npm install
+  2. npm run build
+  3. Deploy wp-content/themes/tebe-poveryat/
+  4. Activate theme in WordPress admin
+
+Assets
+  - assets/css/output.css must be generated
+  - Do NOT commit node_modules/
+  - Commit: src/, template-parts/, assets/*, *.php, *.json
+
+FRAMEWORKS & PATTERNS AVOIDED
+==============================
+
+NOT Used
+  - No frontend framework (Vue, React, Angular)
+  - No PHP framework (Laravel, Symfony)
+  - No CSS preprocessor (SASS, Less)
+  - No JS transpiler (TypeScript, Babel)
+  - No build bundler (Webpack, Vite, Parcel)
+  - No CMS builder
+  - No page builders
+  - No WooCommerce or e-commerce
+
+Intentional Choices
+  - Simplicity over features
+  - Maintainability over complexity
+  - WordPress conventions
+  - Standard hosting compatibility
+
+OPTIMIZATION OPPORTUNITIES
+==========================
+
+Ready for:
+  - CSS purging optimization
+  - Asset optimization (images)
+  - JavaScript minification
+  - Lazy loading images
+  - Resource hints (preload, prefetch)
+  - Service worker for offline
+
+Not Yet Implemented
+  - Automated testing
+  - Performance budgets
+  - CI/CD pipeline
+  - Automated deployments

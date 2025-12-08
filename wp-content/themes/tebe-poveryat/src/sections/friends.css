@@ -1,0 +1,15 @@
+.friends__slider .swiper-slide {
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+    .friends__slider .swiper-slide {
+        transform: scale(0.85);
+    }
+    .friends__slider .swiper-slide-active {
+        transform: scale(1);
+    }
+    .friends__slider .swiper-slide:not(.swiper-slide-active) {
+        filter: grayscale(1);
+    }
+}

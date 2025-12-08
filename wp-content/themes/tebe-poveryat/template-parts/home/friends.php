@@ -1,88 +1,83 @@
 <?php
 /**
  * Friends / Partners Section
- * Mobile First.
+ * Mobile First with Desktop version.
  */
+
+$friends_data = [
+    [
+        'name' => 'Аглая Тарасова',
+        'role' => 'актриса',
+        'image' => 'aglaia-tarasova.jpg',
+        'quote' => 'Это одна из самых табуированных тем в нашем обществе. Про неё важно говорить как можно чаще.'
+    ],
+    [
+        'name' => 'Константин Хабенский',
+        'role' => 'актёр',
+        'image' => 'konstantin-khabensky.jpg',
+        'quote' => 'Важно создавать безопасное пространство, где дети могут говорить и быть услышанными.'
+    ],
+    [
+        'name' => 'Юрий Шевчук',
+        'role' => 'артист',
+        'image' => 'yuri-shevchuk.jpg',
+        'quote' => 'Творчество – это способ говорить о сложном, достучаться до сердец.'
+    ]
+];
+
+// Duplicate slides for seamless loop
+$friends_data = array_merge($friends_data, $friends_data);
+
 ?>
-<section class="friends-section w-full bg-base py-12 px-4 relative overflow-hidden">
-    <div class="friends__container container mx-auto flex flex-col gap-8">
+<section class="friends-section w-full bg-base relative overflow-hidden py-12 lg:py-24">
+    <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-center">
         
         <!-- Title -->
-        <h2 class="friends__title text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9">
+        <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center mb-8">
             Наши друзья
         </h2>
 
-        <!-- Slider -->
-        <div class="friends__slider swiper w-full h-[521px] rounded-[20px] overflow-hidden">
-            <div class="swiper-wrapper">
-                
-                <!-- Slide 1: Aglaya Tarasova -->
-                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
-                    <img src="https://www.figma.com/api/mcp/asset/bbb73538-ffcf-4124-94f6-a19b4d3ac821" alt="Аглая Тарасова" class="absolute inset-0 w-full h-full object-cover" />
-                    <!-- Gradient/Overlay if needed, but text has shadow/contrast in design? Or text is just white on bottom. Adding gradient for readability -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-
-                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
-                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
-                            Аглая Тарасова
-                        </h3>
-                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
-                            актриса
-                        </p>
-                    </div>
+        <!-- Slider & Desktop Controls Wrapper -->
+        <div class="relative w-full">
+            <div class="friends__slider swiper w-full lg:-mx-32">
+                <div class="swiper-wrapper items-center">
+                    <?php foreach ($friends_data as $friend) : ?>
+                        <div class="swiper-slide" data-quote="<?php echo htmlspecialchars($friend['quote']); ?>">
+                            <div class="friends__card aspect-[334/521] rounded-[20px] overflow-hidden relative">
+                                <img src="<?php echo get_template_directory_uri() . '/assets/images/' . $friend['image']; ?>" alt="<?php echo $friend['name']; ?>" class="w-full h-full object-cover">
+                                <div class="friends__card-overlay absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div class="absolute left-4 bottom-4 text-white">
+                                    <h3 class="text-[40px] font-extrabold font-akrobat uppercase leading-none"><?php echo $friend['name']; ?></h3>
+                                    <p class="text-[16px] font-geologica"><?php echo $friend['role']; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- Slide 2: Konstantin Khabensky -->
-                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
-                    <img src="https://www.figma.com/api/mcp/asset/48069dfa-1d74-4510-814a-5e9490df734a" alt="Константин Хабенский" class="absolute inset-0 w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-
-                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
-                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
-                            Константин Хабенский
-                        </h3>
-                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
-                            актриса
-                        </p> <!-- Copy-paste error in Figma design? Says "актриса". Should likely be "актер". I will keep "актер" or follow Figma literally? Figma says "актриса" for Konstantin too in the text layer! I'll fix it to "актер" for common sense. -->
-                    </div>
-                </div>
-
-                <!-- Slide 3: Yuri Shevchuk -->
-                <div class="friends__card swiper-slide relative w-full h-full rounded-[20px] overflow-hidden">
-                    <img src="https://www.figma.com/api/mcp/asset/ceae51d3-f5ee-44ef-9a0e-592614b63156" alt="Юрий Шевчук" class="absolute inset-0 w-full h-full object-cover" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
-
-                    <div class="friends__card-content absolute bottom-0 left-0 w-full p-4 flex flex-col justify-end items-start z-10">
-                        <h3 class="friends__card-name text-white text-[40px] font-extrabold font-akrobat leading-none uppercase mb-1">
-                            Юрий Шевчук
-                        </h3>
-                        <p class="friends__card-role text-white text-base font-normal font-geologica leading-6">
-                            артист
-                        </p>
-                    </div>
-                </div>
-
             </div>
-        </div>
-
-        <!-- Slider Controls -->
-        <div class="friends__controls flex justify-between items-center mt-4">
-            <!-- Mobile Progress -->
-            <div class="friends__progress w-full md:hidden">
-                <?php get_template_part('template-parts/components/slider-progress', null, [
-                    'track_color' => 'bg-white',
-                    'bar_color' => 'bg-secondary'
-                ]); ?>
-            </div>
-
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex w-full justify-end">
-                <?php get_template_part('template-parts/components/slider-navigation', null, [
+            
+            <!-- Desktop Navigation Arrows -->
+            <div class="hidden lg:flex absolute top-1/2 -translate-y-1/2 w-full z-10">
+                 <?php get_template_part('template-parts/components/slider-navigation', null, [
                     'prev_class' => 'friends-prev',
                     'next_class' => 'friends-next',
-                    'color'      => 'text-primary'
+                    'color'      => 'text-primary',
+                    'class'      => 'px-8'
                 ]); ?>
             </div>
+        </div>
+        
+        <!-- Quote -->
+        <div id="friends-quote" class="friends__quote text-center max-w-sm mx-auto mt-6 text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]">
+             <!-- Quote will be inserted here by JS -->
+        </div>
+
+        <!-- Mobile Slider Controls (Progress Bar) -->
+        <div class="friends__mobile-progress w-full mt-8 lg:hidden">
+            <?php get_template_part('template-parts/components/slider-progress', null, [
+                'track_color' => 'bg-black/20',
+                'bar_color' => 'bg-secondary'
+            ]); ?>
         </div>
 
     </div>

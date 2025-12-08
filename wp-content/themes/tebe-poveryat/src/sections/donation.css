@@ -1,0 +1,53 @@
+/* Toggle Switch */
+.donation-form__toggle {
+  @apply flex p-1 bg-white rounded-[40px] max-w-sm mx-auto;
+}
+.donation-form__toggle-button {
+  @apply flex-1 px-8 py-3 rounded-[40px] text-xl font-bold font-akrobat leading-5 text-center;
+}
+.donation-form__toggle-button--active {
+  @apply bg-primary text-white;
+}
+.donation-form__toggle-button--inactive {
+  @apply bg-white text-contrast;
+}
+
+/* Amount Buttons & Custom Amount Input */
+.donation-form__amounts {
+    @apply grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-2;
+}
+.donation-form__amount-button {
+    @apply px-8 py-3 rounded-[40px] text-xl font-medium font-geologica text-center bg-white text-contrast;
+}
+.donation-form__amount-button--selected {
+    @apply bg-primary text-white border-2 border-white;
+}
+.donation-form__custom-amount {
+    @apply w-full px-4 py-3 rounded-[40px] text-xl font-medium font-geologica text-center bg-white text-contrast placeholder:text-primary/20; /* Placeholder color adjusted */
+    @apply col-span-2 md:shrink-0 md:w-[203px]; /* Controlled width for desktop */
+}
+
+/* Main Inputs */
+.donation-form__input {
+  @apply w-full px-5 py-3 bg-white rounded-[40px] text-contrast text-[16px] font-normal font-geologica leading-[1.5] placeholder:text-primary/20 focus:outline-none focus:ring-2 focus:ring-primary/50; /* Placeholder color adjusted */
+  @apply text-center; /* Placeholders centered as per feedback */
+}
+
+/* Checkboxes */
+.donation-form__checkboxes {
+  @apply flex flex-col gap-4; /* Removed items-center */
+}
+.donation-form__checkbox-label {
+  @apply flex items-center gap-2 cursor-pointer w-full; /* Changed items-start to items-center */
+  @apply md:justify-center; /* Center flex items on desktop only */
+}
+.donation-form__checkbox-custom {
+  @apply w-6 h-6 rounded border-2 border-white flex-shrink-0 flex items-center justify-center bg-white mt-1;
+}
+.donation-form__checkbox-text {
+  @apply text-white text-[16px] font-light font-geologica leading-[1.5];
+  @apply md:whitespace-nowrap; /* Prevent text wrapping on desktop */
+}
+.donation-form__checkbox-text a {
+  @apply !underline hover:!no-underline;
+}
