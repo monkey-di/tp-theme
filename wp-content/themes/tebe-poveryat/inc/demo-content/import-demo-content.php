@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function tp_import_demo_content() {
 	$results = array(
-		'hero_slides' => tp_import_hero_slides(),
+		'main_slides' => tp_import_main_slides(),
 		'friends'     => tp_import_friends(),
 		'media'       => tp_import_media(),
 		'materials'   => tp_import_materials(),
@@ -33,9 +33,9 @@ function tp_import_demo_content() {
 }
 
 /**
- * Import Hero Slides
+ * Import Main Slider Slides
  */
-function tp_import_hero_slides() {
+function tp_import_main_slides() {
 	$slides = array(
 		array(
 			'title'   => 'Тебе поверят',
@@ -58,7 +58,7 @@ function tp_import_hero_slides() {
 
 	foreach ( $slides as $index => $slide ) {
 		$post_id = wp_insert_post( array(
-			'post_type'    => 'hero_slide',
+			'post_type'    => 'main_slide',
 			'post_title'   => $slide['title'],
 			'post_content' => $slide['content'],
 			'post_status'  => 'publish',

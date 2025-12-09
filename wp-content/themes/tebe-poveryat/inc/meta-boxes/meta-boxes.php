@@ -116,8 +116,8 @@ add_action( 'save_post_team_member', 'tp_save_team_position' );
  * Add custom columns for CPT admin lists
  */
 
-// Hero Slides columns
-function tp_hero_slides_columns( $columns ) {
+// Main Slider columns
+function tp_main_slider_columns( $columns ) {
 	$new_columns = array();
 	$new_columns['cb'] = $columns['cb'];
 	$new_columns['thumbnail'] = 'Изображение';
@@ -125,15 +125,15 @@ function tp_hero_slides_columns( $columns ) {
 	$new_columns['date'] = $columns['date'];
 	return $new_columns;
 }
-add_filter( 'manage_hero_slide_posts_columns', 'tp_hero_slides_columns' );
+add_filter( 'manage_main_slide_posts_columns', 'tp_main_slider_columns' );
 
-function tp_hero_slides_column_content( $column, $post_id ) {
+function tp_main_slider_column_content( $column, $post_id ) {
 	if ( 'thumbnail' === $column ) {
 		$thumb = get_the_post_thumbnail( $post_id, array( 80, 80 ) );
 		echo $thumb ? $thumb : '—';
 	}
 }
-add_action( 'manage_hero_slide_posts_custom_column', 'tp_hero_slides_column_content', 10, 2 );
+add_action( 'manage_main_slide_posts_custom_column', 'tp_main_slider_column_content', 10, 2 );
 
 // Friends columns
 function tp_friends_columns( $columns ) {

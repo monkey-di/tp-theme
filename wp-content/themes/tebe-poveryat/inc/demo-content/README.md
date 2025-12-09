@@ -4,7 +4,7 @@
 
 ## Что импортируется
 
-### 1. Hero Slides (Слайдер героя)
+### 1. Main Slider (Главный слайдер)
 - 3 одинаковых слайда
 - Заголовок: "Тебе поверят"
 - Описание организации
@@ -89,8 +89,8 @@ add_action('admin_bar_menu', function($wp_admin_bar) {
 4. **Очистка:** Если нужно удалить импортированные записи, используйте WP-CLI:
 
 ```bash
-# Удалить все hero_slide
-wp post delete $(wp post list --post_type=hero_slide --format=ids) --force
+# Удалить все main_slide
+wp post delete $(wp post list --post_type=main_slide --format=ids) --force
 
 # Удалить все friend
 wp post delete $(wp post list --post_type=friend --format=ids) --force
@@ -118,11 +118,11 @@ wp post delete $(wp post list --post_type=friend --format=ids) --force
 ## Структура импортируемых данных
 
 ```
-hero_slide
+main_slide
 ├── post_title: Заголовок слайда
 ├── post_content: Описание
 ├── menu_order: Порядок отображения
-└── featured_image: Изображение героя
+└── featured_image: Изображение слайда
 
 friend
 ├── post_title: Имя друга

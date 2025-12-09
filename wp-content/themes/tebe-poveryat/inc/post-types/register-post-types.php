@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Register Hero Slides CPT
- * Используется для слайдера на главной странице
+ * Register Main Slider CPT
+ * Используется для главного слайдера на главной странице
  */
-function tp_register_hero_slides() {
+function tp_register_main_slider() {
 	$labels = array(
-		'name'               => 'Слайды героя',
-		'singular_name'      => 'Слайд героя',
-		'menu_name'          => 'Hero Слайдер',
+		'name'               => 'Главный слайдер',
+		'singular_name'      => 'Слайд',
+		'menu_name'          => 'Главный слайдер',
 		'add_new'            => 'Добавить новый',
 		'add_new_item'       => 'Добавить новый слайд',
 		'edit_item'          => 'Редактировать слайд',
@@ -47,9 +47,9 @@ function tp_register_hero_slides() {
 		'show_in_rest'        => true,
 	);
 
-	register_post_type( 'hero_slide', $args );
+	register_post_type( 'main_slide', $args );
 }
-add_action( 'init', 'tp_register_hero_slides' );
+add_action( 'init', 'tp_register_main_slider' );
 
 /**
  * Register Friends CPT
