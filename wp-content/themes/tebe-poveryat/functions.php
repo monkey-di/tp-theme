@@ -77,3 +77,8 @@ require_once get_template_directory() . '/inc/post-types/register-post-types.php
  * Include Meta Boxes
  */
 require_once get_template_directory() . '/inc/meta-boxes/meta-boxes.php';
+
+/**
+ * Include Demo Content Importer (temporary - remove after import)
+ */
+require_once get_template_directory() . '/inc/demo-content/import-demo-content.php';

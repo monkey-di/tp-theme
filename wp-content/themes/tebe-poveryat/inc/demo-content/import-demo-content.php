@@ -337,7 +337,7 @@ function tp_insert_attachment( $file_path, $parent_post_id = 0 ) {
  * Admin menu item for manual import
  * Uncomment to add temporary admin menu
  */
-/*
+
 function tp_demo_import_admin_menu() {
 	add_management_page(
 		'Импорт демо-контента',
@@ -380,7 +380,7 @@ function tp_demo_import_page() {
 	</div>
 	<?php
 }
-*/
+
 
 // Для импорта через WP-CLI:
 // wp eval-file wp-content/themes/tebe-poveryat/inc/demo-content/import-demo-content.php
