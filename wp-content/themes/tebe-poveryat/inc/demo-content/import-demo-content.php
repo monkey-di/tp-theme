@@ -312,32 +312,101 @@ function tp_import_histories() {
 
 /**
  * Helper function to insert attachment
+ * Копирует файл из темы в uploads и создаёт attachment
  */
 function tp_insert_attachment( $file_path, $parent_post_id = 0 ) {
-	$wp_filetype = wp_check_filetype( basename( $file_path ), null );
+	// Проверяем существование файла
+	if ( ! file_exists( $file_path ) ) {
+		return false;
+	}
 
+	// Читаем файл
+	$file_data = file_get_contents( $file_path );
+	$filename  = basename( $file_path );
+
+	// Копируем в uploads через WordPress API
+	$upload = wp_upload_bits( $filename, null, $file_data );
+
+	if ( $upload['error'] ) {
+		return false;
+	}
+
+	// Определяем MIME тип
+	$wp_filetype = wp_check_filetype( $filename, null );
+
+	// Создаём attachment
 	$attachment = array(
-		'guid'           => $file_path,
 		'post_mime_type' => $wp_filetype['type'],
-		'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file_path ) ),
+		'post_title'     => preg_replace( '/\.[^.]+$/', '', $filename ),
 		'post_content'   => '',
 		'post_status'    => 'inherit',
 	);
 
-	$attach_id = wp_insert_attachment( $attachment, $file_path, $parent_post_id );
+	// Вставляем attachment в БД
+	$attach_id = wp_insert_attachment( $attachment, $upload['file'], $parent_post_id );
 
+	if ( is_wp_error( $attach_id ) ) {
+		return false;
+	}
+
+	// Генерируем метаданные (thumbnails)
 	require_once ABSPATH . 'wp-admin/includes/image.php';
-	$attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
+	$attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
 	wp_update_attachment_metadata( $attach_id, $attach_data );
 
 	return $attach_id;
 }
 
 /**
- * Admin menu item for manual import
- * Uncomment to add temporary admin menu
+ * Get current post counts for all CPT
  */
+function tp_get_current_counts() {
+	$post_types = array( 'main_slide', 'friend', 'media_item', 'material', 'team_member', 'history' );
+	$counts = array();
 
+	foreach ( $post_types as $post_type ) {
+		$counts[ $post_type ] = wp_count_posts( $post_type )->publish;
+	}
+
+	return $counts;
+}
+
+/**
+ * Delete all demo content posts
+ */
+function tp_delete_all_demo_content() {
+	$post_types = array( 'main_slide', 'friend', 'media_item', 'material', 'team_member', 'history' );
+	$deleted = array();
+
+	foreach ( $post_types as $post_type ) {
+		$posts = get_posts( array(
+			'post_type'      => $post_type,
+			'posts_per_page' => -1,
+			'post_status'    => 'any',
+		) );
+
+		$count = 0;
+		foreach ( $posts as $post ) {
+			// Удаляем связанные изображения
+			$thumbnail_id = get_post_thumbnail_id( $post->ID );
+			if ( $thumbnail_id ) {
+				wp_delete_attachment( $thumbnail_id, true );
+			}
+
+			// Удаляем пост
+			wp_delete_post( $post->ID, true );
+			$count++;
+		}
+
+		$deleted[ $post_type ] = $count;
+	}
+
+	return $deleted;
+}
+
+/**
+ * Admin menu item for manual import
+ */
 function tp_demo_import_admin_menu() {
 	add_management_page(
 		'Импорт демо-контента',
@@ -354,29 +423,114 @@ function tp_demo_import_page() {
 		return;
 	}
 
+	// Handle delete action
+	if ( isset( $_POST['tp_delete_demo'] ) && check_admin_referer( 'tp_delete_demo' ) ) {
+		$deleted = tp_delete_all_demo_content();
+		echo '<div class="notice notice-warning"><p>Записи удалены!</p>';
+		echo '<ul>';
+		foreach ( $deleted as $type => $count ) {
+			if ( $count > 0 ) {
+				echo '<li>' . esc_html( $type ) . ': ' . $count . ' записей удалено</li>';
+			}
+		}
+		echo '</ul></div>';
+	}
+
+	// Handle import action
 	if ( isset( $_POST['tp_import_demo'] ) && check_admin_referer( 'tp_import_demo' ) ) {
 		$results = tp_import_demo_content();
 		echo '<div class="notice notice-success"><p>Импорт завершён!</p>';
 		echo '<ul>';
 		foreach ( $results as $type => $ids ) {
-			echo '<li>' . esc_html( $type ) . ': ' . count( $ids ) . ' записей</li>';
+			echo '<li>' . esc_html( $type ) . ': ' . count( $ids ) . ' записей импортировано</li>';
 		}
 		echo '</ul></div>';
 	}
 
+	// Get current counts
+	$counts = tp_get_current_counts();
+	$total = array_sum( $counts );
+
 	?>
 	<div class="wrap">
 		<h1>Импорт демо-контента</h1>
-		<p>Эта функция импортирует все статические данные из текущих шаблонов в Custom Post Types.</p>
-		<p><strong>Внимание:</strong> Запускайте импорт только один раз, чтобы избежать дублирования.</p>
-		<form method="post">
-			<?php wp_nonce_field( 'tp_import_demo' ); ?>
-			<p>
-				<button type="submit" name="tp_import_demo" class="button button-primary">
-					Запустить импорт
-				</button>
-			</p>
-		</form>
+
+		<!-- Current Status -->
+		<div class="card" style="max-width: 600px; margin-bottom: 20px;">
+			<h2>Текущее состояние базы данных</h2>
+			<table class="widefat">
+				<thead>
+					<tr>
+						<th>Тип записи</th>
+						<th>Количество</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Главный слайдер</td>
+						<td><strong><?php echo $counts['main_slide']; ?></strong></td>
+					</tr>
+					<tr>
+						<td>Друзья</td>
+						<td><strong><?php echo $counts['friend']; ?></strong></td>
+					</tr>
+					<tr>
+						<td>СМИ о нас</td>
+						<td><strong><?php echo $counts['media_item']; ?></strong></td>
+					</tr>
+					<tr>
+						<td>Материалы</td>
+						<td><strong><?php echo $counts['material']; ?></strong></td>
+					</tr>
+					<tr>
+						<td>Команда</td>
+						<td><strong><?php echo $counts['team_member']; ?></strong></td>
+					</tr>
+					<tr>
+						<td>Истории</td>
+						<td><strong><?php echo $counts['history']; ?></strong></td>
+					</tr>
+					<tr style="background: #f0f0f1;">
+						<td><strong>ВСЕГО:</strong></td>
+						<td><strong><?php echo $total; ?></strong></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Delete Form -->
+		<?php if ( $total > 0 ) : ?>
+		<div class="card" style="max-width: 600px; margin-bottom: 20px; border-left: 4px solid #d63638;">
+			<h2>Удалить все записи</h2>
+			<p>Удалит все импортированные записи и связанные изображения из базы данных.</p>
+			<p><strong>Внимание:</strong> Это действие необратимо!</p>
+			<form method="post" onsubmit="return confirm('Вы уверены? Все демо-записи и изображения будут удалены без возможности восстановления!');">
+				<?php wp_nonce_field( 'tp_delete_demo' ); ?>
+				<p>
+					<button type="submit" name="tp_delete_demo" class="button button-secondary">
+						🗑️ Удалить все записи (<?php echo $total; ?>)
+					</button>
+				</p>
+			</form>
+		</div>
+		<?php endif; ?>
+
+		<!-- Import Form -->
+		<div class="card" style="max-width: 600px;">
+			<h2>Импортировать демо-контент</h2>
+			<p>Импортирует статические данные из шаблонов в Custom Post Types.</p>
+			<?php if ( $total > 0 ) : ?>
+				<p><strong>⚠️ Предупреждение:</strong> В базе уже есть записи. Рекомендуется сначала удалить старые записи, чтобы избежать дубликатов.</p>
+			<?php endif; ?>
+			<form method="post">
+				<?php wp_nonce_field( 'tp_import_demo' ); ?>
+				<p>
+					<button type="submit" name="tp_import_demo" class="button button-primary">
+						▶️ Запустить импорт
+					</button>
+				</p>
+			</form>
+		</div>
 	</div>
 	<?php
 }
