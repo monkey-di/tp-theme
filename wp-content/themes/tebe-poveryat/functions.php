@@ -79,6 +79,57 @@ require_once get_template_directory() . '/inc/post-types/register-post-types.php
 require_once get_template_directory() . '/inc/meta-boxes/meta-boxes.php';
 
 /**
+ * Enable SVG uploads
+ */
+function tp_enable_svg_upload( $mimes ) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter( 'upload_mimes', 'tp_enable_svg_upload' );
+
+/**
+ * Fix SVG thumbnail display in media library
+ */
+function tp_fix_svg_thumb_display( $response, $attachment, $meta ) {
+	if ( $response['type'] === 'image' && $response['subtype'] === 'svg+xml' && class_exists( 'SimpleXMLElement' ) ) {
+		try {
+			$path = get_attached_file( $attachment->ID );
+			if ( @file_exists( $path ) ) {
+				$svg = simplexml_load_file( $path );
+				if ( false !== $svg ) {
+					$src = $response['url'];
+					$width = (int) $svg['width'];
+					$height = (int) $svg['height'];
+
+					// If SVG does not have width/height attributes, try viewBox
+					if ( ! $width || ! $height ) {
+						$viewbox = explode( ' ', $svg['viewBox'] );
+						$width = isset( $viewbox[2] ) ? (int) $viewbox[2] : 0;
+						$height = isset( $viewbox[3] ) ? (int) $viewbox[3] : 0;
+					}
+
+					$response['image'] = compact( 'src', 'width', 'height' );
+					$response['thumb'] = compact( 'src', 'width', 'height' );
+
+					// Add full size
+					$response['sizes']['full'] = array(
+						'height'        => $height,
+						'width'         => $width,
+						'url'           => $src,
+						'orientation'   => $height > $width ? 'portrait' : 'landscape',
+					);
+				}
+			}
+		} catch ( Exception $e ) {
+			// Silence
+		}
+	}
+
+	return $response;
+}
+add_filter( 'wp_prepare_attachment_for_js', 'tp_fix_svg_thumb_display', 10, 3 );
+
+/**
  * Include Demo Content Importer (temporary - remove after import)
  */
 require_once get_template_directory() . '/inc/demo-content/import-demo-content.php';
