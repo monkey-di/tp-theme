@@ -1,10 +1,10 @@
 /* About Section Styles */
 .about-section {
-    @apply w-full bg-base pt-12 px-4 relative overflow-hidden;
+    @apply w-full bg-surface pt-12 px-4 relative overflow-hidden;
 }
 
 .about__container {
-    @apply container mx-auto flex flex-col gap-8 md:grid md:grid-cols-2 md:gap-x-24; /* Increased gap-x for desktop */
+    @apply container mx-auto lg:py-20 flex flex-col gap-8 md:flex-row md:gap-x-24 md:justify-between; /* Increased gap-x for desktop */
 }
 
 .about__title {
@@ -12,7 +12,10 @@
 }
 
 .about__description {
-    @apply text-contrast text-[16px] font-light font-geologica leading-[1.5] max-w-2xl;
+    @apply text-contrast text-[16px] font-light font-geologica leading-[1.5] max-w-[690px];
+}
+.about__description p{
+    @apply justify-start text-[#19232e] text-base font-light font-['Geologica'] leading-6  lg:text-[23px]  lg:leading-[34.50px];
 }
 
 .about__stats {

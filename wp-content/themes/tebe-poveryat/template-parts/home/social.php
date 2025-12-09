@@ -3,7 +3,7 @@
  * Social Section
  */
 ?>
-<section class="social-section py-12 bg-contrast text-base">
+<section class="social-section py-12 bg-contrast text-surface">
     <div class="container mx-auto px-4 text-center">
         <h2 class="text-2xl font-bold mb-6 text-white">Мы в социальных сетях</h2>
         <div class="flex justify-center gap-4">

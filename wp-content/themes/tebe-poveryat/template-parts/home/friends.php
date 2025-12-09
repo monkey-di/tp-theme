@@ -29,7 +29,7 @@ $friends_data = [
 $friends_data_looped = array_merge($friends_data, $friends_data);
 
 ?>
-<section class="friends-section w-full bg-base relative overflow-hidden py-12 lg:py-24">
+<section class="friends-section w-full bg-surface relative overflow-hidden py-12 lg:py-24">
     <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-center">
         
         <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center mb-8">

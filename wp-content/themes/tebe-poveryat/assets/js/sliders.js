@@ -146,6 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 disableOnInteraction: false,
             },
             speed: 850,
+            slidesPerView: 1,
+            spaceBetween: 0,
             pagination: {
                 el: historiesSliderProgress,
                 type: 'progressbar',

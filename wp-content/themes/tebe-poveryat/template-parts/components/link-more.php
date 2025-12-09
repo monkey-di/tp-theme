@@ -24,7 +24,7 @@ switch ($style) {
         break;
     case 'default':
     default:
-        $text_classes = 'text-primary text-base font-normal font-geologica leading-6';
+        $text_classes = 'text-primary text-[16px] font-normal font-geologica leading-6';
         break;
 }
 ?>

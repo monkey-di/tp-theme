@@ -9,7 +9,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<header class="header w-full bg-base relative z-50">
+<header class="header w-full bg-surface relative z-50">
   <div class="header__container mx-auto px-4 xl:px-24 flex justify-between items-center h-[144px] xl:h-[80px]">
 
     <!-- Logo Wrapper -->
@@ -55,7 +55,7 @@
       <!-- Language Switcher -->
       <div class="header__language-switcher border-2 border-primary rounded-[12px] flex h-[40px] p-[2px] w-[108px] gap-0">
         <button class="header__language-btn header__language-btn--active flex-1 bg-primary text-white rounded-[10px] font-akrobat font-bold text-[16px] leading-none hover:bg-primary-dark transition">RU</button>
-        <button class="header__language-btn flex-1 bg-base text-primary rounded-[10px] font-akrobat font-bold text-[16px] leading-none hover:bg-opacity-80 transition">ENG</button>
+        <button class="header__language-btn flex-1 bg-surface text-primary rounded-[10px] font-akrobat font-bold text-[16px] leading-none hover:bg-opacity-80 transition">ENG</button>
       </div>
 
       <!-- Donate Button -->

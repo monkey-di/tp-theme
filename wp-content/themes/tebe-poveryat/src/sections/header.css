@@ -5,7 +5,7 @@
 @layer components {
   /* Utility Classes for Header */
   .header {
-    @apply w-full bg-base relative z-50;
+    @apply w-full bg-surface relative z-50;
   }
 
   .header__container {
@@ -80,7 +80,7 @@
   }
 
   .header__language-btn:not(.header__language-btn--active) {
-    @apply bg-base text-primary;
+    @apply bg-surface text-primary;
   }
 
   .header__language-btn:not(.header__language-btn--active):hover {

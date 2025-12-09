@@ -4,7 +4,7 @@
  * Mobile First with Desktop version.
  */
 ?>
-<section class="about-section-part2 w-full bg-base py-12 px-4 relative overflow-hidden">
+<section class="about-section-part2 w-full bg-surface py-12 px-4 relative overflow-hidden">
     <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-x-20">
         
         <!-- Left Column: Image -->

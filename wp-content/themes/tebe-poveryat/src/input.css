@@ -44,9 +44,9 @@
 @theme {
   --color-primary: #6063a6;
   --color-secondary: #d98b99;
-  --color-base: #fef1ec;
+  --color-surface: #fef1ec;
   --color-contrast: #1e1e1e;
-  
+
   --font-geologica: "Geologica", sans-serif;
   --font-akrobat: "Akrobat", sans-serif;
   --font-ura: "Ura Bum Bum SP", display;
@@ -63,6 +63,13 @@
   --color-plum-grey: #90687D;
   --color-sand-yellow: #E9B977;
   --color-pastel-yellow: #F4DDC7;
+
+  /* Breakpoints for container */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1408px;
 }
 
 /* 
@@ -71,8 +78,13 @@
 */
 
 @layer base {
+  /* Container max-width override */
+  .container {
+    max-width: 1408px !important;
+  }
+
   body {
-      @apply bg-base text-contrast font-geologica text-[16px] leading-[1.5];
+      @apply bg-surface text-contrast font-geologica text-[16px] leading-[1.5];
   }
 
   p {

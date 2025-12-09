@@ -6,9 +6,9 @@
 		"color": {
 			"palette": [
 				{
-					"slug": "base",
+					"slug": "surface",
 					"color": "#fef1ec",
-					"name": "Base"
+					"name": "Surface"
 				},
 				{
 					"slug": "contrast",
@@ -229,7 +229,7 @@
 			}
 		},
 		"color": {
-			"background": "var(--wp--preset--color--base)",
+			"background": "var(--wp--preset--color--surface)",
 			"text": "var(--wp--preset--color--contrast)"
 		},
 		"elements": {

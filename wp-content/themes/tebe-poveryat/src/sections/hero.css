@@ -5,7 +5,7 @@
 @layer components {
   /* Hero Section */
   .hero-section {
-    @apply w-full bg-base min-h-screen relative overflow-hidden py-12 px-4;
+    @apply w-full bg-surface min-h-screen relative overflow-hidden py-12 px-4;
   }
 
   /* Container */
