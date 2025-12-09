@@ -41,7 +41,7 @@ function tp_register_main_slider() {
 		'capability_type'     => 'post',
 		'has_archive'         => false,
 		'hierarchical'        => false,
-		'menu_position'       => 5,
+		'menu_position'       => 20,
 		'menu_icon'           => 'dashicons-images-alt2',
 		'supports'            => array( 'title', 'editor', 'thumbnail' ),
 		'show_in_rest'        => true,
@@ -82,7 +82,7 @@ function tp_register_friends() {
 		'capability_type'     => 'post',
 		'has_archive'         => false,
 		'hierarchical'        => false,
-		'menu_position'       => 6,
+		'menu_position'       => 21,
 		'menu_icon'           => 'dashicons-groups',
 		'supports'            => array( 'title', 'editor', 'thumbnail' ),
 		'show_in_rest'        => true,
@@ -123,7 +123,7 @@ function tp_register_media() {
 		'capability_type'     => 'post',
 		'has_archive'         => false,
 		'hierarchical'        => false,
-		'menu_position'       => 7,
+		'menu_position'       => 22,
 		'menu_icon'           => 'dashicons-megaphone',
 		'supports'            => array( 'title', 'thumbnail' ),
 		'show_in_rest'        => true,
@@ -164,7 +164,7 @@ function tp_register_materials() {
 		'capability_type'     => 'post',
 		'has_archive'         => true,
 		'hierarchical'        => false,
-		'menu_position'       => 8,
+		'menu_position'       => 23,
 		'menu_icon'           => 'dashicons-book-alt',
 		'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 		'show_in_rest'        => true,
@@ -173,47 +173,6 @@ function tp_register_materials() {
 	register_post_type( 'material', $args );
 }
 add_action( 'init', 'tp_register_materials' );
-
-/**
- * Register Team CPT
- * Наши специалисты - слайдер команды
- */
-function tp_register_team() {
-	$labels = array(
-		'name'               => 'Команда',
-		'singular_name'      => 'Участник команды',
-		'menu_name'          => 'Команда',
-		'add_new'            => 'Добавить нового',
-		'add_new_item'       => 'Добавить нового участника',
-		'edit_item'          => 'Редактировать участника',
-		'new_item'           => 'Новый участник',
-		'view_item'          => 'Просмотреть участника',
-		'search_items'       => 'Искать участников',
-		'not_found'          => 'Участники не найдены',
-		'not_found_in_trash' => 'В корзине участников не найдено',
-		'all_items'          => 'Все участники',
-	);
-
-	$args = array(
-		'labels'              => $labels,
-		'public'              => false,
-		'publicly_queryable'  => false,
-		'show_ui'             => true,
-		'show_in_menu'        => true,
-		'query_var'           => true,
-		'rewrite'             => false,
-		'capability_type'     => 'post',
-		'has_archive'         => false,
-		'hierarchical'        => false,
-		'menu_position'       => 9,
-		'menu_icon'           => 'dashicons-businessman',
-		'supports'            => array( 'title', 'editor', 'thumbnail' ),
-		'show_in_rest'        => true,
-	);
-
-	register_post_type( 'team_member', $args );
-}
-add_action( 'init', 'tp_register_team' );
 
 /**
  * Register Histories CPT
@@ -246,7 +205,7 @@ function tp_register_histories() {
 		'capability_type'     => 'post',
 		'has_archive'         => true,
 		'hierarchical'        => false,
-		'menu_position'       => 10,
+		'menu_position'       => 24,
 		'menu_icon'           => 'dashicons-heart',
 		'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
 		'show_in_rest'        => true,
@@ -255,3 +214,44 @@ function tp_register_histories() {
 	register_post_type( 'history', $args );
 }
 add_action( 'init', 'tp_register_histories' );
+
+/**
+ * Register Team CPT
+ * Наши специалисты - слайдер команды
+ */
+function tp_register_team() {
+	$labels = array(
+		'name'               => 'Команда',
+		'singular_name'      => 'Участник команды',
+		'menu_name'          => 'Команда',
+		'add_new'            => 'Добавить нового',
+		'add_new_item'       => 'Добавить нового участника',
+		'edit_item'          => 'Редактировать участника',
+		'new_item'           => 'Новый участник',
+		'view_item'          => 'Просмотреть участника',
+		'search_items'       => 'Искать участников',
+		'not_found'          => 'Участники не найдены',
+		'not_found_in_trash' => 'В корзине участников не найдено',
+		'all_items'          => 'Все участники',
+	);
+
+	$args = array(
+		'labels'              => $labels,
+		'public'              => false,
+		'publicly_queryable'  => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'query_var'           => true,
+		'rewrite'             => false,
+		'capability_type'     => 'post',
+		'has_archive'         => false,
+		'hierarchical'        => false,
+		'menu_position'       => 25,
+		'menu_icon'           => 'dashicons-businessman',
+		'supports'            => array( 'title', 'editor', 'thumbnail' ),
+		'show_in_rest'        => true,
+	);
+
+	register_post_type( 'team_member', $args );
+}
+add_action( 'init', 'tp_register_team' );
