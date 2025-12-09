@@ -1,0 +1,12 @@
+/**
+ * Materials Slider Styles
+ */
+
+/* Ensure proper slider behavior */
+.materials__slider .swiper-wrapper {
+    align-items: stretch;
+}
+
+.materials__slider .swiper-slide {
+    height: auto;
+}

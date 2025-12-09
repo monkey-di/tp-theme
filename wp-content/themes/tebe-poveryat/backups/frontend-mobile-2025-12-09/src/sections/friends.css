@@ -1,0 +1,21 @@
+/* Friends slider card transitions */
+
+/* Скрываем цитату в неактивных слайдах */
+.friends__slider .swiper-slide:not(.swiper-slide-active) .friends__card-quote {
+    opacity: 0;
+}
+
+.friends__slider .swiper-slide-active .friends__card-quote {
+    opacity: 1;
+}
+
+/* Делаем неактивные слайды чёрно-белыми (только на десктопе) */
+@media (min-width: 1024px) {
+    .friends__slider .swiper-slide:not(.swiper-slide-active) .friends__card-image-wrap {
+        filter: grayscale(100%);
+    }
+
+    .friends__slider .swiper-slide-active .friends__card-image-wrap {
+        filter: grayscale(0%);
+    }
+}

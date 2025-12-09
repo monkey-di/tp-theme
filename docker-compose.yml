@@ -13,6 +13,8 @@ services:
     volumes:
       # Монтируем нашу локальную папку темы в контейнер
       - ./wp-content/themes/tebe-poveryat:/var/www/html/wp-content/themes/tebe-poveryat
+      # Монтируем каталог кастомных плагинов
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
     depends_on:
       - db
 
