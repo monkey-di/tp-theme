@@ -135,32 +135,39 @@ function tp_import_friends() {
 function tp_import_media() {
 	$media_items = array(
 		array(
-			'name' => 'Snob',
-			'url'  => 'https://snob.ru/example-article',
+			'name'  => 'Snob',
+			'url'   => 'https://snob.ru/example-article',
+			'logo'  => 'media-logo-snob.svg',
 		),
 		array(
-			'name' => 'Новый Очаг',
-			'url'  => 'https://novochag.ru/example-article',
+			'name'  => 'Новый Очаг',
+			'url'   => 'https://novochag.ru/example-article',
+			'logo'  => 'media-logo-novochag.svg',
 		),
 		array(
-			'name' => 'Forbes',
-			'url'  => 'https://forbes.ru/example-article',
+			'name'  => 'Forbes',
+			'url'   => 'https://forbes.ru/example-article',
+			'logo'  => 'media-logo-forbes.svg',
 		),
 		array(
-			'name' => 'Нож',
-			'url'  => 'https://knife.media/example-article',
+			'name'  => 'Нож',
+			'url'   => 'https://knife.media/example-article',
+			'logo'  => 'media-logo-knife.svg',
 		),
 		array(
-			'name' => 'Медиа 5',
-			'url'  => 'https://example.com/article-5',
+			'name'  => 'Медиа 5',
+			'url'   => 'https://example.com/article-5',
+			'logo'  => 'media-logo-5.svg',
 		),
 		array(
-			'name' => 'Такие Дела',
-			'url'  => 'https://takiedela.ru/example-article',
+			'name'  => 'Такие Дела',
+			'url'   => 'https://takiedela.ru/example-article',
+			'logo'  => 'media-logo-takiedela.svg',
 		),
 	);
 
 	$imported = array();
+	$theme_dir = get_template_directory();
 
 	foreach ( $media_items as $index => $media ) {
 		$post_id = wp_insert_post( array(
@@ -173,6 +180,16 @@ function tp_import_media() {
 		if ( ! is_wp_error( $post_id ) ) {
 			// Save URL as meta
 			update_post_meta( $post_id, '_media_url', $media['url'] );
+
+			// Attach logo
+			if ( ! empty( $media['logo'] ) ) {
+				$logo_path = $theme_dir . '/assets/images/' . $media['logo'];
+				$attach_id = tp_insert_attachment( $logo_path, $post_id );
+				if ( $attach_id ) {
+					set_post_thumbnail( $post_id, $attach_id );
+				}
+			}
+
 			$imported[] = $post_id;
 		}
 	}
@@ -248,6 +265,7 @@ function tp_import_team() {
 	);
 
 	$imported = array();
+	$theme_dir = get_template_directory();
 
 	foreach ( $team_members as $index => $member ) {
 		$post_id = wp_insert_post( array(
@@ -261,6 +279,16 @@ function tp_import_team() {
 		if ( ! is_wp_error( $post_id ) ) {
 			// Save position as meta
 			update_post_meta( $post_id, '_team_position', $member['position'] );
+
+			// Set featured image
+			$image_path = $theme_dir . '/assets/images/team-default.jpg';
+			if ( file_exists( $image_path ) ) {
+				$attach_id = tp_insert_attachment( $image_path, $post_id );
+				if ( $attach_id ) {
+					set_post_thumbnail( $post_id, $attach_id );
+				}
+			}
+
 			$imported[] = $post_id;
 		}
 	}
@@ -291,6 +319,7 @@ function tp_import_histories() {
 	);
 
 	$imported = array();
+	$theme_dir = get_template_directory();
 
 	foreach ( $histories as $index => $history ) {
 		$post_id = wp_insert_post( array(
@@ -303,6 +332,15 @@ function tp_import_histories() {
 		) );
 
 		if ( ! is_wp_error( $post_id ) ) {
+			// Set featured image
+			$image_path = $theme_dir . '/assets/images/history-default.jpg';
+			if ( file_exists( $image_path ) ) {
+				$attach_id = tp_insert_attachment( $image_path, $post_id );
+				if ( $attach_id ) {
+					set_post_thumbnail( $post_id, $attach_id );
+				}
+			}
+
 			$imported[] = $post_id;
 		}
 	}
