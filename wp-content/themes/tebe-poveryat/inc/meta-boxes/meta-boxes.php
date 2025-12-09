@@ -168,8 +168,21 @@ add_filter( 'manage_media_item_posts_columns', 'tp_media_columns' );
 
 function tp_media_column_content( $column, $post_id ) {
 	if ( 'thumbnail' === $column ) {
-		$thumb = get_the_post_thumbnail( $post_id, array( 80, 80 ) );
-		echo $thumb ? $thumb : '—';
+		$thumbnail_id = get_post_thumbnail_id( $post_id );
+		if ( $thumbnail_id ) {
+			$image_url = wp_get_attachment_url( $thumbnail_id );
+			$mime_type = get_post_mime_type( $thumbnail_id );
+
+			// Special handling for SVG
+			if ( $mime_type === 'image/svg+xml' ) {
+				echo '<img src="' . esc_url( $image_url ) . '" style="width: 80px; height: auto; max-height: 80px; object-fit: contain;" />';
+			} else {
+				$thumb = get_the_post_thumbnail( $post_id, array( 80, 80 ) );
+				echo $thumb;
+			}
+		} else {
+			echo '—';
+		}
 	}
 	if ( 'url' === $column ) {
 		$url = get_post_meta( $post_id, '_media_url', true );
