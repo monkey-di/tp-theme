@@ -108,6 +108,10 @@ function tp_fix_svg_thumb_display( $response, $attachment, $meta ) {
 						$height = isset( $viewbox[3] ) ? (int) $viewbox[3] : 0;
 					}
 
+					// Use default dimensions if still not found
+					if ( ! $width ) $width = 200;
+					if ( ! $height ) $height = 200;
+
 					$response['image'] = compact( 'src', 'width', 'height' );
 					$response['thumb'] = compact( 'src', 'width', 'height' );
 
@@ -128,6 +132,21 @@ function tp_fix_svg_thumb_display( $response, $attachment, $meta ) {
 	return $response;
 }
 add_filter( 'wp_prepare_attachment_for_js', 'tp_fix_svg_thumb_display', 10, 3 );
+
+/**
+ * Fix SVG display in post editor (Featured Image metabox)
+ */
+function tp_fix_svg_admin_thumbnail( $html, $post_id, $post_thumbnail_id ) {
+	$mime_type = get_post_mime_type( $post_thumbnail_id );
+	if ( $mime_type === 'image/svg+xml' ) {
+		$image_url = wp_get_attachment_url( $post_thumbnail_id );
+		if ( $image_url ) {
+			$html = '<img src="' . esc_url( $image_url ) . '" style="max-width: 100%; height: auto;" />';
+		}
+	}
+	return $html;
+}
+add_filter( 'admin_post_thumbnail_html', 'tp_fix_svg_admin_thumbnail', 10, 3 );
 
 /**
  * Include Demo Content Importer (temporary - remove after import)
