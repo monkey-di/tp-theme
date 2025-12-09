@@ -114,6 +114,7 @@ function tp_import_friends() {
 		$post_id = wp_insert_post( array(
 			'post_type'    => 'friend',
 			'post_title'   => $friend['name'],
+			'post_excerpt' => $friend['role'],
 			'post_content' => $friend['quote'],
 			'post_status'  => 'publish',
 			'menu_order'   => $index + 1,

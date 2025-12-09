@@ -50,7 +50,7 @@ $friends_query = new WP_Query(array(
                                             </div>
                                         </div>
                                         <p class="friends__card-quote text-[23px] font-light font-geologica leading-[1.5] text-contrast">
-                                            <?php the_content(); ?>
+                                            <?php echo get_the_content(); ?>
                                         </p>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@ $friends_query = new WP_Query(array(
                                             </div>
                                         </div>
                                         <p class="friends__card-quote text-[23px] font-light font-geologica leading-[1.5] text-contrast">
-                                            <?php the_content(); ?>
+                                            <?php echo get_the_content(); ?>
                                         </p>
                                     </div>
                                 </div>
