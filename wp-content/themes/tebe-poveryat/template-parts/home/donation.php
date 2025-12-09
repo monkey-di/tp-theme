@@ -49,7 +49,7 @@
     </div>
 
     <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16 md:pt-24 md:pb-24 lg:pt-32 lg:pb-32">
-        <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8">Поддержите нас</h2>
+        <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8"><?php echo esc_html( get_option( 'tp_donation_title', 'Поддержите нас' ) ); ?></h2>
         
         <div class="max-w-3xl mx-auto">
             <!-- Toggle Button Group (Разово/Ежемесячно) -->
