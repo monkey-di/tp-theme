@@ -67,3 +67,13 @@ function tebe_poveryat_setup() {
     add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption' ) );
 }
 add_action( 'after_setup_theme', 'tebe_poveryat_setup' );
+
+/**
+ * Include Custom Post Types
+ */
+require_once get_template_directory() . '/inc/post-types/register-post-types.php';
+
+/**
+ * Include Meta Boxes
+ */
+require_once get_template_directory() . '/inc/meta-boxes/meta-boxes.php';
