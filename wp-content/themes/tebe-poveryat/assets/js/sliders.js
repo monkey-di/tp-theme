@@ -30,22 +30,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Friends Slider
     if (document.querySelector('.friends__slider')) {
-        const quoteEl = document.getElementById('friends-quote');
         const friendsSliderProgress = document.querySelector('.friends__mobile-progress .slider-progress');
         const friendsSwiper = new Swiper('.friends__slider', {
             loop: true,
-            speed: 850,
-            
+            speed: 700,
+
             // Mobile settings
             slidesPerView: 1,
             spaceBetween: 16,
-            
+
             // Desktop settings
             breakpoints: {
                 1024: {
                     slidesPerView: 3,
-                    spaceBetween: 30,
+                    slidesPerGroup: 1,
                     centeredSlides: true,
+                    spaceBetween: 76
                 }
             },
             pagination: {
@@ -57,22 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 prevEl: '.friends-prev',
             },
             on: {
-                init: function (swiper) {
-                    if (quoteEl && swiper.slides[swiper.activeIndex]) {
-                        const activeSlide = swiper.slides[swiper.activeIndex];
-                        if(activeSlide.dataset.quote) {
-                            quoteEl.textContent = activeSlide.dataset.quote;
-                        }
-                    }
-                },
-                slideChange: function (swiper) {
-                    if (quoteEl && swiper.slides[swiper.activeIndex]) {
-                        const activeSlide = swiper.slides[swiper.activeIndex];
-                         if(activeSlide.dataset.quote) {
-                            quoteEl.textContent = activeSlide.dataset.quote;
-                        }
-                    }
-                },
+                init: function () {
+                    // Добавляем плавные переходы при инициализации
+                    this.slides.forEach(slide => {
+                        const imageWrap = slide.querySelector('.friends__card-image-wrap');
+                        const quote = slide.querySelector('.friends__card-quote');
+                        if (imageWrap) imageWrap.style.transition = 'filter 700ms ease-in-out';
+                        if (quote) quote.style.transition = 'opacity 700ms ease-in-out';
+                    });
+                }
             }
         });
     }
@@ -82,14 +75,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const mediaSliderProgress = document.querySelector('.media__progress .slider-progress');
         const mediaSwiper = new Swiper('.media__slider', {
             loop: true,
-            autoplay: {
-                delay: 5500,
-                disableOnInteraction: false,
-            },
             speed: 600,
-            slidesPerView: 'auto', 
-            spaceBetween: 16,      
-            centeredSlides: true,  
+            slidesPerView: 1.5,
+            spaceBetween: 16,
+            breakpoints: {
+                640: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 16
+                },
+                768: {
+                    slidesPerView: 3.5,
+                    spaceBetween: 16
+                },
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 16
+                },
+                1280: {
+                    slidesPerView: 6,
+                    spaceBetween: 16
+                }
+            },
             pagination: {
                 el: mediaSliderProgress,
                 type: 'progressbar',
@@ -111,11 +117,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const materialsSliderProgress = document.querySelector('.materials__progress .slider-progress');
         const materialsSwiper = new Swiper('.materials__slider', {
             loop: true,
-            autoplay: {
-                delay: 5800,
-                disableOnInteraction: false,
-            },
             speed: 700,
+            slidesPerView: 1,
+            spaceBetween: 16,
             pagination: {
                 el: materialsSliderProgress,
                 type: 'progressbar',

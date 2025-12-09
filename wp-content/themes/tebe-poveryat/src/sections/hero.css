@@ -15,11 +15,11 @@
 
   /* Slider */
   .hero__slider {
-    @apply w-full flex-grow;
+    @apply w-full flex-grow mb-20;
   }
 
   /* Slide */
-  .swiper-slide {
+  .hero__slider .swiper-slide {
     @apply flex flex-col justify-start items-start h-full relative;
   }
 
@@ -186,7 +186,7 @@
     }
 
     /* Slide - Desktop layout with flexbox */
-    .swiper-slide {
+    .hero__slider .swiper-slide {
       @apply flex flex-col justify-between;
       min-height: 600px;
       padding: 0;
