@@ -63,16 +63,16 @@
 
   /* Language Switcher */
   .header__language-switcher {
-    @apply border-2 border-primary rounded-[12px] flex h-[40px] p-[2px] w-[108px] gap-0;
+    @apply border-2 border-primary rounded-[12px] flex h-[40px]  w-[108px] gap-0 p-[1px];
   }
 
   .header__language-btn {
-    @apply flex-1 rounded-[10px] font-akrobat font-bold text-[16px] leading-none;
+    @apply flex-1 rounded-[10px] font-akrobat font-bold text-[16px] leading-none bg-white;
     @apply transition duration-200 cursor-pointer border-none;
   }
 
   .header__language-btn--active {
-    @apply bg-primary text-white;
+    @apply bg-primary text-white outline-[2px] outline-transparent;
   }
 
   .header__language-btn--active:hover {
@@ -80,7 +80,7 @@
   }
 
   .header__language-btn:not(.header__language-btn--active) {
-    @apply bg-surface text-primary;
+    @apply bg-white text-primary;
   }
 
   .header__language-btn:not(.header__language-btn--active):hover {

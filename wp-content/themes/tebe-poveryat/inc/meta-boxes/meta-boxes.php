@@ -218,3 +218,107 @@ function tp_team_column_content( $column, $post_id ) {
 	}
 }
 add_action( 'manage_team_member_posts_custom_column', 'tp_team_column_content', 10, 2 );
+
+/**
+ * Add meta boxes for About Page (Statistics)
+ */
+function tp_add_about_page_meta_boxes() {
+	$about_page = get_page_by_path( 'about-block' );
+	if ( ! $about_page ) {
+		return;
+	}
+
+	add_meta_box(
+		'about_statistics',
+		'Статистика',
+		'tp_about_statistics_callback',
+		'page',
+		'normal',
+		'high'
+	);
+}
+add_action( 'add_meta_boxes', 'tp_add_about_page_meta_boxes' );
+
+/**
+ * Callback for About Statistics meta box
+ */
+function tp_about_statistics_callback( $post ) {
+	// Показываем только для страницы about-block
+	if ( $post->post_name !== 'about-block' ) {
+		return;
+	}
+
+	wp_nonce_field( 'tp_save_about_stats', 'tp_about_stats_nonce' );
+
+	$stats = array();
+	for ( $i = 1; $i <= 4; $i++ ) {
+		$stats[$i] = array(
+			'number' => get_post_meta( $post->ID, '_about_stat' . $i . '_number', true ),
+			'text'   => get_post_meta( $post->ID, '_about_stat' . $i . '_text', true ),
+		);
+	}
+
+	echo '<style>
+		.about-stat-row { display: flex; gap: 20px; margin-bottom: 15px; padding: 15px; background: #f9f9f9; border-radius: 4px; }
+		.about-stat-field { flex: 1; }
+		.about-stat-field label { display: block; margin-bottom: 5px; font-weight: 600; }
+		.about-stat-field input { width: 100%; }
+		.about-stat-field.number { flex: 0 0 150px; }
+	</style>';
+
+	echo '<div class="about-stats-container">';
+	echo '<p><strong>Настройте 4 карточки статистики для блока "О нас".</strong> Используйте <code>&lt;br&gt;</code> для переноса строки в тексте.</p>';
+
+	for ( $i = 1; $i <= 4; $i++ ) {
+		echo '<div class="about-stat-row">';
+		echo '<div class="about-stat-field number">';
+		echo '<label for="about_stat' . $i . '_number">Число ' . $i . ':</label>';
+		echo '<input type="text" id="about_stat' . $i . '_number" name="about_stat' . $i . '_number" value="' . esc_attr( $stats[$i]['number'] ) . '" />';
+		echo '</div>';
+		echo '<div class="about-stat-field">';
+		echo '<label for="about_stat' . $i . '_text">Текст ' . $i . ':</label>';
+		echo '<input type="text" id="about_stat' . $i . '_text" name="about_stat' . $i . '_text" value="' . esc_attr( $stats[$i]['text'] ) . '" placeholder="Например: лет&nbsp;оказываем<br>помощь" />';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	echo '</div>';
+}
+
+/**
+ * Save About Statistics meta box data
+ */
+function tp_save_about_stats( $post_id ) {
+	if ( ! isset( $_POST['tp_about_stats_nonce'] ) ) {
+		return;
+	}
+	if ( ! wp_verify_nonce( $_POST['tp_about_stats_nonce'], 'tp_save_about_stats' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+
+	// Сохраняем только для страницы about-block
+	$post = get_post( $post_id );
+	if ( $post->post_name !== 'about-block' ) {
+		return;
+	}
+
+	// Сохраняем 4 статистики
+	for ( $i = 1; $i <= 4; $i++ ) {
+		if ( isset( $_POST['about_stat' . $i . '_number'] ) ) {
+			$number = sanitize_text_field( $_POST['about_stat' . $i . '_number'] );
+			update_post_meta( $post_id, '_about_stat' . $i . '_number', $number );
+		}
+
+		if ( isset( $_POST['about_stat' . $i . '_text'] ) ) {
+			$text = wp_kses_post( $_POST['about_stat' . $i . '_text'] );
+			update_post_meta( $post_id, '_about_stat' . $i . '_text', $text );
+		}
+	}
+}
+add_action( 'save_post_page', 'tp_save_about_stats' );

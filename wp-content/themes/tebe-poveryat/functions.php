@@ -79,11 +79,6 @@ require_once get_template_directory() . '/inc/post-types/register-post-types.php
 require_once get_template_directory() . '/inc/meta-boxes/meta-boxes.php';
 
 /**
- * Include Theme Settings Page
- */
-require_once get_template_directory() . '/inc/theme-settings.php';
-
-/**
  * Enable SVG uploads
  */
 function tp_enable_svg_upload( $mimes ) {

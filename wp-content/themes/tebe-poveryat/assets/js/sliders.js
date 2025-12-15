@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const heroSliderProgress = document.querySelector('.hero__slider-controls .slider-progress'); // Updated selector
         const heroSwiper = new Swiper('.hero__slider', {
             loop: true,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
+            // autoplay: {
+            //     delay: 5000,
+            //     disableOnInteraction: false,
+            // },
             speed: 800,
             pagination: {
                 el: heroSliderProgress,
@@ -78,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
             speed: 600,
             slidesPerView: 1.5,
             spaceBetween: 16,
+            grabCursor: true,
+            observer: true,
+            observeParents: true,
             breakpoints: {
                 640: {
                     slidesPerView: 2.5,
@@ -85,15 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 768: {
                     slidesPerView: 3.5,
-                    spaceBetween: 16
+                    spaceBetween: 24
                 },
                 1024: {
                     slidesPerView: 5,
-                    spaceBetween: 16
+                    spaceBetween: 24
                 },
                 1280: {
                     slidesPerView: 6,
-                    spaceBetween: 16
+                    spaceBetween: 24
                 }
             },
             pagination: {
@@ -141,10 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const historiesSliderProgress = document.querySelector('.histories__progress .slider-progress');
         const historiesSwiper = new Swiper('.histories__slider', {
             loop: true,
-            autoplay: {
-                delay: 6200,
-                disableOnInteraction: false,
-            },
+            // autoplay: {
+            //     delay: 6200,
+            //     disableOnInteraction: false,
+            // },
             speed: 850,
             slidesPerView: 1,
             spaceBetween: 0,
@@ -169,10 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const teamSliderProgress = document.querySelector('.team__progress .slider-progress');
         const teamSwiper = new Swiper('.team__slider', {
             loop: true,
-            autoplay: {
-                delay: 6500,
-                disableOnInteraction: false,
-            },
+            // autoplay: {
+            //     delay: 6500,
+            //     disableOnInteraction: false,
+            // },
             speed: 900,
             pagination: {
                 el: teamSliderProgress,

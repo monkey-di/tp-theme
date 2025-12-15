@@ -2,50 +2,61 @@
 /**
  * About Section
  * Mobile First.
- * Dynamic content from theme settings
+ * Dynamic content from page
  */
+
+$about_page = get_page_by_path( 'about-block' );
+if ( ! $about_page ) {
+    return;
+}
+
+// Получаем контент страницы
+$content_parts = explode( "\n\n", $about_page->post_content );
+$title = ! empty( $content_parts[0] ) ? $content_parts[0] : '';
+$description = array_slice( $content_parts, 1 );
+$description_text = implode( "\n\n", $description );
+
+// Получаем статистику из meta
+$stats = array();
+for ( $i = 1; $i <= 4; $i++ ) {
+    $stats[$i] = array(
+        'number' => get_post_meta( $about_page->ID, '_about_stat' . $i . '_number', true ),
+        'text'   => get_post_meta( $about_page->ID, '_about_stat' . $i . '_text', true ),
+    );
+}
+
+// Цвета для карточек статистики
+$colors = array( 'bg-primary', 'bg-teal', 'bg-sky', 'bg-secondary' );
+$widths = array( 'w-[calc(43%-4px)]', 'w-[calc(51%-4px)]', 'w-[calc(53%-4px)]', 'w-[calc(40%-4px)]' );
 ?>
 <section class="about-section">
     <div class="about__container">
 
         <!-- Left Column (Title and Description) -->
         <div class="flex flex-col lg:gap-10">
-            <h2 class="about__title"><?php echo esc_html( get_option( 'tp_about_title', 'О «Тебе поверят»' ) ); ?></h2>
+            <?php if ( $title ) : ?>
+            <h2 class="about__title"><?php echo esc_html( $title ); ?></h2>
+            <?php endif; ?>
 
+            <?php if ( $description_text ) : ?>
             <div class="about__description">
-                <?php echo wpautop( get_option( 'tp_about_description', 'Каждый 8-й ребёнок в мире сталкивается с сексуализированным насилием.
-
-С 2018 года мы работаем над тем, чтобы заменить страх перед темой сексуализированного насилия над детьми на готовность решать эту серьёзную проблему. Если мы боимся и совсем не говорим об этом, то когда ситуация происходит, просто прячем голову в песок.' ) ); ?>
+                <?php echo wpautop( $description_text ); ?>
             </div>
+            <?php endif; ?>
         </div>
 
         <!-- Right Column (Statistics Cards) -->
         <div class="about__stats">
-
-            <!-- Stat 1 -->
-            <div class="about__stat-card w-[calc(40%-4px)] md:w-full bg-primary">
-                <div class="about__stat-card-number"><?php echo esc_html( get_option( 'tp_about_stat1_number', '6' ) ); ?></div>
-                <div class="about__stat-card-text"><?php echo wp_kses_post( get_option( 'tp_about_stat1_text', 'лет&nbsp;оказываем<br>помощь' ) ); ?></div>
-            </div>
-
-            <!-- Stat 2 -->
-            <div class="about__stat-card w-[calc(60%-4px)] md:w-full bg-teal">
-                <div class="about__stat-card-number"><?php echo esc_html( get_option( 'tp_about_stat2_number', '8 228' ) ); ?></div>
-                <div class="about__stat-card-text"><?php echo wp_kses_post( get_option( 'tp_about_stat2_text', 'консультаций<br>проведено' ) ); ?></div>
-            </div>
-
-            <!-- Stat 3 -->
-            <div class="about__stat-card w-[calc(60%-4px)] md:w-full bg-sky">
-                <div class="about__stat-card-number"><?php echo esc_html( get_option( 'tp_about_stat3_number', '2 091' ) ); ?></div>
-                <div class="about__stat-card-text"><?php echo wp_kses_post( get_option( 'tp_about_stat3_text', 'человек получили<br>помощь' ) ); ?></div>
-            </div>
-
-            <!-- Stat 4 -->
-            <div class="about__stat-card w-[calc(40%-4px)] md:w-full bg-secondary">
-                <div class="about__stat-card-number"><?php echo esc_html( get_option( 'tp_about_stat4_number', '26' ) ); ?></div>
-                <div class="about__stat-card-text"><?php echo wp_kses_post( get_option( 'tp_about_stat4_text', 'человек<br>в команде' ) ); ?></div>
-            </div>
-
+            <?php foreach ( $stats as $index => $stat ) : ?>
+                <?php if ( $stat['number'] ) : ?>
+                <div class="about__stat-card <?php echo $widths[ $index - 1 ]; ?> md:w-full <?php echo $colors[ $index - 1 ]; ?>">
+                    <div class="about__stat-card-number"><?php echo esc_html( $stat['number'] ); ?></div>
+                    <?php if ( $stat['text'] ) : ?>
+                    <div class="about__stat-card-text"><?php echo wp_kses_post( $stat['text'] ); ?></div>
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </div>
 
     </div>

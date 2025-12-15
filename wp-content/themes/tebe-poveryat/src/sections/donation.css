@@ -1,9 +1,9 @@
 /* Toggle Switch */
 .donation-form__toggle {
-  @apply flex p-1 bg-white rounded-[40px] max-w-sm mx-auto;
+  @apply flex p-1 bg-white rounded-[40px] max-w-[348px] mx-auto mb-[38px];
 }
 .donation-form__toggle-button {
-  @apply flex-1 px-8 py-3 rounded-[40px] text-xl font-bold font-akrobat leading-5 text-center;
+  @apply flex-1 py-3 rounded-[40px] text-xl font-bold font-akrobat leading-5 text-center;
 }
 .donation-form__toggle-button--active {
   @apply bg-primary text-white;
@@ -14,7 +14,7 @@
 
 /* Amount Buttons & Custom Amount Input */
 .donation-form__amounts {
-    @apply grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-2;
+    @apply grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-2 ;
 }
 .donation-form__amount-button {
     @apply px-8 py-3 rounded-[40px] text-xl font-medium font-geologica text-center bg-white text-contrast;
@@ -42,7 +42,7 @@
   @apply md:justify-center; /* Center flex items on desktop only */
 }
 .donation-form__checkbox-custom {
-  @apply w-6 h-6 rounded border-2 border-white flex-shrink-0 flex items-center justify-center bg-white mt-1;
+  @apply w-5 h-5 rounded border-2 border-white flex-shrink-0 flex items-center justify-center bg-white mt-1;
 }
 .donation-form__checkbox-text {
   @apply text-white text-[16px] font-light font-geologica leading-[1.5];

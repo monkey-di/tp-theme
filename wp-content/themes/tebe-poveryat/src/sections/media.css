@@ -12,6 +12,7 @@
 }
 
 .media__slider .media__card {
+    width: 175px;
     height: 87px !important;
     max-height: 87px !important;
 }

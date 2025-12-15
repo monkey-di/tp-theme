@@ -4,30 +4,30 @@
 }
 
 .about__container {
-    @apply container mx-auto lg:py-20 flex flex-col gap-8 md:flex-row md:gap-x-24 md:justify-between; /* Increased gap-x for desktop */
+    @apply container mx-auto lg:py-20 flex flex-col gap-8 md:flex-row md:gap-[146px] md:justify-start md:items-center; /* Increased gap-x for desktop */
 }
 
 .about__title {
-    @apply text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-center md:text-left md:text-[64px] md:leading-[0.95]; /* Added responsive line-height */
+    @apply text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-left lg:text-center md:text-left md:text-[64px] md:leading-[0.95]; /* Added responsive line-height */
 }
 
 .about__description {
-    @apply text-contrast text-[16px] font-light font-geologica leading-[1.5] max-w-[690px];
+    @apply text-contrast text-[16px] font-light font-geologica leading-[1.5] lg:max-w-[690px] py-6 pl-3 lg:py-0 lg:pl-0;
 }
 .about__description p{
-    @apply justify-start text-[#19232e] text-base font-light font-['Geologica'] leading-6  lg:text-[23px]  lg:leading-[34.50px];
+    @apply justify-start text-[#19232e] text-base font-light font-['Geologica'] leading-6  lg:text-[23px]  lg:leading-[34.50px] lg:mb-4;
 }
 
 .about__stats {
-    @apply flex flex-col gap-4 mt-4 md:mt-0; /* Change gap to 4 for desktop, was 2 on mobile */
+    @apply flex flex-row flex-wrap gap-2 mt-4 md:flex-col md:gap-4 md:mt-0 xl:w-full max-w-[573px];
 }
 
 .about__stat-card {
-    @apply p-4 rounded-[20px] flex flex-col lg:flex-row justify-start  px-4 items-start gap-3 text-white w-full lg:gap-[56px]; /* w-full for desktop */
+    @apply py-4  rounded-[20px] flex flex-col lg:flex-row justify-start  px-4 xl:px-10 items-start gap-3 xl:gap-[56px] text-white md:w-full lg:gap-[56px];
 }
 
 .about__stat-card-number {
-    @apply text-[50px] font-normal font-ura uppercase leading-[0.95] lg:w-[263px];
+    @apply text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] lg:w-[263px];
 }
 
 .about__stat-card-text {

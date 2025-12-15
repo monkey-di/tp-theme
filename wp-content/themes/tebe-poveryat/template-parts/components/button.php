@@ -20,8 +20,8 @@ $size        = $args['size'] ?? 'md';
 $state       = $args['state'] ?? 'default';
 $extra_class = $args['class'] ?? '';
 $submit      = $args['submit'] ?? false;
-
-$base_classes = 'inline-flex justify-center items-center gap-3 rounded-[40px] transition-colors duration-300 font-geologica uppercase leading-6 no-underline';
+$uppercase    = $args['uppercase'] ?? 'uppercase';
+$base_classes = 'inline-flex justify-center items-center gap-3 rounded-[40px] transition-colors duration-300 font-geologica  leading-6 no-underline ' . $uppercase;
 $text_classes = '';
 $bg_classes   = '';
 $border_classes = '';
@@ -32,11 +32,11 @@ switch ($size) {
         $base_classes .= ' px-3 py-2 text-[13px]';
         break;
     case 'lg':
-        $base_classes .= ' px-8 py-5 text-xl';
+        $base_classes .= ' px-8 py-3 text-xl';
         break;
     case 'md':
     default:
-        $base_classes .= ' px-5 py-4 text-base'; // Default for the provided maket
+        $base_classes .= ' px-5 py-3 text-base'; // Default for the provided maket
         break;
 }
 

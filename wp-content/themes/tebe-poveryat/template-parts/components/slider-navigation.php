@@ -24,7 +24,7 @@ $img_class  = $args['img_class'] ?? 'w-[58px] h-[58px]';
 $justify    = $args['justify'] ?? 'justify-between';
 ?>
 
-<div class="slider-navigation flex gap-4 items-center <?php echo esc_attr( $justify ); ?> <?php echo esc_attr( $extra_class ); ?>">
+<div class="slider-navigation hidden xl:flex gap-4 items-center  <?php echo esc_attr( $justify ); ?> <?php echo esc_attr( $extra_class ); ?>">
     <!-- Prev Button -->
     <button type="button" class="<?php echo esc_attr( $prev_class ); ?> cursor-pointer hover:opacity-70 transition">
         <img src="<?php echo get_theme_file_uri('assets/images/' . $arrow_prev); ?>" alt="Previous" class="<?php echo esc_attr( $img_class ); ?>" />

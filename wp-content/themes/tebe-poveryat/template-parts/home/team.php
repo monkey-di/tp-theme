@@ -14,7 +14,7 @@
     <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col gap-8">
         
         <!-- Title -->
-        <h2 class="team__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text-center">
+        <h2 class="team__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text=left lg:text-center">
             Наши специалисты
         </h2>
 
@@ -28,134 +28,80 @@
             <div class="swiper-container-wrapper w-full lg:flex-1 lg:min-w-0">
                 <div class="team__slider swiper">
             <div class="swiper-wrapper">
-                <!-- Slide 1 -->
-                <div class="swiper-slide">
-                    <div class="team__card w-full lg:max-w-[1129px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
-                        <!-- Image Container -->
-                        <div class="team__card-image relative w-full lg:w-[428px] lg:min-w-[428px] h-[480px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
-                            <img class="w-full h-full object-cover rounded-[20px]" src="https://www.figma.com/api/mcp/asset/eff26b4d-5d3f-4d3c-85da-268de874818f" alt="Ксения Шашунова" />
-                            <!-- Overlay for mobile only -->
-                            <div class="absolute inset-0 bg-black/20 pointer-events-none lg:hidden"></div>
-                            <!-- Name & Role Overlay - Mobile only -->
-                            <div class="absolute left-0 bottom-0 w-full p-[16px] lg:hidden">
-                                <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Ксения<br>Шашунова
-                                </h3>
-                                <p class="text-white text-[16px] font-normal font-geologica leading-[1.5]">
-                                    Координаторка детско-родительского направления
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Content -->
-                        <div class="team__card-content w-full px-4 py-6 lg:p-4 flex flex-col gap-1 lg:flex-1">
-                            <!-- Name & Role - Desktop only -->
-                            <div class="hidden lg:flex lg:flex-col lg:gap-1 lg:p-[16px]">
-                                <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Ксения Шашунова
-                                </h3>
-                                <p class="text-contrast text-[20px] font-light font-geologica leading-[1.5]">
-                                    Координаторка детско-родительского направления
-                                </p>
-                            </div>
-                            <!-- Description -->
-                            <div class="lg:p-[16px]">
-                                <p class="text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]">
-                                    «Я руковожу направлением работы, куда обращаются за помощью, поддержкой и информацией подростки или родители, чьи дети подверглись сексуализированному насилию. Моя главная задача — поддержка и развитие команды психологов этого направления, организация обучения и регулярных супервизий и интервизий. Также я принимаю заявки от подростков, распределяю их между специалистами: мне важно быть на связи в случае, если ситуация срочная, подключать к работе юристов или другие организации. Кроме того, я рассказываю о нашей работе с детьми в СМИ, чтобы было больше информации о проблеме сексуализированного насилия над детьми в разных аспектах»
-                                </p>
-                            </div>
-                            <!-- Read More (Mobile Only) -->
-                            <div class="team__card-read-more lg:hidden">
-                                <?php get_template_part('template-parts/components/link-more', null, [
-                                    'text' => 'Читать далее',
-                                    'url' => '#',
-                                    'style' => 'default'
-                                ]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                $team_query = new WP_Query(array(
+                    'post_type'      => 'team_member',
+                    'posts_per_page' => -1,
+                    'orderby'        => 'menu_order',
+                    'order'          => 'ASC',
+                    'post_status'    => 'publish',
+                ));
 
-                <!-- Slide 2 -->
-                <div class="swiper-slide">
-                    <div class="team__card w-full lg:max-w-[1129px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
-                        <div class="team__card-image relative w-full lg:w-[428px] lg:min-w-[428px] h-[480px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
-                            <img class="w-full h-full object-cover rounded-[20px]" src="https://www.figma.com/api/mcp/asset/eff26b4d-5d3f-4d3c-85da-268de874818f" alt="Ирина Смирнова" />
-                            <div class="absolute inset-0 bg-black/20 pointer-events-none lg:hidden"></div>
-                            <div class="absolute left-0 bottom-0 w-full p-[16px] lg:hidden">
-                                <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Ирина<br>Смирнова
-                                </h3>
-                                <p class="text-white text-[16px] font-normal font-geologica leading-[1.5]">
-                                    Психолог-консультант
-                                </p>
+                if ( $team_query->have_posts() ) :
+                    while ( $team_query->have_posts() ) : $team_query->the_post();
+                        $position = get_post_meta( get_the_ID(), '_team_position', true );
+                        $photo_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+                        $name = get_the_title();
+                        $name_mobile = str_replace( ' ', '<br>', $name ); // Имя с <br> для мобильного
+                        ?>
+                        <div class="swiper-slide">
+                            <div class="team__card w-full lg:max-w-[1105px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
+                                <!-- Image Container -->
+                                <?php if ( $photo_url ) : ?>
+                                <div class="team__card-image relative w-full lg:w-[358px] lg:min-w-[358px] h-[636px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
+                                    <img class="w-full h-full object-cover rounded-[20px]" src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
+                                    <!-- Overlay for mobile only -->
+                                    <div class="absolute inset-0 bg-black/20 pointer-events-none lg:hidden"></div>
+                                    <!-- Name & Role Overlay - Mobile only -->
+                                    <div class="absolute left-0 bottom-0 w-full p-[16px] lg:hidden">
+                                        <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                            <?php echo $name_mobile; ?>
+                                        </h3>
+                                        <?php if ( $position ) : ?>
+                                        <p class="text-white text-[16px] font-normal font-geologica leading-[1.5]">
+                                            <?php echo esc_html( $position ); ?>
+                                        </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                                <!-- Content -->
+                                <div class="team__card-content w-full px-4 py-6 lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1">
+                                    <!-- Name & Role - Desktop only -->
+                                    <div class="hidden lg:flex lg:flex-col lg:gap-1 ">
+                                        <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                            <?php echo esc_html( $name ); ?>
+                                        </h3>
+                                        <?php if ( $position ) : ?>
+                                        <p class="text-contrast text-[20px] font-light font-geologica leading-[1.5]">
+                                            <?php echo esc_html( $position ); ?>
+                                        </p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <!-- Description -->
+                                    <?php if ( get_the_content() ) : ?>
+                                    <div class="mt-[26px]">
+                                        <p class="text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] max-w-[630px] line-clamp-6 xl:line-clamp-none">
+                                            <?php echo get_the_content(); ?>
+                                        </p>
+                                    </div>
+                                    <?php endif; ?>
+                                    <!-- Read More (Mobile Only) -->
+                                    <div class="team__card-read-more lg:hidden">
+                                        <?php get_template_part('template-parts/components/link-more', null, [
+                                            'text' => 'Читать далее',
+                                            'url' => '#',
+                                            'style' => 'default'
+                                        ]); ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="team__card-content w-full px-4 py-6 lg:p-4 flex flex-col gap-1 lg:flex-1">
-                            <div class="hidden lg:flex lg:flex-col lg:gap-1 lg:p-[16px]">
-                                <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Ирина Смирнова
-                                </h3>
-                                <p class="text-contrast text-[20px] font-light font-geologica leading-[1.5]">
-                                    Психолог-консультант
-                                </p>
-                            </div>
-                            <div class="lg:p-[16px]">
-                                <p class="text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]">
-                                    Вторая история специалиста: Ирина работает с детьми и подростками, помогая им справиться с травмами и восстановить доверие к миру.
-                                </p>
-                            </div>
-                            <!-- Read More (Mobile Only) -->
-                            <div class="team__card-read-more lg:hidden">
-                                <?php get_template_part('template-parts/components/link-more', null, [
-                                    'text' => 'Читать далее',
-                                    'url' => '#',
-                                    'style' => 'default'
-                                ]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3 -->
-                <div class="swiper-slide">
-                    <div class="team__card w-full lg:max-w-[1129px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
-                        <div class="team__card-image relative w-full lg:w-[428px] lg:min-w-[428px] h-[480px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
-                            <img class="w-full h-full object-cover rounded-[20px]" src="https://www.figma.com/api/mcp/asset/eff26b4d-5d3f-4d3c-85da-268de874818f" alt="Алексей Волков" />
-                            <div class="absolute inset-0 bg-black/20 pointer-events-none lg:hidden"></div>
-                            <div class="absolute left-0 bottom-0 w-full p-[16px] lg:hidden">
-                                <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Алексей<br>Волков
-                                </h3>
-                                <p class="text-white text-[16px] font-normal font-geologica leading-[1.5]">
-                                    Юридический консультант
-                                </p>
-                            </div>
-                        </div>
-                        <div class="team__card-content w-full px-4 py-6 lg:p-4 flex flex-col gap-1 lg:flex-1">
-                            <div class="hidden lg:flex lg:flex-col lg:gap-1 lg:p-[16px]">
-                                <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                    Алексей Волков
-                                </h3>
-                                <p class="text-contrast text-[20px] font-light font-geologica leading-[1.5]">
-                                    Юридический консультант
-                                </p>
-                            </div>
-                            <div class="lg:p-[16px]">
-                                <p class="text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]">
-                                    Третья история специалиста: Алексей оказывает правовую поддержку и консультирует по вопросам защиты прав детей.
-                                </p>
-                            </div>
-                            <!-- Read More (Mobile Only) -->
-                            <div class="team__card-read-more lg:hidden">
-                                <?php get_template_part('template-parts/components/link-more', null, [
-                                    'text' => 'Читать далее',
-                                    'url' => '#',
-                                    'style' => 'default'
-                                ]); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
                 </div> <!-- End swiper-wrapper -->
             </div> <!-- End swiper -->
         </div> <!-- End swiper-container-wrapper -->
@@ -169,7 +115,7 @@
         <!-- Progress Bar (Mobile Only) -->
         <div class="team__progress w-full lg:hidden">
             <?php get_template_part('template-parts/components/slider-progress', null, [
-                'track_color' => 'bg-white/20',
+                'track_color' => '!bg-white',
                 'bar_color' => 'bg-secondary'
             ]); ?>
         </div>

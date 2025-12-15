@@ -21,15 +21,93 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function tp_import_demo_content() {
 	$results = array(
-		'main_slides' => tp_import_main_slides(),
-		'friends'     => tp_import_friends(),
-		'media'       => tp_import_media(),
-		'materials'   => tp_import_materials(),
-		'team'        => tp_import_team(),
-		'histories'   => tp_import_histories(),
+		'static_pages' => tp_import_static_pages(),
+		'main_slides'  => tp_import_main_slides(),
+		'friends'      => tp_import_friends(),
+		'media'        => tp_import_media(),
+		'materials'    => tp_import_materials(),
+		'team'         => tp_import_team(),
+		'histories'    => tp_import_histories(),
 	);
 
 	return $results;
+}
+
+/**
+ * Import Static Pages
+ * Создаём страницы для статических блоков: Donation, About, About Part 2
+ */
+function tp_import_static_pages() {
+	$pages = array(
+		array(
+			'slug'    => 'donation-block',
+			'title'   => 'Блок: Кампания',
+			'content' => 'Поддержите нас',
+		),
+		array(
+			'slug'    => 'about-block',
+			'title'   => 'Блок: О нас',
+			'content' => "О «Тебе поверят»\n\nКаждый 8-й ребёнок в мире сталкивается с сексуализированным насилием.\n\nС 2018 года мы работаем над тем, чтобы заменить страх перед темой сексуализированного насилия над детьми на готовность решать эту серьёзную проблему. Если мы боимся и совсем не говорим об этом, то когда ситуация происходит, просто прячем голову в песок.",
+		),
+		array(
+			'slug'    => 'about-part2-block',
+			'title'   => 'Блок: О нас часть 2',
+			'content' => "Юлия Кулешова\n\nдиректор\n\nМне очень хочется, чтобы общество перешагнуло через эту ступень и начало создавать большую образовательную и реабилитационную структуру на всю страну. В «Тебе поверят» мы делаем так, чтобы о проблеме узнавало как можно больше людей, чтобы пережившие получали поддержку, а родители знали, чему учить детей, чтобы они знали, что такое «личные границы».",
+			'image'   => 'yulia-kuleshova.jpg',
+		),
+	);
+
+	$imported = array();
+
+	foreach ( $pages as $page_data ) {
+		// Проверяем, существует ли уже страница
+		$existing = get_page_by_path( $page_data['slug'], OBJECT, 'page' );
+
+		if ( $existing ) {
+			$post_id = $existing->ID;
+			// Обновляем содержимое
+			wp_update_post( array(
+				'ID'           => $post_id,
+				'post_content' => $page_data['content'],
+			) );
+		} else {
+			// Создаём новую страницу
+			$post_id = wp_insert_post( array(
+				'post_type'    => 'page',
+				'post_title'   => $page_data['title'],
+				'post_name'    => $page_data['slug'],
+				'post_content' => $page_data['content'],
+				'post_status'  => 'publish',
+			) );
+		}
+
+		if ( ! is_wp_error( $post_id ) ) {
+			// Добавляем featured image если указан
+			if ( ! empty( $page_data['image'] ) ) {
+				$image_path = get_template_directory() . '/assets/images/' . $page_data['image'];
+				if ( file_exists( $image_path ) ) {
+					$attach_id = tp_insert_attachment( $image_path, $post_id );
+					set_post_thumbnail( $post_id, $attach_id );
+				}
+			}
+
+			// Для About добавляем meta-поля со статистикой
+			if ( $page_data['slug'] === 'about-block' ) {
+				update_post_meta( $post_id, '_about_stat1_number', '6' );
+				update_post_meta( $post_id, '_about_stat1_text', 'лет&nbsp;оказываем<br>помощь' );
+				update_post_meta( $post_id, '_about_stat2_number', '8 228' );
+				update_post_meta( $post_id, '_about_stat2_text', 'консультаций<br>проведено' );
+				update_post_meta( $post_id, '_about_stat3_number', '2 091' );
+				update_post_meta( $post_id, '_about_stat3_text', 'человек получили<br>помощь' );
+				update_post_meta( $post_id, '_about_stat4_number', '26' );
+				update_post_meta( $post_id, '_about_stat4_text', 'человек<br>в команде' );
+			}
+
+			$imported[] = $post_id;
+		}
+	}
+
+	return $imported;
 }
 
 /**

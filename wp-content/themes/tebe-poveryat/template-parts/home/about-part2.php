@@ -2,35 +2,64 @@
 /**
  * About Section - Part 2
  * Mobile First with Desktop version.
- * Dynamic content from theme settings
+ * Dynamic content from page
  */
+
+$about_page = get_page_by_path( 'about-part2-block' );
+if ( ! $about_page ) {
+    return;
+}
+
+// Разбираем контент страницы по строкам
+$content_parts = explode( "\n\n", $about_page->post_content );
+$name = ! empty( $content_parts[0] ) ? $content_parts[0] : '';
+$position = ! empty( $content_parts[1] ) ? $content_parts[1] : '';
+$description_parts = array_slice( $content_parts, 2 );
+$description = implode( "\n\n", $description_parts );
+
+// Получаем изображение
+$image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
 ?>
 <section class="about-section-part2 w-full bg-surface py-12 px-4 relative overflow-hidden">
-    <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-x-20">
+    <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-12">
 
         <!-- Left Column: Image -->
-        <div class="about-section-part2__image-wrapper relative w-full lg:w-1/2 h-[522px] rounded-[20px] overflow-hidden">
-            <img class="w-full h-full object-cover" src="<?php echo get_template_directory_uri(); ?>/assets/images/yulia-kuleshova.jpg" alt="<?php echo esc_attr( get_option( 'tp_about2_title', 'Юлия Кулешова' ) ); ?>" />
+        <?php if ( $image_url ) : ?>
+        <div class="about-section-part2__image-wrapper relative w-full lg:w-[787px] lg:min-w-[787px] h-[522px] rounded-[20px] overflow-hidden">
+            <img class="w-full h-full object-cover" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
 
             <!-- Mobile-only Overlay: Name and Title -->
             <div class="about-section-part2__overlay-text lg:hidden absolute left-0 bottom-4 w-full px-4 text-white">
-                <h3 class="text-h3 font-extrabold font-akrobat uppercase leading-10 mb-0"><?php echo esc_html( get_option( 'tp_about2_title', 'Юлия Кулешова' ) ); ?></h3>
-                <p class="text-[16px] font-normal font-geologica leading-[1.5]"><?php echo esc_html( get_option( 'tp_about2_subtitle', 'директор' ) ); ?></p>
+                <?php if ( $name ) : ?>
+                <h3 class="text-h3 font-extrabold font-akrobat uppercase leading-10 mb-0"><?php echo esc_html( $name ); ?></h3>
+                <?php endif; ?>
+                <?php if ( $position ) : ?>
+                <p class="text-[16px] font-normal font-geologica leading-[1.5]"><?php echo esc_html( $position ); ?></p>
+                <?php endif; ?>
             </div>
         </div>
+        <?php endif; ?>
 
         <!-- Right Column: Text -->
-        <div class="w-full lg:w-1/2 flex flex-col gap-8 mt-8 lg:mt-0">
+        <div class="w-full lg:w-auto flex flex-col gap-8 mt-6 lg:mt-0">
             <!-- Desktop-only Title -->
+            <?php if ( $name || $position ) : ?>
             <div class="hidden lg:block">
-                 <h3 class="text-[40px] font-extrabold font-akrobat uppercase leading-none"><?php echo esc_html( get_option( 'tp_about2_title', 'Юлия Кулешова' ) ); ?></h3>
-                 <p class="text-[20px] font-light font-geologica"><?php echo esc_html( get_option( 'tp_about2_subtitle', 'директор' ) ); ?></p>
+                <?php if ( $name ) : ?>
+                 <h3 class="text-[40px] font-extrabold font-akrobat uppercase leading-none"><?php echo esc_html( $name ); ?></h3>
+                <?php endif; ?>
+                <?php if ( $position ) : ?>
+                 <p class="text-[20px] font-light font-geologica"><?php echo esc_html( $position ); ?></p>
+                <?php endif; ?>
             </div>
+            <?php endif; ?>
 
             <!-- Description Text -->
+            <?php if ( $description ) : ?>
             <div class="about-section-part2__description">
-                <p class="text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]"><?php echo esc_html( get_option( 'tp_about2_description', 'Мне очень хочется, чтобы общество перешагнуло через эту ступень и начало создавать большую образовательную и реабилитационную структуру на всю страну. В «Тебе поверят» мы делаем так, чтобы о проблеме узнавало как можно больше людей, чтобы пережившие получали поддержку, а родители знали, чему учить детей, чтобы они знали, что такое «личные границы».' ) ); ?></p>
+                <p class="text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] line-clamp-5"><?php echo esc_html( $description ); ?></p>
             </div>
+            <?php endif; ?>
 
             <!-- Mobile-only Read More Link -->
             <div class="about-section-part2__read-more lg:hidden">

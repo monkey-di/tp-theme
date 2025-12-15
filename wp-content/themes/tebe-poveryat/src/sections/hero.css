@@ -3,290 +3,289 @@
    ============================================ */
 
 @layer components {
-  /* Hero Section */
-  .hero-section {
-    @apply w-full bg-surface min-h-screen relative overflow-hidden py-12 px-4;
-  }
-
-  /* Container */
-  .hero__container {
-    @apply container mx-auto flex flex-col justify-start items-start h-full;
-  }
-
-  /* Slider */
-  .hero__slider {
-    @apply w-full flex-grow mb-20;
-  }
-
-  /* Slide */
-  .hero__slider .swiper-slide {
-    @apply flex flex-col justify-start items-start h-full relative;
-  }
-
-  /* ============ MOBILE STYLES (320px+) ============ */
-
-  /* Titles Section - relative container for absolute image positioning */
-  .hero__titles-section {
-    @apply relative w-fit mx-auto;
-  }
-
-  /* Title Part 1 */
-  .hero__title-part1 {
-    @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] mt-12 relative;
-    z-index: 10;
-  }
-
-  /* Title Part 2 */
-  .hero__title-part2 {
-    @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] -mt-2 relative;
-    z-index: 10;
-  }
-
-  /* Decorative Image Wrapper (absolute positioned inside titles-section) */
-  .hero__image-wrapper {
-    @apply absolute z-0;
-    top: -35px;
-    left: calc(50% + 89px);
-    transform: translateX(-50%);
-    width: 120px;
-    height: 120px;
-  }
-
-  /* Decorative Image */
-  .hero__decor-image {
-    @apply w-full h-full object-cover;
-  }
-
-  /* Subtitle */
-  .hero__subtitle {
-    @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-8 z-10 relative;
-  }
-
-  /* Description */
-  .hero__description {
-    @apply mt-6 z-10 relative;
-  }
-
-  .hero__description p {
-    @apply text-[#19232e] text-[16px] font-light font-geologica leading-[1.5];
-  }
-
-  /* Learn More */
-  .hero__learn-more {
-    @apply mt-10 z-10 relative;
-  }
-
-  /* Slider Controls */
-  .hero__slider-controls {
-    @apply mt-auto mb-4 w-full flex justify-between items-end z-10;
-  }
-
-  /* Mobile Progress - visible on mobile only */
-  .hero__slider-controls > div:first-child {
-    @apply w-full md:hidden;
-  }
-
-  /* ============ DESKTOP STYLES (1280px+) ============ */
-
-  @media (min-width: 1280px) {
     /* Hero Section */
     .hero-section {
-      @apply min-h-screen py-0 px-24 overflow-visible;
-    }
-
-    /* Background decorative ellipses - Hidden on mobile, visible on desktop */
-    .hero__bg-ellipse {
-      @apply hidden;
-    }
-
-    /* Large central ellipse */
-    .hero__bg-ellipse--large {
-      display: block;
-      position: absolute;
-      width: 797px;
-      height: 580px;
-      background: rgba(217, 139, 153, 0.35);
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-28.23deg);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Top-left ellipse */
-    .hero__bg-ellipse--top-left {
-      display: block;
-      position: absolute;
-      width: 187px;
-      height: 90px;
-      background: rgba(217, 139, 153, 0.4);
-      border-radius: 50%;
-      top: calc(50% - 227px);
-      left: calc(20.83% + 45px);
-      transform: translate(-50%, -50%) rotate(-28.23deg);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Bottom-right ellipse */
-    .hero__bg-ellipse--bottom-right {
-      display: block;
-      position: absolute;
-      width: 187px;
-      height: 90px;
-      background: rgba(217, 139, 153, 0.4);
-      border-radius: 50%;
-      top: calc(50% + 72px);
-      left: calc(87.5% - 104px);
-      transform: translate(-50%, -50%) rotate(-28.23deg);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Top-left small ellipse */
-    .hero__bg-ellipse--top-left-small {
-      display: block;
-      position: absolute;
-      width: 87px;
-      height: 42px;
-      background: rgba(217, 139, 153, 0.45);
-      border-radius: 50%;
-      top: calc(50% - 125px);
-      left: calc(16.67% + 61px);
-      transform: translate(-50%, -50%) rotate(-28.23deg);
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* Bottom-right small ellipse */
-    .hero__bg-ellipse--bottom-right-small {
-      display: block;
-      position: absolute;
-      width: 47px;
-      height: 23px;
-      background: rgba(217, 139, 153, 0.5);
-      border-radius: 50%;
-      top: calc(50% - 14px);
-      left: calc(87.5% - 89px);
-      transform: translate(-50%, -50%) rotate(-28.23deg);
-      z-index: 0;
-      pointer-events: none;
+        @apply w-full bg-surface relative overflow-hidden lg:py-12 px-4;
     }
 
     /* Container */
     .hero__container {
-      @apply h-full;
-      overflow: visible;
+        @apply container mx-auto flex flex-col justify-start items-start h-full;
     }
 
     /* Slider */
     .hero__slider {
-      /* desktop styles */
+        @apply w-full flex-grow mb-20;
     }
 
-    /* Slide - Desktop layout with flexbox */
+    /* Slide */
     .hero__slider .swiper-slide {
-      @apply flex flex-col justify-between;
-      min-height: 600px;
-      padding: 0;
-      gap: 0;
-      overflow: visible;
+        @apply flex flex-col justify-start items-start h-full relative;
     }
 
-    /* Titles Section - relative container */
+    /* ============ MOBILE STYLES (320px+) ============ */
+    /* Titles Section - relative container for absolute image positioning */
     .hero__titles-section {
-      @apply relative;
-      margin-top: 96px;
-      overflow: visible;
+        @apply relative w-fit mx-auto;
     }
 
-    /* Title Part 1 - Desktop (normal flow) */
+    /* Title Part 1 */
     .hero__title-part1 {
-      @apply text-[150px] leading-[0.95] text-center;
-      margin: 0;
+        @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] mt-12 relative;
+        z-index: 10;
     }
 
-    /* Title Part 2 - Desktop (normal flow) */
+    /* Title Part 2 */
     .hero__title-part2 {
-      @apply text-[150px] leading-[0.95] text-center;
-      margin: 0;
+        @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] -mt-2 relative;
+        z-index: 10;
     }
 
-    /* Image Wrapper - Desktop (absolute positioned inside titles-section) */
+    /* Decorative Image Wrapper (absolute positioned inside titles-section) */
     .hero__image-wrapper {
-      @apply absolute;
-      z-index: 0;
-      top: -14px;
-      left: 534px;
-      transform: none;
-      width: 275px;
-      height: 275px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        @apply absolute z-0;
+        top: -35px;
+        left: calc(50% + 89px);
+        transform: translateX(-50%);
+        width: 120px;
+        height: 120px;
     }
 
-    /* Decorative Image - Desktop (image itself has rotation in assets) */
+    /* Decorative Image */
     .hero__decor-image {
-      @apply w-[224px] h-[224px] object-cover;
+        @apply w-full h-full object-cover;
     }
 
-    /* Subtitle - Desktop */
+    /* Subtitle */
     .hero__subtitle {
-      @apply text-[30px] leading-none text-center;
-      margin-top: auto;
-      margin-bottom: 0;
+        @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-3 lg:mt-8 z-10 relative;
     }
 
-    /* Description - Desktop */
+    /* Description */
     .hero__description {
-      @apply text-center;
+        @apply mt-3 xl:mt-6 z-10 relative;
     }
 
     .hero__description p {
-      @apply text-[23px] mx-auto;
-      max-width: 785px;
+        @apply text-[#19232e] text-[16px] font-light font-geologica leading-[1.5];
     }
 
-    /* Learn More - Desktop */
+    /* Learn More */
     .hero__learn-more {
-      @apply text-center;
+        @apply mt-10 z-10 relative;
     }
 
-    /* Slider Controls - Hidden on Desktop */
+    /* Slider Controls */
     .hero__slider-controls {
-      @apply hidden;
-    }
-  }
-
-  /* ============ SLIDER NAVIGATION ============ */
-
-  /* Navigation wrapper */
-  .slider-navigation {
-    @apply hidden;
-  }
-
-  /* Desktop: Show navigation */
-  @media (min-width: 1280px) {
-    .hero__slider-controls {
-      @apply flex absolute w-full h-full top-0 left-0 pointer-events-none;
-      z-index: 20;
+        @apply mt-auto mb-4 w-full flex justify-between items-end z-10;
     }
 
+    /* Mobile Progress - visible on mobile only */
+    .hero__slider-controls > div:first-child {
+        @apply w-full md:hidden;
+    }
+
+    /* ============ DESKTOP STYLES (1280px+) ============ */
+    @media (min-width: 1280px) {
+        /* Hero Section */
+        .hero-section {
+            @apply lg:min-h-screen py-0 px-24 overflow-visible;
+        }
+
+        /* Background decorative ellipses - Hidden on mobile, visible on desktop */
+        .hero__bg-ellipse {
+            @apply hidden;
+        }
+
+        /* Large central ellipse */
+        .hero__bg-ellipse--large {
+            display: block;
+            position: absolute;
+            width: 797px;
+            height: 580px;
+            background: #FBE4EA;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-28.23deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Top-left ellipse */
+        .hero__bg-ellipse--top-left {
+            display: block;
+            position: absolute;
+            width: 187px;
+            height: 90px;
+            background: #FBE4EA;
+            border-radius: 50%;
+            top: calc(50% - 227px);
+            left: calc(20.83% + 45px);
+            transform: translate(-50%, -50%) rotate(-28.23deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Bottom-right ellipse */
+        .hero__bg-ellipse--bottom-right {
+            display: block;
+            position: absolute;
+            width: 187px;
+            height: 90px;
+            background: #FBE4EA;
+            border-radius: 50%;
+            top: calc(50% + 72px);
+            left: calc(87.5% - 104px);
+            transform: translate(-50%, -50%) rotate(-28.23deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Top-left small ellipse */
+        .hero__bg-ellipse--top-left-small {
+            display: block;
+            position: absolute;
+            width: 87px;
+            height: 42px;
+            background: #FBE4EA;
+            border-radius: 50%;
+            top: calc(50% - 125px);
+            left: calc(16.67% + 61px);
+            transform: translate(-50%, -50%) rotate(-28.23deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Bottom-right small ellipse */
+        .hero__bg-ellipse--bottom-right-small {
+            display: block;
+            position: absolute;
+            width: 47px;
+            height: 23px;
+            background: #FBE4EA;
+            border-radius: 50%;
+            top: calc(50% - 14px);
+            left: calc(87.5% - 89px);
+            transform: translate(-50%, -50%) rotate(-28.23deg);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Container */
+        .hero__container {
+            @apply h-full;
+            overflow: visible;
+        }
+
+        /* Slider */
+        .hero__slider {
+            /* desktop styles */
+        }
+
+        /* Slide - Desktop layout with flexbox */
+        .hero__slider .swiper-slide {
+            @apply flex flex-col justify-between;
+            min-height: 600px;
+            padding: 0;
+            gap: 0;
+            overflow: visible;
+        }
+
+        /* Titles Section - relative container */
+        .hero__titles-section {
+            @apply relative;
+            margin-top: 96px;
+            overflow: visible;
+        }
+
+        /* Title Part 1 - Desktop (normal flow) */
+        .hero__title-part1 {
+            @apply text-[150px] leading-[0.95] text-center;
+            margin: 0;
+        }
+
+        /* Title Part 2 - Desktop (normal flow) */
+        .hero__title-part2 {
+            @apply text-[150px] leading-[0.95] text-center;
+            margin: 0;
+        }
+
+        /* Image Wrapper - Desktop (absolute positioned inside titles-section) */
+        .hero__image-wrapper {
+            @apply absolute;
+            z-index: 0;
+            top: -14px;
+            left: 534px;
+            transform: none;
+            width: 275px;
+            height: 275px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Decorative Image - Desktop (image itself has rotation in assets) */
+        .hero__decor-image {
+            @apply w-[224px] h-[224px] object-cover;
+        }
+
+        /* Subtitle - Desktop */
+        .hero__subtitle {
+            @apply text-[30px] leading-none text-center mx-auto;
+            margin-top: auto;
+            margin-bottom: 0;
+            max-width: 475px;
+
+        }
+
+        /* Description - Desktop */
+        .hero__description {
+            @apply text-center;
+        }
+
+        .hero__description p {
+            @apply text-[23px] mx-auto;
+            max-width: 785px;
+        }
+
+        /* Learn More - Desktop */
+        .hero__learn-more {
+            @apply text-center;
+        }
+
+        /* Slider Controls - Hidden on Desktop */
+        .hero__slider-controls {
+            @apply hidden;
+        }
+    }
+
+    /* ============ SLIDER NAVIGATION ============ */
+    /* Navigation wrapper */
     .slider-navigation {
-      @apply flex w-full justify-between items-center absolute top-1/2 translate-y-[-50%] px-24;
-      pointer-events: all;
+        @apply hidden;
     }
 
-    /* Prev Button */
-    .hero-prev {
-      @apply cursor-pointer hover:opacity-70 transition bg-transparent border-0 p-0;
-    }
+    /* Desktop: Show navigation */
+    @media (min-width: 1280px) {
+        .hero__slider-controls {
+            @apply flex absolute w-full h-full top-0 left-0 pointer-events-none;
+            z-index: 20;
+        }
 
-    /* Next Button */
-    .hero-next {
-      @apply cursor-pointer hover:opacity-70 transition bg-transparent border-0 p-0;
+        .slider-navigation {
+            @apply flex w-full justify-between items-center absolute top-[40%] translate-y-[-50%] px-24;
+            pointer-events: all;
+        }
+
+        /* Prev Button */
+        .hero-prev {
+            @apply cursor-pointer hover:opacity-70 transition bg-transparent border-0 p-0;
+        }
+
+        /* Next Button */
+        .hero-next {
+            @apply cursor-pointer hover:opacity-70 transition bg-transparent border-0 p-0;
+        }
     }
-  }
 }

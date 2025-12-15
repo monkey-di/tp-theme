@@ -16,7 +16,7 @@ $friends_query = new WP_Query(array(
 
 ?>
 <section class="friends-section w-full bg-surface relative overflow-hidden py-12 lg:py-24">
-    <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-center">
+    <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-start lg:items-center">
 
         <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center mb-8">
             Наши друзья
@@ -24,7 +24,7 @@ $friends_query = new WP_Query(array(
 
         <?php if ( $friends_query->have_posts() ) : ?>
             <div class="friends__slider-area w-full flex items-center lg:justify-between lg:gap-x-4 lg:mt-10">
-                <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition">
+                <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative top-[-100px]">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
 
@@ -49,7 +49,7 @@ $friends_query = new WP_Query(array(
                                                 <p class="text-[16px] font-geologica leading-[1.5]"><?php echo get_the_excerpt(); ?></p>
                                             </div>
                                         </div>
-                                        <p class="friends__card-quote text-[23px] font-light font-geologica leading-[1.5] text-contrast">
+                                        <p class="friends__card-quote text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] text-contrast">
                                             <?php echo get_the_content(); ?>
                                         </p>
                                     </div>
@@ -86,14 +86,14 @@ $friends_query = new WP_Query(array(
                     </div>
                 </div>
 
-                <button type="button" class="friends-next hidden lg:block cursor-pointer hover:opacity-70 transition">
+                <button type="button" class="friends-next hidden lg:block cursor-pointer hover:opacity-70 transition relative top-[-100px]">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next" />
                 </button>
             </div>
 
             <div class="friends__mobile-progress w-full mt-8 lg:hidden">
                  <?php get_template_part('template-parts/components/slider-progress', null, [
-                    'track_color' => 'bg-black/20',
+                    'track_color' => '!bg-white',
                     'bar_color' => 'bg-secondary'
                 ]); ?>
             </div>
