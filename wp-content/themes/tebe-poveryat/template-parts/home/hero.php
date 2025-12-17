@@ -14,7 +14,7 @@ $slides_query = new WP_Query(array(
         'post_status' => 'publish',
 ));
 ?>
-<section class="hero-section">
+<section class="hero-section bg-surface relative z-20 pb-12 lg:pb-32 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
     <!-- Desktop Background Decorative Ellipses -->
     <div class="hero__bg-ellipse hero__bg-ellipse--large"></div>
     <div class="hero__bg-ellipse hero__bg-ellipse--top-left"></div>
@@ -56,7 +56,7 @@ $slides_query = new WP_Query(array(
                                     <?php
                                     else : ?>
                                         <img class="hero__decor-image" src="<?php
-                                        echo get_theme_file_uri('assets/hero.webp'); ?>"
+                                        echo get_theme_file_uri('assets/images/hero-abstract.png'); ?>"
                                              alt="Декоративное изображение"/>
                                     <?php
                                     endif; ?>

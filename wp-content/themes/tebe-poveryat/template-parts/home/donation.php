@@ -4,7 +4,7 @@
  * Mobile First.
  */
 ?>
-<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden py-8">
+<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[160px]">
     
     <!-- Mobile Background -->
     <div class="md:hidden">
@@ -36,16 +36,6 @@
     <!-- Desktop Background -->
     <div class="hidden md:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stars/donation-stars-desktop.svg" alt="" class="w-full h-full ">
-    </div>
-
-    <!-- Top Wave -->
-    <div class="donation-form__decor-svg donation-form__decor-svg--top-wave absolute left-0 top-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/a78f4794-1aec-424a-84e6-29b30a1deec8" alt="" class="w-full h-[32px] object-cover" />
-    </div>
-
-    <!-- Bottom Wave -->
-    <div class="donation-form__decor-svg donation-form__decor-svg--bottom-wave absolute left-0 bottom-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/a78f4794-1aec-424a-84e6-29b30a1deec8" alt="" class="w-full h-[32px] object-cover scale-y-[-1]" />
     </div>
 
     <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16 md:pt-24 md:pb-24 lg:pt-32 lg:pb-32">

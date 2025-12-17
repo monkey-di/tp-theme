@@ -16,7 +16,7 @@
         <!-- wp:column {"width":"33.33%"} -->
         <div class="wp-block-column" style="flex-basis:33.33%">
             <!-- wp:image {"sizeSlug":"thumbnail","linkDestination":"none"} -->
-            <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Член команды 1"/></figure>
+            <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/team-julia-kuleshova.jpg' ) ); ?>" alt="Член команды 1"/></figure>
             <!-- /wp:image -->
             <!-- wp:heading {"level":4} -->
             <h4 class="wp-block-heading">Иван Иванов</h4>
@@ -29,7 +29,7 @@
         <!-- wp:column {"width":"33.33%"} -->
         <div class="wp-block-column" style="flex-basis:33.33%">
             <!-- wp:image {"sizeSlug":"thumbnail","linkDestination":"none"} -->
-            <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Член команды 2"/></figure>
+            <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/team-ksenia-shashunova.jpg' ) ); ?>" alt="Член команды 2"/></figure>
             <!-- /wp:image -->
             <!-- wp:heading {"level":4} -->
             <h4 class="wp-block-heading">Мария Петрова</h4>
@@ -42,7 +42,7 @@
         <!-- wp:column {"width":"33.33%"} -->
         <div class="wp-block-column" style="flex-basis:33.33%">
             <!-- wp:image {"sizeSlug":"thumbnail","linkDestination":"none"} -->
-            <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Член команды 3"/></figure>
+            <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/team-julia-kuleshova.jpg' ) ); ?>" alt="Член команды 3"/></figure>
             <!-- /wp:image -->
             <!-- wp:heading {"level":4} -->
             <h4 class="wp-block-heading">Алексей Сидоров</h4>

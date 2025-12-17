@@ -4,13 +4,8 @@
  * Mobile First.
  */
 ?>
-<section class="team-section w-full bg-surface py-12 px-4 relative overflow-hidden">
+<section class="team-section w-full bg-surface px-4 relative overflow-hidden z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
     
-    <!-- Bottom Wave -->
-    <div class="team-section__wave team-section__wave--bottom absolute left-0 bottom-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/a3ffcfd2-6447-443d-af83-5edaaddb8c2d" alt="" class="w-full h-[32px] object-cover scale-y-[-1]" />
-    </div>
-
     <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col gap-8">
         
         <!-- Title -->

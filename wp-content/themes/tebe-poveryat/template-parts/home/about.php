@@ -29,7 +29,7 @@ for ( $i = 1; $i <= 4; $i++ ) {
 $colors = array( 'bg-primary', 'bg-teal', 'bg-sky', 'bg-secondary' );
 $widths = array( 'w-[calc(43%-4px)]', 'w-[calc(51%-4px)]', 'w-[calc(53%-4px)]', 'w-[calc(40%-4px)]' );
 ?>
-<section class="about-section">
+<section class="about-section bg-surface relative z-20 pt-12 lg:pt-32 pb-0 [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
     <div class="about__container">
 
         <!-- Left Column (Title and Description) -->

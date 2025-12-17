@@ -5,10 +5,10 @@
  */
 
 ?>
-<section class="media-section w-full bg-teal relative overflow-hidden py-12 lg:py-20">
+<section class="media-section w-full bg-teal relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] lg:pt-[160px] pb-[80px] lg:pb-[160px]">
     <div class="hidden lg:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php
-        echo get_template_directory_uri(); ?>/assets/images/фон2.png" alt="" class="w-full h-full"/>
+        echo get_template_directory_uri(); ?>/assets/images/bg2.png" alt="" class="w-full h-full"/>
 
     </div>
 
@@ -17,24 +17,13 @@
         echo get_template_directory_uri(); ?>/assets/images/fon2.png" alt=""
              class="w-full h-full object-cover object-bottom lg:object-center"/>
     </div>
-    <!-- Top Wave -->
-    <div class="media-section__wave media-section__wave--top absolute left-0 top-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/caf0a422-764c-4079-aa5c-076f0e81e0b0" alt=""
-             class="w-full h-[32px] lg:h-[64px] object-cover"/>
-    </div>
-
-    <!-- Bottom Wave -->
-    <div class="media-section__wave media-section__wave--bottom absolute left-0 bottom-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/caf0a422-764c-4079-aa5c-076f0e81e0b0" alt=""
-             class="w-full h-[32px] lg:h-[64px] object-cover scale-y-[-1]"/>
-    </div>
 
     <!-- Background Decor -->
     <div class="media-section__decor absolute inset-0 z-0 opacity-20 pointer-events-none">
         <div class="absolute bottom-[-0.93%] flex items-center justify-center left-[-308px] top-[3.01%] w-[688.41px]">
             <div class="flex-none h-[325.078px] rotate-[180deg] w-[688.41px]">
                 <div class="opacity-[0.45] relative size-full">
-                    <img src="https://www.figma.com/api/mcp/asset/aafc4d3a-a165-4a31-94b6-14585f99ac59" alt=""
+                    <img src="<?php echo get_theme_file_uri('assets/images/media-decor-1.svg'); ?>" alt=""
                          class="block max-w-none size-full"/>
                 </div>
             </div>
@@ -42,7 +31,7 @@
         <div class="absolute bottom-[-0.13%] flex items-center justify-center left-[-72.91%] right-[10.22%] top-0">
             <div className="flex-none h-[332.434px] rotate-[180deg] scale-y-[-100%] w-[618.207px]">
                 <div class="opacity-[0.45] relative size-full">
-                    <img src="https://www.figma.com/api/mcp/asset/a3ed1268-469b-463b-830a-12704d0610ad" alt=""
+                    <img src="<?php echo get_theme_file_uri('assets/images/media-decor-2.svg'); ?>" alt=""
                          class="block max-w-none size-full"/>
                 </div>
             </div>

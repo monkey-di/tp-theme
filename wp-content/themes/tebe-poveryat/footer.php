@@ -12,7 +12,7 @@ if (file_exists($mobile_menu_path)) {
 }
 ?>
 
-<footer class="footer w-full bg-primary relative overflow-hidden py-12 lg:py-[56px] px-4">
+<footer class="footer w-full bg-primary relative overflow-hidden px-4 z-20 mt-[-40px] lg:mt-[-80px] pt-12 lg:pt-32 pb-12 lg:pb-[56px] [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
 
     <div class="footer__container container mx-auto px-4 lg:px-0 relative z-20 flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-[145px]">
 
@@ -23,7 +23,7 @@ if (file_exists($mobile_menu_path)) {
             <div class="footer__logo">
                 <a href="<?php
                 echo home_url(); ?>" class="block w-[340px] lg:w-[561px] h-[33px] lg:h-[54px]">
-                    <img src="https://www.figma.com/api/mcp/asset/802942f5-abc3-4669-879e-3ee57d459253" alt="<?php
+                    <img src="<?php echo get_theme_file_uri('assets/images/logo-footer.svg'); ?>" alt="<?php
                     echo get_bloginfo('name'); ?>" class="w-full h-full object-contain lg:object-left"/>
                 </a>
             </div>
@@ -32,12 +32,12 @@ if (file_exists($mobile_menu_path)) {
             <div class="footer__social flex gap-4 lg:gap-3 justify-center lg:justify-start relative left-[-5px] lg:pt-8">
                 <a href="#"
                    class="footer__social-link footer__social-link--telegram w-14 h-14 flex items-center justify-center hover:opacity-80 transition">
-                    <img src="https://www.figma.com/api/mcp/asset/2ac5164c-f53c-4646-8486-b3852ce8d9f3" alt="Telegram"
+                    <img src="<?php echo get_theme_file_uri('assets/images/icon-telegram.svg'); ?>" alt="Telegram"
                          class="w-full h-full object-contain"/>
                 </a>
                 <a href="#"
                    class="footer__social-link footer__social-link--vk w-14 h-14 flex items-center justify-center hover:opacity-80 transition">
-                    <img src="https://www.figma.com/api/mcp/asset/6b991558-e49f-4871-a3b3-57a3328a204d" alt="VK"
+                    <img src="<?php echo get_theme_file_uri('assets/images/icon-vk.svg'); ?>" alt="VK"
                          class="w-full h-full object-contain"/>
                 </a>
             </div>
@@ -55,7 +55,7 @@ if (file_exists($mobile_menu_path)) {
                 </div>
 
                 <div class="footer__author hidden lg:block">
-                    <img src="https://www.figma.com/api/mcp/asset/734dba62-15fd-4cd2-8028-ca94fbc94bfe"
+                    <img src="<?php echo get_theme_file_uri('assets/images/author-signature.svg'); ?>"
                          alt="Made with Love" class="w-[186px] h-[20px] object-contain opacity-100"/>
                 </div>
             </div>
@@ -176,7 +176,7 @@ if (file_exists($mobile_menu_path)) {
 
             <!-- Author Signature -->
             <div class="footer__author flex justify-start lg:justify-center">
-                <img src="https://www.figma.com/api/mcp/asset/734dba62-15fd-4cd2-8028-ca94fbc94bfe" alt="Made with Love"
+                <img src="<?php echo get_theme_file_uri('assets/images/author-signature.svg'); ?>" alt="Made with Love"
                      class="w-[186px] h-[20px] object-contain opacity-100"/>
             </div>
         </div>

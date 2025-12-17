@@ -15,7 +15,7 @@ $friends_query = new WP_Query(array(
 ));
 
 ?>
-<section class="friends-section w-full bg-surface relative overflow-hidden py-12 lg:py-24">
+<section class="friends-section w-full bg-surface relative overflow-hidden z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_/_40px] lg:[border-radius:50%_/_80px]">
     <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-start lg:items-center">
 
         <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center mb-8">

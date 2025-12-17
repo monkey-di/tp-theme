@@ -27,7 +27,7 @@ wp_body_open(); ?>
                     the_custom_logo();
                 } else {
                     // Fallback from Figma - original mobile logo
-                    echo '<img src="https://www.figma.com/api/mcp/asset/980fea03-0eb2-47b1-8418-214c0ed92171" alt="' . get_bloginfo(
+                    echo '<img src="' . get_theme_file_uri('assets/images/logo-header-icon.svg') . '" alt="' . get_bloginfo(
                                     'name'
                             ) . '" class="w-full h-full object-contain">';
                 }
@@ -106,7 +106,7 @@ wp_body_open(); ?>
         <!-- Burger Menu (visible only on mobile) -->
         <button class="header__burger xl:hidden w-16 h-10 p-2 bg-primary rounded-[40px] flex justify-center items-center gap-2 hover:bg-opacity-90 transition cursor-pointer border-none js-open-mobile-menu">
             <div class="header__burger-icon relative w-6 h-6">
-                <img src="https://www.figma.com/api/mcp/asset/f1f61e86-0d0a-4090-8c31-ad4587e05d51" alt="Menu"
+                <img src="<?php echo get_theme_file_uri('assets/images/icon-burger.svg'); ?>" alt="Menu"
                      class="w-full h-full"/>
             </div>
         </button>

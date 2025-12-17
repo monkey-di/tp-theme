@@ -1,30 +1,31 @@
-# Контекст проекта Tebe Poveryat
+# Asset Update Context - 2025-12-15
 
-Привет!
-Вот состояние проекта на **08.12.2025**.
+## Summary
+Replaced placeholder Figma asset URLs with local assets downloaded via `download_assets.sh`.
+This ensures that the theme does not rely on temporary Figma API links which expire after 7 days.
 
-## 🏗 Архитектура
-*   **Hybrid/Classic:** `front-page.php` вызывает `template-parts/home/*.php`.
-*   **Styles:** Tailwind CSS v4 (в `src/input.css`, сборка в `assets/css/output.css`).
-*   **JS:** `assets/js/main.js` (меню), `assets/js/sliders.js` (слайдеры).
-*   **Libs:** Swiper.js (в `assets/vendor/swiper/`).
+## Asset Mapping
 
-## 🚦 Текущий статус: MOBILE VERSION COMPLETED
-1.  **Главная страница:** Мобильная версия завершена и максимально приближена к макету Figma.
-    *   Все секции обновлены с использованием реальных ассетов из Figma (через MCP).
-    *   Устранены все стилистические несоответствия, проблемы с типографикой, отступами, позиционированием, z-index, фоновыми элементами.
-    *   Настроена работа мобильного меню.
-    *   Использованы семантические классы Tailwind для цветов.
-2.  **UI Kit:** Компоненты (`button`, `link-more`...) обновлены для поддержки изображений иконок и общей стилистики.
+| Original Figma Component | Local File Path | Description |
+| ------------------------ | --------------- | ----------- |
+| Team Members | `assets/images/team-*.jpg` | Julia Kuleshova, Ksenia Shashunova |
+| Friends | `assets/images/friend-*.jpg` | Aglaya Tarasova, Konstantin Khabensky, Yuri Shevchuk |
+| History | `assets/images/history-*.jpg` | Tatiana Tsvetkova |
+| Partners | `assets/images/partner-*.svg` | Partner logos |
+| Hero | `assets/images/hero-abstract.png` | Abstract hero background |
+| Logo | `assets/images/logo-header-icon.svg`, `logo-header-text.svg` | Header logo parts |
+| Decor | `assets/images/media-wave.svg`, `media-decor-*.svg` | Decorative waves and shapes |
+| Footer | `assets/images/logo-footer.svg` | Footer logo (Desktop `imgGroup7`) |
+| Icons | `assets/images/icon-*.svg` | Telegram (`imgLinkTelegram`), VK (`imgLink`), Burger menu (Mobile `imgOutlineMenu`), Heart (`imgUnion`) |
+| Link Decoration | `assets/images/arrow-link-more.svg` | Underline decoration for "Read More" links (Desktop `imgLine3`) |
+| Team Wave | `assets/images/team-wave.svg` | Decorative wave in Team section (Desktop `imgEllipse2`) |
+| Author Signature | `assets/images/author-signature.svg` | Author signature in footer (Desktop `imgAuthorSvg`) |
 
-## 📝 План действий (Next Steps)
-1.  **Адаптив (Desktop):** Главная задача. Превратить мобильную верстку в десктопную.
-    *   Систематически пройтись по всем `template-parts/home/` файлам и добавить `md:`, `lg:`, `xl:` Tailwind классы для настройки Grid/Flex, размеров, отступов.
-2.  **Функционал:**
-    *   Доделать мобильное меню (анимации) - если потребуется дополнительная доработка.
-    *   PHP-обработчики форм.
-3.  **Страницы:** `single.php` и другие.
+## Key Changes
+- Updated `download_assets.sh` with correct Figma asset IDs after verifying valid responses.
+- Modified `header.php`, `footer.php`, `template-parts/home/team.php`, and `template-parts/components/link-more.php` to use `get_theme_file_uri()` for these assets.
+- Fixed 404 errors for `arrow-link-more.svg`, `author-signature.svg`, `icon-burger.svg`, `icon-telegram.svg`, `icon-vk.svg`, `logo-footer.svg`, and `team-wave.svg`.
 
-## ⚠️ Важно
-*   Всегда запускай `npm run dev` при правке классов Tailwind.
-*   Все цвета настроены в `input.css` (`@theme`).
+## Notes
+- Images are downloaded to `wp-content/themes/tebe-poveryat/assets/images/`.
+- `download_assets.sh` can be re-run to refresh assets if URLs are updated.

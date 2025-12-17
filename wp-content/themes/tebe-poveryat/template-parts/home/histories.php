@@ -5,33 +5,22 @@
  */
 
 ?>
-<section class="histories-section w-full bg-sky relative overflow-hidden py-12">
+<section class="histories-section w-full bg-sky relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] lg:pt-[160px] pb-[80px] lg:pb-[160px]">
 
-    <!-- Top Wave -->
-    <div class="histories-section__wave histories-section__wave--top absolute left-0 top-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/5b123c0f-8fc7-432b-a8ff-d1c8d69cf037" alt=""
-             class="w-full h-[32px] object-cover"/>
-    </div>
-
-    <!-- Bottom Wave -->
-    <div class="histories-section__wave histories-section__wave--bottom absolute left-0 bottom-0 z-10 w-full">
-        <img src="https://www.figma.com/api/mcp/asset/5b123c0f-8fc7-432b-a8ff-d1c8d69cf037" alt=""
-             class="w-full h-[32px] object-cover scale-y-[-1]"/>
-    </div>
     <div class="hidden lg:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php
-        echo get_template_directory_uri(); ?>/assets/images/фон3.png" alt="" class="w-full h-full"/>
+        echo get_template_directory_uri(); ?>/assets/images/bg3.png" alt="" class="w-full h-full"/>
 
     </div>
 
     <!-- Background Decor (Stars/Sparks) -->
     <div class="histories-section__decor absolute inset-0 z-0 pointer-events-none lg:hidden">
         <div class="absolute bottom-0 left-[-28px] w-[423px] h-[423px] flex items-center justify-center">
-            <img src="https://www.figma.com/api/mcp/asset/ca24a85b-aec7-44bb-9747-9b67a42f16c0" alt=""
+            <img src="<?php echo get_theme_file_uri('assets/images/history-decor-1.svg'); ?>" alt=""
                  class="w-full h-full object-contain opacity-45 rotate-[270deg]"/>
         </div>
         <div class="absolute top-[5%] right-[-6%] w-[432px] h-[432px] flex items-center justify-center">
-            <img src="https://www.figma.com/api/mcp/asset/8a7b47e0-5554-4a01-99f4-964c295223ba" alt=""
+            <img src="<?php echo get_theme_file_uri('assets/images/history-decor-2.svg'); ?>" alt=""
                  class="w-full h-full object-contain opacity-45 rotate-[270deg] scale-y-[-1]"/>
         </div>
     </div>
@@ -52,7 +41,7 @@
                         <!-- Image Container -->
                         <div class="histories__card-image relative w-[calc(100%-8px)] lg:w-[340px] h-[400px] lg:h-auto mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0">
                             <img class="w-full h-full object-cover"
-                                 src="https://www.figma.com/api/mcp/asset/314b9643-f36f-4b57-bdbc-8214ec397710"
+                                 src="<?php echo get_theme_file_uri('assets/images/history-tatiana.jpg'); ?>"
                                  alt="Татьяна Цветкова"/>
                             <div class="absolute inset-0 bg-black/20"></div>
 
@@ -132,7 +121,7 @@
                     <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col lg:flex-row items-center lg:items-stretch pt-1 lg:p-1 lg:gap-[40px]">
                         <div class="histories__card-image relative w-[calc(100%-8px)] lg:w-[340px] h-[400px] lg:h-auto mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0">
                             <img class="w-full h-full object-cover"
-                                 src="https://www.figma.com/api/mcp/asset/314b9643-f36f-4b57-bdbc-8214ec397710"
+                                 src="<?php echo get_theme_file_uri('assets/images/history-tatiana.jpg'); ?>"
                                  alt="Мария Иванова"/>
                             <div class="absolute inset-0 bg-black/20"></div>
                             <div class="absolute left-0 bottom-0 w-full p-4 lg:hidden">
@@ -194,7 +183,7 @@
                     <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col lg:flex-row items-center lg:items-stretch pt-1 lg:p-1 lg:gap-[40px]">
                         <div class="histories__card-image relative w-[calc(100%-8px)] lg:w-[340px] h-[400px] lg:h-auto mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0">
                             <img class="w-full h-full object-cover"
-                                 src="https://www.figma.com/api/mcp/asset/314b9643-f36f-4b57-bdbc-8214ec397710"
+                                 src="<?php echo get_theme_file_uri('assets/images/history-tatiana.jpg'); ?>"
                                  alt="Елена Петрова"/>
                             <div class="absolute inset-0 bg-black/20"></div>
                             <div class="absolute left-0 bottom-0 w-full p-4 lg:hidden">

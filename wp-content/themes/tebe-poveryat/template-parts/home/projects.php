@@ -5,11 +5,11 @@
  */
 
 ?>
-<section class="projects-section w-full bg-peach relative overflow-hidden py-8 lg:py-24">
+<section class="projects-section w-full bg-peach relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] lg:pt-[160px] pb-[80px] lg:pb-[160px]">
     <!-- Decorative SVG Shapes -->
     <div class="absolute inset-0 z-0 pointer-events-none px-0 lg:px-[96px] hidden lg:block">
         <img src="<?php
-        echo get_template_directory_uri(); ?>/assets/images/фон.png" alt=""
+        echo get_template_directory_uri(); ?>/assets/images/bg.png" alt=""
              class="w-full h-full object-cover object-bottom lg:object-center"/>
     </div>
 
@@ -17,18 +17,6 @@
         <img src="<?php
         echo get_template_directory_uri(); ?>/assets/images/fon1.png" alt=""
              class="w-full h-full object-cover object-bottom lg:object-center"/>
-    </div>
-
-    <!-- Top and Bottom Ellipse Shapes -->
-    <div class="absolute top-0 left-0 w-full h-[32px] lg:h-[64px] z-10">
-        <img src="<?php
-        echo get_template_directory_uri(); ?>/assets/images/campaign-ellipse1.svg" alt=""
-             class="w-full h-full object-cover"/>
-    </div>
-    <div class="absolute bottom-0 left-0 w-full h-[32px] lg:h-[64px] z-10 scale-y-[-1]">
-        <img src="<?php
-        echo get_template_directory_uri(); ?>/assets/images/campaign-ellipse1.svg" alt=""
-             class="w-full h-full object-cover"/>
     </div>
 
     <div class="projects__container container mx-auto px-4 relative z-20 flex flex-col items-start lg:items-center pt-[80px] pb-8 lg:pt-14 lg:pb-8">

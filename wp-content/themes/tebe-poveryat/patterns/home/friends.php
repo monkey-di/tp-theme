@@ -17,16 +17,16 @@
     <!-- wp:gallery {"columns":4,"linkTo":"none","sizeSlug":"thumbnail"} -->
     <figure class="wp-block-gallery has-nested-images columns-4 is-cropped">
         <!-- wp:image {"id":1,"sizeSlug":"thumbnail","linkDestination":"none"} -->
-        <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Логотип 1"/></figure>
+        <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partner-1.svg' ) ); ?>" alt="Логотип 1"/></figure>
         <!-- /wp:image -->
         <!-- wp:image {"id":2,"sizeSlug":"thumbnail","linkDestination":"none"} -->
-        <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Логотип 2"/></figure>
+        <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partner-2.svg' ) ); ?>" alt="Логотип 2"/></figure>
         <!-- /wp:image -->
         <!-- wp:image {"id":3,"sizeSlug":"thumbnail","linkDestination":"none"} -->
-        <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Логотип 3"/></figure>
+        <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partner-3.svg' ) ); ?>" alt="Логотип 3"/></figure>
         <!-- /wp:image -->
         <!-- wp:image {"id":4,"sizeSlug":"thumbnail","linkDestination":"none"} -->
-        <figure class="wp-block-image size-thumbnail"><img src="https://via.placeholder.com/150" alt="Логотип 4"/></figure>
+        <figure class="wp-block-image size-thumbnail"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/partner-4.svg' ) ); ?>" alt="Логотип 4"/></figure>
         <!-- /wp:image -->
     </figure>
     <!-- /wp:gallery -->

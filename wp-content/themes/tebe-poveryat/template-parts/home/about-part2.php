@@ -20,7 +20,7 @@ $description = implode( "\n\n", $description_parts );
 // Получаем изображение
 $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
 ?>
-<section class="about-section-part2 w-full bg-surface py-12 px-4 relative overflow-hidden">
+<section class="about-section-part2 w-full bg-surface px-4 relative overflow-hidden z-20 pt-0 pb-12 lg:pb-32 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
     <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-12">
 
         <!-- Left Column: Image -->

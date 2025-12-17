@@ -4,7 +4,7 @@
  * Mobile First.
  */
 ?>
-<section class="materials-section materials w-full bg-surface relative overflow-hidden py-12 lg:pt-20 lg:pb-40 px-4">
+<section class="materials-section materials w-full bg-surface relative overflow-hidden px-4 z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_/_40px] lg:[border-radius:50%_/_80px]">
     <div class="materials__container container mx-auto flex flex-col gap-6 lg:gap-8">
 
         <!-- Title -->
