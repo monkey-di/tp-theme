@@ -34,9 +34,12 @@ switch ($size) {
     case 'lg':
         $base_classes .= ' px-8 py-3 text-xl';
         break;
+    case 'help':
+        $base_classes .= ' py-4 text-base font-normal uppercase leading-6 mt-2';
+        break;
     case 'md':
     default:
-        $base_classes .= ' px-5 py-3 text-base'; // Default for the provided maket
+        $base_classes .= ' px-5 py-3 xl:py-4 text-base'; // Default for the provided maket
         break;
 }
 

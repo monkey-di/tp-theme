@@ -21,7 +21,7 @@ $description = implode( "\n\n", $description_parts );
 $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
 ?>
 <section class="about-section-part2 w-full bg-surface px-4 relative overflow-hidden z-20 pt-0 pb-12 lg:pb-32 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
-    <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row lg:items-center lg:gap-12">
+    <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row sm:items-center lg:gap-12">
 
         <!-- Left Column: Image -->
         <?php if ( $image_url ) : ?>
@@ -57,7 +57,7 @@ $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
             <!-- Description Text -->
             <?php if ( $description ) : ?>
             <div class="about-section-part2__description">
-                <p class="text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] line-clamp-5"><?php echo esc_html( $description ); ?></p>
+                <p class="text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] line-clamp-5 xl:line-clamp-none"><?php echo esc_html( $description ); ?></p>
             </div>
             <?php endif; ?>
 
@@ -66,7 +66,8 @@ $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
                 <?php get_template_part('template-parts/components/link-more', null, [
                     'text' => 'Читать далее',
                     'url' => '#',
-                    'style' => 'default'
+                    'style' => 'default',
+                    'icon_classes' => 'hidden'
                 ]); ?>
             </div>
         </div>

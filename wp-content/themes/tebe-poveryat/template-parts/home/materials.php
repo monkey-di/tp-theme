@@ -8,7 +8,7 @@
     <div class="materials__container container mx-auto flex flex-col gap-6 lg:gap-8">
 
         <!-- Title -->
-        <h2 class="materials__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text-left lg:text-center">
+        <h2 class="materials__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text-left sm:text-center">
             Полезные <br class="lg:hidden">материалы
         </h2>
 
@@ -36,7 +36,7 @@
                         $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
                         ?>
                         <div class="swiper-slide w-[500px]">
-                            <div class="materials__card w-full lg:max-w-[1055px] lg:ml-[168px] flex flex-col lg:flex-row gap-6 lg:gap-0">
+                            <div class="materials__card w-full xl:max-w-[1055px] xl:ml-[168px] flex flex-col lg:flex-row gap-6 lg:gap-0">
                                 <!-- Illustration -->
                                 <?php if ( $thumbnail_url ) : ?>
                                 <div class="materials__card-image w-full lg:w-[453px] lg:h-[453px] lg:min-w-[453px] rounded-[20px] overflow-hidden relative bg-[#fef1ec] flex-shrink-0">
@@ -46,11 +46,11 @@
 
                                 <!-- Content -->
                                 <div class="materials__card-content flex flex-col justify-start gap-4 lg:gap-6 lg:p-12 lg:flex-1">
-                                    <h3 class="materials__card-title text-contrast text-[20px] lg:text-[26px] font-extrabold font-akrobat leading-none max-w-[400px]">
+                                    <h3 class="materials__card-title text-contrast text-4xl lg:text-[26px] font-extrabold font-akrobat leading-none max-w-[400px]">
                                         <?php the_title(); ?>
                                     </h3>
                                     <?php if ( has_excerpt() ) : ?>
-                                    <p class="materials__card-description text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5]">
+                                    <p class="materials__card-description text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5]">
                                         <?php echo get_the_excerpt(); ?>
                                     </p>
                                     <?php endif; ?>

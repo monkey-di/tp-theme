@@ -58,13 +58,40 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             on: {
                 init: function () {
-                    // Добавляем плавные переходы при инициализации
+                    // Initialize Quote
+                    const activeSlide = this.slides[this.activeIndex];
+                    if (activeSlide) {
+                         const quoteEl = activeSlide.querySelector('.friends__slide-quote');
+                         const outputEl = document.querySelector('.friends__quote-output');
+                         if (quoteEl && outputEl) {
+                             outputEl.innerHTML = quoteEl.innerHTML;
+                         }
+                    }
+
+                    // Add transitions
                     this.slides.forEach(slide => {
                         const imageWrap = slide.querySelector('.friends__card-image-wrap');
-                        const quote = slide.querySelector('.friends__card-quote');
                         if (imageWrap) imageWrap.style.transition = 'filter 700ms ease-in-out';
-                        if (quote) quote.style.transition = 'opacity 700ms ease-in-out';
                     });
+                },
+                slideChange: function () {
+                     const outputEl = document.querySelector('.friends__quote-output');
+                     if (!outputEl) return;
+                     
+                     // Fade out
+                     outputEl.style.opacity = '0';
+                     
+                     setTimeout(() => {
+                         const activeSlide = this.slides[this.activeIndex];
+                         if (activeSlide) {
+                             const quoteEl = activeSlide.querySelector('.friends__slide-quote');
+                             if (quoteEl) {
+                                 outputEl.innerHTML = quoteEl.innerHTML;
+                             }
+                         }
+                         // Fade in
+                         outputEl.style.opacity = '1';
+                     }, 300);
                 }
             }
         });

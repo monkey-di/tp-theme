@@ -16,7 +16,7 @@ $style = $args['style'] ?? 'default';
 $class = $args['class'] ?? '';
 
 $text_classes = '';
-$icon_classes = 'w-6 h-6 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0 flex items-center justify-center';
+$icon_classes = $args['icon_classes'] ?? 'w-6 h-6 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0 flex items-center justify-center';
 
 switch ($style) {
     case 'hero':

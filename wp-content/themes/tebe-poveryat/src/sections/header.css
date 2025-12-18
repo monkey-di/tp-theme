@@ -9,7 +9,7 @@
   }
 
   .header__container {
-    @apply mx-auto px-4 xl:px-24 flex justify-between items-center h-[144px] xl:h-[80px];
+    @apply container mx-auto px-4 xl:px-0 flex justify-between items-center h-[144px] xl:h-[80px];
   }
 
   .header__logo-link {
@@ -89,7 +89,7 @@
 
   /* Donate Button - Desktop */
   .header__donate-btn {
-    @apply bg-secondary rounded-[40px] px-[20px] py-[8px] h-[60px] flex items-center gap-[8px];
+    @apply bg-secondary rounded-[40px] px-[20px] py-[8px] h-[56px] w-[216px] flex items-center gap-[8px] justify-center;
     @apply no-underline transition duration-200;
   }
 

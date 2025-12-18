@@ -76,12 +76,14 @@
   В v4 конфиг (theme, plugins) можно писать прямо здесь.
   WordPress специфичные классы можно добавить ниже.
 */
+@utility container {
+    max-width: 1408px !important;
+}
+
 
 @layer base {
   /* Container max-width override */
-  .container {
-    max-width: 1408px !important;
-  }
+
 
   body {
       @apply bg-surface text-contrast font-geologica text-[16px] leading-[1.5];
@@ -92,7 +94,7 @@
   }
 
   h1, .h1 {
-      @apply font-ura text-[73px] leading-[69.35px] uppercase;
+      @apply font-ura text-[73px] leading-[69.35px] xl:text-[180px] xl:leading-[171px] uppercase;
   }
 
   h2, .h2 {
@@ -125,5 +127,6 @@
 @import "./sections/donation.css";
 @import "./sections/about.css";
 @import "./sections/friends.css";
+@import "./sections/histories.css";
 @import "./sections/media.css";
 @import "./sections/materials.css";

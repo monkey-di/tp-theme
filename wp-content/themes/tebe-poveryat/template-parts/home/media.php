@@ -5,7 +5,7 @@
  */
 
 ?>
-<section class="media-section w-full bg-teal relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] lg:pt-[160px] pb-[80px] lg:pb-[160px]">
+<section class="media-section w-full bg-teal relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px]">
     <div class="hidden lg:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php
         echo get_template_directory_uri(); ?>/assets/images/bg2.png" alt="" class="w-full h-full"/>

@@ -33,7 +33,7 @@ $widths = array( 'w-[calc(43%-4px)]', 'w-[calc(51%-4px)]', 'w-[calc(53%-4px)]', 
     <div class="about__container">
 
         <!-- Left Column (Title and Description) -->
-        <div class="flex flex-col lg:gap-10">
+        <div class="flex flex-col lg:pt-4 lg:gap-10">
             <?php if ( $title ) : ?>
             <h2 class="about__title"><?php echo esc_html( $title ); ?></h2>
             <?php endif; ?>

@@ -6,11 +6,22 @@
     /* Hero Section */
     .hero-section {
         @apply w-full bg-surface relative overflow-hidden lg:py-12 px-4;
+
+    }
+    @media (min-width: 1280px) {
+        .hero-section {
+            background: url("/wp-content/themes/tebe-poveryat/assets/images/bg-hero.webp") 57% 9% no-repeat;
+        }
     }
 
+    .hero__slider .swiper-slide {
+        @apply sm:px-40 xl:px-0;
+    }
     /* Container */
     .hero__container {
-        @apply container mx-auto flex flex-col justify-start items-start h-full;
+        @apply container mx-auto pb-10 xl:pb-0 flex flex-col justify-start items-start h-full;
+
+
     }
 
     /* Slider */
@@ -26,12 +37,12 @@
     /* ============ MOBILE STYLES (320px+) ============ */
     /* Titles Section - relative container for absolute image positioning */
     .hero__titles-section {
-        @apply relative w-fit mx-auto;
+        @apply relative w-fit mx-auto max-w-[844px] text-primary;
     }
 
     /* Title Part 1 */
     .hero__title-part1 {
-        @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] mt-12 relative;
+        @apply text-primary mt-12 relative text-center;
         z-index: 10;
     }
 
@@ -58,12 +69,12 @@
 
     /* Subtitle */
     .hero__subtitle {
-        @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-3 lg:mt-8 z-10 relative;
+        @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-3 lg:mt-5 z-10 relative;
     }
 
     /* Description */
     .hero__description {
-        @apply mt-3 xl:mt-6 z-10 relative;
+        @apply mt-3 xl:mt-5 z-10 relative;
     }
 
     .hero__description p {
@@ -72,7 +83,7 @@
 
     /* Learn More */
     .hero__learn-more {
-        @apply mt-10 z-10 relative;
+        @apply mt-3 z-10 relative;
     }
 
     /* Slider Controls */
@@ -95,6 +106,10 @@
         /* Background decorative ellipses - Hidden on mobile, visible on desktop */
         .hero__bg-ellipse {
             @apply hidden;
+        }
+
+        .hero__learn-more {
+            @apply mt-[27px];
         }
 
         /* Large central ellipse */
@@ -172,6 +187,10 @@
             pointer-events: none;
         }
 
+        .hero__title-part1 {
+            @apply mb-[25px]
+        }
+
         /* Container */
         .hero__container {
             @apply h-full;
@@ -200,10 +219,7 @@
         }
 
         /* Title Part 1 - Desktop (normal flow) */
-        .hero__title-part1 {
-            @apply text-[150px] leading-[0.95] text-center;
-            margin: 0;
-        }
+
 
         /* Title Part 2 - Desktop (normal flow) */
         .hero__title-part2 {
@@ -215,8 +231,8 @@
         .hero__image-wrapper {
             @apply absolute;
             z-index: 0;
-            top: -14px;
-            left: 534px;
+            top: -12px;
+            left: 633px;
             transform: none;
             width: 275px;
             height: 275px;
@@ -227,7 +243,7 @@
 
         /* Decorative Image - Desktop (image itself has rotation in assets) */
         .hero__decor-image {
-            @apply w-[224px] h-[224px] object-cover;
+            @apply w-[275px] h-[275px] object-cover;
         }
 
         /* Subtitle - Desktop */
@@ -244,9 +260,10 @@
             @apply text-center;
         }
 
+
         .hero__description p {
             @apply text-[23px] mx-auto;
-            max-width: 785px;
+            max-width: 1151px;
         }
 
         /* Learn More - Desktop */
@@ -274,7 +291,7 @@
         }
 
         .slider-navigation {
-            @apply flex w-full justify-between items-center absolute top-[40%] translate-y-[-50%] px-24;
+            @apply flex w-full justify-between items-center absolute top-[46%] translate-y-[-50%] px-24;
             pointer-events: all;
         }
 

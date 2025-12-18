@@ -4,11 +4,11 @@
 }
 
 .about__container {
-    @apply container mx-auto lg:py-20 flex flex-col gap-8 md:flex-row md:gap-[146px] md:justify-start md:items-center; /* Increased gap-x for desktop */
+    @apply container mx-auto py-12 lg:py-24 flex flex-col gap-8 md:flex-row xl:gap-[146px] md:justify-start md:items-center; /* Increased gap-x for desktop */
 }
 
 .about__title {
-    @apply text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-left lg:text-center md:text-left md:text-[64px] md:leading-[0.95]; /* Added responsive line-height */
+    @apply text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-left lg:text-left md:text-left md:text-[64px] md:leading-[0.95]; /* Added responsive line-height */
 }
 
 .about__description {
@@ -19,7 +19,7 @@
 }
 
 .about__stats {
-    @apply flex flex-row flex-wrap gap-2 mt-4 md:flex-col md:gap-4 md:mt-0 xl:w-full max-w-[573px];
+    @apply flex flex-row flex-wrap gap-2 mt-4 xl:flex-col md:gap-4 xl:mt-0 xl:w-full max-w-[573px];
 }
 
 .about__stat-card {
@@ -27,7 +27,7 @@
 }
 
 .about__stat-card-number {
-    @apply text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] lg:w-[263px];
+    @apply text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] lg:w-[223px];
 }
 
 .about__stat-card-text {

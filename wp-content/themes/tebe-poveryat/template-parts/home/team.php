@@ -4,12 +4,12 @@
  * Mobile First.
  */
 ?>
-<section class="team-section w-full bg-surface px-4 relative overflow-hidden z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
+<section class="team-section w-full bg-surface px-4 relative overflow-hidden z-20 pt-12 pb-12  [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
     
-    <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col gap-8">
+    <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col xl:gap-8">
         
         <!-- Title -->
-        <h2 class="team__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text=left lg:text-center">
+        <h2 class="team__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text=left sm:text-center">
             Наши специалисты
         </h2>
 
@@ -76,7 +76,7 @@
                                     <!-- Description -->
                                     <?php if ( get_the_content() ) : ?>
                                     <div class="mt-[26px]">
-                                        <p class="text-contrast text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] max-w-[630px] line-clamp-6 xl:line-clamp-none">
+                                        <p class="text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] max-w-[630px] line-clamp-6 xl:line-clamp-none">
                                             <?php echo get_the_content(); ?>
                                         </p>
                                     </div>
@@ -86,7 +86,9 @@
                                         <?php get_template_part('template-parts/components/link-more', null, [
                                             'text' => 'Читать далее',
                                             'url' => '#',
-                                            'style' => 'default'
+                                            'style' => 'default',
+                                            'icon_classes' => 'hidden'
+
                                         ]); ?>
                                     </div>
                                 </div>

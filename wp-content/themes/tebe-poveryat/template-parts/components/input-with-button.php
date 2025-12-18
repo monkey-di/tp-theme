@@ -28,17 +28,17 @@ $input_classes = 'flex-grow bg-transparent border-none outline-none text-base fo
 switch ($state) {
     case 'disabled':
         $wrapper_classes .= ' bg-primary/20 cursor-not-allowed';
-        $input_classes .= ' text-contrast opacity-40 placeholder-contrast/40';
+        $input_classes .= ' text-contrast opacity-40 placeholder-[#6063a6] placeholder-opacity-60';
         $is_disabled = 'disabled';
         break;
     case 'error':
         $wrapper_classes .= ' bg-white outline outline-1 outline-secondary';
-        $input_classes .= ' text-secondary placeholder-secondary';
+        $input_classes .= ' text-secondary placeholder-[#6063a6] placeholder-opacity-60';
         $is_disabled = '';
         break;
     default: // default / focus
         $wrapper_classes .= ' bg-white focus-within:outline focus-within:outline-1 focus-within:outline-primary';
-        $input_classes .= ' text-contrast placeholder-contrast/40'; // Changed from text-primary
+        $input_classes .= ' text-contrast placeholder-[#6063a6] placeholder-opacity-60'; // Changed from text-primary
         $is_disabled = '';
         break;
 }

@@ -16,19 +16,19 @@ $friends_query = new WP_Query(array(
 
 ?>
 <section class="friends-section w-full bg-surface relative overflow-hidden z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_/_40px] lg:[border-radius:50%_/_80px]">
-    <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-start lg:items-center">
+    <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-start sm:items-center">
 
-        <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center mb-8">
+        <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center">
             Наши друзья
         </h2>
 
         <?php if ( $friends_query->have_posts() ) : ?>
-            <div class="friends__slider-area w-full flex items-center lg:justify-between lg:gap-x-4 lg:mt-10">
+            <div class="friends__slider-area w-full flex items-center lg:justify-between lg:gap-x-4 mt-6 lg:mt-10">
                 <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative top-[-100px]">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
 
-                <div class="swiper-container-wrapper w-full lg:max-w-[1169px]">
+                <div class="swiper-container-wrapper w-full lg:max-w-[800px] xl:max-w-[1169px]">
                     <div class="friends__slider swiper">
                         <div class="swiper-wrapper items-stretch">
                             <?php
@@ -49,9 +49,9 @@ $friends_query = new WP_Query(array(
                                                 <p class="text-[16px] font-geologica leading-[1.5]"><?php echo get_the_excerpt(); ?></p>
                                             </div>
                                         </div>
-                                        <p class="friends__card-quote text-[16px] lg:text-[23px] font-light font-geologica leading-[1.5] text-contrast">
+                                        <div class="friends__slide-quote hidden">
                                             <?php echo get_the_content(); ?>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endwhile; ?>
@@ -75,9 +75,9 @@ $friends_query = new WP_Query(array(
                                                 <p class="text-[16px] font-geologica leading-[1.5]"><?php echo get_the_excerpt(); ?></p>
                                             </div>
                                         </div>
-                                        <p class="friends__card-quote text-[23px] font-light font-geologica leading-[1.5] text-contrast">
+                                        <div class="friends__slide-quote hidden">
                                             <?php echo get_the_content(); ?>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endwhile; ?>
@@ -90,6 +90,8 @@ $friends_query = new WP_Query(array(
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next" />
                 </button>
             </div>
+
+            <div class="friends__quote-output text-center font-geologica font-light text-[23px] leading-[1.5] text-contrast max-w-[672px] mx-auto mt-12 min-h-[80px] transition-opacity duration-300"></div>
 
             <div class="friends__mobile-progress w-full mt-8 lg:hidden">
                  <?php get_template_part('template-parts/components/slider-progress', null, [

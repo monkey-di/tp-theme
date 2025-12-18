@@ -14,13 +14,8 @@ $slides_query = new WP_Query(array(
         'post_status' => 'publish',
 ));
 ?>
-<section class="hero-section bg-surface relative z-20 pb-12 lg:pb-32 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
-    <!-- Desktop Background Decorative Ellipses -->
-    <div class="hero__bg-ellipse hero__bg-ellipse--large"></div>
-    <div class="hero__bg-ellipse hero__bg-ellipse--top-left"></div>
-    <div class="hero__bg-ellipse hero__bg-ellipse--bottom-right"></div>
-    <div class="hero__bg-ellipse hero__bg-ellipse--top-left-small"></div>
-    <div class="hero__bg-ellipse hero__bg-ellipse--bottom-right-small"></div>
+<section class="hero-section bg-surface relative z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
+
     <div class="absolute inset-0 z-0 pointer-events-none px-0 lg:px-[96px] lg:hidden block">
         <img src="<?php
         echo get_template_directory_uri(); ?>/assets/images/Ellipse.png" alt=""
@@ -39,10 +34,8 @@ $slides_query = new WP_Query(array(
                             <!-- Titles Section with Image (relative container for absolute image positioning) -->
                             <div class="hero__titles-section">
                                 <!-- Main Title Part 1 -->
-                                <h1 class="hero__title-part1">Тебе</h1>
+                                <h1 class="h1 hero__title-part1">Тебе  <br class="lg:hidden">поверят</h1>
 
-                                <!-- Main Title Part 2 -->
-                                <h1 class="hero__title-part2">поверят</h1>
 
                                 <!-- Decorative Image (absolute positioned inside titles-section) -->
                                 <div class="hero__image-wrapper">

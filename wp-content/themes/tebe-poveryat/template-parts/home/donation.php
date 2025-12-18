@@ -4,7 +4,7 @@
  * Mobile First.
  */
 ?>
-<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[160px]">
+<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[140px]">
     
     <!-- Mobile Background -->
     <div class="md:hidden">
@@ -38,8 +38,8 @@
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stars/donation-stars-desktop.svg" alt="" class="w-full h-full ">
     </div>
 
-    <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16 md:pt-24 md:pb-24 lg:pt-32 lg:pb-32">
-        <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8 md:leading-[64px]">Поддержите нас</h2>
+    <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16 md:pt-0 md:pb-24 lg:pb-0">
+        <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8 md:leading-[64px] lg:mb-[35px]">Поддержите нас</h2>
         
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">
             <!-- Toggle Button Group (Разово/Ежемесячно) -->
@@ -55,8 +55,8 @@
                 <button type="button" class="donation-form__amount-button donation-form__amount-button--selected">1000₽</button>
                 <input type="text" placeholder="Другая сумма" class="donation-form__custom-amount" />
             </div>
-
-            <hr class="border-t border-white mb-[23px] mx-auto max-w-[708px]" />
+            <div class="self-stretch h-px bg-white mb-[23px]" > </div>
+            <hr class="border-t border-white  mx-auto max-w-[708px]" />
 
             <!-- Contact Inputs -->
             <div class="flex flex-col gap-4 mb-8">
@@ -86,6 +86,7 @@
             <?php get_template_part('template-parts/components/button', null, [
                 'text' => 'Помочь',
                 'submit' => true,
+                'size' => 'help',
                 'class' => 'w-full xl:w-[348px] mx-auto'
             ]); ?>
         </div>
