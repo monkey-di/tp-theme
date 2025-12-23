@@ -1,0 +1,76 @@
+name: Deploy Theme to Server
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies and build theme
+        working-directory: wp-content/themes/tebe-poveryat
+        run: |
+          npm install
+          npm run build
+
+      - name: Setup SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Deploy theme to server
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # Create deployment package (exclude unnecessary files)
+          mkdir -p deploy_package/tebe-poveryat
+          cp -r wp-content/themes/tebe-poveryat/* deploy_package/tebe-poveryat/
+
+          # Remove development files
+          rm -rf deploy_package/tebe-poveryat/node_modules
+          rm -rf deploy_package/tebe-poveryat/.git
+          rm -rf deploy_package/tebe-poveryat/src
+          rm -f deploy_package/tebe-poveryat/package.json
+          rm -f deploy_package/tebe-poveryat/package-lock.json
+
+          # Upload to server
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=~/.ssh/known_hosts" \
+            deploy_package/tebe-poveryat/ \
+            ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/
+
+      - name: Clear WordPress cache
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+            ${DEPLOY_USER}@${DEPLOY_HOST} \
+            "cd ${{ secrets.DEPLOY_PATH }}/.. && \
+             rm -rf wp-content/cache 2>/dev/null || true && \
+             echo 'Cache cleared successfully'"
+
+      - name: Deployment Status
+        if: success()
+        run: echo "✅ Theme deployed successfully!"
+
+      - name: Deployment Failed
+        if: failure()
+        run: echo "❌ Deployment failed!"
