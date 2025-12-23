@@ -5,14 +5,26 @@
 Перейди в **Settings → Secrets and variables → Actions** и добавь следующие секреты:
 
 ### `DEPLOY_SSH_KEY`
-Приватный SSH ключ для доступа на сервер. Копировать полное содержимое ключа (от `-----BEGIN` до `-----END`).
+Приватный SSH ключ для доступа на сервер. Скопировать **ПОЛНОЕ** содержимое ключа (от `-----BEGIN OPENSSH PRIVATE KEY-----` до `-----END OPENSSH PRIVATE KEY-----` включительно).
 
-Можно получить командой:
+Получить ключ командой:
 ```bash
+# Вариант 1: ed25519
 cat ~/.ssh/id_ed25519
-# или
+
+# Вариант 2: RSA (если у тебя нет ed25519)
 cat ~/.ssh/id_rsa
 ```
+
+**Пример содержимого:**
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+...много строк...
+-----END OPENSSH PRIVATE KEY-----
+```
+
+⚠️ **Важно**: Убедись что копируешь полное содержимое, все строки от BEGIN до END!
 
 ### `DEPLOY_HOST`
 ```

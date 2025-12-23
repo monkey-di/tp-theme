@@ -12,7 +12,7 @@
 
 | Name | Value |
 |------|-------|
-| `DEPLOY_SSH_KEY` | Содержимое файла `~/.ssh/id_ed25519` (от `-----BEGIN` до `-----END`) |
+| `DEPLOY_SSH_KEY` | **Полное** содержимое файла `~/.ssh/id_ed25519` или `~/.ssh/id_rsa` (от `-----BEGIN OPENSSH PRIVATE KEY-----` до `-----END OPENSSH PRIVATE KEY-----` включительно) |
 | `DEPLOY_HOST` | `tebe-poveryat.realeasystudio.site` |
 | `DEPLOY_USER` | `abrobe14_monkey` |
 | `DEPLOY_PATH` | `/home/a/abrobe14/tebe-poveryat.realeasystudio.site/public_html/wp-content/themes/tebe-poveryat` |
