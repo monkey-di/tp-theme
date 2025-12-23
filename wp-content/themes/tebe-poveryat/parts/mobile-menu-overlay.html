@@ -7,9 +7,18 @@
       
       <!-- Logo (simplified from complex SVG to standard WP Site Logo) -->
       <div class="mobile-menu-overlay__logo w-[67px] h-16 relative flex items-center">
+          <img src="/wp-content/themes/tebe-poveryat/assets/images/logo-header-icon.svg" alt="Тебе поверят" class="w-full h-full object-contain">
         <!-- wp:site-logo {"width":67,"height":64,"isLink":true} /-->
       </div>
-      
+        <!-- Donate Button (repeated from header) -->
+        <a href="#" class="mobile-menu-overlay__donate-btn w-[159px] h-10 px-3 py-2 bg-secondary rounded-[40px] flex justify-center items-center gap-1 no-underline hover:opacity-90 transition mr-2">
+            <div data-svg-wrapper>
+                <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.61553 1.01116C8.84736 -0.337024 10.8443 -0.33708 12.0761 1.01116C13.308 2.35975 13.308 4.54658 12.0761 5.89518L7.97638 10.3833C7.18331 11.2515 5.81597 11.2515 5.02296 10.3832L0.923911 5.89518C-0.30797 4.54658 -0.30797 2.35975 0.923911 1.01116C2.15573 -0.337044 4.15266 -0.33706 5.38447 1.01116L6.49961 2.23195L7.61553 1.01116Z" fill="white"/>
+                </svg>
+            </div>
+            <span class="text-white text-[10px] font-normal uppercase leading-4 font-sans">Хочу помочь</span>
+        </a>
       <!-- Close Button (X icon) -->
       <button class="mobile-menu-overlay__close-btn w-16 p-2 rounded-[40px] outline outline-1 outline-offset-[-1px] outline-primary flex justify-center items-center gap-2 cursor-pointer border-none bg-transparent">
         <div data-svg-wrapper class="relative">
@@ -20,15 +29,7 @@
         </div>
       </button>
 
-      <!-- Donate Button (repeated from header) -->
-      <a href="#" class="mobile-menu-overlay__donate-btn w-[159px] h-10 px-3 py-2 bg-secondary rounded-[40px] flex justify-center items-center gap-1 no-underline hover:opacity-90 transition absolute right-[80px] top-[48px] mr-2">
-        <div data-svg-wrapper>
-          <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.61553 1.01116C8.84736 -0.337024 10.8443 -0.33708 12.0761 1.01116C13.308 2.35975 13.308 4.54658 12.0761 5.89518L7.97638 10.3833C7.18331 11.2515 5.81597 11.2515 5.02296 10.3832L0.923911 5.89518C-0.30797 4.54658 -0.30797 2.35975 0.923911 1.01116C2.15573 -0.337044 4.15266 -0.33706 5.38447 1.01116L6.49961 2.23195L7.61553 1.01116Z" fill="white"/>
-          </svg>
-        </div>
-        <span class="text-white text-[10px] font-normal uppercase leading-4 font-sans">Хочу помочь</span>
-      </a>
+
       
     </div>
   </div>

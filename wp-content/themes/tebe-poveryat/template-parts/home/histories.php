@@ -90,7 +90,8 @@ $histories_query = new WP_Query([
                                             get_template_part('template-parts/components/link-more', null, [
                                                     'text' => 'Читать далее',
                                                     'url' => get_permalink(),
-                                                    'style' => 'default'
+                                                    'style' => 'default',
+                                                    'icon_classes' => 'hidden'
                                             ]); ?>
                                         </div>
 

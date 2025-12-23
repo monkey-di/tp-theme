@@ -50,7 +50,7 @@
                                         <?php the_title(); ?>
                                     </h3>
                                     <?php if ( has_excerpt() ) : ?>
-                                    <p class="materials__card-description text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5]">
+                                    <p class="materials__card-description text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] xl:max-w-[400px] 2xl:max-w-full">
                                         <?php echo get_the_excerpt(); ?>
                                     </p>
                                     <?php endif; ?>
