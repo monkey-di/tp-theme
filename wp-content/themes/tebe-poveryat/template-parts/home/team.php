@@ -4,7 +4,7 @@
  * Mobile First.
  */
 ?>
-<section class="team-section w-full bg-surface px-4 relative overflow-hidden z-20 pt-12 pb-12  [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
+<section class="team-section w-full bg-surface px-4 relative overflow-hidden z-20 pt-12 pb-12 xl:pb-40 [border-radius:50%_50%_0_0_/_40px_40px_0_0] lg:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">
     
     <div class="team__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col xl:gap-8">
         

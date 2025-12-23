@@ -24,7 +24,7 @@ $friends_query = new WP_Query(array(
 
         <?php if ( $friends_query->have_posts() ) : ?>
             <div class="friends__slider-area w-full flex items-center lg:justify-between lg:gap-x-4 mt-6 lg:mt-10">
-                <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative top-[-100px]">
+                <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative ">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
 
@@ -86,7 +86,7 @@ $friends_query = new WP_Query(array(
                     </div>
                 </div>
 
-                <button type="button" class="friends-next hidden lg:block cursor-pointer hover:opacity-70 transition relative top-[-100px]">
+                <button type="button" class="friends-next hidden lg:block cursor-pointer hover:opacity-70 transition relative ">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next" />
                 </button>
             </div>
