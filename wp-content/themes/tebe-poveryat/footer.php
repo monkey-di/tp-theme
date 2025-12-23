@@ -136,7 +136,7 @@ if (file_exists($mobile_menu_path)) {
                             'placeholder' => 'example@mail.com',
                             'button_text' => 'Подписаться',
                             'submit' => true,
-                            'state' => 'disabled',
+                            'state' => 'default',
                             'button_id' => 'subscribe-btn',
                             'input_id' => 'subscribe-email',
                             'placeholder_position' => ' placeholder-shown:justify-start '

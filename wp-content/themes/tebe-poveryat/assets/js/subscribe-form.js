@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!emailInput || !consentCheckbox || !submitBtn) return;
 
+    // Initialize button as disabled
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-40', 'cursor-not-allowed');
+
     /**
      * Validate email using HTML5 pattern
      */
@@ -36,22 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Enable button
             submitBtn.disabled = false;
             submitBtn.classList.remove('opacity-40', 'cursor-not-allowed');
-            // Update wrapper styling
-            const wrapper = submitBtn.closest('div[class*="rounded-[20px]"]');
-            if (wrapper) {
-                wrapper.classList.remove('bg-primary/20', 'cursor-not-allowed');
-                wrapper.classList.add('bg-white');
-            }
         } else {
             // Disable button
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-40', 'cursor-not-allowed');
-            // Update wrapper styling
-            const wrapper = submitBtn.closest('div[class*="rounded-[20px]"]');
-            if (wrapper) {
-                wrapper.classList.remove('bg-white');
-                wrapper.classList.add('bg-primary/20', 'cursor-not-allowed');
-            }
         }
     }
 
