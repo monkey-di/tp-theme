@@ -21,11 +21,11 @@ $description = implode( "\n\n", $description_parts );
 $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
 ?>
 <section class="about-section-part2 w-full bg-surface px-4 relative overflow-hidden z-20 pt-0 pb-12 lg:pb-32 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
-    <div class="about-section-part2__container container mx-auto flex flex-col lg:flex-row sm:items-center lg:gap-12">
+    <div class="about-section-part2__container">
 
         <!-- Left Column: Image -->
         <?php if ( $image_url ) : ?>
-        <div class="about-section-part2__image-wrapper relative w-full lg:w-[787px] lg:min-w-[787px] h-[522px] rounded-[20px] overflow-hidden">
+        <div class="about-section-part2__image-wrapper">
             <img class="w-full h-full object-cover" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
 
             <!-- Mobile-only Overlay: Name and Title -->

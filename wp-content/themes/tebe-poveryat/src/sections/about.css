@@ -33,3 +33,10 @@
 .about__stat-card-text {
     @apply text-[16px] font-normal font-geologica leading-[1.5];
 }
+
+.about-section-part2__container {
+    @apply  container mx-auto flex flex-col lg:flex-row sm:items-center lg:gap-12;
+}
+.about-section-part2__image-wrapper {
+    @apply  relative w-full xl:w-[787px] xl:min-w-[787px] md:min-w-[380px] xl:max-w-full xl:h-[522px] rounded-[20px] overflow-hidden
+}
