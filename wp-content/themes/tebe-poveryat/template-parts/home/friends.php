@@ -36,11 +36,11 @@ $friends_query = new WP_Query(array(
                             while ( $friends_query->have_posts() ) : $friends_query->the_post();
                             ?>
                                 <div class="swiper-slide">
-                                    <div class="friends__card h-full flex flex-col gap-6">
+                                    <div class="friends__card">
                                         <div class="friends__card-image-wrap relative rounded-[20px] overflow-hidden">
                                             <?php if ( has_post_thumbnail() ) : ?>
                                                 <?php the_post_thumbnail( 'full', array(
-                                                    'class' => 'w-full h-auto object-cover aspect-[853/1280]',
+                                                    'class' => 'w-full h-auto object-cover aspect-[1/1] lg:aspect-[853/1280]',
                                                     'alt' => get_the_title()
                                                 ) ); ?>
                                             <?php endif; ?>
@@ -62,11 +62,11 @@ $friends_query = new WP_Query(array(
                             while ( $friends_query->have_posts() ) : $friends_query->the_post();
                             ?>
                                 <div class="swiper-slide">
-                                    <div class="friends__card h-full flex flex-col gap-6">
+                                    <div class="friends__card">
                                         <div class="friends__card-image-wrap relative rounded-[20px] overflow-hidden">
                                             <?php if ( has_post_thumbnail() ) : ?>
                                                 <?php the_post_thumbnail( 'full', array(
-                                                    'class' => 'w-full h-auto object-cover aspect-[853/1280]',
+                                                    'class' => 'w-full h-auto object-cover lg:aspect-[853/1280]',
                                                     'alt' => get_the_title()
                                                 ) ); ?>
                                             <?php endif; ?>

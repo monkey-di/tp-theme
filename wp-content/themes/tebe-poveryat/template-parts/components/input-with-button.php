@@ -18,6 +18,8 @@ $button_text = $args['button_text'] ?? 'Отправить';
 $state = $args['state'] ?? 'default';
 $classes = $args['classes'] ?? '';
 $placeholder_position = $args['placeholder_position'] ?? 'placeholder-shown:text-center';
+$button_id = $args['button_id'] ?? '';
+$input_id = $args['input_id'] ?? '';
 // Base Wrapper Classes
 $wrapper_classes = 'w-full pl-4 pr-1 py-1 rounded-[20px] flex justify-between items-center transition-colors duration-300';
 
@@ -58,10 +60,14 @@ echo esc_attr($wrapper_classes); ?>">
             class="<?php
             echo esc_attr($input_classes); ?>"
             <?php
+            if ($input_id) echo 'id="' . esc_attr($input_id) . '" '; ?>
+            <?php
             echo $is_disabled; ?>
     >
 
     <button type="submit"
+            <?php
+            if ($button_id) echo 'id="' . esc_attr($button_id) . '" '; ?>
             class="h-12 px-5 py-4 bg-secondary rounded-[20px] flex justify-center items-center gap-3 hover:bg-secondary/80 transition duration-300 flex-shrink-0" <?php
     echo $is_disabled; ?>>
         <span class="text-white text-[13px] font-normal font-geologica uppercase leading-5">

@@ -19,3 +19,10 @@
         filter: grayscale(0%);
     }
 }
+
+.friends__card {
+    @apply h-full flex flex-col gap-6 sm:max-h-[600px] lg:max-h-full;
+}
+.friends__slider {
+    @apply sm:max-h-[600px] lg:max-h-full;
+}

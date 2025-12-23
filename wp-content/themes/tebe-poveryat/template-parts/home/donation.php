@@ -38,7 +38,7 @@
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stars/donation-stars-desktop.svg" alt="" class="w-full h-full ">
     </div>
 
-    <div class="donation-form__container container mx-auto px-4 relative z-20 pt-16 pb-16 md:pt-0 md:pb-24 lg:pb-0">
+    <div class="donation-form__container container mx-auto px-4 relative z-20 md:pt-0 md:pb-24 lg:pb-0">
         <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8 md:leading-[64px] lg:mb-[35px]">Поддержите нас</h2>
         
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">

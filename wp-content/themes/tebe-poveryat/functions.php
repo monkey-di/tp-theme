@@ -41,6 +41,9 @@ function tebe_poveryat_scripts() {
 
     // Sliders Initialization
     wp_enqueue_script( 'tp-sliders', get_template_directory_uri() . '/assets/js/sliders.js', ['swiper-js'], '1.0.0', true );
+
+    // Subscribe Form Validation
+    wp_enqueue_script( 'tp-subscribe-form', get_template_directory_uri() . '/assets/js/subscribe-form.js', [], '1.0.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'tebe_poveryat_scripts' );
 
