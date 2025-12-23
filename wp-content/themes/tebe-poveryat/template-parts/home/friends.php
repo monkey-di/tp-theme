@@ -27,8 +27,22 @@ $friends_query = new WP_Query(array(
                 <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative ">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
+                <style>
+                    @media (min-width: 1300px) {
+                        .strelki-v-rot-ebal {
+                            max-width: 1169px;
+                        }
 
-                <div class="swiper-container-wrapper w-full lg:max-w-[800px] xl:max-w-[1169px]">
+                    }
+                    @media (min-width: 1200px) {
+                        .strelki-v-rot-ebal {
+                            max-width: 1100px;
+                        }
+
+                    }
+                </style>
+
+                <div class="swiper-container-wrapper w-full lg:max-w-[800px] strelki-v-rot-ebal">
                     <div class="friends__slider swiper">
                         <div class="swiper-wrapper items-stretch">
                             <?php
