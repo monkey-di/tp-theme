@@ -14,7 +14,7 @@ body_class(); ?>>
 <?php
 wp_body_open(); ?>
 
-<header class="header w-full bg-surface relative z-50">
+<header class="header w-full bg-surface sticky top-0 z-50">
     <div class="header__container">
 
         <!-- Logo Wrapper -->
