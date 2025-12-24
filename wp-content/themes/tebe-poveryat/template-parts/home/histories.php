@@ -45,7 +45,7 @@ $histories_query = new WP_Query([
                 <div class="swiper-wrapper">
                     <?php while ($histories_query->have_posts()) : $histories_query->the_post(); ?>
                         <div class="swiper-slide">
-                            <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col sm:flex-row items-center lg:items-stretch pt-1 lg:p-1 lg:gap-[40px]">
+                            <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col sm:flex-row items-center lg:items-stretch pt-1 sm:p-1 lg:gap-[40px]">
                                 <!-- Image Container -->
                                 <div class="histories__card-image relative w-[calc(100%-8px)] lg:w-[340px] h-[400px]  sm:h-auto lg:h-[491px] mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0 sm:flex-shrink-1 ">
                                     <?php if (has_post_thumbnail()) : ?>
