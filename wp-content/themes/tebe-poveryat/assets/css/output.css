@@ -642,6 +642,9 @@
   .container {
     max-width: 1408px !important;
   }
+  .max-w-\[348px\] {
+    max-width: 348px;
+  }
   .max-w-\[630px\] {
     max-width: 630px;
   }

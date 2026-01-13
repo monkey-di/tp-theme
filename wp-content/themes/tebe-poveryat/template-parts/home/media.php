@@ -103,7 +103,7 @@
         </div>
 
         <!-- Slider Controls -->
-        <div class="media__controls w-full">
+        <div class="media__controls w-full max-w-[348px] mx-auto">
             <!-- Mobile Progress -->
             <div class="media__progress w-full xl:hidden py-4">
                 <?php
