@@ -79,7 +79,7 @@
     }
 
     .hero__description p {
-        @apply text-[#19232e] text-[16px] font-light font-geologica leading-[1.5] md:justify-start md:text-[#19232e] md:text-xl md:font-light md:font-['Geologica'] md:leading-[30px];
+        @apply text-[#19232e] text-[18px] font-light font-geologica leading-[1.5] md:justify-start md:text-[#19232e] md:text-xl md:font-light md:font-['Geologica'] md:leading-[30px];
     }
 
     /* Learn More */

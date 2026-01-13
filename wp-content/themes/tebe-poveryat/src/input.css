@@ -86,11 +86,11 @@
 @layer base {
     /* Container max-width override */
     body {
-        @apply bg-surface text-contrast font-geologica text-[16px] leading-[1.5];
+        @apply bg-surface text-contrast font-geologica text-[18px] leading-[1.5];
     }
 
     p {
-        @apply text-[16px] leading-[1.5];
+        @apply text-[18px] leading-[1.5];
     }
 
     h1, .h1 {

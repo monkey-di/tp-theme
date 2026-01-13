@@ -29,7 +29,7 @@
 
 /* Main Inputs */
 .donation-form__input {
-      @apply w-full px-5 py-3 bg-white rounded-[40px] text-contrast text-[16px] font-normal font-geologica leading-[1.5] placeholder:text-[#6063a6] placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-primary/50; /* Placeholder color adjusted */  @apply text-center; /* Placeholders centered as per feedback */
+      @apply w-full px-5 py-3 bg-white rounded-[40px] text-contrast text-[18px] font-normal font-geologica leading-[1.5] placeholder:text-[#6063a6] placeholder:opacity-60 focus:outline-none focus:ring-2 focus:ring-primary/50; /* Placeholder color adjusted */  @apply text-center; /* Placeholders centered as per feedback */
 }
 
 /* Checkboxes */
@@ -44,7 +44,7 @@
   @apply w-5 h-5 rounded border-2 border-white flex-shrink-0 flex items-center justify-center bg-white;
 }
 .donation-form__checkbox-text {
-  @apply text-white text-[16px] font-light font-geologica leading-[1.5] md:leading-[1px] md:text-lg;
+  @apply text-white text-[18px] font-light font-geologica leading-[1.5] md:leading-[1px] md:text-lg;
   @apply md:whitespace-nowrap; /* Prevent text wrapping on desktop */
 }
 .donation-form__checkbox-text a {

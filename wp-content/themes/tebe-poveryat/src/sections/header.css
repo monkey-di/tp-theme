@@ -67,7 +67,7 @@
   }
 
   .header__language-btn {
-    @apply flex-1 rounded-[10px] font-akrobat font-bold text-[16px] leading-none bg-white;
+    @apply flex-1 rounded-[10px] font-akrobat font-bold text-[18px] leading-none bg-white;
     @apply transition duration-200 cursor-pointer border-none;
   }
 
