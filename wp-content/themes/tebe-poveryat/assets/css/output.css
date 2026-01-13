@@ -513,6 +513,9 @@
   .h-\[506\.981px\] {
     height: 506.981px;
   }
+  .h-\[522px\] {
+    height: 522px;
+  }
   .h-\[636px\] {
     height: 636px;
   }
@@ -621,8 +624,14 @@
   .w-\[calc\(40\%-4px\)\] {
     width: calc(40% - 4px);
   }
+  .w-\[calc\(43\%\+7px\)\] {
+    width: calc(43% + 7px);
+  }
   .w-\[calc\(43\%-4px\)\] {
     width: calc(43% - 4px);
+  }
+  .w-\[calc\(43\%-7px\)\] {
+    width: calc(43% - 7px);
   }
   .w-\[calc\(51\%-4px\)\] {
     width: calc(51% - 4px);
@@ -3632,7 +3641,7 @@
 }
 .about__stat-card-text {
   font-family: var(--font-geologica);
-  font-size: 18px;
+  font-size: 16px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-normal);

@@ -28,7 +28,7 @@ $image_url = get_the_post_thumbnail_url($about_page->ID, 'full');
         <?php
         if ($image_url) : ?>
             <div class="about-section-part2__image-wrapper">
-                <img class="ebabaya-kartinka w-full  h-full md:h-[522px] xl:h-full object-cover" src="<?php
+                <img class="ebabaya-kartinka w-full h-[522px] xl:h-full object-cover" src="<?php
                 echo esc_url($image_url); ?>" alt="<?php
                 echo esc_attr($name); ?>"/>
 
