@@ -2352,13 +2352,13 @@
   body {
     background-color: var(--color-surface);
     font-family: var(--font-geologica);
-    font-size: 16px;
+    font-size: 18px;
     --tw-leading: 1.5;
     line-height: 1.5;
     color: var(--color-contrast);
   }
   p {
-    font-size: 16px;
+    font-size: 18px;
     --tw-leading: 1.5;
     line-height: 1.5;
   }
@@ -2607,7 +2607,7 @@
     border-radius: 10px;
     background-color: var(--color-white);
     font-family: var(--font-akrobat);
-    font-size: 16px;
+    font-size: 18px;
     --tw-leading: 1;
     line-height: 1;
     --tw-font-weight: var(--font-weight-bold);
@@ -2949,7 +2949,7 @@
   }
   .hero__description p {
     font-family: var(--font-geologica);
-    font-size: 16px;
+    font-size: 18px;
     --tw-leading: 1.5;
     line-height: 1.5;
     --tw-font-weight: var(--font-weight-light);
@@ -3320,7 +3320,7 @@
   padding-inline: calc(var(--spacing) * 5);
   padding-block: calc(var(--spacing) * 3);
   font-family: var(--font-geologica);
-  font-size: 16px;
+  font-size: 18px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-normal);
@@ -3378,7 +3378,7 @@
 }
 .donation-form__checkbox-text {
   font-family: var(--font-geologica);
-  font-size: 16px;
+  font-size: 18px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-light);
@@ -3485,7 +3485,7 @@
   padding-block: calc(var(--spacing) * 6);
   padding-left: calc(var(--spacing) * 3);
   font-family: var(--font-geologica);
-  font-size: 16px;
+  font-size: 18px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-light);
@@ -3632,7 +3632,7 @@
 }
 .about__stat-card-text {
   font-family: var(--font-geologica);
-  font-size: 16px;
+  font-size: 18px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-normal);
@@ -3753,7 +3753,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6;
   font-family: var(--font-geologica);
-  font-size: 16px;
+  font-size: 18px;
   --tw-leading: 1.5;
   line-height: 1.5;
   --tw-font-weight: var(--font-weight-light);
