@@ -20,13 +20,15 @@ $icon_classes = $args['icon_classes'] ?? 'w-6 h-6 transition-transform duration-
 
 switch ($style) {
     case 'hero':
-        $text_classes = 'text-primary text-xl font-bold font-akrobat leading-5';
+        $text_classes = 'text-primary text-xl font-bold font-akrobat leading-5 md:m-auto';
         break;
     case 'default':
     default:
-        $text_classes = 'text-primary text-[16px] font-normal font-geologica leading-6';
+        $text_classes = 'text-primary text-[16px] font-normal font-geologica leading-6 md:text-xl md:leading-5';
         break;
 }
+
+
 ?>
 
 <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer <?php echo esc_attr( $class ); ?>">
@@ -38,7 +40,7 @@ switch ($style) {
             </svg>
         </div>
         <!-- Text -->
-        <div class="<?php echo esc_attr( $text_classes ); ?>">
+        <div class="<?php echo $text_classes; ?>">
             <?php echo esc_html( $text ); ?>
         </div>
     </a>

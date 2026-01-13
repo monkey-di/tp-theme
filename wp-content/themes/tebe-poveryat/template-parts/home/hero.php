@@ -14,7 +14,8 @@ $slides_query = new WP_Query(array(
         'post_status' => 'publish',
 ));
 ?>
-<section class="hero-section bg-surface relative z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
+<section
+        class="hero-section bg-surface relative z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
 
     <div class="absolute inset-0 z-0 pointer-events-none px-0 lg:px-[96px] mob-bg md:hidden block">
         <style>
@@ -24,9 +25,9 @@ $slides_query = new WP_Query(array(
                 background-position: calc(50% - 70px) top;
             }
         </style>
-<!--        <img src="--><?php
-//        echo get_template_directory_uri(); ?><!--/assets/images/Ellipse.png" alt=""-->
-<!--             class="w-[297px] h-[308px] "/>-->
+        <!--        <img src="--><?php
+        //        echo get_template_directory_uri(); ?><!--/assets/images/Ellipse.png" alt=""-->
+        <!--             class="w-[297px] h-[308px] "/>-->
     </div>
     <div class="hero__container">
 
@@ -41,7 +42,10 @@ $slides_query = new WP_Query(array(
                             <!-- Titles Section with Image (relative container for absolute image positioning) -->
                             <div class="hero__titles-section">
                                 <!-- Main Title Part 1 -->
-                                <h1 class="h1 hero__title-part1">Тебе  <br class="lg:hidden">поверят</h1>
+                                <h1 class="h1 hero__title-part1">
+                                    <div class="hidden md:inline xl:hidden ">&nbsp;</div>
+                                    Тебе <br class="lg:hidden">поверят
+                                </h1>
 
 
                                 <!-- Decorative Image (absolute positioned inside titles-section) -->
@@ -74,12 +78,13 @@ $slides_query = new WP_Query(array(
                             </div>
 
                             <!-- Learn More Button/Link -->
-                            <div class="hero__learn-more">
+                            <div class="hero__learn-more md:flex md:justify-center md:mt-8">
                                 <?php
                                 get_template_part('template-parts/components/link-more', null, [
                                         'text' => 'Узнать больше о нас',
                                         'url' => '#',
-                                        'style' => 'hero'
+                                        'style' => 'hero',
+                                        'class' => 'md:m-auto'
                                 ]); ?>
                             </div>
                         </div>

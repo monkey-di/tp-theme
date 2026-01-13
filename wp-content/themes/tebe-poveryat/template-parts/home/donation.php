@@ -34,8 +34,12 @@
     </div>
 
     <!-- Desktop Background -->
-    <div class="hidden md:block absolute inset-0 z-0 pointer-events-none px-[96px]">
+    <div class="hidden xl:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stars/donation-stars-desktop.svg" alt="" class="w-full h-full ">
+    </div>
+
+    <div class="hidden md:block absolute inset-0 z-0 pointer-events-none mt-[-100px] px-0">
+        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/stars/donation-stars-tablet.svg" alt="" class="w-full h-full ">
     </div>
 
     <div class="donation-form__container container mx-auto px-4 relative z-20 md:pt-0 md:pb-24 lg:pb-0">
@@ -87,7 +91,7 @@
                 'text' => 'Помочь',
                 'submit' => true,
                 'size' => 'help',
-                'class' => 'w-full xl:w-[348px] mx-auto'
+                'class' => 'w-full md:w-[348px] mx-auto'
             ]); ?>
         </div>
     </div>

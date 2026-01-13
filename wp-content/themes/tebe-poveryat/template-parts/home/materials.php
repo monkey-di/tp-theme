@@ -8,7 +8,7 @@
     <div class="materials__container container mx-auto flex flex-col gap-6 lg:gap-8">
 
         <!-- Title -->
-        <h2 class="materials__title text-primary text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 text-left sm:text-center">
+        <h2 class="h2 text-primary uppercase  mb-2 text-left xl:text-center">
             Полезные <br class="lg:hidden">материалы
         </h2>
 
@@ -99,7 +99,7 @@
 
         <!-- View All Button -->
         <div class="materials__view-all w-full mt-4 flex justify-center">
-            <a href="#" class="inline-flex justify-center items-center border border-primary rounded-[40px] px-5 py-4 lg:px-[20px] lg:py-[16px] text-[16px] text-primary uppercase font-geologica leading-[1.5] transition-colors hover:bg-primary hover:text-white w-full lg:w-[334px]">
+            <a href="#" class="inline-flex justify-center items-center border border-primary rounded-[40px] px-5 py-4 md:px-[20px] md:py-[16px] text-[16px] text-primary uppercase font-geologica leading-[1.5] transition-colors hover:bg-primary hover:text-white w-full md:w-[334px]">
                 Смотреть все материалы
             </a>
         </div>

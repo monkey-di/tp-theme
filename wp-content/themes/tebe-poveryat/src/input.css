@@ -98,7 +98,11 @@
     }
 
     h2, .h2 {
-        @apply font-ura text-[32px] leading-[30.4px];
+        @apply font-ura text-[32px] leading-[30.4px] md:text-[#6063a6] md:text-[64px] md:font-normal md:leading-[60.80px];
+    }
+
+    .text-p {
+        @apply font-['Geologica'] leading-[30px] font-light text-xl xl:text-[23px];
     }
 
     /* Akrobat headers from design */

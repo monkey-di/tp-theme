@@ -9,6 +9,8 @@
     opacity: 1;
 }
 
+
+
 /* Делаем неактивные слайды чёрно-белыми (на планшетах и десктопе) */
 @media (min-width: 768px) {
     .friends__slider .swiper-slide:not(.swiper-slide-active) .friends__card-image-wrap {

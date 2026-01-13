@@ -18,7 +18,7 @@ $friends_query = new WP_Query(array(
 <section class="friends-section w-full bg-surface relative overflow-hidden z-20 pt-12 lg:pt-32 pb-12 lg:pb-32 [border-radius:50%_/_40px] lg:[border-radius:50%_/_80px]">
     <div class="friends__container container mx-auto px-4 relative z-20 flex flex-col items-start sm:items-center">
 
-        <h2 class="friends__title text-primary text-[32px] lg:text-[64px] font-ura uppercase text-center">
+        <h2 class="friends__title text-primary h2 uppercase text-center">
             Наши друзья
         </h2>
 
@@ -113,7 +113,7 @@ $friends_query = new WP_Query(array(
                 </button>
             </div>
 
-            <div class="friends__quote-output text-center font-geologica font-light text-[23px] leading-[1.5] text-contrast max-w-[672px] mx-auto mt-12 min-h-[80px] transition-opacity duration-300"></div>
+            <div class="friends__quote-output text-center text-p text-contrast max-w-[672px] mx-auto mt-12 min-h-[80px] md:max-w-[534px] transition-opacity duration-300"></div>
 
             <div class="friends__mobile-progress w-full mt-8 xl:hidden">
                  <?php get_template_part('template-parts/components/slider-progress', null, [

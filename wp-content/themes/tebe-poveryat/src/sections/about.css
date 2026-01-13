@@ -8,11 +8,11 @@
 }
 
 .about__title {
-    @apply text-[#36569f] text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left; /* Added responsive line-height */
+    @apply text-[#36569f] text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left md:mb-10; /* Added responsive line-height */
 }
 
 .about__description {
-    @apply text-contrast text-[16px] md:text-[20px] font-light font-geologica leading-[1.5] md:max-w-[720px] lg:max-w-[690px] py-6 pl-3 md:py-0 md:pl-0;
+    @apply text-contrast text-[16px] md:text-[20px] font-light font-geologica leading-[1.5] md:max-w-full lg:max-w-[690px] py-6 pl-3 md:py-0 md:pl-0;
 }
 .about__description p{
     @apply justify-start text-[#19232e] text-base md:text-[20px] font-light font-['Geologica'] leading-6 md:leading-[1.5] lg:text-[23px] lg:leading-[34.50px] md:mb-4;
@@ -23,8 +23,15 @@
 }
 
 .about__stat-card {
-    @apply py-4 md:py-4 rounded-[20px] flex flex-col md:flex-row lg:flex-row justify-start px-4 md:px-8 xl:px-10 items-start md:items-center gap-3 md:gap-10 lg:gap-[56px] xl:gap-[56px] text-white;
+    @apply py-4 md:py-4 rounded-[20px] flex flex-col md:flex-row xl:flex-row justify-start px-4 md:pl-8 md:pr-0 xl:px-10 items-start md:items-center gap-3 md:gap-10 xl:gap-[56px] text-white;
 }
+
+@media (min-width: 768px) and (max-width: 1280px) {
+    .ebabaya-kartinka {
+        object-position: center 70%;
+    }
+}
+
 
 .about__stat-card-number {
     @apply text-[50px] md:text-[40px] lg:text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] md:w-[120px] lg:w-[223px];

@@ -8,6 +8,7 @@
         @apply w-full bg-surface relative overflow-hidden lg:py-12 px-4  z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px];
 
     }
+
     @media (min-width: 768px) {
         .hero-section {
             background: url("/wp-content/themes/tebe-poveryat/assets/images/bg-hero-tablet.webp") center no-repeat;
@@ -22,6 +23,7 @@
     .hero__slider .swiper-slide {
         @apply xl:px-0;
     }
+
     /* Container */
     .hero__container {
         @apply container mx-auto pb-10 xl:pb-0 flex flex-col justify-start items-start h-full;
@@ -31,7 +33,7 @@
 
     /* Slider */
     .hero__slider {
-        @apply w-full flex-grow mb-20;
+        @apply w-full flex-grow mb-20 md:mb-12;
     }
 
     /* Slide */
@@ -47,7 +49,7 @@
 
     /* Title Part 1 */
     .hero__title-part1 {
-        @apply text-primary mt-12 md:mt-[85px] relative text-center;
+        @apply text-primary mt-12 md:mt-[85px] relative text-center md:text-left xl:text-center;
         z-index: 10;
     }
 
@@ -68,16 +70,16 @@
 
     /* Subtitle */
     .hero__subtitle {
-        @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-3 lg:mt-5 z-10 relative;
+        @apply text-contrast text-[36px] font-extrabold font-akrobat leading-none mt-3 lg:mt-5 z-10 relative  md:text-[#1e1e1e] md:text-3xl md:font-extrabold md:text-center md:mt-11 md:max-w-[475px] md:m-auto;
     }
 
     /* Description */
     .hero__description {
-        @apply mt-3 xl:mt-5 z-10 relative;
+        @apply mt-3 xl:mt-5 z-10 relative md:text-center md:justify-start md:text-[#19232e] md:text-xl md:font-light md:font-['Geologica'] md:leading-[30px];
     }
 
     .hero__description p {
-        @apply text-[#19232e] text-[16px] font-light font-geologica leading-[1.5];
+        @apply text-[#19232e] text-[16px] font-light font-geologica leading-[1.5] md:justify-start md:text-[#19232e] md:text-xl md:font-light md:font-['Geologica'] md:leading-[30px];
     }
 
     /* Learn More */
@@ -93,6 +95,21 @@
     /* Mobile Progress - visible on mobile and tablet */
     .hero__slider-controls > div:first-child {
         @apply w-full xl:hidden;
+    }
+
+    @media (min-width: 768px) {
+        .hero__image-wrapper {
+            position: absolute;
+            z-index: 0;
+            top: -9px;
+            left: 430px;
+            transform: none;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     /* ============ DESKTOP STYLES (1280px+) ============ */
@@ -218,8 +235,6 @@
         }
 
         /* Title Part 1 - Desktop (normal flow) */
-
-
         /* Title Part 2 - Desktop (normal flow) */
         .hero__title-part2 {
             @apply text-[150px] leading-[0.95] text-center;
