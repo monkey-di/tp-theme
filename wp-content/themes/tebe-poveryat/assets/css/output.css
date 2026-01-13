@@ -1055,6 +1055,18 @@
   .text-left {
     text-align: left;
   }
+  .text-p {
+    font-family: 'Geologica';
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+    --tw-leading: 30px;
+    line-height: 30px;
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
+    @media (width >= 1281px) {
+      font-size: 23px;
+    }
+  }
   .font-\[\'Akrobat\'\] {
     font-family: 'Akrobat';
   }
@@ -1104,9 +1116,6 @@
   }
   .text-\[20px\] {
     font-size: 20px;
-  }
-  .text-\[23px\] {
-    font-size: 23px;
   }
   .text-\[26px\] {
     font-size: 26px;
@@ -1779,11 +1788,6 @@
       height: auto;
     }
   }
-  .lg\:w-\[334px\] {
-    @media (width >= 1024px) {
-      width: 334px;
-    }
-  }
   .lg\:w-\[340px\] {
     @media (width >= 1024px) {
       width: 340px;
@@ -1922,11 +1926,6 @@
   .lg\:p-6 {
     @media (width >= 1024px) {
       padding: calc(var(--spacing) * 6);
-    }
-  }
-  .lg\:px-\[20px\] {
-    @media (width >= 1024px) {
-      padding-inline: 20px;
     }
   }
   .lg\:px-\[96px\] {
@@ -2406,18 +2405,6 @@
     }
     @media (width >= 768px) {
       color: #6063a6;
-    }
-  }
-  .text-p {
-    font-family: 'Geologica';
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
-    --tw-leading: 30px;
-    line-height: 30px;
-    --tw-font-weight: var(--font-weight-light);
-    font-weight: var(--font-weight-light);
-    @media (width >= 1281px) {
-      font-size: 23px;
     }
   }
   h3, .h3 {
@@ -3780,6 +3767,21 @@
     display: block;
     -webkit-box-orient: horizontal;
     -webkit-line-clamp: unset;
+  }
+}
+.histories__tablet-content {
+  padding: calc(var(--spacing) * 10);
+}
+.histories__tablet-content p {
+  font-family: 'Geologica';
+  font-size: var(--text-xl);
+  line-height: var(--tw-leading, var(--text-xl--line-height));
+  --tw-leading: 30px;
+  line-height: 30px;
+  --tw-font-weight: var(--font-weight-light);
+  font-weight: var(--font-weight-light);
+  @media (width >= 1281px) {
+    font-size: 23px;
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {

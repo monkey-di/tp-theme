@@ -2,6 +2,14 @@
     @apply text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] line-clamp-6 lg:line-clamp-none
 }
 
+.histories__tablet-content {
+    @apply p-10;
+}
+
+.histories__tablet-content p {
+    @apply text-p;
+}
+
 /* Tablet Styles (768px - 1279px) */
 @media (min-width: 768px) and (max-width: 1279px) {
     .histories__slider {

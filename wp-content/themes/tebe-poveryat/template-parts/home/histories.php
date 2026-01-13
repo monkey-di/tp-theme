@@ -233,16 +233,7 @@ $histories_query = new WP_Query([
                      <!-- Content injected by JS -->
                 </div>
 
-                <!-- Tablet 'All Histories' Button -->
-                <div class="hidden md:flex xl:hidden justify-center w-full mt-10">
-                    <?php
-                    get_template_part('template-parts/components/button', null, [
-                            'text' => 'Все истории',
-                            'url' => $stories_archive_link ? $stories_archive_link : '#',
-                            'style' => 'primary',
-                            'class' => 'w-[348px] text-white uppercase'
-                    ]); ?>
-                </div>
+
 
             </div> <!-- End Tablet Wrapper -->
         <?php endif; ?>
@@ -261,7 +252,7 @@ $histories_query = new WP_Query([
         </div>
 
         <!-- "All Histories" Button (Mobile Only) -->
-        <div class="histories__view-all md:hidden">
+        <div class="histories__view-all xl:hidden">
             <?php
             $stories_archive_link = get_post_type_archive_link('history');
             get_template_part('template-parts/components/button', null, [
