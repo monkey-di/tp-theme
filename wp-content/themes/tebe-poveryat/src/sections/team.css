@@ -1,0 +1,21 @@
+/* Tablet Styles (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .team__slider {
+        overflow: visible !important;
+    }
+
+    .team__slider .swiper-slide {
+        width: 348px !important;
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+    }
+
+    .team__slider .swiper-slide-active {
+        opacity: 1;
+    }
+
+    /* External Content Styles */
+    .team__tablet-content .team__content p {
+        @apply text-[#19232e] text-[20px] font-light font-geologica leading-[1.5] mb-4;
+    }
+}

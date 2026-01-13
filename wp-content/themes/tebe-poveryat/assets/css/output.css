@@ -347,6 +347,9 @@
   .mt-8 {
     margin-top: calc(var(--spacing) * 8);
   }
+  .mt-10 {
+    margin-top: calc(var(--spacing) * 10);
+  }
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
   }
@@ -633,9 +636,6 @@
   .container {
     max-width: 1408px !important;
   }
-  .max-w-\[400px\] {
-    max-width: 400px;
-  }
   .max-w-\[630px\] {
     max-width: 630px;
   }
@@ -647,6 +647,9 @@
   }
   .max-w-\[711px\] {
     max-width: 711px;
+  }
+  .max-w-\[720px\] {
+    max-width: 720px;
   }
   .max-w-none {
     max-width: none;
@@ -1213,6 +1216,9 @@
       color: #6063a6;
     }
   }
+  .opacity-0 {
+    opacity: 0%;
+  }
   .opacity-20 {
     opacity: 20%;
   }
@@ -1437,11 +1443,6 @@
       }
     }
   }
-  .sm\:h-auto {
-    @media (width >= 640px) {
-      height: auto;
-    }
-  }
   .sm\:flex-shrink-1 {
     @media (width >= 640px) {
       flex-shrink: 1;
@@ -1477,9 +1478,19 @@
       font-size: 23px;
     }
   }
+  .md\:mx-auto {
+    @media (width >= 768px) {
+      margin-inline: auto;
+    }
+  }
   .md\:block {
     @media (width >= 768px) {
       display: block;
+    }
+  }
+  .md\:flex {
+    @media (width >= 768px) {
+      display: flex;
     }
   }
   .md\:hidden {
@@ -1502,6 +1513,11 @@
       height: 522px;
     }
   }
+  .md\:h-\[534px\] {
+    @media (width >= 768px) {
+      height: 534px;
+    }
+  }
   .md\:w-\[348px\] {
     @media (width >= 768px) {
       width: 348px;
@@ -1517,6 +1533,16 @@
       width: auto;
     }
   }
+  .md\:w-full {
+    @media (width >= 768px) {
+      width: 100%;
+    }
+  }
+  .md\:max-w-\[720px\] {
+    @media (width >= 768px) {
+      max-width: 720px;
+    }
+  }
   .md\:max-w-full {
     @media (width >= 768px) {
       max-width: 100%;
@@ -1530,6 +1556,31 @@
   .md\:gap-6 {
     @media (width >= 768px) {
       gap: calc(var(--spacing) * 6);
+    }
+  }
+  .md\:overflow-hidden {
+    @media (width >= 768px) {
+      overflow: hidden;
+    }
+  }
+  .md\:rounded-\[20px\] {
+    @media (width >= 768px) {
+      border-radius: 20px;
+    }
+  }
+  .md\:bg-white {
+    @media (width >= 768px) {
+      background-color: var(--color-white);
+    }
+  }
+  .md\:px-0 {
+    @media (width >= 768px) {
+      padding-inline: calc(var(--spacing) * 0);
+    }
+  }
+  .md\:py-10 {
+    @media (width >= 768px) {
+      padding-block: calc(var(--spacing) * 10);
     }
   }
   .md\:pt-0 {
@@ -1623,11 +1674,6 @@
       display: none;
     }
   }
-  .lg\:h-\[453px\] {
-    @media (width >= 1024px) {
-      height: 453px;
-    }
-  }
   .lg\:h-\[491px\] {
     @media (width >= 1024px) {
       height: 491px;
@@ -1651,11 +1697,6 @@
   .lg\:w-\[358px\] {
     @media (width >= 1024px) {
       width: 358px;
-    }
-  }
-  .lg\:w-\[453px\] {
-    @media (width >= 1024px) {
-      width: 453px;
     }
   }
   .lg\:w-auto {
@@ -1691,11 +1732,6 @@
   .lg\:min-w-\[358px\] {
     @media (width >= 1024px) {
       min-width: 358px;
-    }
-  }
-  .lg\:min-w-\[453px\] {
-    @media (width >= 1024px) {
-      min-width: 453px;
     }
   }
   .lg\:flex-1 {
@@ -1741,11 +1777,6 @@
   .lg\:gap-2\.5 {
     @media (width >= 1024px) {
       gap: calc(var(--spacing) * 2.5);
-    }
-  }
-  .lg\:gap-6 {
-    @media (width >= 1024px) {
-      gap: calc(var(--spacing) * 6);
     }
   }
   .lg\:gap-8 {
@@ -1796,11 +1827,6 @@
   .lg\:p-6 {
     @media (width >= 1024px) {
       padding: calc(var(--spacing) * 6);
-    }
-  }
-  .lg\:p-12 {
-    @media (width >= 1024px) {
-      padding: calc(var(--spacing) * 12);
     }
   }
   .lg\:px-\[20px\] {
@@ -2012,6 +2038,11 @@
       max-width: 1055px;
     }
   }
+  .xl\:max-w-\[1170px\] {
+    @media (width >= 1281px) {
+      max-width: 1170px;
+    }
+  }
   .xl\:min-w-\[453px\] {
     @media (width >= 1281px) {
       min-width: 453px;
@@ -2092,9 +2123,19 @@
       border-radius: 50% 50% 0 0 / 80px 80px 0 0;
     }
   }
+  .xl\:bg-transparent {
+    @media (width >= 1281px) {
+      background-color: transparent;
+    }
+  }
   .xl\:object-left {
     @media (width >= 1281px) {
       object-position: left;
+    }
+  }
+  .xl\:p-0 {
+    @media (width >= 1281px) {
+      padding: calc(var(--spacing) * 0);
     }
   }
   .xl\:p-12 {
@@ -3526,6 +3567,32 @@
     -webkit-line-clamp: unset;
   }
 }
+@media (min-width: 768px) and (max-width: 1279px) {
+  .histories__slider {
+    overflow: visible !important;
+  }
+  .histories__slider .swiper-slide {
+    width: 340px !important;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+  .histories__slider .swiper-slide-active {
+    opacity: 1;
+  }
+  .histories__card {
+    background: transparent !important;
+  }
+  .histories__tablet-content .history__content p {
+    margin-bottom: calc(var(--spacing) * 4);
+    font-family: var(--font-geologica);
+    font-size: 20px;
+    --tw-leading: 1.5;
+    line-height: 1.5;
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
+    color: #19232e;
+  }
+}
 .media__slider .swiper-wrapper {
   align-items: center !important;
 }
@@ -3555,6 +3622,29 @@
   min-width: 40px;
   min-height: 40px;
 }
+@media (min-width: 768px) and (max-width: 1279px) {
+  .team__slider {
+    overflow: visible !important;
+  }
+  .team__slider .swiper-slide {
+    width: 348px !important;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+  .team__slider .swiper-slide-active {
+    opacity: 1;
+  }
+  .team__tablet-content .team__content p {
+    margin-bottom: calc(var(--spacing) * 4);
+    font-family: var(--font-geologica);
+    font-size: 20px;
+    --tw-leading: 1.5;
+    line-height: 1.5;
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
+    color: #19232e;
+  }
+}
 .materials__slider .swiper-wrapper {
   align-items: stretch;
 }
@@ -3573,11 +3663,36 @@
   .materials__slider .swiper-slide {
     width: 348px !important;
   }
+  .materials__slider .swiper-slide .materials__card-content {
+    display: none;
+  }
   .materials__slider .swiper-slide:not(.swiper-slide-active) .materials__card-image {
     filter: grayscale(100%);
   }
   .materials__slider .swiper-slide-active .materials__card-image {
     filter: grayscale(0%);
+  }
+  .materials__tablet-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .materials__tablet-content h3 {
+    font-family: 'Akrobat', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1;
+    color: #1e1e1e;
+    width: 100%;
+  }
+  .materials__tablet-content p {
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #19232e;
+    width: 100%;
   }
 }
 @property --tw-translate-x {

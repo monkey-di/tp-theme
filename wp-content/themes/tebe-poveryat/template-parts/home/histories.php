@@ -14,14 +14,14 @@ $histories_query = new WP_Query([
 ?>
 <section class="histories-section w-full bg-sky relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] lg:pt-[132px] pb-[80px] lg:pb-[132px]">
 
-    <div class="hidden lg:block absolute inset-0 z-0 pointer-events-none px-[96px]">
+    <div class="hidden xl:block absolute inset-0 z-0 pointer-events-none px-[96px]">
         <img src="<?php
         echo get_template_directory_uri(); ?>/assets/images/bg3.png" alt="" class="w-full h-full"/>
 
     </div>
 
     <!-- Background Decor (Stars/Sparks) -->
-    <div class="histories-section__decor absolute inset-0 z-0 pointer-events-none lg:hidden">
+    <div class="histories-section__decor absolute inset-0 z-0 pointer-events-none md:hidden">
         <div class="absolute bottom-0 left-[-28px] w-[423px] h-[423px] flex items-center justify-center">
             <img src="<?php echo get_theme_file_uri('assets/images/history-decor-1.svg'); ?>" alt=""
                  class="w-full h-full object-contain opacity-45 rotate-[270deg]"/>
@@ -40,98 +40,211 @@ $histories_query = new WP_Query([
         </h2>
 
         <?php if ($histories_query->have_posts()) : ?>
-            <!-- Slider Card -->
-            <div class="histories__slider swiper w-full lg:max-w-[1170px] lg:mx-auto min-w-0">
-                <div class="swiper-wrapper">
-                    <?php while ($histories_query->have_posts()) : $histories_query->the_post(); ?>
-                        <div class="swiper-slide">
-                            <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col sm:flex-row items-center lg:items-stretch pt-1 sm:p-1 lg:gap-[40px]">
-                                <!-- Image Container -->
-                                <div class="histories__card-image relative w-[calc(100%-8px)] lg:w-[340px] h-[400px]  sm:h-auto lg:h-[491px] mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0 sm:flex-shrink-1 ">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <?php the_post_thumbnail('full', ['class' => 'w-full h-full object-cover', 'alt' => get_the_title()]); ?>
-                                    <?php else : ?>
-                                        <img class="w-full h-full object-cover"
-                                             src="<?php echo get_theme_file_uri('assets/images/placeholder.jpg'); ?>"
-                                             alt="<?php the_title(); ?>"/>
-                                    <?php endif; ?>
-                                    
-                                    <div class="absolute inset-0 bg-black/20"></div>
+            <!-- Tablet Wrapper for White Card Look -->
+            <div class="histories__content-wrapper w-full md:overflow-hidden md:max-w-[720px] md:bg-white md:rounded-[20px] md:py-10 md:px-0 md:mx-auto xl:max-w-[1170px] xl:bg-transparent xl:p-0">
+                
+                <!-- Slider Card -->
+                <div class="histories__slider swiper w-full lg:max-w-[1170px] lg:mx-auto min-w-0">
+                    <div class="swiper-wrapper">
+                        <?php while ($histories_query->have_posts()) : $histories_query->the_post(); ?>
+                            <div class="swiper-slide">
+                                <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col sm:flex-row items-center lg:items-stretch pt-1 sm:p-1 lg:gap-[40px]">
+                                    <!-- Image Container -->
+                                    <div class="histories__card-image relative w-[calc(100%-8px)] md:w-full lg:w-[340px] h-[400px] md:h-[534px] lg:h-[491px] mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0 sm:flex-shrink-1 ">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <?php the_post_thumbnail('full', ['class' => 'w-full h-full object-cover', 'alt' => get_the_title()]); ?>
+                                        <?php else : ?>
+                                            <img class="w-full h-full object-cover"
+                                                 src="<?php echo get_theme_file_uri('assets/images/placeholder.jpg'); ?>"
+                                                 alt="<?php the_title(); ?>"/>
+                                        <?php endif; ?>
+                                        
+                                        <div class="absolute inset-0 bg-black/20"></div>
 
-                                    <!-- Name Overlay (Mobile Only) -->
-                                    <div class="absolute left-0 bottom-0 w-full p-4 lg:hidden">
-                                        <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                            <?php 
-                                            // Split title for mobile effect if needed, or just output
-                                            echo str_replace(' ', '<br>', get_the_title()); 
-                                            ?>
-                                        </h3>
-                                    </div>
-                                </div>
-                                <!-- Content -->
-                                <div class="histories__card-content w-full px-4 pt-4 pb-6 lg:py-[16px] lg:pr-10 lg:pb-6  lg:pl-0 flex flex-col gap-4 lg:gap-[40px] lg:flex-1 lg:justify-between">
-                                    <!-- Top: Name + Text -->
-                                    <div class="flex flex-col gap-4 lg:gap-[40px]">
-                                        <!-- Name (Desktop Only) -->
-                                        <h3 class="hidden lg:block text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
-                                            <?php the_title(); ?>
-                                        </h3>
-                                        <!-- Text -->
-                                        <div class="history__content">
-                                            <?php the_content(); ?>
+                                        <!-- Name Overlay (Mobile & Tablet) -->
+                                        <div class="absolute left-0 bottom-0 w-full p-4 xl:hidden">
+                                            <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                                <?php 
+                                                // Split title for mobile effect if needed, or just output
+                                                echo str_replace(' ', '<br>', get_the_title()); 
+                                                ?>
+                                            </h3>
                                         </div>
                                     </div>
-
-                                    <!-- Bottom: Button + Navigation (Desktop) or Read More (Mobile) -->
-                                    <div class="histories__card-footer">
-                                        <!-- Mobile: Read More -->
-                                        <div class="lg:hidden">
-                                            <?php
-                                            get_template_part('template-parts/components/link-more', null, [
-                                                    'text' => 'Читать далее',
-                                                    'url' => get_permalink(),
-                                                    'style' => 'default',
-                                                    'icon_classes' => 'hidden'
-                                            ]); ?>
+                                    <!-- Content -->
+                                    <div class="histories__card-content w-full px-4 pt-4 pb-6 lg:py-[16px] lg:pr-10 lg:pb-6 lg:pl-0 flex flex-col gap-4 lg:gap-[40px] lg:flex-1 lg:justify-between md:hidden xl:flex">
+                                        <!-- Top: Name + Text -->
+                                        <div class="flex flex-col gap-4 lg:gap-[40px]">
+                                            <!-- Name (Desktop Only) -->
+                                            <h3 class="hidden lg:block text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                                <?php the_title(); ?>
+                                            </h3>
+                                            <!-- Text -->
+                                            <div class="history__content">
+                                                <?php the_content(); ?>
+                                            </div>
                                         </div>
 
-                                        <!-- Desktop: Button + Navigation -->
-                                        <div class="hidden xl:flex justify-between items-center w-full">
-                                            <!-- All Histories Button -->
-                                            <?php
-                                            $stories_archive_link = get_post_type_archive_link('history');
-                                            get_template_part('template-parts/components/button', null, [
-                                                    'text' => 'Все истории',
-                                                    'url' => $stories_archive_link ? $stories_archive_link : '#',
-                                                    'style' => 'primary',
-                                                    'size' => 'md',
-                                                    'class' => '!w-[187px] text-white uppercase'
-                                            ]); ?>
+                                        <!-- Bottom: Button + Navigation (Desktop) or Read More (Mobile) -->
+                                        <div class="histories__card-footer">
+                                            <!-- Mobile: Read More -->
+                                            <div class="lg:hidden">
+                                                <?php
+                                                get_template_part('template-parts/components/link-more', null, [
+                                                        'text' => 'Читать далее',
+                                                        'url' => get_permalink(),
+                                                        'style' => 'default',
+                                                        'icon_classes' => 'hidden'
+                                                ]); ?>
+                                            </div>
 
-                                            <!-- Navigation -->
-                                            <div class="flex gap-[8px]">
-                                                <button type="button"
-                                                        class="histories-prev cursor-pointer hover:opacity-70 transition">
-                                                    <img src="<?php
-                                                    echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous"
-                                                         class="w-[56px] h-[56px]"/>
-                                                </button>
-                                                <button type="button"
-                                                        class="histories-next cursor-pointer hover:opacity-70 transition">
-                                                    <img src="<?php
-                                                    echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next"
-                                                         class="w-[56px] h-[56px]"/>
-                                                </button>
+                                            <!-- Desktop: Button + Navigation -->
+                                            <div class="hidden xl:flex justify-between items-center w-full">
+                                                <!-- All Histories Button -->
+                                                <?php
+                                                $stories_archive_link = get_post_type_archive_link('history');
+                                                get_template_part('template-parts/components/button', null, [
+                                                        'text' => 'Все истории',
+                                                        'url' => $stories_archive_link ? $stories_archive_link : '#',
+                                                        'style' => 'primary',
+                                                        'size' => 'md',
+                                                        'class' => '!w-[187px] text-white uppercase'
+                                                ]); ?>
+
+                                                <!-- Navigation -->
+                                                <div class="flex gap-[8px]">
+                                                    <button type="button"
+                                                            class="histories-prev cursor-pointer hover:opacity-70 transition">
+                                                        <img src="<?php
+                                                        echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous"
+                                                             class="w-[56px] h-[56px]"/>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="histories-next cursor-pointer hover:opacity-70 transition">
+                                                        <img src="<?php
+                                                        echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next"
+                                                             class="w-[56px] h-[56px]"/>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endwhile; ?>
-                    <?php wp_reset_postdata(); ?>
+                        <?php endwhile; ?>
+
+                        <?php
+                        // Manual Duplication for Loop Stability (like Friends section)
+                        $histories_query->rewind_posts();
+                        while ($histories_query->have_posts()) : $histories_query->the_post();
+                        ?>
+                            <div class="swiper-slide">
+                                <div class="histories__card w-full bg-white rounded-[20px] overflow-hidden flex flex-col sm:flex-row items-center lg:items-stretch pt-1 sm:p-1 lg:gap-[40px]">
+                                    <!-- Image Container -->
+                                    <div class="histories__card-image relative w-[calc(100%-8px)] md:w-full lg:w-[340px] h-[400px] md:h-[534px] lg:h-[491px] mt-1 lg:mt-0 rounded-[20px] overflow-hidden flex-shrink-0 sm:flex-shrink-1 ">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <?php the_post_thumbnail('full', ['class' => 'w-full h-full object-cover', 'alt' => get_the_title()]); ?>
+                                        <?php else : ?>
+                                            <img class="w-full h-full object-cover"
+                                                 src="<?php echo get_theme_file_uri('assets/images/placeholder.jpg'); ?>"
+                                                 alt="<?php the_title(); ?>"/>
+                                        <?php endif; ?>
+                                        
+                                        <div class="absolute inset-0 bg-black/20"></div>
+
+                                        <!-- Name Overlay (Mobile & Tablet) -->
+                                        <div class="absolute left-0 bottom-0 w-full p-4 xl:hidden">
+                                            <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                                <?php 
+                                                // Split title for mobile effect if needed, or just output
+                                                echo str_replace(' ', '<br>', get_the_title()); 
+                                                ?>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <!-- Content -->
+                                    <div class="histories__card-content w-full px-4 pt-4 pb-6 lg:py-[16px] lg:pr-10 lg:pb-6 lg:pl-0 flex flex-col gap-4 lg:gap-[40px] lg:flex-1 lg:justify-between md:hidden xl:flex">
+                                        <!-- Top: Name + Text -->
+                                        <div class="flex flex-col gap-4 lg:gap-[40px]">
+                                            <!-- Name (Desktop Only) -->
+                                            <h3 class="hidden lg:block text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                                <?php the_title(); ?>
+                                            </h3>
+                                            <!-- Text -->
+                                            <div class="history__content">
+                                                <?php the_content(); ?>
+                                            </div>
+                                        </div>
+
+                                        <!-- Bottom: Button + Navigation (Desktop) or Read More (Mobile) -->
+                                        <div class="histories__card-footer">
+                                            <!-- Mobile: Read More -->
+                                            <div class="lg:hidden">
+                                                <?php
+                                                get_template_part('template-parts/components/link-more', null, [
+                                                        'text' => 'Читать далее',
+                                                        'url' => get_permalink(),
+                                                        'style' => 'default',
+                                                        'icon_classes' => 'hidden'
+                                                ]); ?>
+                                            </div>
+
+                                            <!-- Desktop: Button + Navigation -->
+                                            <div class="hidden xl:flex justify-between items-center w-full">
+                                                <!-- All Histories Button -->
+                                                <?php
+                                                $stories_archive_link = get_post_type_archive_link('history');
+                                                get_template_part('template-parts/components/button', null, [
+                                                        'text' => 'Все истории',
+                                                        'url' => $stories_archive_link ? $stories_archive_link : '#',
+                                                        'style' => 'primary',
+                                                        'size' => 'md',
+                                                        'class' => '!w-[187px] text-white uppercase'
+                                                ]); ?>
+
+                                                <!-- Navigation -->
+                                                <div class="flex gap-[8px]">
+                                                    <button type="button"
+                                                            class="histories-prev cursor-pointer hover:opacity-70 transition">
+                                                        <img src="<?php
+                                                        echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous"
+                                                             class="w-[56px] h-[56px]"/>
+                                                    </button>
+                                                    <button type="button"
+                                                            class="histories-next cursor-pointer hover:opacity-70 transition">
+                                                        <img src="<?php
+                                                        echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next"
+                                                             class="w-[56px] h-[56px]"/>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+
+                        <?php wp_reset_postdata(); ?>
+                    </div>
                 </div>
-            </div>
+            
+                <!-- Tablet Content Container (Dynamic) -->
+                <div class="histories__tablet-content hidden md:block xl:hidden w-full mt-10 opacity-0 transition-opacity duration-300">
+                     <!-- Content injected by JS -->
+                </div>
+
+                <!-- Tablet 'All Histories' Button -->
+                <div class="hidden md:flex xl:hidden justify-center w-full mt-10">
+                    <?php
+                    get_template_part('template-parts/components/button', null, [
+                            'text' => 'Все истории',
+                            'url' => $stories_archive_link ? $stories_archive_link : '#',
+                            'style' => 'primary',
+                            'class' => 'w-[348px] text-white uppercase'
+                    ]); ?>
+                </div>
+
+            </div> <!-- End Tablet Wrapper -->
         <?php endif; ?>
 
         <!-- Slider Controls (Mobile Only) -->
@@ -148,7 +261,7 @@ $histories_query = new WP_Query([
         </div>
 
         <!-- "All Histories" Button (Mobile Only) -->
-        <div class="histories__view-all lg:hidden">
+        <div class="histories__view-all md:hidden">
             <?php
             $stories_archive_link = get_post_type_archive_link('history');
             get_template_part('template-parts/components/button', null, [

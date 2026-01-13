@@ -43,12 +43,12 @@
                             <div class="team__card w-full lg:max-w-[1105px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
                                 <!-- Image Container -->
                                 <?php if ( $photo_url ) : ?>
-                                <div class="team__card-image relative w-full lg:w-[358px] lg:min-w-[358px] h-[636px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
+                                <div class="team__card-image relative w-full md:w-[348px] lg:w-[358px] lg:min-w-[358px] h-[636px] md:h-[522px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
                                     <img class="w-full h-full object-cover rounded-[20px]" src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
-                                    <!-- Overlay for mobile only -->
-                                    <div class="absolute inset-0 bg-black/20 pointer-events-none lg:hidden"></div>
-                                    <!-- Name & Role Overlay - Mobile only -->
-                                    <div class="absolute left-0 bottom-0 w-full p-[16px] lg:hidden">
+                                    <!-- Overlay for mobile & tablet -->
+                                    <div class="absolute inset-0 bg-black/20 pointer-events-none xl:hidden"></div>
+                                    <!-- Name & Role Overlay - Mobile & Tablet -->
+                                    <div class="absolute left-0 bottom-0 w-full p-[16px] xl:hidden">
                                         <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
                                             <?php echo $name_mobile; ?>
                                         </h3>
@@ -61,7 +61,7 @@
                                 </div>
                                 <?php endif; ?>
                                 <!-- Content -->
-                                <div class="team__card-content w-full px-4 py-6 lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1">
+                                <div class="team__card-content w-full px-4 py-6 lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1 md:hidden xl:flex">
                                     <!-- Name & Role - Desktop only -->
                                     <div class="hidden lg:flex lg:flex-col lg:gap-1 ">
                                         <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
@@ -75,7 +75,7 @@
                                     </div>
                                     <!-- Description -->
                                     <?php if ( get_the_content() ) : ?>
-                                    <div class="mt-[26px]">
+                                    <div class="mt-[26px] team__content">
                                         <p class="text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] max-w-[630px] line-clamp-6 xl:line-clamp-none">
                                             <?php echo get_the_content(); ?>
                                         </p>
@@ -96,6 +96,73 @@
                         </div>
                     <?php
                     endwhile;
+
+                    // Manual Duplication for Loop Stability (Tablet)
+                    $team_query->rewind_posts();
+                    while ( $team_query->have_posts() ) : $team_query->the_post();
+                        $position = get_post_meta( get_the_ID(), '_team_position', true );
+                        $photo_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
+                        $name = get_the_title();
+                        $name_mobile = str_replace( ' ', '<br>', $name );
+                        ?>
+                        <div class="swiper-slide">
+                            <div class="team__card w-full lg:max-w-[1105px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
+                                <!-- Image Container -->
+                                <?php if ( $photo_url ) : ?>
+                                <div class="team__card-image relative w-full md:w-[348px] lg:w-[358px] lg:min-w-[358px] h-[636px] md:h-[522px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
+                                    <img class="w-full h-full object-cover rounded-[20px]" src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
+                                    <!-- Overlay for mobile & tablet -->
+                                    <div class="absolute inset-0 bg-black/20 pointer-events-none xl:hidden"></div>
+                                    <!-- Name & Role Overlay - Mobile & Tablet -->
+                                    <div class="absolute left-0 bottom-0 w-full p-[16px] xl:hidden">
+                                        <h3 class="text-white text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                            <?php echo $name_mobile; ?>
+                                        </h3>
+                                        <?php if ( $position ) : ?>
+                                        <p class="text-white text-[16px] font-normal font-geologica leading-[1.5]">
+                                            <?php echo esc_html( $position ); ?>
+                                        </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                                <!-- Content -->
+                                <div class="team__card-content w-full px-4 py-6 lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1 md:hidden xl:flex">
+                                    <!-- Name & Role - Desktop only -->
+                                    <div class="hidden lg:flex lg:flex-col lg:gap-1 ">
+                                        <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
+                                            <?php echo esc_html( $name ); ?>
+                                        </h3>
+                                        <?php if ( $position ) : ?>
+                                        <p class="text-contrast text-[20px] font-light font-geologica leading-[1.5]">
+                                            <?php echo esc_html( $position ); ?>
+                                        </p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <!-- Description -->
+                                    <?php if ( get_the_content() ) : ?>
+                                    <div class="mt-[26px] team__content">
+                                        <p class="text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] max-w-[630px] line-clamp-6 xl:line-clamp-none">
+                                            <?php echo get_the_content(); ?>
+                                        </p>
+                                    </div>
+                                    <?php endif; ?>
+                                    <!-- Read More (Mobile Only) -->
+                                    <div class="team__card-read-more lg:hidden">
+                                        <?php get_template_part('template-parts/components/link-more', null, [
+                                            'text' => 'Читать далее',
+                                            'url' => '#',
+                                            'style' => 'default',
+                                            'icon_classes' => 'hidden'
+
+                                        ]); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    endwhile;
+
                     wp_reset_postdata();
                 endif;
                 ?>
@@ -108,6 +175,11 @@
             </button>
 
         </div> <!-- End slider-area -->
+
+        <!-- Tablet Content Container (Dynamic) -->
+        <div class="team__tablet-content hidden md:flex xl:hidden flex-col items-start gap-2 w-full max-w-[720px] mx-auto mt-12 opacity-0 transition-opacity duration-300">
+             <!-- Content injected by JS -->
+        </div>
 
         <!-- Progress Bar (Mobile Only) -->
         <div class="team__progress w-full xl:hidden">

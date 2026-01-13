@@ -1,3 +1,29 @@
 .history__content, .history__content p {
     @apply text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] line-clamp-6 lg:line-clamp-none
 }
+
+/* Tablet Styles (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .histories__slider {
+        overflow: visible !important;
+    }
+
+    .histories__slider .swiper-slide {
+        width: 340px !important;
+        opacity: 0.5;
+        transition: opacity 0.3s ease;
+    }
+
+    .histories__slider .swiper-slide-active {
+        opacity: 1;
+    }
+
+    .histories__card {
+        background: transparent !important;
+    }
+
+    /* External Content Styles */
+    .histories__tablet-content .history__content p {
+        @apply text-[#19232e] text-[20px] font-light font-geologica leading-[1.5] mb-4;
+    }
+}

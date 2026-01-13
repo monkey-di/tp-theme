@@ -81,6 +81,14 @@
 
         </div> <!-- End slider-area -->
 
+        <!-- Tablet Content Container (Dynamic) -->
+        <div class="materials__tablet-content hidden md:block xl:hidden w-full max-w-[720px] mx-auto mt-8 opacity-0 transition-opacity duration-300 flex flex-col gap-6 items-start">
+             <!-- Content injected by JS -->
+        </div>
+        
+        <!-- Hidden Safelist for JS-injected classes -->
+        <div class="hidden link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer items-center gap-3 no-underline w-6 h-6 transition-transform duration-300 group-hover:translate-x-1 flex-shrink-0 flex text-primary text-[16px] font-normal font-geologica leading-6 h-0 relative shrink-0 w-full absolute bottom-0 left-0 right-0 top-[-2px] block max-w-none size-full"></div>
+
         <!-- Progress Bar (Mobile Only) -->
         <div class="materials__progress w-full xl:hidden">
             <?php get_template_part('template-parts/components/slider-progress', null, [

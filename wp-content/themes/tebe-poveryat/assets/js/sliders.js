@@ -151,15 +151,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Materials Slider
     if (document.querySelector('.materials__slider')) {
         const materialsSliderProgress = document.querySelector('.materials__progress .slider-progress');
+        const tabletContentContainer = document.querySelector('.materials__tablet-content');
+
+    // Materials Slider
+    if (document.querySelector('.materials__slider')) {
+        const materialsSliderProgress = document.querySelector('.materials__progress .slider-progress');
+        const tabletContentContainer = document.querySelector('.materials__tablet-content');
+
+        const updateMaterialsTabletContent = (swiper) => {
+            if (!tabletContentContainer) return;
+            
+            // Fade out
+            tabletContentContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Get the active slide (visual)
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                if (activeSlide) {
+                    // Find the content source within the active slide
+                    const contentSource = activeSlide.querySelector('.materials__card-content');
+                    if (contentSource) {
+                        // Copy content to external container
+                        tabletContentContainer.innerHTML = contentSource.innerHTML;
+                    }
+                }
+                
+                // Fade in
+                tabletContentContainer.style.opacity = '1';
+            }, 300);
+        };
+
         const materialsSwiper = new Swiper('.materials__slider', {
-            loop: true,
+            loop: false,
             speed: 700,
             slidesPerView: 1,
             spaceBetween: 16,
             breakpoints: {
                 768: {
                     slidesPerView: 'auto',
-                    slidesPerGroup: 1,
                     centeredSlides: true,
                     spaceBetween: 24
                 },
@@ -181,22 +210,77 @@ document.addEventListener('DOMContentLoaded', () => {
                 init: function () {
                     if(materialsSliderProgress) materialsSliderProgress.style.opacity = 1;
                 },
+                slideChange: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        updateMaterialsTabletContent(this);
+                    }
+                },
+                resize: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        // On resize, just force an update
+                         updateMaterialsTabletContent(this);
+                    }
+                }
             }
         });
+
+        // Initial content update (fix for missing content on load)
+        if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+            // Use a slight delay to ensure Swiper is fully ready, but force immediate opacity
+            setTimeout(() => {
+                const activeSlide = materialsSwiper.slides[materialsSwiper.activeIndex];
+                if (activeSlide && tabletContentContainer) {
+                    const contentSource = activeSlide.querySelector('.materials__card-content');
+                    if (contentSource) {
+                        tabletContentContainer.innerHTML = contentSource.innerHTML;
+                        tabletContentContainer.style.opacity = '1';
+                    }
+                }
+            }, 50);
+        }
+    }
     }
 
     // Histories Slider
     if (document.querySelector('.histories__slider')) {
         const historiesSliderProgress = document.querySelector('.histories__progress .slider-progress');
+        const tabletContentContainer = document.querySelector('.histories__tablet-content');
+
+        const updateHistoriesTabletContent = (swiper) => {
+            if (!tabletContentContainer) return;
+
+            tabletContentContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                if (activeSlide) {
+                    const contentSource = activeSlide.querySelector('.history__content');
+                    if (contentSource) {
+                         tabletContentContainer.innerHTML = contentSource.innerHTML;
+                    }
+                }
+                tabletContentContainer.style.opacity = '1';
+            }, 300);
+        };
+
         const historiesSwiper = new Swiper('.histories__slider', {
             loop: true,
-            // autoplay: {
-            //     delay: 6200,
-            //     disableOnInteraction: false,
-            // },
             speed: 850,
             slidesPerView: 1,
             spaceBetween: 0,
+            loopedSlides: 6, // Ensure duplicates for auto width
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                    spaceBetween: 24,
+                },
+                1280: {
+                    slidesPerView: 1,
+                    centeredSlides: false,
+                    spaceBetween: 0
+                }
+            },
             pagination: {
                 el: historiesSliderProgress,
                 type: 'progressbar',
@@ -208,21 +292,118 @@ document.addEventListener('DOMContentLoaded', () => {
             on: {
                 init: function () {
                     if(historiesSliderProgress) historiesSliderProgress.style.opacity = 1;
+                    
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        // Force start at first slide
+                        this.slideToLoop(0, 0);
+                        
+                        // Small delay to ensure DOM is ready for content extraction
+                        setTimeout(() => {
+                            const activeSlide = this.slides[this.activeIndex];
+                            if (activeSlide && tabletContentContainer) {
+                                 const contentSource = activeSlide.querySelector('.history__content');
+                                 if (contentSource) {
+                                     tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                     tabletContentContainer.style.opacity = '1';
+                                 }
+                            }
+                        }, 50);
+                    }
                 },
+                slideChange: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        updateHistoriesTabletContent(this);
+                    }
+                },
+                resize: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                         const activeSlide = this.slides[this.activeIndex];
+                         if (activeSlide && tabletContentContainer) {
+                              const contentSource = activeSlide.querySelector('.history__content');
+                              if (contentSource) {
+                                  tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                  tabletContentContainer.style.opacity = '1';
+                              }
+                         }
+                    }
+                }
             }
         });
+
+        // Fallback Initial content update (in case init event misses or race condition)
+        if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+            setTimeout(() => {
+                if (historiesSwiper && !historiesSwiper.destroyed) {
+                    const activeSlide = historiesSwiper.slides[historiesSwiper.activeIndex];
+                    if (activeSlide && tabletContentContainer) {
+                        const contentSource = activeSlide.querySelector('.history__content');
+                        if (contentSource && tabletContentContainer.innerHTML === '') {
+                             tabletContentContainer.innerHTML = contentSource.innerHTML;
+                             tabletContentContainer.style.opacity = '1';
+                        }
+                    }
+                }
+            }, 200);
+        }
     }
 
     // Team Slider
     if (document.querySelector('.team__slider')) {
         const teamSliderProgress = document.querySelector('.team__progress .slider-progress');
+        const tabletContentContainer = document.querySelector('.team__tablet-content');
+
+        const updateTeamTabletContent = (swiper) => {
+            if (!tabletContentContainer) return;
+
+            tabletContentContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                if (activeSlide) {
+                    const contentSource = activeSlide.querySelector('.team__content');
+                    if (contentSource) {
+                         tabletContentContainer.innerHTML = contentSource.innerHTML;
+                         
+                         // Add 'Read More' link dynamically if not present
+                         const readMoreHtml = `
+                            <div class="team__tablet-read-more mt-2">
+                                <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                    <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                        <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                            Читать далее
+                                        </div>
+                                    </a>
+                                    <div class="h-0 relative shrink-0 w-full">
+                                        <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                            <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         `;
+                         tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                    }
+                }
+                tabletContentContainer.style.opacity = '1';
+            }, 300);
+        };
+
         const teamSwiper = new Swiper('.team__slider', {
             loop: true,
-            // autoplay: {
-            //     delay: 6500,
-            //     disableOnInteraction: false,
-            // },
             speed: 900,
+            loopedSlides: 6,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                    spaceBetween: 24
+                },
+                1280: {
+                    slidesPerView: 1,
+                    centeredSlides: false,
+                    spaceBetween: 0
+                }
+            },
             pagination: {
                 el: teamSliderProgress,
                 type: 'progressbar',
@@ -234,10 +415,77 @@ document.addEventListener('DOMContentLoaded', () => {
             on: {
                 init: function () {
                     if(teamSliderProgress) teamSliderProgress.style.opacity = 1;
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        this.slideToLoop(0, 0); // Force start at first slide
+                        
+                        setTimeout(() => {
+                            const activeSlide = this.slides[this.activeIndex];
+                            if (activeSlide && tabletContentContainer) {
+                                 const contentSource = activeSlide.querySelector('.team__content');
+                                 if (contentSource) {
+                                     tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                      // Add 'Read More' link dynamically
+                                     const readMoreHtml = `
+                                        <div class="team__tablet-read-more mt-2">
+                                            <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                                <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                                    <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                                        Читать далее
+                                                    </div>
+                                                </a>
+                                                <div class="h-0 relative shrink-0 w-full">
+                                                    <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                                        <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     `;
+                                     tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                                     tabletContentContainer.style.opacity = '1';
+                                 }
+                            }
+                        }, 50);
+                    }
                 },
+                slideChange: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        updateTeamTabletContent(this);
+                    }
+                },
+                resize: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        const activeSlide = this.slides[this.activeIndex];
+                        if (activeSlide && tabletContentContainer) {
+                             const contentSource = activeSlide.querySelector('.team__content');
+                             if (contentSource) {
+                                 tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                  // Add 'Read More' link dynamically
+                                 const readMoreHtml = `
+                                    <div class="team__tablet-read-more mt-2">
+                                        <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                            <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                                <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                                    Читать далее
+                                                </div>
+                                            </a>
+                                            <div class="h-0 relative shrink-0 w-full">
+                                                <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                                    <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 `;
+                                 tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                                 tabletContentContainer.style.opacity = '1';
+                             }
+                        }
+                    }
+                }
             }
         });
     }
 
-    console.log('Sliders JS loaded');
+
 });

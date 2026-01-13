@@ -27,6 +27,11 @@
         width: 348px !important;
     }
 
+    /* Hide internal content on tablet, show external instead */
+    .materials__slider .swiper-slide .materials__card-content {
+        display: none;
+    }
+
     /* Grayscale effect for inactive slides */
     .materials__slider .swiper-slide:not(.swiper-slide-active) .materials__card-image {
         filter: grayscale(100%);
@@ -34,5 +39,31 @@
 
     .materials__slider .swiper-slide-active .materials__card-image {
         filter: grayscale(0%);
+    }
+    
+    /* External Tablet Content Styles */
+    .materials__tablet-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+    
+    .materials__tablet-content h3 {
+        font-family: 'Akrobat', sans-serif;
+        font-weight: 800;
+        font-size: 26px;
+        line-height: 1;
+        color: #1e1e1e;
+        width: 100%;
+    }
+    
+    .materials__tablet-content p {
+        font-family: 'Geologica', sans-serif;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 1.5;
+        color: #19232e;
+        width: 100%;
     }
 }
