@@ -35,7 +35,7 @@ $histories_query = new WP_Query([
     <div class="histories__container container mx-auto px-4 relative z-20 mt-8 mb-8 flex flex-col gap-8">
 
         <!-- Title -->
-        <h2 class="histories__title text-white text-[32px] lg:text-[64px] font-normal font-ura uppercase leading-[1.1] lg:leading-[0.95] mb-2 sm:text-center">
+        <h2 class="histories__title text-white uppercase  mb-2 h2 xl:text-center">
             Истории <br class="lg:hidden">переживших
         </h2>
 
