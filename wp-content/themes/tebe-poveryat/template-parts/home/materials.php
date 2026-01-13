@@ -35,22 +35,22 @@
                     while ( $materials_query->have_posts() ) : $materials_query->the_post();
                         $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'large' );
                         ?>
-                        <div class="swiper-slide w-[500px]">
-                            <div class="materials__card w-full xl:max-w-[1055px] xl:ml-[168px] flex flex-col lg:flex-row gap-6 lg:gap-0">
+                        <div class="swiper-slide w-[500px] md:w-auto">
+                            <div class="materials__card w-full xl:max-w-[1055px] xl:ml-[168px] flex flex-col xl:flex-row gap-6 xl:gap-0">
                                 <!-- Illustration -->
                                 <?php if ( $thumbnail_url ) : ?>
-                                <div class="materials__card-image w-full lg:w-[453px] lg:h-[453px] lg:min-w-[453px] rounded-[20px] overflow-hidden relative bg-[#fef1ec] flex-shrink-0">
+                                <div class="materials__card-image w-full md:w-[348px] md:h-[348px] xl:w-[453px] xl:h-[453px] xl:min-w-[453px] rounded-[20px] overflow-hidden relative bg-[#fef1ec] flex-shrink-0">
                                     <img src="<?php echo esc_url( $thumbnail_url ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>" class="w-full h-full object-cover" />
                                 </div>
                                 <?php endif; ?>
 
                                 <!-- Content -->
-                                <div class="materials__card-content flex flex-col justify-start gap-4 lg:gap-6 lg:p-12 lg:flex-1">
-                                    <h3 class="materials__card-title text-contrast text-4xl lg:text-[26px] font-extrabold font-akrobat leading-none max-w-[400px]">
+                                <div class="materials__card-content flex flex-col justify-start gap-4 md:gap-6 xl:p-12 xl:flex-1">
+                                    <h3 class="materials__card-title text-contrast text-4xl md:text-[26px] font-extrabold font-akrobat leading-none md:max-w-full xl:max-w-[400px]">
                                         <?php the_title(); ?>
                                     </h3>
                                     <?php if ( has_excerpt() ) : ?>
-                                    <p class="materials__card-description text-contrast text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] xl:max-w-[400px] 2xl:max-w-full">
+                                    <p class="materials__card-description text-contrast text-[16px] md:text-[20px] xl:text-[23px] font-light font-geologica leading-[1.5] md:max-w-full xl:max-w-[400px] 2xl:max-w-full">
                                         <?php echo get_the_excerpt(); ?>
                                     </p>
                                     <?php endif; ?>

@@ -10,3 +10,29 @@
 .materials__slider .swiper-slide {
     height: auto;
 }
+
+/* Tablet version (768px - 1279px) */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .materials__slider-area {
+        overflow: hidden;
+        margin-left: -1rem;
+        margin-right: -1rem;
+    }
+
+    .materials__slider {
+        overflow: visible !important;
+    }
+
+    .materials__slider .swiper-slide {
+        width: 348px !important;
+    }
+
+    /* Grayscale effect for inactive slides */
+    .materials__slider .swiper-slide:not(.swiper-slide-active) .materials__card-image {
+        filter: grayscale(100%);
+    }
+
+    .materials__slider .swiper-slide-active .materials__card-image {
+        filter: grayscale(0%);
+    }
+}

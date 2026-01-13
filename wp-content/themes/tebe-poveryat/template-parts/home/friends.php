@@ -28,6 +28,14 @@ $friends_query = new WP_Query(array(
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
                 <style>
+                    @media (min-width: 768px) and (max-width: 1279px) {
+                        .strelki-v-rot-ebal {
+                            max-width: none;
+                        }
+                        .friends__slider-area {
+                            overflow: visible;
+                        }
+                    }
                     @media (min-width: 1300px) {
                         .strelki-v-rot-ebal {
                             max-width: 1169px;
@@ -42,7 +50,7 @@ $friends_query = new WP_Query(array(
                     }
                 </style>
 
-                <div class="swiper-container-wrapper w-full lg:max-w-[800px] strelki-v-rot-ebal">
+                <div class="swiper-container-wrapper w-full md:max-w-none xl:max-w-[800px] strelki-v-rot-ebal">
                     <div class="friends__slider swiper">
                         <div class="swiper-wrapper items-stretch">
                             <?php
@@ -54,7 +62,7 @@ $friends_query = new WP_Query(array(
                                         <div class="friends__card-image-wrap relative rounded-[20px] overflow-hidden">
                                             <?php if ( has_post_thumbnail() ) : ?>
                                                 <?php the_post_thumbnail( 'full', array(
-                                                    'class' => 'w-full h-auto object-cover aspect-[1/1] lg:aspect-[853/1280]',
+                                                    'class' => 'w-full h-auto object-cover aspect-[1/1] md:aspect-[348/522] xl:aspect-[853/1280]',
                                                     'alt' => get_the_title()
                                                 ) ); ?>
                                             <?php endif; ?>
@@ -80,7 +88,7 @@ $friends_query = new WP_Query(array(
                                         <div class="friends__card-image-wrap relative rounded-[20px] overflow-hidden">
                                             <?php if ( has_post_thumbnail() ) : ?>
                                                 <?php the_post_thumbnail( 'full', array(
-                                                    'class' => 'w-full h-auto object-cover lg:aspect-[853/1280]',
+                                                    'class' => 'w-full h-auto object-cover aspect-[1/1] md:aspect-[348/522] xl:aspect-[853/1280]',
                                                     'alt' => get_the_title()
                                                 ) ); ?>
                                             <?php endif; ?>

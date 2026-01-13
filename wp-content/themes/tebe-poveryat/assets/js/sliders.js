@@ -39,9 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesPerView: 1,
             spaceBetween: 16,
 
-            // Desktop settings
+            // Tablet and Desktop settings
             breakpoints: {
-                1024: {
+                768: {
+                    slidesPerView: 'auto',
+                    slidesPerGroup: 1,
+                    centeredSlides: true,
+                    spaceBetween: 24
+                },
+                1280: {
                     slidesPerView: 3,
                     slidesPerGroup: 1,
                     centeredSlides: true,
@@ -150,6 +156,19 @@ document.addEventListener('DOMContentLoaded', () => {
             speed: 700,
             slidesPerView: 1,
             spaceBetween: 16,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    slidesPerGroup: 1,
+                    centeredSlides: true,
+                    spaceBetween: 24
+                },
+                1280: {
+                    slidesPerView: 1,
+                    centeredSlides: false,
+                    spaceBetween: 16
+                }
+            },
             pagination: {
                 el: materialsSliderProgress,
                 type: 'progressbar',
