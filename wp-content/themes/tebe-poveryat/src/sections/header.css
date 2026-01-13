@@ -9,7 +9,7 @@
   }
 
   .header__container {
-    @apply container mx-auto px-4 sm:px-6 xl:px-0 flex justify-between items-center h-[144px] md:h-[96px] xl:h-[80px];
+    @apply container mx-auto px-4 sm:px-6 xl:px-0 flex justify-between items-center h-[74px] md:h-[96px] xl:h-[80px];
   }
 
   .header__logo-link {

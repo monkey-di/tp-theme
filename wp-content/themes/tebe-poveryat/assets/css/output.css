@@ -305,6 +305,9 @@
   .z-20 {
     z-index: 20;
   }
+  .z-30 {
+    z-index: 30;
+  }
   .z-50 {
     z-index: 50;
   }
@@ -950,6 +953,9 @@
   .object-bottom {
     object-position: bottom;
   }
+  .p-0\.5 {
+    padding: calc(var(--spacing) * 0.5);
+  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -1273,6 +1279,9 @@
   }
   .outline-offset-\[-1px\] {
     outline-offset: -1px;
+  }
+  .outline-\[\#6063a6\] {
+    outline-color: #6063a6;
   }
   .outline-primary {
     outline-color: var(--color-primary);
@@ -1897,11 +1906,6 @@
       gap: calc(var(--spacing) * 8);
     }
   }
-  .lg\:gap-10 {
-    @media (width >= 1024px) {
-      gap: calc(var(--spacing) * 10);
-    }
-  }
   .lg\:gap-12 {
     @media (width >= 1024px) {
       gap: calc(var(--spacing) * 12);
@@ -1952,9 +1956,9 @@
       padding-block: 16px;
     }
   }
-  .lg\:pt-4 {
+  .lg\:pt-5 {
     @media (width >= 1024px) {
-      padding-top: calc(var(--spacing) * 4);
+      padding-top: calc(var(--spacing) * 5);
     }
   }
   .lg\:pt-14 {
@@ -2211,6 +2215,11 @@
       gap: calc(var(--spacing) * 8);
     }
   }
+  .xl\:gap-10 {
+    @media (width >= 1281px) {
+      gap: calc(var(--spacing) * 10);
+    }
+  }
   .xl\:gap-\[43px\] {
     @media (width >= 1281px) {
       gap: 43px;
@@ -2289,6 +2298,12 @@
   .xl\:text-\[23px\] {
     @media (width >= 1281px) {
       font-size: 23px;
+    }
+  }
+  .xl\:leading-\[1\.5\] {
+    @media (width >= 1281px) {
+      --tw-leading: 1.5;
+      line-height: 1.5;
     }
   }
   .\32 xl\:max-w-full {
@@ -2486,7 +2501,7 @@
     }
     margin-inline: auto;
     display: flex;
-    height: 144px;
+    height: 74px;
     max-width: 1408px !important;
     align-items: center;
     justify-content: space-between;
@@ -3376,6 +3391,9 @@
   @media (width >= 768px) {
     justify-content: center;
   }
+  @media (width >= 1281px) {
+    justify-content: flex-start;
+  }
 }
 .donation-form__checkbox-custom {
   display: flex;
@@ -3609,7 +3627,7 @@
     flex-direction: row;
   }
   @media (width >= 1281px) {
-    gap: 56px;
+    gap: 96px;
   }
   @media (width >= 1281px) {
     padding-inline: calc(var(--spacing) * 10);
@@ -3681,6 +3699,9 @@
   }
   @media (width >= 1024px) {
     gap: calc(var(--spacing) * 12);
+  }
+  @media (width >= 1281px) {
+    padding-top: 65px;
   }
 }
 .about-section-part2__image-wrapper {

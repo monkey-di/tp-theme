@@ -38,7 +38,7 @@
 }
 .donation-form__checkbox-label {
   @apply flex items-center gap-2 cursor-pointer w-full ; /* Changed items-start to items-center */
-  @apply md:justify-center; /* Center flex items on desktop only */
+  @apply md:justify-center xl:justify-start; /* Center flex items on desktop only */
 }
 .donation-form__checkbox-custom {
   @apply w-5 h-5 rounded border-2 border-white flex-shrink-0 flex items-center justify-center bg-white;

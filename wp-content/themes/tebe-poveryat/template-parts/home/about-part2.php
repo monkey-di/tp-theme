@@ -52,7 +52,7 @@ $image_url = get_the_post_thumbnail_url($about_page->ID, 'full');
         endif; ?>
 
         <!-- Right Column: Text -->
-        <div class="w-full lg:w-auto flex flex-col gap-8 md:gap-1 mt-6 lg:mt-0">
+        <div class="w-full lg:w-auto flex flex-col gap-8 md:gap-1 xl:gap-10 mt-6 lg:mt-0">
             <!-- Desktop-only Title -->
             <?php
             if ($name || $position) : ?>
@@ -77,7 +77,7 @@ $image_url = get_the_post_thumbnail_url($about_page->ID, 'full');
             <?php
             if ($description) : ?>
                 <div class="about-section-part2__description">
-                    <p class="text-[16px] sm:text-[23px] font-light font-geologica leading-[1.5] line-clamp-5 md:line-clamp-4 xl:line-clamp-none  md:text-[#19232e]
+                    <p class="text-[16px] xl:text-[23px] font-light font-geologica leading-[1.5] xl:leading-[1.5] line-clamp-5 md:line-clamp-4 xl:line-clamp-none  md:text-[#19232e]
 md:text-xl
 md:font-light
 md:font-['Geologica']

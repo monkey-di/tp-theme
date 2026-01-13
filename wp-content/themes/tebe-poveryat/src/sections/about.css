@@ -23,7 +23,7 @@
 }
 
 .about__stat-card {
-    @apply py-4 md:py-4 rounded-[20px] flex flex-col md:flex-row xl:flex-row justify-start px-4 md:pl-8 md:pr-0 xl:px-10 items-start md:items-center gap-3 md:gap-10 xl:gap-[56px] text-white;
+    @apply py-4 md:py-4 rounded-[20px] flex flex-col md:flex-row xl:flex-row justify-start px-4 md:pl-8 md:pr-0 xl:px-10 items-start md:items-center gap-3 md:gap-10 xl:gap-[96px] text-white;
 }
 
 @media (min-width: 768px) and (max-width: 1280px) {
@@ -42,7 +42,7 @@
 }
 
 .about-section-part2__container {
-    @apply  container mx-auto flex flex-col lg:flex-row sm:items-center lg:gap-12;
+    @apply  container mx-auto flex flex-col lg:flex-row sm:items-center lg:gap-12 xl:pt-[65px];
 }
 .about-section-part2__image-wrapper {
     @apply  relative w-full xl:w-[787px] xl:min-w-[787px] lg:min-w-[380px] xl:max-w-full xl:h-[522px] rounded-[20px] overflow-hidden
