@@ -96,7 +96,7 @@ $histories_query = new WP_Query([
                                         </div>
 
                                         <!-- Desktop: Button + Navigation -->
-                                        <div class="hidden lg:flex justify-between items-center w-full">
+                                        <div class="hidden xl:flex justify-between items-center w-full">
                                             <!-- All Histories Button -->
                                             <?php
                                             $stories_archive_link = get_post_type_archive_link('history');
@@ -135,7 +135,7 @@ $histories_query = new WP_Query([
         <?php endif; ?>
 
         <!-- Slider Controls (Mobile Only) -->
-        <div class="histories__controls lg:hidden">
+        <div class="histories__controls xl:hidden">
             <!-- Mobile Progress -->
             <div class="histories__progress w-full">
                 <?php

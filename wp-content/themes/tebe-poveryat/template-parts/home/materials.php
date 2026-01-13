@@ -15,7 +15,7 @@
         <!-- Slider with Navigation (Desktop) -->
         <div class="materials__slider-area w-full flex items-center lg:justify-between lg:gap-x-4">
 
-            <button type="button" class="materials-prev hidden lg:block cursor-pointer hover:opacity-70 transition flex-shrink-0">
+            <button type="button" class="materials-prev hidden xl:block cursor-pointer hover:opacity-70 transition flex-shrink-0">
                 <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" class="w-[56px] h-[56px]" />
             </button>
 
@@ -75,14 +75,14 @@
                 </div> <!-- End swiper -->
             </div> <!-- End swiper-container-wrapper -->
 
-            <button type="button" class="materials-next hidden lg:block cursor-pointer hover:opacity-70 transition flex-shrink-0">
+            <button type="button" class="materials-next hidden xl:block cursor-pointer hover:opacity-70 transition flex-shrink-0">
                 <img src="<?php echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next" class="w-[56px] h-[56px]" />
             </button>
 
         </div> <!-- End slider-area -->
 
         <!-- Progress Bar (Mobile Only) -->
-        <div class="materials__progress w-full lg:hidden">
+        <div class="materials__progress w-full xl:hidden">
             <?php get_template_part('template-parts/components/slider-progress', null, [
                 'track_color' => '!bg-white',
                 'bar_color' => 'bg-secondary'

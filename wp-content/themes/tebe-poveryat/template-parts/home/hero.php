@@ -16,7 +16,7 @@ $slides_query = new WP_Query(array(
 ?>
 <section class="hero-section bg-surface relative z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]">
 
-    <div class="absolute inset-0 z-0 pointer-events-none px-0 lg:px-[96px] mob-bg lg:hidden block">
+    <div class="absolute inset-0 z-0 pointer-events-none px-0 lg:px-[96px] mob-bg md:hidden block">
         <style>
             .mob-bg {
                 background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/Ellipse.png');

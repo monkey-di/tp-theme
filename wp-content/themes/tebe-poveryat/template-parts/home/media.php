@@ -105,7 +105,7 @@
         <!-- Slider Controls -->
         <div class="media__controls w-full">
             <!-- Mobile Progress -->
-            <div class="media__progress w-full lg:hidden py-4">
+            <div class="media__progress w-full xl:hidden py-4">
                 <?php
                 get_template_part('template-parts/components/slider-progress', null, [
                         'track_color' => '!bg-white/20',
@@ -115,7 +115,7 @@
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden lg:flex w-full">
+            <div class="hidden xl:flex w-full">
                 <?php
                 get_template_part('template-parts/components/slider-navigation', null, [
                         'prev_class' => 'media-prev',

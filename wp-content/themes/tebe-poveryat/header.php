@@ -14,14 +14,14 @@ body_class(); ?>>
 <?php
 wp_body_open(); ?>
 
-<header class="header w-full bg-surface sticky top-0 z-50">
+<header class="header ">
     <div class="header__container">
 
         <!-- Logo Wrapper -->
         <a href="<?php
-        echo home_url(); ?>" class="header__logo-link flex items-center gap-[16px] flex-shrink-0 no-underline">
+        echo home_url(); ?>" class="header__logo-link ">
             <!-- Mobile Logo (Icon only) -->
-            <div class="header__logo-mobile xl:hidden flex-shrink-0 w-[67px] h-[64px] sm:w-[77px] sm:h-[74px]">
+            <div class="header__logo-mobile ">
                 <?php
                 if (has_custom_logo()) {
                     the_custom_logo();
@@ -35,7 +35,7 @@ wp_body_open(); ?>
             </div>
 
             <!-- Desktop Logo (Icon + Text) -->
-            <div class="header__logo-desktop hidden xl:flex items-center gap-[16px] flex-shrink-0">
+            <div class="header__logo-desktop ">
                 <!-- Logo Icon -->
                 <div class="header__logo-icon flex-shrink-0 w-[60px] h-[64px]">
                     <img src="<?php echo get_theme_file_uri('assets/images/logo-header-icon1.svg'); ?>" alt="Logo Icon"
@@ -43,7 +43,7 @@ wp_body_open(); ?>
                 </div>
 
                 <!-- Logo Text -->
-                <div class="header__logo-text flex-shrink-0 w-[164.905px] h-[16px]">
+                <div class="header__logo-text ">
                     <img src="<?php echo get_theme_file_uri('assets/images/logo-header-text.svg'); ?>"
                          alt="Tebe Poveryat" class="w-full h-full object-contain"/>
                 </div>
@@ -51,7 +51,7 @@ wp_body_open(); ?>
         </a>
 
         <!-- Desktop Navigation Menu (hidden on mobile) -->
-        <nav class="header__nav hidden xl:flex items-center gap-4 flex-1 justify-center">
+        <nav class="header__nav ">
             <a href="#"
                class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">О
                 проблеме</a>
@@ -93,7 +93,7 @@ wp_body_open(); ?>
 
         <!-- Mobile Donate Button (visible only on mobile) -->
         <a href="#"
-           class="header__donate-btn-mobile xl:hidden w-[159px] sm:w-[180px] h-10 sm:h-12 px-3 py-2 bg-secondary rounded-[40px] flex justify-center items-center gap-1 no-underline hover:opacity-90 transition">
+           class="header__donate-btn-mobile ">
             <div class="header__donate-icon-mobile w-[13px] h-[12px] flex items-center justify-center">
                 <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7.61553 1.01116C8.84736 -0.337024 10.8443 -0.33708 12.0761 1.01116C13.308 2.35975 13.308 4.54658 12.0761 5.89518L7.97638 10.3833C7.18331 11.2515 5.81597 11.2515 5.02296 10.3832L0.923911 5.89518C-0.30797 4.54658 -0.30797 2.35975 0.923911 1.01116C2.15573 -0.337044 4.15266 -0.33706 5.38447 1.01116L6.49961 2.23195L7.61553 1.01116Z"
@@ -104,7 +104,7 @@ wp_body_open(); ?>
         </a>
 
         <!-- Burger Menu (visible only on mobile) -->
-        <button class="header__burger xl:hidden w-16 sm:w-18 h-10 sm:h-12 p-2 bg-primary rounded-[40px] flex justify-center items-center gap-2 hover:bg-opacity-90 transition cursor-pointer border-none js-open-mobile-menu">
+        <button class="header__burger js-open-mobile-menu">
             <div class="header__burger-icon relative w-6 h-6">
                 <img src="<?php echo get_theme_file_uri('assets/images/icon-burger.svg'); ?>" alt="Menu"
                      class="w-full h-full"/>

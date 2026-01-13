@@ -24,7 +24,7 @@ $friends_query = new WP_Query(array(
 
         <?php if ( $friends_query->have_posts() ) : ?>
             <div class="friends__slider-area w-full flex items-center lg:justify-between lg:gap-x-4 mt-6 lg:mt-10">
-                <button type="button" class="friends-prev hidden lg:block cursor-pointer hover:opacity-70 transition relative ">
+                <button type="button" class="friends-prev hidden xl:block cursor-pointer hover:opacity-70 transition relative ">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-prev.svg'); ?>" alt="Previous" />
                 </button>
                 <style>
@@ -100,14 +100,14 @@ $friends_query = new WP_Query(array(
                     </div>
                 </div>
 
-                <button type="button" class="friends-next hidden lg:block cursor-pointer hover:opacity-70 transition relative ">
+                <button type="button" class="friends-next hidden xl:block cursor-pointer hover:opacity-70 transition relative ">
                     <img src="<?php echo get_theme_file_uri('assets/images/arrow-next.svg'); ?>" alt="Next" />
                 </button>
             </div>
 
             <div class="friends__quote-output text-center font-geologica font-light text-[23px] leading-[1.5] text-contrast max-w-[672px] mx-auto mt-12 min-h-[80px] transition-opacity duration-300"></div>
 
-            <div class="friends__mobile-progress w-full mt-8 lg:hidden">
+            <div class="friends__mobile-progress w-full mt-8 xl:hidden">
                  <?php get_template_part('template-parts/components/slider-progress', null, [
                     'track_color' => '!bg-white',
                     'bar_color' => 'bg-secondary'

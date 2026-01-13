@@ -26,7 +26,7 @@ $image_url = get_the_post_thumbnail_url( $about_page->ID, 'full' );
         <!-- Left Column: Image -->
         <?php if ( $image_url ) : ?>
         <div class="about-section-part2__image-wrapper">
-            <img class="w-full h-full object-cover" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
+            <img class="w-full  h-full md:h-[522px] xl:h-full object-cover" src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $name ); ?>" />
 
             <!-- Mobile-only Overlay: Name and Title -->
             <div class="about-section-part2__overlay-text lg:hidden absolute left-0 bottom-4 w-full px-4 text-white">

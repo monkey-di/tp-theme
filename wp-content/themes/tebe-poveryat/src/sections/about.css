@@ -4,30 +4,30 @@
 }
 
 .about__container {
-    @apply container mx-auto py-12 lg:py-24 flex flex-col gap-8 lg:flex-row xl:gap-[146px] lg:justify-start lg:items-center; /* Increased gap-x for desktop */
+    @apply container mx-auto py-12 md:py-16 lg:py-24 flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[146px] md:justify-start md:items-start lg:items-center; /* Increased gap-x for desktop */
 }
 
 .about__title {
-    @apply text-[#36569f] text-[32px] font-normal font-ura uppercase leading-9 text-left lg:text-left lg:text-left lg:text-[64px] lg:leading-[0.95]; /* Added responsive line-height */
+    @apply text-[#36569f] text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left; /* Added responsive line-height */
 }
 
 .about__description {
-    @apply text-contrast text-[16px] font-light font-geologica leading-[1.5] lg:max-w-[690px] py-6 pl-3 lg:py-0 lg:pl-0;
+    @apply text-contrast text-[16px] md:text-[20px] font-light font-geologica leading-[1.5] md:max-w-[720px] lg:max-w-[690px] py-6 pl-3 md:py-0 md:pl-0;
 }
 .about__description p{
-    @apply justify-start text-[#19232e] text-base font-light font-['Geologica'] leading-6  lg:text-[23px]  lg:leading-[34.50px] lg:mb-4;
+    @apply justify-start text-[#19232e] text-base md:text-[20px] font-light font-['Geologica'] leading-6 md:leading-[1.5] lg:text-[23px] lg:leading-[34.50px] md:mb-4;
 }
 
 .about__stats {
-    @apply flex flex-row flex-wrap gap-2 mt-4 xl:flex-col lg:gap-4 xl:mt-0 xl:w-full max-w-[573px];
+    @apply flex flex-row flex-wrap gap-2 md:gap-4 mt-4 md:mt-0 xl:flex-col xl:mt-0 md:w-full md:max-w-[720px] xl:max-w-[573px];
 }
 
 .about__stat-card {
-    @apply py-4  rounded-[20px] flex flex-col lg:flex-row justify-start  px-4 xl:px-10 items-start gap-3 xl:gap-[56px] text-white lg:w-full lg:gap-[56px];
+    @apply py-4 md:py-4 rounded-[20px] flex flex-col md:flex-row lg:flex-row justify-start px-4 md:px-8 xl:px-10 items-start md:items-center gap-3 md:gap-10 lg:gap-[56px] xl:gap-[56px] text-white;
 }
 
 .about__stat-card-number {
-    @apply text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] lg:w-[223px];
+    @apply text-[50px] md:text-[40px] lg:text-[50px] xl:text-[60px] font-normal font-ura uppercase leading-[0.95] md:w-[120px] lg:w-[223px];
 }
 
 .about__stat-card-text {

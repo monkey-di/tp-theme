@@ -49,7 +49,7 @@ $widths = array( 'w-[calc(43%-4px)]', 'w-[calc(51%-4px)]', 'w-[calc(53%-4px)]', 
         <div class="about__stats">
             <?php foreach ( $stats as $index => $stat ) : ?>
                 <?php if ( $stat['number'] ) : ?>
-                <div class="about__stat-card <?php echo $widths[ $index - 1 ]; ?> lg:w-full <?php echo $colors[ $index - 1 ]; ?>">
+                <div class="about__stat-card <?php echo $widths[ $index - 1 ]; ?> md:w-[calc(50%-8px)] lg:w-full <?php echo $colors[ $index - 1 ]; ?>">
                     <div class="about__stat-card-number"><?php echo esc_html( $stat['number'] ); ?></div>
                     <?php if ( $stat['text'] ) : ?>
                     <div class="about__stat-card-text"><?php echo wp_kses_post( $stat['text'] ); ?></div>

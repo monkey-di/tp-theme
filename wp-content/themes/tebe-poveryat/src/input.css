@@ -68,7 +68,7 @@
     --breakpoint-sm: 640px;
     --breakpoint-md: 768px;
     --breakpoint-lg: 1024px;
-    --breakpoint-xl: 1280px;
+    --breakpoint-xl: 1281px;
     --breakpoint-2xl: 1408px;
 }
 
@@ -92,7 +92,9 @@
     }
 
     h1, .h1 {
-        @apply font-ura text-[73px] leading-[69.35px] xl:text-[180px] xl:leading-[171px] uppercase;
+        @apply font-ura text-[73px] md:text-[132px] md:font-normal leading-[69.35px] md:leading-[125.40px] xl:text-[180px] xl:leading-[171px] uppercase;
+
+
     }
 
     h2, .h2 {

@@ -5,11 +5,11 @@
 @layer components {
   /* Utility Classes for Header */
   .header {
-    @apply w-full bg-surface relative z-50;
+    @apply w-full  sticky top-0 z-50 bg-surface;
   }
 
   .header__container {
-    @apply container mx-auto px-4 xl:px-0 flex justify-between items-center h-[144px] xl:h-[80px];
+    @apply container mx-auto px-4 sm:px-6 xl:px-0 flex justify-between items-center h-[144px] md:h-[96px] xl:h-[80px];
   }
 
   .header__logo-link {
@@ -18,7 +18,7 @@
 
   /* Mobile Logo */
   .header__logo-mobile {
-    @apply xl:hidden flex-shrink-0 w-[67px] h-[64px];
+    @apply xl:hidden flex-shrink-0 w-[67px] h-[64px] lg:w-[77px] lg:h-[74px];
   }
 
   .header__logo-mobile img {
@@ -48,7 +48,7 @@
 
   /* Navigation Menu (Desktop Only) */
   .header__nav {
-    @apply hidden xl:flex items-center gap-[32px] flex-1 justify-center;
+    @apply hidden xl:flex items-center gap-4 flex-1 justify-center;
   }
 
   .header__nav-link {
@@ -107,8 +107,7 @@
 
   /* Donate Button - Mobile */
   .header__donate-btn-mobile {
-    @apply xl:hidden w-[159px] h-10 px-3 py-2 bg-secondary rounded-[40px];
-    @apply flex justify-center items-center gap-1 no-underline transition;
+    @apply xl:hidden  w-[159px] lg:w-[180px] h-10 lg:h-12 px-3 py-2 bg-secondary rounded-[40px] hover:opacity-90  flex justify-center items-center gap-1 no-underline transition;
   }
 
   .header__donate-btn-mobile:hover {
@@ -125,9 +124,7 @@
 
   /* Burger Menu */
   .header__burger {
-    @apply xl:hidden w-16 h-10 p-2 bg-primary rounded-[40px];
-    @apply flex justify-center items-center gap-2 hover:opacity-90 transition;
-    @apply cursor-pointer border-none;
+    @apply  xl:hidden w-16  h-10  p-2 bg-primary rounded-[40px] flex justify-center items-center gap-2  cursor-pointer border-none hover:opacity-90 transition;
   }
 
   .header__burger-icon {

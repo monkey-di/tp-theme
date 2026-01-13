@@ -5,8 +5,13 @@
 @layer components {
     /* Hero Section */
     .hero-section {
-        @apply w-full bg-surface relative overflow-hidden lg:py-12 px-4;
+        @apply w-full bg-surface relative overflow-hidden lg:py-12 px-4  z-20 [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px];
 
+    }
+    @media (min-width: 768px) {
+        .hero-section {
+            background: url("/wp-content/themes/tebe-poveryat/assets/images/bg-hero-tablet.webp") center no-repeat;
+        }
     }
     @media (min-width: 1280px) {
         .hero-section {
@@ -15,7 +20,7 @@
     }
 
     .hero__slider .swiper-slide {
-        @apply sm:px-40 xl:px-0;
+        @apply xl:px-0;
     }
     /* Container */
     .hero__container {
@@ -42,13 +47,7 @@
 
     /* Title Part 1 */
     .hero__title-part1 {
-        @apply text-primary mt-12 relative text-center;
-        z-index: 10;
-    }
-
-    /* Title Part 2 */
-    .hero__title-part2 {
-        @apply text-primary text-[73px] font-normal font-ura uppercase leading-[0.95] -mt-2 relative;
+        @apply text-primary mt-12 md:mt-[85px] relative text-center;
         z-index: 10;
     }
 
@@ -91,9 +90,9 @@
         @apply mt-auto mb-4 w-full flex justify-between items-end z-10;
     }
 
-    /* Mobile Progress - visible on mobile only */
+    /* Mobile Progress - visible on mobile and tablet */
     .hero__slider-controls > div:first-child {
-        @apply w-full md:hidden;
+        @apply w-full xl:hidden;
     }
 
     /* ============ DESKTOP STYLES (1280px+) ============ */
