@@ -621,17 +621,11 @@
   .w-\[688\.41px\] {
     width: 688.41px;
   }
-  .w-\[calc\(40\%-4px\)\] {
-    width: calc(40% - 4px);
-  }
   .w-\[calc\(43\%\+7px\)\] {
     width: calc(43% + 7px);
   }
   .w-\[calc\(43\%-4px\)\] {
     width: calc(43% - 4px);
-  }
-  .w-\[calc\(43\%-7px\)\] {
-    width: calc(43% - 7px);
   }
   .w-\[calc\(51\%-4px\)\] {
     width: calc(51% - 4px);
@@ -1066,12 +1060,15 @@
   }
   .text-p {
     font-family: 'Geologica';
-    font-size: var(--text-xl);
-    line-height: var(--tw-leading, var(--text-xl--line-height));
+    font-size: 16px;
     --tw-leading: 30px;
     line-height: 30px;
     --tw-font-weight: var(--font-weight-light);
     font-weight: var(--font-weight-light);
+    @media (width >= 768px) {
+      font-size: var(--text-xl);
+      line-height: var(--tw-leading, var(--text-xl--line-height));
+    }
     @media (width >= 1281px) {
       font-size: 23px;
     }
@@ -1670,6 +1667,11 @@
   .md\:pb-24 {
     @media (width >= 768px) {
       padding-bottom: calc(var(--spacing) * 24);
+    }
+  }
+  .md\:text-center {
+    @media (width >= 768px) {
+      text-align: center;
     }
   }
   .md\:font-\[\'Geologica\'\] {
@@ -2367,7 +2369,7 @@
     color: var(--color-contrast);
   }
   p {
-    font-size: 18px;
+    font-size: 16px;
     --tw-leading: 1.5;
     line-height: 1.5;
   }
@@ -3783,12 +3785,15 @@
 }
 .histories__tablet-content p {
   font-family: 'Geologica';
-  font-size: var(--text-xl);
-  line-height: var(--tw-leading, var(--text-xl--line-height));
+  font-size: 16px;
   --tw-leading: 30px;
   line-height: 30px;
   --tw-font-weight: var(--font-weight-light);
   font-weight: var(--font-weight-light);
+  @media (width >= 768px) {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
   @media (width >= 1281px) {
     font-size: 23px;
   }
