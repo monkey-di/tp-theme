@@ -1,0 +1,66 @@
+/* Details Section English Styles */
+
+.details-en-section {
+    @apply w-full bg-surface relative z-20 pt-12 lg:pt-20 pb-12 lg:pb-32 px-4 overflow-hidden;
+}
+
+.details-en__container {
+    @apply container mx-auto py-12 md:py-16 lg:py-24 flex flex-col gap-8 lg:gap-12 xl:gap-0 lg:flex-row lg:justify-between lg:items-start;
+}
+
+.details-en__left {
+    @apply w-full lg:w-auto flex flex-col gap-10;
+}
+
+.details-en__right {
+    @apply w-full lg:w-auto flex flex-col gap-6 md:gap-8 lg:gap-6 pt-6 lg:pt-0;
+}
+
+.details-en__title {
+    @apply text-primary text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left;
+}
+
+.details-en__org-name {
+    @apply text-contrast text-[16px] md:text-[23px] font-light font-geologica leading-[1.5] max-w-[691px];
+}
+
+.details-en__block {
+    @apply flex flex-col gap-2;
+}
+
+.details-en__text {
+    @apply text-contrast text-[16px] md:text-[20px] lg:text-[20px] font-light font-geologica leading-[1.5];
+}
+
+/* Decorative elements positioning */
+@media (max-width: 1023px) {
+    .details-en__left {
+        @apply mb-4;
+    }
+
+    .details-en__right {
+        @apply pt-4 lg:pt-0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .details-en__container {
+        @apply items-start;
+    }
+
+    .details-en__left {
+        @apply flex-none w-[691px];
+    }
+
+    .details-en__right {
+        @apply flex-none w-[573px];
+    }
+
+    .details-en__org-name {
+        @apply text-[23px];
+    }
+
+    .details-en__text {
+        @apply text-[20px];
+    }
+}

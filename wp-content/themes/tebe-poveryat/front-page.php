@@ -13,9 +13,10 @@ get_header();
     <?php
     // Load sections based on current language
     if ( tp_is_english() ) {
-        // English version - currently shows hero section only with static content
+        // English version with static content
         get_template_part( 'template-parts/home/hero-en' );
-        // Note: Other sections to be localized
+        get_template_part( 'template-parts/home/about-en' );
+        get_template_part( 'template-parts/home/details-en' );
     } else {
         // Russian version - full site
         get_template_part( 'template-parts/home/hero' );

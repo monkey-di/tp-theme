@@ -135,6 +135,8 @@
 @import "./sections/hero.css";
 @import "./sections/donation.css";
 @import "./sections/about.css";
+@import "./sections/about-en.css";
+@import "./sections/details-en.css";
 @import "./sections/friends.css";
 @import "./sections/histories.css";
 @import "./sections/media.css";
