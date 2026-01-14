@@ -113,7 +113,7 @@ $friends_query = new WP_Query(array(
                 </button>
             </div>
 
-            <div class="friends__quote-output md:text-center text-p text-left text-contrast max-w-[672px] mx-auto mt-12 min-h-[80px] md:max-w-[534px] transition-opacity duration-300"></div>
+            <div class="friends__quote-output md:text-center text-p text-left text-contrast max-w-[672px] mx-auto mt-6 md:mt-12 min-h-[80px] md:max-w-[534px] transition-opacity duration-300"></div>
 
             <div class="friends__mobile-progress w-full mt-8 xl:hidden">
                  <?php get_template_part('template-parts/components/slider-progress', null, [

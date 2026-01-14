@@ -1523,6 +1523,11 @@
       margin-top: calc(var(--spacing) * 8);
     }
   }
+  .md\:mt-12 {
+    @media (width >= 768px) {
+      margin-top: calc(var(--spacing) * 12);
+    }
+  }
   .md\:mb-10 {
     @media (width >= 768px) {
       margin-bottom: calc(var(--spacing) * 10);
@@ -3515,7 +3520,6 @@
 }
 .about__description {
   padding-block: calc(var(--spacing) * 6);
-  padding-left: calc(var(--spacing) * 3);
   font-family: var(--font-geologica);
   font-size: 18px;
   --tw-leading: 1.5;
@@ -3531,6 +3535,9 @@
   }
   @media (width >= 768px) {
     padding-left: calc(var(--spacing) * 0);
+  }
+  @media (width >= 768px) {
+    padding-left: calc(var(--spacing) * 3);
   }
   @media (width >= 768px) {
     font-size: 20px;
