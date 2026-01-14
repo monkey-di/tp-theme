@@ -3868,6 +3868,10 @@
   justify-content: center !important;
 }
 .media__slider .media__card {
+  max-width: 180px;
+  @media (width >= 768px) {
+    max-width: 100%;
+  }
   width: 175px;
   height: 87px !important;
   max-height: 87px !important;
