@@ -40,7 +40,7 @@
                         $name_mobile = str_replace( ' ', '<br>', $name ); // Имя с <br> для мобильного
                         ?>
                         <div class="swiper-slide">
-                            <div class="team__card w-full lg:max-w-[1105px] lg:ml-auto flex flex-col lg:flex-row gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
+                            <div class="team__card w-full lg:max-w-[1105px] lg:ml-auto flex flex-col lg:flex-row md:gap-6 lg:gap-0 rounded-[20px] overflow-hidden">
                                 <!-- Image Container -->
                                 <?php if ( $photo_url ) : ?>
                                 <div class="team__card-image relative w-full md:w-[348px] lg:w-[358px] lg:min-w-[358px] h-[636px] md:h-[522px] lg:h-auto flex-shrink-0 rounded-[20px] overflow-hidden">
