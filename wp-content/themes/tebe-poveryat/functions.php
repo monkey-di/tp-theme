@@ -72,6 +72,11 @@ function tebe_poveryat_setup() {
 add_action( 'after_setup_theme', 'tebe_poveryat_setup' );
 
 /**
+ * Include Language Manager
+ */
+require_once get_template_directory() . '/inc/language-manager.php';
+
+/**
  * Include Custom Post Types
  */
 require_once get_template_directory() . '/inc/post-types/register-post-types.php';

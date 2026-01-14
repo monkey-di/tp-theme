@@ -43,15 +43,15 @@ if (file_exists($mobile_menu_path)) {
             </div>
 
             <!-- Contact Email -->
-            <a href="mailto:verimtebe@gmail.com"
+            <a href="mailto:<?php echo tp_get_text('footer.email', 'verimtebe@gmail.com', 'verimtebe@gmail.com'); ?>"
                class="footer__email relative left-[-5px] text-white text-[32px] font-extrabold font-akrobat uppercase leading-none no-underline hover:underline text-center xl:text-left">
-                verimtebe@gmail.com
+                <?php echo tp_get_text('footer.email', 'verimtebe@gmail.com', 'verimtebe@gmail.com'); ?>
             </a>
 
             <!-- Copyright -->
             <div class="footer__copyright hidden text-white text-[14px] font-light font-geologica leading-[1.5] w-full xl:flex gap-[77px] pt-5 relative left-[-5px]">
                 <div>
-                    © «Тебе поверят», 2025
+                    <?php echo tp_get_text('footer.copyright', '© «Тебе поверят», 2025', '© "Tebe Poveryat", 2025'); ?>
                 </div>
 
                 <div class="footer__author hidden xl:block">
@@ -75,7 +75,7 @@ if (file_exists($mobile_menu_path)) {
                         'template-parts/components/button',
                         null,
                         [
-                                'text' => 'Проекты',
+                                'text' => tp_get_text('footer.projects', 'Проекты', 'Projects'),
                                 'url' => '#',
                                 'style' => 'outline-white',
                                 'uppercase' => '',
@@ -88,7 +88,7 @@ if (file_exists($mobile_menu_path)) {
                         'template-parts/components/button',
                         null,
                         [
-                                'text' => 'Отчеты',
+                                'text' => tp_get_text('footer.reports', 'Отчеты', 'Reports'),
                                 'url' => '#',
                                 'style' => 'outline-white',
                                 'uppercase' => '',
@@ -101,7 +101,7 @@ if (file_exists($mobile_menu_path)) {
                         'template-parts/components/button',
                         null,
                         [
-                                'text' => 'О нас',
+                                'text' => tp_get_text('footer.about_us', 'О нас', 'About Us'),
                                 'url' => '#',
                                 'style' => 'outline-white',
                                 'uppercase' => '',
@@ -114,7 +114,7 @@ if (file_exists($mobile_menu_path)) {
                         'template-parts/components/button',
                         null,
                         [
-                                'text' => 'Реквизиты',
+                                'text' => tp_get_text('footer.details', 'Реквизиты', 'Details'),
                                 'url' => '#',
                                 'style' => 'outline-white',
                                 'uppercase' => '',
@@ -126,15 +126,14 @@ if (file_exists($mobile_menu_path)) {
 
             <!-- Subscription Form -->
             <div class="footer__subscribe flex flex-col gap-3">
-                <p class="text-white text-[16px] font-light font-geologica leading-[1.5]">Подпишитесь на рассылку, чтобы
-                    не пропустить новости о нашей работе</p>
+                <p class="text-white text-[16px] font-light font-geologica leading-[1.5]"><?php echo tp_get_text('footer.subscribe_text', 'Подпишитесь на рассылку, чтобы не пропустить новости о нашей работе', 'Subscribe to our newsletter to stay updated on our work'); ?></p>
                 <form id="subscribe-form" class="flex flex-col gap-3">
                     <?php
                     get_template_part('template-parts/components/input-with-button', null, [
                             'type' => 'email',
                             'name' => 'subscribe_email',
-                            'placeholder' => 'example@mail.com',
-                            'button_text' => 'Подписаться',
+                            'placeholder' => tp_get_text('footer.placeholder', 'example@mail.com', 'example@mail.com'),
+                            'button_text' => tp_get_text('footer.subscribe_btn', 'Подписаться', 'Subscribe'),
                             'submit' => true,
                             'state' => 'default',
                             'button_id' => 'subscribe-btn',
@@ -147,7 +146,7 @@ if (file_exists($mobile_menu_path)) {
                     <span class="donation-form__checkbox-custom">
                         <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                     </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+                    <span class="donation-form__checkbox-text"><?php echo tp_get_text('footer.consent', 'Я соглашаюсь на обработку моих <a href="#">персональных данных</a>', 'I agree to the processing of my <a href="#">personal data</a>'); ?></span>
                 </label>
                 </form>
 
@@ -156,14 +155,11 @@ if (file_exists($mobile_menu_path)) {
             <!-- Document Links -->
             <div class="footer__docs flex flex-col xl:flex-row gap-4 xl:gap-4 items-start xl:items-center">
                 <a href="#"
-                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline">Уставные
-                    документы</a>
+                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline"><?php echo tp_get_text('footer.documents', 'Уставные документы', 'Governing Documents'); ?></a>
                 <a href="#"
-                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline">Публичная
-                    оферта</a>
+                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline"><?php echo tp_get_text('footer.offer', 'Публичная оферта', 'Public Offer'); ?></a>
                 <a href="#"
-                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline">Политика
-                    обработки персональных данных</a>
+                   class="footer__docs-link text-white text-[14px] font-light font-geologica leading-[1.5] no-underline hover:underline"><?php echo tp_get_text('footer.privacy', 'Политика обработки персональных данных', 'Privacy Policy'); ?></a>
             </div>
 
         </div>
@@ -171,8 +167,8 @@ if (file_exists($mobile_menu_path)) {
         <!-- Mobile-only Footer Elements -->
         <div class="footer__mobile-bottom xl:hidden flex flex-col gap-4 mt-4">
             <!-- Copyright -->
-            <div class="footer__copyright text-white text-[14px] font-light font-geologica leading-[1.5] text-left xl:text-center">©
-                «Тебе поверят», 2025
+            <div class="footer__copyright text-white text-[14px] font-light font-geologica leading-[1.5] text-left xl:text-center">
+                <?php echo tp_get_text('footer.copyright', '© «Тебе поверят», 2025', '© "Tebe Poveryat", 2025'); ?>
             </div>
 
             <!-- Author Signature -->

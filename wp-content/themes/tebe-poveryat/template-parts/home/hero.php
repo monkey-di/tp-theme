@@ -44,7 +44,11 @@ $slides_query = new WP_Query(array(
                                 <!-- Main Title Part 1 -->
                                 <h1 class="h1 hero__title-part1">
                                     <div class="hidden md:inline xl:hidden ">&nbsp;</div>
-                                    Тебе <br class="lg:hidden">поверят
+                                    <?php if (tp_is_english()) : ?>
+                                        Tebe <br class="lg:hidden">Poveryat
+                                    <?php else : ?>
+                                        Тебе <br class="lg:hidden">поверят
+                                    <?php endif; ?>
                                 </h1>
 
 
@@ -81,7 +85,7 @@ $slides_query = new WP_Query(array(
                             <div class="hero__learn-more md:flex md:justify-center md:mt-8">
                                 <?php
                                 get_template_part('template-parts/components/link-more', null, [
-                                        'text' => 'Узнать больше о нас',
+                                        'text' => tp_is_english() ? 'Learn More About Us' : 'Узнать больше о нас',
                                         'url' => '#',
                                         'style' => 'hero',
                                         'class' => 'md:m-auto'

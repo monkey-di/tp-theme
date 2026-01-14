@@ -53,29 +53,25 @@ wp_body_open(); ?>
         <!-- Desktop Navigation Menu (hidden on mobile) -->
         <nav class="header__nav ">
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">О
-                проблеме</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.about_problem', 'О проблеме', 'About Issue'); ?></a>
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">Для
-                переживших</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.for_survivors', 'Для переживших', 'For Survivors'); ?></a>
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">Как
-                мы помогаем</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.how_we_help', 'Как мы помогаем', 'How We Help'); ?></a>
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">Проекты</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.projects', 'Проекты', 'Projects'); ?></a>
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">О
-                нас</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.about_us', 'О нас', 'About Us'); ?></a>
             <a href="#"
-               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition">Блог</a>
+               class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.blog', 'Блог', 'Blog'); ?></a>
         </nav>
 
         <!-- Desktop Controls (hidden on mobile) -->
         <div class="header__controls hidden xl:flex items-center gap-[24px]">
             <!-- Language Switcher -->
             <div class="header__language-switcher">
-                <button class="header__language-btn header__language-btn--active">RU</button>
-                <button class="header__language-btn ">ENG</button>
+                <a href="<?php echo tp_get_language_url('ru'); ?>" class="header__language-btn <?php echo !tp_is_english() ? 'header__language-btn--active' : ''; ?>">RU</a>
+                <a href="<?php echo tp_get_language_url('en'); ?>" class="header__language-btn <?php echo tp_is_english() ? 'header__language-btn--active' : ''; ?>">ENG</a>
             </div>
 
             <!-- Donate Button -->
@@ -87,7 +83,7 @@ wp_body_open(); ?>
                               fill="white"/>
                     </svg>
                 </div>
-                <span class="header__donate-text text-white font-geologica font-normal text-[14px] leading-[1.57] uppercase whitespace-nowrap">Хочу помочь</span>
+                <span class="header__donate-text text-white font-geologica font-normal text-[14px] leading-[1.57] uppercase whitespace-nowrap"><?php echo tp_get_text('header.donate', 'Хочу помочь', 'I want to help.'); ?></span>
             </a>
         </div>
 
@@ -100,7 +96,7 @@ wp_body_open(); ?>
                           fill="white"/>
                 </svg>
             </div>
-            <span class="header__donate-text-mobile text-white text-[10px] font-normal uppercase leading-4 font-geologica">Хочу помочь</span>
+            <span class="header__donate-text-mobile text-white text-[10px] font-normal uppercase leading-4 font-geologica"><?php echo tp_get_text('header.donate', 'Хочу помочь', 'I want to help.'); ?></span>
         </a>
 
         <!-- Burger Menu (visible only on mobile) -->

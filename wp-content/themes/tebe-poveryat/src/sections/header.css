@@ -68,7 +68,8 @@
 
   .header__language-btn {
     @apply flex-1 rounded-[10px] font-akrobat font-bold text-[18px] leading-none bg-white;
-    @apply transition duration-200 cursor-pointer border-none;
+    @apply transition duration-200 cursor-pointer border-none no-underline;
+    @apply flex items-center justify-center;
   }
 
   .header__language-btn--active {
