@@ -61,7 +61,7 @@
                                 </div>
                                 <?php endif; ?>
                                 <!-- Content -->
-                                <div class="team__card-content w-full px-4 py-6 lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1 md:hidden xl:flex">
+                                <div class="team__card-content w-full lg:p-6 lg:pl-10 flex flex-col gap-1 lg:flex-1 md:hidden xl:flex">
                                     <!-- Name & Role - Desktop only -->
                                     <div class="hidden lg:flex lg:flex-col lg:gap-1 ">
                                         <h3 class="text-contrast text-[40px] font-extrabold font-akrobat uppercase leading-none">
