@@ -24,3 +24,6 @@ wp-content/themes/tebe-poveryat/vendor/
 
 # Root
 /package-lock.json
+tmpclaude*
+PROMPT_FOR_NEXT_SESSION.md
+test_download.jpg
