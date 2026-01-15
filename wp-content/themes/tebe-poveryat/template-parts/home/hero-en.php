@@ -32,11 +32,10 @@
                         </div>
                     </div>
 
-                    <h2 class="hero__subtitle">We are a non-profit charitable organization.</h2>
+                    <?php block_template_part( 'hero-en-s1-subtitle' ); ?>
 
                     <div class="hero__description hero__description--eng">
-                        <p>1 of 8 children worldwide experiences sexual violence.
-                            Together, we can change this — by learning, listening, believing, and supporting </p>
+                        <?php block_template_part( 'hero-en-s1-desc' ); ?>
                     </div>
 
 
@@ -54,10 +53,10 @@
                         </div>
                     </div>
 
-                    <h2 class="hero__subtitle">Dedicated to Supporting Survivors</h2>
+                    <?php block_template_part( 'hero-en-s2-subtitle' ); ?>
 
                     <div class="hero__description hero__description--eng">
-                        <p>Our mission is to create a safe space where survivors can seek help, find community, and reclaim their lives with dignity and respect.</p>
+                        <?php block_template_part( 'hero-en-s2-desc' ); ?>
                     </div>
 
                     <div class="hero__learn-more md:flex md:justify-center md:mt-8">
@@ -82,10 +81,10 @@
                         </div>
                     </div>
 
-                    <h2 class="hero__subtitle">Comprehensive Support Services</h2>
+                    <?php block_template_part( 'hero-en-s3-subtitle' ); ?>
 
                     <div class="hero__description hero__description--eng">
-                        <p>From counseling and legal advice to community resources and advocacy, we offer comprehensive support tailored to each survivor's needs.</p>
+                        <?php block_template_part( 'hero-en-s3-desc' ); ?>
                     </div>
 
                     <div class="hero__learn-more md:flex md:justify-center md:mt-8">

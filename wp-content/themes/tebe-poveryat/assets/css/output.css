@@ -422,6 +422,9 @@
   .inline-flex {
     display: inline-flex;
   }
+  .table {
+    display: table;
+  }
   .aspect-\[1\/1\] {
     aspect-ratio: 1/1;
   }
@@ -687,6 +690,9 @@
   .flex-none {
     flex: none;
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -695,6 +701,9 @@
   }
   .flex-grow {
     flex-grow: 1;
+  }
+  .border-collapse {
+    border-collapse: collapse;
   }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
@@ -756,6 +765,9 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .\!items-start {
     align-items: flex-start !important;
   }
@@ -776,6 +788,9 @@
   }
   .justify-start {
     justify-content: flex-start;
+  }
+  .gap-0 {
+    gap: calc(var(--spacing) * 0);
   }
   .gap-0\.5 {
     gap: calc(var(--spacing) * 0.5);
@@ -902,6 +917,9 @@
   .bg-\[\#fef1ec\] {
     background-color: #fef1ec;
   }
+  .bg-black {
+    background-color: var(--color-black);
+  }
   .bg-black\/20 {
     background-color: color-mix(in srgb, #000 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -967,6 +985,9 @@
   }
   .object-bottom {
     object-position: bottom;
+  }
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
   }
   .p-0\.5 {
     padding: calc(var(--spacing) * 0.5);
@@ -2374,6 +2395,11 @@
   .\[\&\.swiper-pagination-progressbar\]\:\!relative {
     &.swiper-pagination-progressbar {
       position: relative !important;
+    }
+  }
+  .\[\&\.swiper-pagination-progressbar\]\:\!bg-white {
+    &.swiper-pagination-progressbar {
+      background-color: var(--color-white) !important;
     }
   }
 }
@@ -3851,6 +3877,7 @@
   max-width: 1408px !important;
   flex-direction: column;
   gap: calc(var(--spacing) * 8);
+  padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 12);
   @media (width >= 1024px) {
     gap: calc(var(--spacing) * 12);
@@ -3860,6 +3887,9 @@
   }
   @media (width >= 1280px) {
     gap: 0;
+  }
+  @media (width >= 1280px) {
+    padding-inline: calc(var(--spacing) * 0);
   }
   @media (width >= 1280px) {
     padding-top: 73px;

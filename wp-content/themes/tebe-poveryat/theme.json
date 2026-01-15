@@ -300,6 +300,116 @@
 			"name": "footer",
 			"title": "Footer",
 			"area": "footer"
+		},
+		{
+			"name": "hero-en-s1-subtitle",
+			"title": "Hero EN Slide 1 Subtitle",
+			"area": "uncategorized"
+		},
+		{
+			"name": "hero-en-s1-desc",
+			"title": "Hero EN Slide 1 Description",
+			"area": "uncategorized"
+		},
+		{
+			"name": "hero-en-s2-subtitle",
+			"title": "Hero EN Slide 2 Subtitle",
+			"area": "uncategorized"
+		},
+		{
+			"name": "hero-en-s2-desc",
+			"title": "Hero EN Slide 2 Description",
+			"area": "uncategorized"
+		},
+		{
+			"name": "hero-en-s3-subtitle",
+			"title": "Hero EN Slide 3 Subtitle",
+			"area": "uncategorized"
+		},
+		{
+			"name": "hero-en-s3-desc",
+			"title": "Hero EN Slide 3 Description",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-title",
+			"title": "About EN Title",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-desc",
+			"title": "About EN Description",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-impact-title",
+			"title": "About EN Impact Title",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat1-num",
+			"title": "About EN Stat 1 Number",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat1-text",
+			"title": "About EN Stat 1 Text",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat2-num",
+			"title": "About EN Stat 2 Number",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat2-text",
+			"title": "About EN Stat 2 Text",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat3-num",
+			"title": "About EN Stat 3 Number",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat3-text",
+			"title": "About EN Stat 3 Text",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat4-num",
+			"title": "About EN Stat 4 Number",
+			"area": "uncategorized"
+		},
+		{
+			"name": "about-en-stat4-text",
+			"title": "About EN Stat 4 Text",
+			"area": "uncategorized"
+		},
+		{
+			"name": "details-en-title",
+			"title": "Details EN Title",
+			"area": "uncategorized"
+		},
+		{
+			"name": "details-en-org-name",
+			"title": "Details EN Org Name",
+			"area": "uncategorized"
+		},
+		{
+			"name": "details-en-address",
+			"title": "Details EN Address",
+			"area": "uncategorized"
+		},
+		{
+			"name": "details-en-contact",
+			"title": "Details EN Contact Info",
+			"area": "uncategorized"
+		},
+		{
+			"name": "details-en-bank",
+			"title": "Details EN Bank Info",
+			"area": "uncategorized"
 		}
 	],
 	"customTemplates": [

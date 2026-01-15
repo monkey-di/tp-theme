@@ -5,7 +5,7 @@
 }
 
 .about-en__container {
-    @apply container mx-auto py-12 xl:pt-[73px] xl:pb-[148px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
+    @apply container mx-auto px-4 xl:px-0 py-12 xl:pt-[73px] xl:pb-[148px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
 }
 
 .about-en__title {
