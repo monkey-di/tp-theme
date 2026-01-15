@@ -47,20 +47,48 @@
         @apply relative w-fit mx-auto max-w-[844px] text-primary;
     }
 
+
     /* Title Part 1 */
     .hero__title-part1 {
         @apply text-primary mt-12 md:mt-[85px] relative text-center md:text-left xl:text-center;
         z-index: 10;
     }
 
+    /* ============ LAYERED LAYOUT (English Hero - Behind/In-Front Text) ============ */
+    /* Only for hero__titles-section--layered */
+    .hero__titles-section--layered .hero__title-part1 {
+        z-index: auto;
+    }
+
+    /* Span positioning within title - only for layered version */
+    .hero__titles-section--layered .hero__title-part1 span {
+        position: relative;
+    }
+
+    /* First span - behind image */
+    .hero__titles-section--layered .hero__title-part1 span:nth-of-type(1) {
+        z-index: 1;
+    }
+
+    /* Second span - in front of image */
+    .hero__titles-section--layered .hero__title-part1 span:nth-of-type(2) {
+        z-index: 11;
+    }
+
     /* Decorative Image Wrapper (absolute positioned inside titles-section) */
     .hero__image-wrapper {
         @apply absolute z-0;
-        top: -35px;
+        top: -50px;
         left: calc(50% + 89px);
         transform: translateX(-50%);
         width: 120px;
         height: 120px;
+    }
+
+    /* Image wrapper for layered layout - higher z-index to sit between text layers */
+    .hero__titles-section--layered .hero__image-wrapper {
+        z-index: 2;
+        pointer-events: none;
     }
 
     /* Decorative Image */
@@ -109,6 +137,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .hero__titles-section--layered .hero__image-wrapper {
+            z-index: 2;
+            pointer-events: none;
         }
     }
 
@@ -253,6 +286,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .hero__titles-section--layered .hero__image-wrapper {
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero__image-wrapper.hero__image-wrapper--eng {
+            @apply absolute;
+            z-index: 2;
+            top: 100px;
+            left: 790px;
+            transform: none;
+            width: 275px;
+            height: 275px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none !important;
+        }
+
+        .hero__description.hero__description--eng {
+            max-width: 785px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero__description.hero__description--eng p {
+            line-height: 1.5;
         }
 
         /* Decorative Image - Desktop (image itself has rotation in assets) */

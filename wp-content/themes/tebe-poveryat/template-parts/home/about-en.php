@@ -5,11 +5,11 @@
  * Static content
  */
 ?>
-<section class="about-en-section bg-secondary relative z-20 pt-12 lg:pt-0 pb-0 overflow-hidden">
+<section class="about-en-section">
     <div class="about-en__container">
 
         <!-- Left Column (About Us - Desktop only) -->
-        <div class="about-en__left hidden lg:flex flex-col gap-10 pt-12 xl:pt-0">
+        <div class="about-en__left hidden lg:flex flex-col gap-10 pt-12 xl:pt-0 flex-[3]">
             <h2 class="about-en__title text-white">About Us</h2>
             <p class="about-en__description text-white">
                 We are a non-profit organization. We provide free psychological and legal support to people who experienced sexual violence in childhood. We are also actively engaged in prevention to protect children and make society safer.
@@ -17,7 +17,7 @@
         </div>
 
         <!-- Right Column / Mobile Full Width -->
-        <div class="w-full">
+        <div class="w-full  flex-[2.5]">
             <!-- Mobile: About Us Section -->
             <div class="lg:hidden">
                 <h2 class="about-en__title text-white">About Us</h2>
@@ -27,7 +27,7 @@
             </div>
 
             <!-- Our Impact Section -->
-            <div class="about-en__impact mt-12 lg:mt-0">
+            <div class="about-en__impact mt-12 lg:mt-0 xl:pl-[66px]">
                 <h2 class="about-en__impact-title text-white">Our Impact</h2>
 
                 <!-- Statistics Cards -->

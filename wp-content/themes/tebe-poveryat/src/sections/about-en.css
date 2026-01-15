@@ -1,11 +1,11 @@
 /* About Section English Styles */
 
 .about-en-section {
-    @apply w-full bg-secondary relative z-20 pt-12 lg:pt-32 pb-0 px-4 overflow-hidden;
+    @apply w-full bg-secondary relative z-20 pt-12 overflow-hidden bg-secondary relative z-[19] pt-12 xl:pt-[80px] overflow-hidden xl:mt-[-80px] xl:mb-[-80px];
 }
 
 .about-en__container {
-    @apply container mx-auto py-12 md:py-16 lg:py-24 flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[146px];
+    @apply container mx-auto py-12 xl:py-[73px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
 }
 
 .about-en__title {
@@ -13,7 +13,7 @@
 }
 
 .about-en__description {
-    @apply text-[18px] md:text-[23px] font-light font-geologica leading-[1.5] md:max-w-[690px] pt-4 md:pt-0;
+    @apply text-[18px] md:text-[23px] font-[300] font-geologica leading-[1.5] md:max-w-[690px] pt-4 md:pt-0;
 }
 
 .about-en__impact {
@@ -39,12 +39,8 @@
         @apply flex flex-col gap-4;
     }
 
-    .about-en-section {
-        @apply pt-12 lg:pt-0;
-    }
-
     .about-en__container {
-        @apply items-center;
+        @apply items-start;
     }
 
     .about-en__impact {
