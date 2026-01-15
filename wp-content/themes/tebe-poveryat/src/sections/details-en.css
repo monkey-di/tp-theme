@@ -5,7 +5,7 @@
 }
 
 .details-en__container {
-    @apply container mx-auto py-12 md:py-16 lg:py-24 flex flex-col gap-8 lg:gap-12 xl:gap-0 lg:flex-row lg:justify-between lg:items-start;
+    @apply container mx-auto py-12 md:py-16 xl:pt-24 xl:pb-10 flex flex-col gap-8  lg:flex-row lg:justify-between lg:items-start;
 }
 
 .details-en__left {
@@ -13,7 +13,7 @@
 }
 
 .details-en__right {
-    @apply w-full lg:w-auto flex flex-col gap-6 md:gap-8 lg:gap-6 pt-6 lg:pt-0;
+    @apply w-full lg:w-auto flex flex-col gap-6 xl:gap-2  pt-6 lg:pt-0;
 }
 
 .details-en__title {
@@ -25,7 +25,7 @@
 }
 
 .details-en__block {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-2 xl:pt-2;
 }
 
 .details-en__text {
@@ -45,7 +45,7 @@
 
 @media (min-width: 1024px) {
     .details-en__container {
-        @apply items-start;
+        @apply items-start justify-start gap-[83px];
     }
 
     .details-en__left {

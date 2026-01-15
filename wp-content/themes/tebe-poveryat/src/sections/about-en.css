@@ -5,7 +5,7 @@
 }
 
 .about-en__container {
-    @apply container mx-auto py-12 xl:py-[73px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
+    @apply container mx-auto py-12 xl:pt-[73px] xl:pb-[148px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
 }
 
 .about-en__title {
@@ -21,23 +21,17 @@
 }
 
 .about-en__impact-title {
-    @apply text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left mt-10 md:mt-0;
+    @apply text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left mt-10 md:mt-0 xl:mb-10;
 }
 
 .about-en__stats {
-    @apply flex flex-col gap-3 md:gap-4 mt-8 md:mt-8;
+    @apply flex flex-col gap-3 md:gap-4 mt-8 md:mt-8 xl:grid xl:grid-cols-2 xl:gap-4 xl:mt-8;
 }
 
-@media (min-width: 768px) {
-    .about-en__stats {
-        @apply grid grid-cols-2 gap-4 mt-8;
-    }
-}
+
 
 @media (min-width: 1024px) {
-    .about-en__stats {
-        @apply flex flex-col gap-4;
-    }
+
 
     .about-en__container {
         @apply items-start;
@@ -47,13 +41,21 @@
         @apply w-full;
     }
 
-    .about-en__impact-title {
-        @apply mb-6;
-    }
+
+
+
 }
 
 .about-en__stat-card {
-    @apply rounded-[20px] p-4 md:p-8 lg:p-8 flex flex-col gap-3 md:gap-4 text-white;
+    @apply rounded-[20px] p-4 md:p-8 xl:pt-4 xl:pb-4 flex flex-col gap-3 text-white;
+}
+
+.about-en__stat-card--1 {
+    @apply xl:gap-[56px]
+}
+
+.about-en__stat-card--2 {
+    @apply xl:gap-[23px]
 }
 
 .about-en__stat-number {
@@ -63,3 +65,4 @@
 .about-en__stat-text {
     @apply text-[16px] md:text-[18px] font-normal font-geologica leading-[1.5] text-white;
 }
+

@@ -47,3 +47,4 @@
 .about-section-part2__image-wrapper {
     @apply  relative w-full xl:w-[787px] xl:min-w-[787px] lg:min-w-[380px] xl:max-w-full xl:h-[522px] rounded-[20px] overflow-hidden
 }
+
