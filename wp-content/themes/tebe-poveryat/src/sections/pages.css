@@ -21,7 +21,18 @@
         display:none;
     }
     .page-head-wrapper h1{
+        padding-top:60px;
         padding-bottom:0;
         font-size:64px;
+    }
+}
+@media(max-width:710px){
+    .page-head-wrapper h1{
+        font-size: 48px;
+    }
+}
+@media(max-width:520px){
+    .page-head-wrapper h1{
+        font-size: 32px;
     }
 }
