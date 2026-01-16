@@ -1,9 +1,8 @@
 <?php
-/**
- * Template Name: Help Page
- *
- * Classic PHP template using Tailwind CSS and template-parts.
- * Supports both Russian and English versions.
+/*
+    Template Name: Help Page
+    Template Post Type: page
+    Post Type: page
  */
 
 get_header();
