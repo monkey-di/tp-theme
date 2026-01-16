@@ -3,13 +3,13 @@
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
-        'post_type' => 'blog_item', // для блога
-        'posts_per_page' => 3,
-        'sort' => 'date_desc',
-        'taxonomy' => '', // Таксономия
-        'term' => '', // Термин
-        'meta_key' => '', // Мета-ключ для сортировки
-        'meta_value' => '' // Мета-значение для фильтра
+            'post_type' => 'blog_item', // для блога
+            'posts_per_page' => 3,
+            'sort' => 'date_desc',
+            'taxonomy' => '', // Таксономия
+            'term' => '', // Термин
+            'meta_key' => '', // Мета-ключ для сортировки
+            'meta_value' => '' // Мета-значение для фильтра
     ], $atts);
 
     ob_start();
@@ -30,7 +30,6 @@ add_shortcode('ajax_custom_posts', function($atts) {
                 <option value="date_desc">Сначала свежие</option>
                 <option value="date_asc">Сначала старые</option>
                 <option value="popular">Сначала популярные</option>
-                <option value="menu_order">По порядку меню</option>
             </select>
         </div>
 
@@ -54,43 +53,43 @@ add_shortcode('ajax_custom_posts', function($atts) {
 // Функция загрузки кастомных постов
 function load_ajax_custom_posts($args = []) {
     $defaults = [
-        'paged' => 1,
-        'post_type' => 'blog_item',
-        'posts_per_page' => 3,
-        'sort' => 'date_desc',
-        'taxonomy' => '',
-        'term' => '',
-        'meta_key' => '',
-        'meta_value' => ''
+            'paged' => 1,
+            'post_type' => 'blog_item',
+            'posts_per_page' => 3,
+            'sort' => 'date_desc',
+            'taxonomy' => '',
+            'term' => '',
+            'meta_key' => '',
+            'meta_value' => ''
     ];
 
     $args = wp_parse_args($args, $defaults);
     $query_args = [
-        'post_type' => $args['post_type'],
-        'post_status' => 'publish',
-        'posts_per_page' => $args['posts_per_page'],
-        'paged' => $args['paged'],
+            'post_type' => $args['post_type'],
+            'post_status' => 'publish',
+            'posts_per_page' => $args['posts_per_page'],
+            'paged' => $args['paged'],
     ];
 
     // Таксономия
     if (!empty($args['taxonomy']) && !empty($args['term'])) {
         $query_args['tax_query'] = [
-            [
-                'taxonomy' => $args['taxonomy'],
-                'field' => 'slug',
-                'terms' => $args['term'],
-            ]
+                [
+                        'taxonomy' => $args['taxonomy'],
+                        'field' => 'slug',
+                        'terms' => $args['term'],
+                ]
         ];
     }
 
     // Мета-запрос
     if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
         $query_args['meta_query'] = [
-            [
-                'key' => $args['meta_key'],
-                'value' => $args['meta_value'],
-                'compare' => '='
-            ]
+                [
+                        'key' => $args['meta_key'],
+                        'value' => $args['meta_value'],
+                        'compare' => '='
+                ]
         ];
     }
 
@@ -105,16 +104,17 @@ function load_ajax_custom_posts($args = []) {
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
             break;
-        case 'menu_order':
-            $query_args['orderby'] = 'menu_order';
-            $query_args['order'] = 'ASC';
-            break;
         default: // date_desc
             $query_args['orderby'] = 'date';
             $query_args['order'] = 'DESC';
     }
 
     $query = new WP_Query($query_args);
+
+    // ДЕБАГ: добавим логирование запроса
+    error_log('AJAX Posts Query Args: ' . print_r($query_args, true));
+    error_log('AJAX Posts Found: ' . $query->found_posts);
+
     $output = '';
 
     if ($query->have_posts()) {
@@ -126,14 +126,42 @@ function load_ajax_custom_posts($args = []) {
         // Проверка на наличие следующих постов
         $has_more = $query->max_num_pages > $args['paged'];
         $output .= '<script type="application/json" class="posts-data">' .
-            json_encode(['has_more' => $has_more]) .
-            '</script>';
+                json_encode(['has_more' => $has_more]) .
+                '</script>';
     } else {
+        // ДЕБАГ: добавим больше информации
         $output = '<p>Записи не найдены</p>';
+        $output .= '<div style="display:none;" class="debug-info">';
+        $output .= 'Post Type: ' . $args['post_type'] . '<br>';
+        $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
+        $output .= 'Found Posts: ' . $query->found_posts;
+        $output .= '</div>';
     }
 
     wp_reset_postdata();
     return $output;
+}
+
+// ФУНКЦИЯ ВЫВОДА ПОСТА - ВАЖНО! Без нее ничего не будет выводиться
+function get_custom_post_html($post_type = 'blog_item') {
+    ob_start();
+    ?>
+    <article class="custom-post-item" style="border:1px solid #ddd; padding:20px; margin-bottom:20px;">
+        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+        <?php if (has_post_thumbnail()): ?>
+            <div class="post-thumbnail">
+                <?php the_post_thumbnail('medium'); ?>
+            </div>
+        <?php endif; ?>
+        <div class="post-excerpt">
+            <?php the_excerpt(); ?>
+        </div>
+        <div class="post-meta">
+            <time><?php echo get_the_date(); ?></time>
+        </div>
+    </article>
+    <?php
+    return ob_get_clean();
 }
 
 // AJAX загрузка кастомных постов
@@ -153,51 +181,51 @@ function ajax_load_more_custom_posts() {
     $meta_value = sanitize_text_field($_POST['meta_value']);
 
     $args = [
-        'paged' => $paged,
-        'post_type' => $post_type,
-        'sort' => $sort,
-        'posts_per_page' => $per_page,
-        'taxonomy' => $taxonomy,
-        'term' => $term,
-        'meta_key' => $meta_key,
-        'meta_value' => $meta_value
+            'paged' => $paged,
+            'post_type' => $post_type,
+            'sort' => $sort,
+            'posts_per_page' => $per_page,
+            'taxonomy' => $taxonomy,
+            'term' => $term,
+            'meta_key' => $meta_key,
+            'meta_value' => $meta_value
     ];
 
     wp_send_json_success([
-        'html' => load_ajax_custom_posts($args),
-        'paged' => $paged,
-        'has_more' => has_more_custom_posts($args)
+            'html' => load_ajax_custom_posts($args),
+            'paged' => $paged,
+            'has_more' => has_more_custom_posts($args)
     ]);
 }
 
 // Функция проверки наличия дополнительных кастомных постов
 function has_more_custom_posts($args) {
     $query_args = [
-        'post_type' => $args['post_type'],
-        'post_status' => 'publish',
-        'posts_per_page' => $args['posts_per_page'],
-        'paged' => $args['paged'] + 1,
+            'post_type' => $args['post_type'],
+            'post_status' => 'publish',
+            'posts_per_page' => $args['posts_per_page'],
+            'paged' => $args['paged'] + 1,
     ];
 
     // Таксономия
     if (!empty($args['taxonomy']) && !empty($args['term'])) {
         $query_args['tax_query'] = [
-            [
-                'taxonomy' => $args['taxonomy'],
-                'field' => 'slug',
-                'terms' => $args['term'],
-            ]
+                [
+                        'taxonomy' => $args['taxonomy'],
+                        'field' => 'slug',
+                        'terms' => $args['term'],
+                ]
         ];
     }
 
     // Мета-запрос
     if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
         $query_args['meta_query'] = [
-            [
-                'key' => $args['meta_key'],
-                'value' => $args['meta_value'],
-                'compare' => '='
-            ]
+                [
+                        'key' => $args['meta_key'],
+                        'value' => $args['meta_value'],
+                        'compare' => '='
+                ]
         ];
     }
 
@@ -219,16 +247,17 @@ function has_more_custom_posts($args) {
 
     return $has_more;
 }
+
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_script('ajax-custom-posts',
-        get_template_directory() . '/assets/js/ajax-posts.js',
-        ['jquery'],
-        null,
-        true
+            get_template_directory_uri() . '/assets/js/ajax-posts.js', // Исправлено: get_template_directory_uri()
+            ['jquery'],
+            null,
+            true
     );
 
     wp_localize_script('ajax-custom-posts', 'ajax_object', [
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('ajax_nonce')
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('ajax_nonce')
     ]);
 });
