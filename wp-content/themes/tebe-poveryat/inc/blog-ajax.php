@@ -3,7 +3,7 @@
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
-        'post_type' => 'blog', // для блога
+        'post_type' => 'blog_item', // для блога
         'posts_per_page' => 3,
         'sort' => 'date_desc',
         'taxonomy' => '', // Таксономия
