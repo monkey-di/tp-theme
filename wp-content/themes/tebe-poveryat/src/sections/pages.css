@@ -73,9 +73,9 @@
 @media(max-width:520px){
     .page-head-wrapper{
         padding-top: 0;
-        background-size: 210%;
-        background-position-x: 110%;
-        background-position-y: center;
+        background-size: 220%;
+        background-position-x: 108%;
+        background-position-y: 35%;
     }
     .page-head-wrapper h1{
         padding-top: 30px;
@@ -89,5 +89,8 @@
         background-position-x: right;
         background-size: cover;
         background-position-y: 60px;
+    }
+    .page-head-picture img{
+        margin-left:-5%;
     }
 }
