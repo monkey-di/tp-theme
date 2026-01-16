@@ -41,4 +41,9 @@
     .page-head-wrapper h1{
         font-size: 32px;
     }
+    .page-head-wrapper{
+        background-position-x: right;
+        background-size: cover;
+        background-position-y: 60px;
+    }
 }
