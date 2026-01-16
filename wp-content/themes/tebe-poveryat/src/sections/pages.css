@@ -1,5 +1,5 @@
 .page-head{
-    padding-top: 60px;
+
 }
 .page-head-wrapper{
     display:flex;
@@ -11,6 +11,7 @@
     background-position-x: 56%;
     background-position-y: -20px;
     padding-left:0;
+    padding-top:60px;
 }
 .page-head-description{
     color:#19232E;
