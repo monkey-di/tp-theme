@@ -130,7 +130,7 @@ function load_ajax_custom_posts($args = []) {
                 '</script>';
     } else {
         // ДЕБАГ: добавим больше информации
-        $output = '<p>Записи не найдены</p>';
+        $output = '<p>111 Записи не найдены</p>';
         $output .= '<div style="display:none;" class="debug-info">';
         $output .= 'Post Type: ' . $args['post_type'] . '<br>';
         $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
