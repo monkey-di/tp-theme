@@ -291,6 +291,6 @@ function tp_register_blog() {
         'show_in_rest'        => true,
     );
 
-    register_post_type( 'blog_item', $args );
+    register_post_type( 'blog', $args );
 }
 add_action( 'init', 'tp_register_blog' );
