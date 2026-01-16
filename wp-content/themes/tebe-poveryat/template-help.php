@@ -27,7 +27,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     <?=$pagehead_title?>
                 </div>
                 <div class="page-head-picture">
-                    <?=$pagehead_pic?>
+                    <img src="<?=$pagehead_pic?>">
                 </div>
             </div>
             <div class="page-head-col">
