@@ -160,3 +160,104 @@ add_filter( 'admin_post_thumbnail_html', 'tp_fix_svg_admin_thumbnail', 10, 3 );
  * Include Demo Content Importer (temporary - remove after import)
  */
 require_once get_template_directory() . '/inc/demo-content/import-demo-content.php';
+
+// Шорткод для вывода постов с AJAX-подгрузкой
+add_shortcode('ajax_posts', function($atts) {
+    $atts = shortcode_atts([
+        'category' => '',
+        'posts_per_page' => 3,
+        'sort' => 'date_desc'
+    ], $atts);
+
+    ob_start();
+    ?>
+    <div class="ajax-posts-container"
+         data-category="<?php echo esc_attr($atts['category']); ?>"
+         data-perpage="<?php echo esc_attr($atts['posts_per_page']); ?>"
+         data-sort="<?php echo esc_attr($atts['sort']); ?>"
+         data-paged="1">
+
+        <!-- Сортировка -->
+        <div class="posts-sort">
+            <select class="sort-select">
+                <option value="date_desc">Сначала свежие</option>
+                <option value="date_asc">Сначала старые</option>
+                <option value="popular">Сначала популярные</option>
+            </select>
+        </div>
+
+        <!-- Контейнер для постов -->
+        <div class="posts-wrapper">
+            <?php echo load_ajax_posts($atts); ?>
+        </div>
+
+        <!-- Кнопка загрузки -->
+        <div class="load-more-container">
+            <button class="load-more-btn" style="display: none;">
+                Показать ещё
+                <span class="spinner"></span>
+            </button>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+});
+
+// Функция загрузки постов
+function load_ajax_posts($args = []) {
+    $defaults = [
+        'paged' => 1,
+        'category' => '',
+        'posts_per_page' => 3,
+        'sort' => 'date_desc'
+    ];
+
+    $args = wp_parse_args($args, $defaults);
+    $query_args = [
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => $args['posts_per_page'],
+        'paged' => $args['paged'],
+    ];
+
+    // Категория
+    if (!empty($args['category'])) {
+        $query_args['category_name'] = $args['category'];
+    }
+
+    // Сортировка
+    switch($args['sort']) {
+        case 'date_asc':
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'ASC';
+            break;
+        case 'popular':
+            $query_args['meta_key'] = 'post_views';
+            $query_args['orderby'] = 'meta_value_num';
+            $query_args['order'] = 'DESC';
+            break;
+        default: // date_desc
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'DESC';
+    }
+
+    $query = new WP_Query($query_args);
+    $output = '';
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $output .= get_post_html(); // вывод поста
+        }
+        // Проверка наличия след. постов
+        $has_more = $query->max_num_pages > $args['paged'];
+        $output .= '<script type="application/json" class="posts-data">' .
+            json_encode(['has_more' => $has_more]) .
+            '</script>';
+    } else {
+        $output = '<p>Записи не найдены</p>';
+    }
+
+    wp_reset_postdata();
+    return $output;
+}
