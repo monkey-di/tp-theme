@@ -55,7 +55,7 @@ add_shortcode('ajax_custom_posts', function($atts) {
 function load_ajax_custom_posts($args = []) {
     $defaults = [
         'paged' => 1,
-        'post_type' => 'blog',
+        'post_type' => 'blog_item',
         'posts_per_page' => 3,
         'sort' => 'date_desc',
         'taxonomy' => '',
