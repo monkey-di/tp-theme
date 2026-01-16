@@ -30,6 +30,9 @@
     .page-head-wrapper h1{
         font-size: 48px;
     }
+    .page-head-wrapper{
+        padding-bottom:0;
+    }
 }
 @media(max-width:520px){
     .page-head-wrapper h1{
