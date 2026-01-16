@@ -23,9 +23,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     <div class="page-head" style="background:<?=$pagehead_bg_color?>">
         <div class="page-head-wrapper container" style="background:<?=$pagehead_bg_image?>">
             <div class="page-head-col">
-                <div class="page-head-title">
+                <h1 class="page-head-title">
                     <?=$pagehead_title?>
-                </div>
+                </h1>
                 <div class="page-head-description">
                     <?=$pagehead_description?>
                 </div>
