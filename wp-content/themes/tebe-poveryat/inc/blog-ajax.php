@@ -111,7 +111,7 @@ function load_ajax_custom_posts($args = []) {
 
     $query = new WP_Query($query_args);
 
-    // ДЕБАГ: добавим логирование запроса
+    // ДЕБАГ: логирование запроса
     error_log('AJAX Posts Query Args: ' . print_r($query_args, true));
     error_log('AJAX Posts Found: ' . $query->found_posts);
 
@@ -129,8 +129,8 @@ function load_ajax_custom_posts($args = []) {
                 json_encode(['has_more' => $has_more]) .
                 '</script>';
     } else {
-        // ДЕБАГ: добавим больше информации
-        $output = '<p>111 Записи не найдены</p>';
+        // ДЕБАГ:
+        $output = '<p>Записи не найдены</p>';
         $output .= '<div style="display:none;" class="debug-info">';
         $output .= 'Post Type: ' . $args['post_type'] . '<br>';
         $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
@@ -142,7 +142,7 @@ function load_ajax_custom_posts($args = []) {
     return $output;
 }
 
-// ФУНКЦИЯ ВЫВОДА ПОСТА - ВАЖНО! Без нее ничего не будет выводиться
+// Вывод
 function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
     ?>
