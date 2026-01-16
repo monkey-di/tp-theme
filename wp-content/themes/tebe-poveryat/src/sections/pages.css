@@ -4,6 +4,8 @@
     justify-content: space-between;
     padding-bottom:90px;
     padding-inline:calc(var(--spacing)*5);
+    background-repeat: no-repeat;
+    background-position:top;
 }
 .page-head-wrapper h1{
     font-size:90px;
