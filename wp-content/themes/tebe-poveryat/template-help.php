@@ -21,7 +21,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 ?>
 <main class="site-main">
     <div class="page-head" style="background:<?=$pagehead_bg_color?>">
-        <div class="page-head-wrapper container" style="background:url(<?=$pagehead_bg_image?>)">
+        <div class="page-head-wrapper container mx-auto" style="background:url(<?=$pagehead_bg_image?>)">
             <div class="page-head-col">
                 <h1 class="page-head-title">
                     <?=$pagehead_title?>
