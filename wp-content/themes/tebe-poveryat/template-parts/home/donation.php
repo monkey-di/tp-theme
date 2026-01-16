@@ -52,6 +52,12 @@
                 <button type="button" class="donation-form__toggle-button donation-form__toggle-button--active">Разово</button>
                 <button type="button" class="donation-form__toggle-button donation-form__toggle-button--inactive">Ежемесячно</button>
             </div>
+            <?php if( !is_front_page() ) { ?>
+            <div class="donate-description">
+                <p>Спасибо за поддержку! Именно она помогает нам работать. Частные пожертвования делают организацию независимой и устойчивой, ведь грантов может не быть, а бизнес может отказаться от финансирования.
+                </p>
+            </div>
+            <?php } ?>
             <!-- Amount Buttons & Custom Amount Input -->
             <div class="donation-form__amounts mb-[23px]">
                 <button type="button" class="donation-form__amount-button">100₽</button>
