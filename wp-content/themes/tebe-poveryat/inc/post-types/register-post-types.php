@@ -255,8 +255,8 @@ function tp_register_team() {
 	register_post_type( 'team_member', $args );
 }
 /**
- * Register Team CPT
- * Наши специалисты - слайдер команды
+ * Register Blog CPT
+ * Блог
  */
 function tp_register_blog() {
     $labels = array(
