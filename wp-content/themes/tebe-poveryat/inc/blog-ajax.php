@@ -219,3 +219,16 @@ function has_more_custom_posts($args) {
 
     return $has_more;
 }
+add_action('wp_enqueue_scripts', function() {
+    wp_enqueue_script('ajax-custom-posts',
+        get_template_directory() . '/assets/js/ajax-posts.js',
+        ['jquery'],
+        null,
+        true
+    );
+
+    wp_localize_script('ajax-custom-posts', 'ajax_object', [
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('ajax_nonce')
+    ]);
+});

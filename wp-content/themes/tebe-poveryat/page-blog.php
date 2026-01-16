@@ -43,6 +43,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             </div>
         </div>
     </div>
+    <div class="bloglist-content">
+        <?php echo do_shortcode('[ajax_custom_posts post_type="portfolio"]');?>
+    </div>
 </main>
 <?php
 get_footer();
