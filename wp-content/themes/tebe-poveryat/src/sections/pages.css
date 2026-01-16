@@ -1,3 +1,8 @@
 .page-head-wrapper{
     display:flex;
 }
+.page-head-wrapper h1{
+    font-size:90px;
+    color: var(--color-primary);
+    font-weight:400;
+}
