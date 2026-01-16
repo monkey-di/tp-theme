@@ -1,6 +1,14 @@
 .page-head{
 
 }
+.donate-description{
+    padding-top:40px;
+    padding-bottom:32px;
+    color:#fff;
+    font-family: Geologica;
+    font-size:23px;
+    line-height:150%;
+}
 .page-head-wrapper{
     display:flex;
     align-items: center;
