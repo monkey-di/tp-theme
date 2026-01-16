@@ -71,6 +71,17 @@
     }
 }
 @media(max-width:520px){
+    .page-head-wrapper{
+        padding-top;0;
+        background-size: 210%;
+        background-position-x: 110%;
+        background-position-y: center;
+    }
+    .page-head-title{
+        padding-top: 30px;
+        max-width: 290px;
+        text-align: center;
+    }
     .page-head-wrapper h1{
         font-size: 32px;
     }
