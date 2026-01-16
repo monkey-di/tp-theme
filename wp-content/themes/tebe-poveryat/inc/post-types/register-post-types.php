@@ -254,4 +254,43 @@ function tp_register_team() {
 
 	register_post_type( 'team_member', $args );
 }
-add_action( 'init', 'tp_register_team' );
+/**
+ * Register Team CPT
+ * Наши специалисты - слайдер команды
+ */
+function tp_register_blog() {
+    $labels = array(
+        'name'               => 'Блог',
+        'singular_name'      => 'Запись',
+        'menu_name'          => 'Блог',
+        'add_new'            => 'Добавить',
+        'add_new_item'       => 'Добавить запись',
+        'edit_item'          => 'Редактировать',
+        'new_item'           => 'Новая запись',
+        'view_item'          => 'Просмотреть запись',
+        'search_items'       => 'Найти запись',
+        'not_found'          => 'Записи не найдены',
+        'not_found_in_trash' => 'В корзине пусто',
+        'all_items'          => 'Все записи',
+    );
+
+    $args = array(
+        'labels'              => $labels,
+        'public'              => false,
+        'publicly_queryable'  => false,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'query_var'           => true,
+        'rewrite'             => false,
+        'capability_type'     => 'post',
+        'has_archive'         => false,
+        'hierarchical'        => false,
+        'menu_position'       => 86,
+        'menu_icon'           => 'dashicons-edit-page',
+        'supports'            => array( 'title', 'editor', 'thumbnail' ),
+        'show_in_rest'        => true,
+    );
+
+    register_post_type( 'blog_item', $args );
+}
+add_action( 'init', 'tp_register_blog' );
