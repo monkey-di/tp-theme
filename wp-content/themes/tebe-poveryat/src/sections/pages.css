@@ -5,14 +5,14 @@
     display:flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom:90px;
+    padding-bottom: 90px;
     padding-inline:calc(var(--spacing)*5);
     background-repeat: no-repeat;
     background-position-x: 56%;
     background-position-y: 30px;
-    padding-left:0;
-    padding-right:0;
-    padding-top:60px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 60px;
 }
 .page-head-description{
     color:#19232E;
