@@ -24,6 +24,7 @@
         padding-top:60px;
         padding-bottom:0;
         font-size:64px;
+        text-align: center;
     }
 }
 @media(max-width:710px){
