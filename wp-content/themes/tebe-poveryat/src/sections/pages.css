@@ -1,3 +1,6 @@
+.page-head{
+    padding-top: 60px;
+}
 .page-head-wrapper{
     display:flex;
     align-items: center;
@@ -6,9 +9,11 @@
     padding-inline:calc(var(--spacing)*5);
     background-repeat: no-repeat;
     background-position:top;
+    padding-left:0;
 }
 .page-head-description{
     color:#19232E;
+    line-height:150%;
 }
 .page-head-wrapper h1{
     font-size:90px;
