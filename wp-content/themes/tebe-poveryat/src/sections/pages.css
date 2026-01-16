@@ -13,3 +13,15 @@
     line-height:95%;
     padding-bottom:40px;
 }
+@media(max-width:967px){
+    .page-head-wrapper{
+        flex-direction:column;
+    }
+    .page-head-description{
+        display:none;
+    }
+    .page-head-wrapper h1{
+        padding-bottom:0;
+        font-size:64px;
+    }
+}
