@@ -1,11 +1,11 @@
 /* About Section English Styles */
 
 .about-en-section {
-    @apply w-full bg-secondary relative z-20 pt-12 overflow-hidden bg-secondary relative z-[19] pt-12 xl:pt-[80px] overflow-hidden xl:mt-[-80px] xl:mb-[-80px];
+    @apply w-full bg-secondary relative z-20 pt-12 overflow-hidden bg-secondary relative z-[19] pt-12 xl:pt-[80px] overflow-hidden mb-[-40px] mt-[-40px] xl:mt-[-80px] xl:mb-[-80px];
 }
 
 .about-en__container {
-    @apply container mx-auto px-4 xl:px-0 py-12 xl:pt-[73px] xl:pb-[148px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
+    @apply container mx-auto px-4 xl:px-0 py-12 pb-[74px] xl:pt-[73px] xl:pb-[148px] flex flex-col gap-8 xl:flex-row lg:gap-12 xl:gap-[0];
 }
 
 .about-en__title {
@@ -13,7 +13,7 @@
 }
 
 .about-en__description {
-    @apply text-[18px] md:text-[23px] font-[300] font-geologica leading-[1.5] md:max-w-[690px] pt-4 md:pt-0;
+    @apply text-[18px] md:text-[23px] font-[300] font-geologica leading-[1.5] md:max-w-[690px] pt-5 md:pt-0;
 }
 
 .about-en__impact {
@@ -21,7 +21,7 @@
 }
 
 .about-en__impact-title {
-    @apply text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left mt-10 md:mt-0 xl:mb-10;
+    @apply text-[32px] md:text-[64px] font-normal font-ura uppercase leading-9 md:leading-[0.95] text-left mt-[22px] md:mt-0 xl:mb-10;
 }
 
 .about-en__stats {

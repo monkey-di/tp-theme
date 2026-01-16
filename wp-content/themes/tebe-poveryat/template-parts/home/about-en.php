@@ -8,6 +8,10 @@
 ?>
 
 <style>
+    .about-en-section {
+        background-image: url("<?php echo get_theme_file_uri('assets/images/stars/en-stars.png'); ?>");
+        background-position: center center;
+    }
     @media (min-width: 1280px) {
         .about-en-section {
             background-image: url("<?php echo get_theme_file_uri('assets/images/stars-bg.webp'); ?>");
@@ -33,7 +37,7 @@
             </div>
 
             <!-- Our Impact Section -->
-            <div class="about-en__impact mt-12 lg:mt-0 xl:pl-[66px]">
+            <div class="about-en__impact mt-[22px] lg:mt-0 xl:pl-[66px]">
                 <?php block_template_part( 'about-en-impact-title' ); ?>
 
                 <!-- Statistics Cards -->

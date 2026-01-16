@@ -5,15 +5,15 @@
 }
 
 .details-en__container {
-    @apply container mx-auto py-12 md:py-16 xl:pt-24 xl:pb-10 flex flex-col gap-8  lg:flex-row lg:justify-between lg:items-start;
+    @apply container mx-auto py-12 md:py-16 xl:pt-24 xl:pb-10 flex flex-col xl:gap-8  lg:flex-row lg:justify-between lg:items-start;
 }
 
 .details-en__left {
-    @apply w-full lg:w-auto flex flex-col gap-10;
+    @apply w-full lg:w-auto flex flex-col gap-6 xl:gap-10;
 }
 
 .details-en__right {
-    @apply w-full lg:w-auto flex flex-col gap-6 xl:gap-2  pt-6 lg:pt-0;
+    @apply w-full lg:w-auto flex flex-col xl:gap-2  pt-6 lg:pt-0;
 }
 
 .details-en__title {
@@ -34,9 +34,7 @@
 
 /* Decorative elements positioning */
 @media (max-width: 1023px) {
-    .details-en__left {
-        @apply mb-4;
-    }
+
 
     .details-en__right {
         @apply pt-4 lg:pt-0;
