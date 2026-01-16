@@ -72,7 +72,7 @@
 }
 @media(max-width:520px){
     .page-head-wrapper{
-        padding-top;0;
+        padding-top: 0;
         background-size: 210%;
         background-position-x: 110%;
         background-position-y: center;
