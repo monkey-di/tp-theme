@@ -20,7 +20,7 @@ $pagehead_bg_image = get_field('headpage-background');  // ACF фоновое и
 $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 ?>
 <main class="site-main">
-    <div class="page-head" style="background:<?=$pagehead_bg_color?>">
+    <div class="page-head lg\:\[border-radius\:0_0_50\%_50\%_\/_0_0_80px_80px\]" style="background:<?=$pagehead_bg_color?>">
         <div class="page-head-wrapper container mx-auto" style="background:url(<?=$pagehead_bg_image?>)">
             <div class="page-head-col">
                 <h1 class="page-head-title">
