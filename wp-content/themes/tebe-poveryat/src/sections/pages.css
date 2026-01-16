@@ -77,7 +77,7 @@
         background-position-x: 110%;
         background-position-y: center;
     }
-    h1.page-head-title{
+    .page-head-wrapper h1{
         padding-top: 30px;
         max-width: 290px;
         text-align: center;
