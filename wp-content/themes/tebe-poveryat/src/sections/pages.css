@@ -91,6 +91,7 @@
         background-position-y: 60px;
     }
     .page-head-picture img{
+        max-width:110%;
         margin-left:-5%;
     }
 }
