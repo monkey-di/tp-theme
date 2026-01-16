@@ -6,10 +6,7 @@
  */
 
 // Mobile Menu Overlay
-$mobile_menu_path = get_theme_file_path('/parts/mobile-menu-overlay.html');
-if (file_exists($mobile_menu_path)) {
-    readfile($mobile_menu_path);
-}
+get_template_part('parts/mobile-menu-overlay');
 ?>
 
 <footer class="footer w-full bg-primary relative overflow-hidden px-4 z-20 mt-[-40px] xl:mt-[-80px] pt-12 xl:pt-32 pb-12 xl:pb-[56px] [border-radius:50%_50%_0_0_/_40px_40px_0_0] xl:[border-radius:50%_50%_0_0_/_80px_80px_0_0]">

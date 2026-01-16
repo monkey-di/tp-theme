@@ -365,6 +365,9 @@
   .mt-\[-100px\] {
     margin-top: -100px;
   }
+  .mt-\[22px\] {
+    margin-top: 22px;
+  }
   .mt-\[26px\] {
     margin-top: 26px;
   }
@@ -421,9 +424,6 @@
   }
   .inline-flex {
     display: inline-flex;
-  }
-  .table {
-    display: table;
   }
   .aspect-\[1\/1\] {
     aspect-ratio: 1/1;
@@ -690,9 +690,6 @@
   .flex-none {
     flex: none;
   }
-  .flex-shrink {
-    flex-shrink: 1;
-  }
   .flex-shrink-0 {
     flex-shrink: 0;
   }
@@ -701,9 +698,6 @@
   }
   .flex-grow {
     flex-grow: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
@@ -765,9 +759,6 @@
   .flex-col {
     flex-direction: column;
   }
-  .flex-wrap {
-    flex-wrap: wrap;
-  }
   .\!items-start {
     align-items: flex-start !important;
   }
@@ -788,9 +779,6 @@
   }
   .justify-start {
     justify-content: flex-start;
-  }
-  .gap-0 {
-    gap: calc(var(--spacing) * 0);
   }
   .gap-0\.5 {
     gap: calc(var(--spacing) * 0.5);
@@ -917,9 +905,6 @@
   .bg-\[\#fef1ec\] {
     background-color: #fef1ec;
   }
-  .bg-black {
-    background-color: var(--color-black);
-  }
   .bg-black\/20 {
     background-color: color-mix(in srgb, #000 20%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -985,9 +970,6 @@
   }
   .object-bottom {
     object-position: bottom;
-  }
-  .p-0 {
-    padding: calc(var(--spacing) * 0);
   }
   .p-0\.5 {
     padding: calc(var(--spacing) * 0.5);
@@ -1290,6 +1272,9 @@
   }
   .opacity-45 {
     opacity: 45%;
+  }
+  .opacity-50 {
+    opacity: 50%;
   }
   .opacity-100 {
     opacity: 100%;
@@ -2397,11 +2382,6 @@
       position: relative !important;
     }
   }
-  .\[\&\.swiper-pagination-progressbar\]\:\!bg-white {
-    &.swiper-pagination-progressbar {
-      background-color: var(--color-white) !important;
-    }
-  }
 }
 @font-face {
   font-family: 'Akrobat';
@@ -2542,6 +2522,12 @@
     z-index: 50;
     width: 100%;
     background-color: var(--color-surface);
+    @media (width >= 1280px) {
+      padding-inline: calc(var(--spacing) * 5);
+    }
+    @media (width >= 1408px) {
+      padding-inline: calc(var(--spacing) * 0);
+    }
   }
   .header__container {
     width: 100%;
@@ -3124,6 +3110,11 @@
       z-index: 2;
       pointer-events: none;
     }
+  }
+  .hero__image-wrapper.hero__image-wrapper--eng {
+    position: absolute;
+    top: 100px;
+    left: 790px;
   }
   @media (min-width: 1280px) {
     .hero-section {
@@ -3841,6 +3832,8 @@
   position: relative;
   z-index: 20;
   z-index: 19;
+  margin-top: -40px;
+  margin-bottom: -40px;
   width: 100%;
   overflow: hidden;
   background-color: var(--color-secondary);
@@ -3879,6 +3872,7 @@
   gap: calc(var(--spacing) * 8);
   padding-inline: calc(var(--spacing) * 4);
   padding-block: calc(var(--spacing) * 12);
+  padding-bottom: 74px;
   @media (width >= 1024px) {
     gap: calc(var(--spacing) * 12);
   }
@@ -3916,7 +3910,7 @@
   }
 }
 .about-en__description {
-  padding-top: calc(var(--spacing) * 4);
+  padding-top: calc(var(--spacing) * 5);
   font-family: var(--font-geologica);
   font-size: 18px;
   --tw-leading: 1.5;
@@ -3937,7 +3931,7 @@
   width: 100%;
 }
 .about-en__impact-title {
-  margin-top: calc(var(--spacing) * 10);
+  margin-top: 22px;
   text-align: left;
   font-family: var(--font-ura);
   font-size: 32px;
@@ -4080,7 +4074,6 @@
   display: flex;
   max-width: 1408px !important;
   flex-direction: column;
-  gap: calc(var(--spacing) * 8);
   padding-block: calc(var(--spacing) * 12);
   @media (width >= 768px) {
     padding-block: calc(var(--spacing) * 16);
@@ -4095,6 +4088,9 @@
     justify-content: space-between;
   }
   @media (width >= 1280px) {
+    gap: calc(var(--spacing) * 8);
+  }
+  @media (width >= 1280px) {
     padding-top: calc(var(--spacing) * 24);
   }
   @media (width >= 1280px) {
@@ -4105,16 +4101,18 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: calc(var(--spacing) * 10);
+  gap: calc(var(--spacing) * 6);
   @media (width >= 1024px) {
     width: auto;
+  }
+  @media (width >= 1280px) {
+    gap: calc(var(--spacing) * 10);
   }
 }
 .details-en__right {
   display: flex;
   width: 100%;
   flex-direction: column;
-  gap: calc(var(--spacing) * 6);
   padding-top: calc(var(--spacing) * 6);
   @media (width >= 1024px) {
     width: auto;
@@ -4181,9 +4179,6 @@
   }
 }
 @media (max-width: 1023px) {
-  .details-en__left {
-    margin-bottom: calc(var(--spacing) * 4);
-  }
   .details-en__right {
     padding-top: calc(var(--spacing) * 4);
     @media (width >= 1024px) {

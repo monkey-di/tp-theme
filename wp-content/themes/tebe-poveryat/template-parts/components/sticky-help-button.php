@@ -13,6 +13,6 @@
         class="bg-primary text-white font-geologica font-normal text-base leading-6 uppercase border border-white w-[348px] h-16 px-3 py-2 left-0 top-0 rounded-[40px]  outline  outline-offset-[-1px] outline-white inline-flex justify-center items-center gap-1 whitespace-nowrap"
         disabled
     >
-        Обратиться за помощью
+        <?php echo tp_get_text('sticky_help.text', 'Обратиться за помощью', 'Get Help'); ?>
     </button>
 </div>

@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const materialsSwiper = new Swiper('.materials__slider', {
-            loop: false,
+            loop: true,
             speed: 700,
             slidesPerView: 1,
             spaceBetween: 16,
@@ -190,7 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 768: {
                     slidesPerView: 'auto',
                     centeredSlides: true,
-                    spaceBetween: 24
+                    spaceBetween: 24,
+                    loop: false,
                 },
                 1280: {
                     slidesPerView: 1,

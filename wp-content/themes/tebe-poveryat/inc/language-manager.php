@@ -139,6 +139,86 @@ function tp_get_translations() {
             'ru' => 'verimtebe@gmail.com',
             'en' => 'verimtebe@gmail.com',
         ],
+
+        // Mobile Menu
+        'mobile_menu.about_problem' => [
+            'ru' => 'О проблеме',
+            'en' => 'About Issue',
+        ],
+        'mobile_menu.materials' => [
+            'ru' => 'Материалы',
+            'en' => 'Materials',
+        ],
+        'mobile_menu.survivors_stories' => [
+            'ru' => 'Истории переживших',
+            'en' => 'Survivors\' Stories',
+        ],
+        'mobile_menu.for_survivors' => [
+            'ru' => 'Для переживших',
+            'en' => 'For Survivors',
+        ],
+        'mobile_menu.for_adults' => [
+            'ru' => 'Взрослым',
+            'en' => 'For Adults',
+        ],
+        'mobile_menu.for_parents' => [
+            'ru' => 'Если с ребенком случилась беда',
+            'en' => 'If Something Happened to Your Child',
+        ],
+        'mobile_menu.for_teens' => [
+            'ru' => 'Подросткам',
+            'en' => 'For Teens',
+        ],
+        'mobile_menu.how_we_help' => [
+            'ru' => 'Как мы помогаем',
+            'en' => 'How We Help',
+        ],
+        'mobile_menu.psychological_help' => [
+            'ru' => 'Психологическая помощь',
+            'en' => 'Psychological Support',
+        ],
+        'mobile_menu.legal_help' => [
+            'ru' => 'Юридическая помощь',
+            'en' => 'Legal Support',
+        ],
+        'mobile_menu.group_support' => [
+            'ru' => 'Групповое направление',
+            'en' => 'Group Support',
+        ],
+        'mobile_menu.projects' => [
+            'ru' => 'Проекты',
+            'en' => 'Projects',
+        ],
+        'mobile_menu.about_us' => [
+            'ru' => 'О нас',
+            'en' => 'About Us',
+        ],
+        'mobile_menu.governing_docs' => [
+            'ru' => 'Учредительные документы',
+            'en' => 'Governing Documents',
+        ],
+        'mobile_menu.team' => [
+            'ru' => 'Команда',
+            'en' => 'Team',
+        ],
+        'mobile_menu.reports' => [
+            'ru' => 'Отчеты',
+            'en' => 'Reports',
+        ],
+        'mobile_menu.partnership' => [
+            'ru' => 'Сотрудничество',
+            'en' => 'Partnership',
+        ],
+        'mobile_menu.blog' => [
+            'ru' => 'Блог',
+            'en' => 'Blog',
+        ],
+
+        // Sticky Help Button
+        'sticky_help.text' => [
+            'ru' => 'Обратиться за помощью',
+            'en' => 'Get Help',
+        ],
     ];
 }
 

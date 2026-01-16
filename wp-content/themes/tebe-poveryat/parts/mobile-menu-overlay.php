@@ -1,0 +1,224 @@
+<!-- Mobile Menu Overlay with Multilanguage Support -->
+<div class="mobile-menu-overlay w-full bg-white flex flex-col justify-start items-start overflow-hidden fixed inset-0 z-50 transform translate-x-full transition-transform duration-300 ease-in-out">
+
+    <!-- Mobile Menu Header -->
+    <div class="mobile-menu-overlay__header self-stretch h-36 relative bg-white overflow-hidden">
+        <div class="w-full px-4 py-4 absolute top-0 left-0 inline-flex justify-between items-center">
+
+            <!-- Logo -->
+            <div class="mobile-menu-overlay__logo w-[67px] h-16 relative flex items-center">
+                <img src="<?php echo get_theme_file_uri('assets/images/logo-header-icon.svg'); ?>" alt="<?php echo get_bloginfo('name'); ?>"
+                     class="w-full h-full object-contain">
+            </div>
+
+            <!-- Donate Button -->
+            <a href="#"
+               class="mobile-menu-overlay__donate-btn w-[159px] h-10 px-3 py-2 bg-secondary rounded-[40px] flex justify-center items-center gap-1 no-underline hover:opacity-90 transition mr-2">
+                <div data-svg-wrapper>
+                    <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.61553 1.01116C8.84736 -0.337024 10.8443 -0.33708 12.0761 1.01116C13.308 2.35975 13.308 4.54658 12.0761 5.89518L7.97638 10.3833C7.18331 11.2515 5.81597 11.2515 5.02296 10.3832L0.923911 5.89518C-0.30797 4.54658 -0.30797 2.35975 0.923911 1.01116C2.15573 -0.337044 4.15266 -0.33706 5.38447 1.01116L6.49961 2.23195L7.61553 1.01116Z"
+                              fill="white"/>
+                    </svg>
+                </div>
+                <span class="text-white text-[10px] font-normal uppercase leading-4 font-sans"><?php echo tp_get_text('header.donate', 'Хочу помочь', 'I want to help'); ?></span>
+            </a>
+
+            <!-- Close Button -->
+            <button class="mobile-menu-overlay__close-btn w-16 p-2 rounded-[40px] outline outline-1 outline-offset-[-1px] outline-primary flex justify-center items-center gap-2 cursor-pointer border-none bg-transparent">
+                <div data-svg-wrapper class="relative">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M18.5303 5.46967C18.8232 5.76256 18.8232 6.23744 18.5303 6.53033L6.53033 18.5303C6.23744 18.8232 5.76256 18.8232 5.46967 18.5303C5.17678 18.2374 5.17678 17.7626 5.46967 17.4697L17.4697 5.46967C17.7626 5.17678 18.2374 5.17678 18.5303 5.46967Z"
+                              fill="var(--wp--preset--color--primary)"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M5.46967 5.46967C5.76256 5.17678 6.23744 5.17678 6.53033 5.46967L18.5303 17.4697C18.8232 17.7626 18.8232 18.8232 18.5303 18.5303C18.2374 18.8232 17.7626 18.8232 17.4697 18.5303L5.46967 6.53033C5.17678 6.23744 5.17678 5.76256 5.46967 5.46967Z"
+                              fill="var(--wp--preset--color--primary)"/>
+                    </svg>
+                </div>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Mobile Menu Content -->
+    <div class="mobile-menu-overlay__content self-stretch px-4 py-6 flex flex-col justify-start items-start gap-5 overflow-y-auto">
+
+        <!-- Section: О проблеме / About Issue -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--about-problem self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-blue-300 inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-primary text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.about_problem', 'О проблеме', 'About Issue'); ?>
+                </h3>
+            </div>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.materials', 'Материалы', 'Materials'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.survivors_stories', 'Истории переживших', 'Survivors\' Stories'); ?>
+            </a>
+        </div>
+
+        <!-- Section: Для переживших / For Survivors -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--for-survivors self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-secondary inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-contrast text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.for_survivors', 'Для переживших', 'For Survivors'); ?>
+                </h3>
+            </div>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.for_adults', 'Взрослым', 'For Adults'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.for_parents', 'Если с ребенком случилась беда', 'If Something Happened to Your Child'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.for_teens', 'Подросткам', 'For Teens'); ?>
+            </a>
+        </div>
+
+        <!-- Section: Как мы помогаем / How We Help -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--how-we-help self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-green-700 inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-contrast text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.how_we_help', 'Как мы помогаем', 'How We Help'); ?>
+                </h3>
+            </div>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.psychological_help', 'Психологическая помощь', 'Psychological Support'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.legal_help', 'Юридическая помощь', 'Legal Support'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.group_support', 'Групповое направление', 'Group Support'); ?>
+            </a>
+        </div>
+
+        <!-- Section: Проекты / Projects -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--projects self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-primary inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-primary text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.projects', 'Проекты', 'Projects'); ?>
+                </h3>
+            </div>
+        </div>
+
+        <!-- Section: О нас / About Us -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--about-us self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-orange-300 inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-primary text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.about_us', 'О нас', 'About Us'); ?>
+                </h3>
+            </div>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.governing_docs', 'Учредительные документы', 'Governing Documents'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.team', 'Команда', 'Team'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.reports', 'Отчеты', 'Reports'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__nav-link justify-start text-primary text-xl font-bold font-['Akrobat'] leading-5 no-underline hover:underline">
+                <?php echo tp_get_text('mobile_menu.partnership', 'Сотрудничество', 'Partnership'); ?>
+            </a>
+        </div>
+
+        <!-- Section: Блог / Blog -->
+        <div class="mobile-menu-overlay__nav-section mobile-menu-overlay__nav-section--blog self-stretch flex flex-col justify-start items-start gap-4">
+            <div class="self-stretch pb-2 border-b border-secondary inline-flex justify-center items-center gap-2">
+                <h3 class="mobile-menu-overlay__nav-title flex-1 justify-start text-primary text-[26px] font-extrabold font-['Akrobat'] leading-[26px]">
+                    <?php echo tp_get_text('mobile_menu.blog', 'Блог', 'Blog'); ?>
+                </h3>
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="mobile-menu-overlay__social self-stretch inline-flex justify-between items-center mt-2">
+            <div class="mobile-menu-overlay__social-icons flex justify-start items-start gap-5">
+                <!-- Telegram -->
+                <a href="#"
+                   class="mobile-menu-overlay__social-link mobile-menu-overlay__social-link--telegram relative w-14 h-14 rounded-xl flex justify-center items-center no-underline">
+                    <div data-svg-wrapper class="relative">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 12C0 5.37258 5.37258 0 12 0H44C50.6274 0 56 5.37258 56 12V44C56 50.6274 50.6274 56 44 56H12C5.37258 56 0 50.6274 0 44V12Z"
+                                  fill="var(--wp--preset--color--primary)"/>
+                            <path d="M19.81 27.0208L35.2366 21.0728C35.9526 20.8141 36.578 21.2475 36.346 22.3301L36.3473 22.3288L33.7206 34.7035C33.526 35.5808 33.0046 35.7941 32.2753 35.3808L28.2753 32.4328L26.346 34.2915C26.1326 34.5048 25.9526 34.6848 25.5393 34.6848L25.8233 30.6141L33.2366 23.9168C33.5593 23.6328 33.1646 23.4728 32.7393 23.7555L23.578 29.5235L19.6286 28.2915C18.7713 28.0195 18.7526 27.4341 19.81 27.0208Z"
+                                  fill="white"/>
+                        </svg>
+                    </div>
+                </a>
+                <!-- VK -->
+                <a href="#"
+                   class="mobile-menu-overlay__social-link mobile-menu-overlay__social-link--vk relative w-14 h-14 rounded-xl flex justify-center items-center no-underline">
+                    <div data-svg-wrapper class="relative">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 12C0 5.37258 5.37258 0 12 0H44C50.6274 0 56 5.37258 56 12V44C56 50.6274 50.6274 56 44 56H12C5.37258 56 0 50.6274 0 44V12Z"
+                                  fill="var(--wp--preset--color--primary)"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                  d="M25.4049 23.0063C26.4088 23.0063 27.1224 23.005 28.2403 23C28.4805 23 28.7952 23.0378 28.9919 23.1665C28.997 23.1692 29.002 23.1722 29.0068 23.1753C29.152 23.2687 29.3324 23.3835 29.3338 23.7947C29.3379 24.3396 29.3365 24.858 29.3351 25.3714C29.3324 26.166 29.3324 26.9519 29.346 27.8147C29.3745 28.1098 29.5821 28.2334 29.7774 28.2322C29.9714 28.2322 30.1953 28.1187 30.3621 27.966C31.2684 27.1386 32.3116 25.1494 32.952 23.8451C33.1758 23.3872 33.5313 23.3872 33.9356 23.3885H34.0102C34.892 23.3885 35.455 23.3935 36.0655 23.4011C36.463 23.4049 36.8808 23.4087 37.4194 23.4112C37.6704 23.4137 37.8875 23.6092 37.958 23.7505C38.0191 23.8729 38.0611 24.2286 37.7288 24.7293C36.7085 26.2733 35.7684 27.517 34.6315 28.9827C34.561 29.076 34.4918 29.1858 34.4945 29.3006C34.5017 29.4071 34.5504 29.5075 34.6315 29.5831L35.3682 30.2996C36.1523 31.0589 36.9527 31.8347 37.7423 32.6646C38.0476 32.985 37.8563 33.482 37.7722 33.6208C37.7084 33.7255 37.4221 33.9954 37.2281 33.9979C36.8429 34.0004 36.6665 34.0004 36.1076 33.9992L33.5665 33.9979C33.1297 33.9979 32.956 33.8781 32.7254 33.6523C31.9318 32.8791 31.83 32.7769 31.3023 32.2522L30.704 31.6568C30.5588 31.5117 30.2685 31.3288 29.9931 31.4449L29.9389 31.4663C29.6974 31.566 29.3284 31.7186 29.3284 32.0907V33.4921C29.3284 33.7469 28.8983 33.9361 28.6392 33.9361H26.6313C25.6857 33.9361 24.8677 33.7242 24.4132 33.5199C22.4583 32.6369 21.2943 31.4083 20.0244 29.3611C18.9644 27.64 17.977 25.8812 17.0642 24.0886C16.9598 23.8867 16.8851 23.4453 17.6612 23.4453C18.0288 23.4453 18.3856 23.4427 18.779 23.439C19.2661 23.4339 19.8074 23.4289 20.4979 23.4289C20.8629 23.4289 21.0908 23.497 21.2441 23.6004C21.3919 23.7001 21.4652 23.8287 21.5371 23.9536L21.548 23.9738C21.8654 24.5237 22.1191 24.9677 22.3294 25.3386C23.1475 26.774 23.3292 27.0957 24.2097 28.1552C24.3142 28.2801 24.4648 28.299 24.576 28.299C24.7085 28.3076 24.8398 28.2718 24.9464 28.1981C25.1702 28.0304 25.234 27.8512 25.234 27.5927V24.8794C25.234 24.5679 25.0061 24.1075 24.7551 23.9624C24.69 23.9284 24.6153 23.8943 24.5394 23.859C24.3087 23.7518 24.0673 23.6408 24.0781 23.5109C24.093 23.3216 24.5638 23.0063 25.4049 23.0063Z"
+                                  fill="white"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+            <!-- Language Badges (RU/ENG) -->
+            <div class="flex gap-0.5 p-0.5 rounded-xl outline outline-1 outline-offset-[-1px] outline-[#6063a6]">
+                <!-- RU Badge -->
+                <a href="<?php echo tp_get_language_url('ru'); ?>" class="transition hover:opacity-80 <?php echo tp_is_english() ? 'opacity-50' : 'opacity-100'; ?>">
+                    <div data-svg-wrapper>
+                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="52" height="52" rx="10" fill="#6063A6"/>
+                            <path d="M20.18 26.92H18.92V32H16.9V18H20.52C21.8533 18 22.8867 18.3867 23.62 19.16C24.3533 19.92 24.72 20.9933 24.72 22.38C24.72 23.46 24.5 24.3667 24.06 25.1C23.62 25.8333 23 26.3467 22.2 26.64L25.24 32H23L20.18 26.92ZM18.92 25H20.48C21.1867 25 21.72 24.78 22.08 24.34C22.4533 23.9 22.64 23.26 22.64 22.42C22.64 21.5933 22.46 20.9733 22.1 20.56C21.74 20.1333 21.2067 19.92 20.5 19.92H18.92V25ZM30.8381 32.2C29.5848 32.2 28.5848 31.8133 27.8381 31.04C27.1048 30.2533 26.7381 29.1533 26.7381 27.74V18H28.7981V27.74C28.7981 28.5667 28.9781 29.1933 29.3381 29.62C29.6981 30.0333 30.1981 30.24 30.8381 30.24C31.4915 30.24 31.9981 30.0333 32.3581 29.62C32.7181 29.1933 32.8981 28.5667 32.8981 27.74V18H34.9381V27.74C34.9381 29.1533 34.5715 30.2533 33.8381 31.04C33.1048 31.8133 32.1048 32.2 30.8381 32.2Z"
+                                  fill="white"/>
+                        </svg>
+                    </div>
+                </a>
+                <!-- ENG Badge -->
+                <a href="<?php echo tp_get_language_url('en'); ?>" class="transition hover:opacity-80 <?php echo !tp_is_english() ? 'opacity-50' : 'opacity-100'; ?>">
+                    <div data-svg-wrapper>
+                        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="52" height="52" rx="10" fill="white"/>
+                            <path d="M18.96 30.1V32H11.9V18H18.76V19.9H13.92V23.96H18.38V25.82H13.92V30.1H18.96ZM21.1188 18H23.1388L26.3588 25.14C26.5988 25.6733 27.0254 26.7 27.6388 28.22L27.6988 28.18C27.6188 27.5 27.5521 26.7 27.4988 25.78C27.4454 24.86 27.4188 24.0867 27.4188 23.46V18H29.4188V32H27.3988L24.2788 25.14C23.7054 23.7133 23.2588 22.58 22.9388 21.74L22.8788 21.78C22.9454 22.4733 22.9988 23.2867 23.0388 24.22C23.0921 25.14 23.1188 25.9333 23.1188 26.6V32H21.1188V18ZM35.9525 32.22C34.6725 32.22 33.6592 31.84 32.9125 31.08C32.1792 30.32 31.8125 29.24 31.8125 27.84V22.14C31.8125 20.74 32.1725 19.6667 32.8925 18.92C33.6258 18.16 34.6325 17.78 35.9125 17.78C37.1658 17.78 38.1458 18.1467 38.8525 18.88C39.5592 19.6133 39.9392 20.6667 39.9925 22.04H37.9925C37.9525 21.24 37.7592 20.6533 37.4125 20.28C37.0658 19.9067 36.5658 19.72 35.9125 19.72C34.5525 19.72 33.8725 20.5333 33.8725 22.16V27.84C33.8725 28.6667 34.0525 29.28 34.4125 29.68C34.7858 30.08 35.3058 30.28 35.9725 30.28C36.6525 30.28 37.1792 30.0867 37.5525 29.7C37.9258 29.3133 38.1125 28.7267 38.1125 27.94V26.18H35.8925V24.38H40.0925V27.94C40.0792 29.3 39.6992 30.3533 38.9525 31.1C38.2192 31.8467 37.2192 32.22 35.9525 32.22Z"
+                                  fill="#6063A6"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="mobile-menu-overlay__footer-nav flex flex-col justify-start items-start gap-3 mt-2">
+            <a href="#"
+               class="mobile-menu-overlay__footer-link justify-start text-primary text-base font-light leading-6 no-underline hover:underline">
+                <?php echo tp_get_text('footer.documents', 'Уставные документы', 'Governing Documents'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__footer-link justify-start text-primary text-base font-light leading-6 no-underline hover:underline">
+                <?php echo tp_get_text('footer.offer', 'Публичная оферта', 'Public Offer'); ?>
+            </a>
+            <a href="#"
+               class="mobile-menu-overlay__footer-link w-full justify-start text-primary text-base font-light leading-6 no-underline hover:underline">
+                <?php echo tp_get_text('footer.privacy', 'Политика обработки персональных данных', 'Privacy Policy'); ?>
+            </a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="mobile-menu-overlay__copyright justify-start text-contrast text-base font-light leading-6 mt-2">
+            <?php echo tp_get_text('footer.copyright', '© «Тебе поверят», 2025', '© "Tebe Poveryat", 2025'); ?>
+        </div>
+
+    </div>
+</div>

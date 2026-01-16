@@ -145,6 +145,12 @@
         }
     }
 
+    .hero__image-wrapper.hero__image-wrapper--eng {
+        @apply absolute;
+        top: 100px;
+        left: 790px;
+    }
+
     /* ============ DESKTOP STYLES (1280px+) ============ */
     @media (min-width: 1280px) {
         /* Hero Section */

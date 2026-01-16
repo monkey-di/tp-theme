@@ -5,7 +5,7 @@
 @layer components {
   /* Utility Classes for Header */
   .header {
-    @apply w-full  sticky top-0 z-50 bg-surface;
+    @apply w-full  sticky top-0 z-50 bg-surface xl:px-5 2xl:px-0;
   }
 
   .header__container {
