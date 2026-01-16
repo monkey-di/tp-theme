@@ -21,7 +21,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 ?>
 <main class="site-main">
     <div class="page-head z-20 bg-surface relative [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]" style="background:<?=$pagehead_bg_color?>">
-        <div class="page-head-wrapper container mx-auto" style="background:url(<?=$pagehead_bg_image?>)">
+        <div class="page-head-wrapper container mx-auto" style="background:url(<?=$pagehead_bg_image?>) no-repeat top">
             <div class="page-head-col">
                 <h1 class="page-head-title">
                     <?=$pagehead_title?>
