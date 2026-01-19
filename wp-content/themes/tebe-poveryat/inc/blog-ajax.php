@@ -147,26 +147,22 @@ function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
     ?>
     <article class="blog-item">
-
-            <div class="post-thumbnail">
-                <?php if (has_post_thumbnail()) {?>
-                      <?php the_post_thumbnail('medium'); ?>
-                <?php } else { ?>
-                      <img src="<?php echo get_template_directory();?>/assets/images/nophoto.png">
-                <?php } ?>
-            </div>
-
-
-
-        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-
-
-
-        <div class="post-excerpt">
-            <?php the_excerpt(); ?>
+        <div class="post-thumbnail">
+            <?php if (has_post_thumbnail()) {?>
+                <?php the_post_thumbnail('medium'); ?>
+            <?php } else { ?>
+                <img src="<?php echo get_template_directory();?>/assets/images/nophoto.png">
+            <?php } ?>
         </div>
         <div class="post-meta">
-            <time><?php echo get_the_date(); ?></time>
+            <time>
+                <img src="<?php echo get_template_directory();?>/assets/images/calendar.svg">
+                <?php echo get_the_date(); ?>
+            </time>
+        </div>
+        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+        <div class="post-excerpt">
+            <?php the_excerpt(); ?>
         </div>
     </article>
     <?php
