@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
     // Инициализация для кастомных постов
     function initAjaxCustomPosts($container) {
-        const $wrapper = $container.find('.custom-posts-wrapper');
+        const $wrapper = $container.find('.bloglist-wrapper');
         const $btn = $container.find('.load-more-btn');
         const $sort = $container.find('.sort-select');
 
