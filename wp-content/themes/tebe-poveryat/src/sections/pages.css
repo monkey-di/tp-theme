@@ -52,6 +52,9 @@
 .blog-item{
     width:calc(100% / 3);
 }
+.post-meta time{
+    display:flex;
+}
 @media(max-width:1000px){
     .page-head-wrapper{
         flex-direction:column;
