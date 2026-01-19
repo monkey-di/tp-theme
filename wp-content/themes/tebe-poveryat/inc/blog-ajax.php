@@ -147,12 +147,21 @@ function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
     ?>
     <article class="blog-item">
-        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-        <?php if (has_post_thumbnail()): ?>
+
             <div class="post-thumbnail">
-                <?php the_post_thumbnail('medium'); ?>
+                <?php if (has_post_thumbnail()) {?>
+                      <?php the_post_thumbnail('medium'); ?>
+                <?php } else { ?>
+                      <img src="<?php echo get_template_directory();?>/assets/images/nophoto.png">
+                <?php } ?>
             </div>
-        <?php endif; ?>
+
+
+
+        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+
+
+
         <div class="post-excerpt">
             <?php the_excerpt(); ?>
         </div>
