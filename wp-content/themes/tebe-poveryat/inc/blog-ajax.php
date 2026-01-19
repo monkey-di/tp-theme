@@ -149,7 +149,7 @@ function get_custom_post_html($post_type = 'blog_item') {
     <article class="blog-item">
         <div class="post-thumbnail">
             <?php if (has_post_thumbnail()) {?>
-                <?php the_post_thumbnail('medium'); ?>
+                <?php the_post_thumbnail('full'); ?>
             <?php } else { ?>
                 <img src="<?php echo get_template_directory();?>/assets/images/nophoto.png">
             <?php } ?>
