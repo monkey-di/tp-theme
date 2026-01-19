@@ -146,7 +146,7 @@ function load_ajax_custom_posts($args = []) {
 function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
     ?>
-    <article class="custom-post-item" style="border:1px solid #ddd; padding:20px; margin-bottom:20px;">
+    <article class="blog-item">
         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
         <?php if (has_post_thumbnail()): ?>
             <div class="post-thumbnail">

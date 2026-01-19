@@ -49,6 +49,9 @@
     display:flex;
     flex-wrap: wrap;
 }
+.blog-item{
+    width:calc(100% / 3);
+}
 @media(max-width:1000px){
     .page-head-wrapper{
         flex-direction:column;
