@@ -151,12 +151,12 @@ function get_custom_post_html($post_type = 'blog_item') {
             <?php if (has_post_thumbnail()) {?>
                 <?php the_post_thumbnail('full'); ?>
             <?php } else { ?>
-                <img src="<?php echo get_template_directory();?>/assets/images/nophoto.png">
+                <img src="/wp-content/themes/tebe-poveryat/assets/images/nophoto.png">
             <?php } ?>
         </div>
         <div class="post-meta">
             <time>
-                <img src="<?php echo get_template_directory();?>/assets/images/calendar.svg">
+                <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
                 <?php echo get_the_date(); ?>
             </time>
         </div>
