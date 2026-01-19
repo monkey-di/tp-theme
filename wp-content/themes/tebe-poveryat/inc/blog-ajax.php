@@ -34,7 +34,7 @@ add_shortcode('ajax_custom_posts', function($atts) {
         </div>
 
         <!-- Контейнер для постов -->
-        <div class="bloglist-wrapper">
+        <div class="bloglist-wrapper container">
             <?php echo load_ajax_custom_posts($atts); ?>
         </div>
 
