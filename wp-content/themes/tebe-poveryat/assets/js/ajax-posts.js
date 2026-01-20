@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
         const $wrapper = $container.find('.bloglist-wrapper');
         const $btn = $container.find('.load-more-btn');
         const $sort = $container.find('.sort-select');
+        const $spinner = $btn.find('.spinner');
 
         // Установка начальных значений
         $sort.val($container.data('sort'));
@@ -11,8 +12,12 @@ jQuery(document).ready(function($) {
 
         // Событие сортировки
         $sort.on('change', function() {
-            $container.data('sort', $(this).val());
+            const newSort = $(this).val();
+            $container.data('sort', newSort);
             $container.data('paged', 1);
+
+            $btn.hide();
+            $wrapper.html('<div class="loading">Загрузка...</div>');
 
             $.ajax({
                 url: ajax_object.ajax_url,
@@ -20,25 +25,26 @@ jQuery(document).ready(function($) {
                 data: {
                     action: 'load_more_custom_posts',
                     nonce: ajax_object.nonce,
-                    paged: 0,
+                    paged: 0, // Сбрасываем на первую страницу
                     post_type: $container.data('post-type'),
-                    sort: $(this).val(),
+                    sort: newSort,
                     per_page: $container.data('perpage'),
                     taxonomy: $container.data('taxonomy'),
                     term: $container.data('term'),
                     meta_key: $container.data('meta-key'),
                     meta_value: $container.data('meta-value')
                 },
-                beforeSend: function() {
-                    $wrapper.html('<div class="loading">Загрузка...</div>');
-                    $btn.hide();
-                },
                 success: function(response) {
                     if (response.success) {
                         $wrapper.html(response.data.html);
                         $container.data('paged', 1);
                         updateCustomButtonState($container);
+                    } else {
+                        $wrapper.html('<p class="error">Ошибка загрузки</p>');
                     }
+                },
+                error: function() {
+                    $wrapper.html('<p class="error">Ошибка загрузки</p>');
                 }
             });
         });
@@ -46,13 +52,12 @@ jQuery(document).ready(function($) {
         // Загрузка постов
         $btn.on('click', function(e) {
             e.preventDefault();
-            if ($(this).hasClass('disabled')) return;
+            if ($(this).hasClass('disabled') || $(this).hasClass('loading')) return;
 
             const currentPage = parseInt($container.data('paged'));
-            const $spinner = $(this).find('.spinner');
 
             $spinner.show();
-            $(this).addClass('loading');
+            $btn.addClass('loading');
 
             $.ajax({
                 url: ajax_object.ajax_url,
@@ -74,12 +79,12 @@ jQuery(document).ready(function($) {
                     $btn.removeClass('loading');
 
                     if (response.success) {
-                        // Удаляем старые данные
-                        $wrapper.find('.posts-data').remove();
+                        // Удаляем старые данные и сообщение "нет постов"
+                        $wrapper.find('.posts-data, .no-posts-found').remove();
 
                         // Добавляем новые посты
-                        const $newPosts = $(response.data.html);
-                        $wrapper.append($newPosts.find('*:not(.posts-data)'));
+                        const $newContent = $(response.data.html);
+                        $wrapper.append($newContent);
 
                         // Обновляем состояние
                         $container.data('paged', response.data.paged);
@@ -89,6 +94,7 @@ jQuery(document).ready(function($) {
                 error: function() {
                     $spinner.hide();
                     $btn.removeClass('loading');
+                    alert('Произошла ошибка при загрузке');
                 }
             });
         });
@@ -100,11 +106,15 @@ jQuery(document).ready(function($) {
         const $data = $container.find('.posts-data');
 
         if ($data.length) {
-            const data = JSON.parse($data.html());
-            if (data.has_more) {
-                $btn.show().removeClass('disabled');
-            } else {
-                $btn.hide().addClass('disabled');
+            try {
+                const data = JSON.parse($data.html());
+                if (data.has_more) {
+                    $btn.show().removeClass('disabled');
+                } else {
+                    $btn.hide().addClass('disabled');
+                }
+            } catch (e) {
+                $btn.hide();
             }
         } else {
             $btn.hide();
