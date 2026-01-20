@@ -3,13 +3,13 @@
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
-            'post_type' => 'blog_item', // для блога
+            'post_type' => 'blog_item',
             'posts_per_page' => 3,
             'sort' => 'date_desc',
-            'taxonomy' => '', // Таксономия
-            'term' => '', // Термин
-            'meta_key' => '', // Мета-ключ для сортировки
-            'meta_value' => '' // Мета-значение для фильтра
+            'taxonomy' => '',
+            'term' => '',
+            'filter_meta_key' => '', // Изменено с meta_key на filter_meta_key
+            'filter_meta_value' => '' // Изменено с meta_value на filter_meta_value
     ], $atts);
 
     ob_start();
@@ -20,31 +20,31 @@ add_shortcode('ajax_custom_posts', function($atts) {
          data-sort="<?php echo esc_attr($atts['sort']); ?>"
          data-taxonomy="<?php echo esc_attr($atts['taxonomy']); ?>"
          data-term="<?php echo esc_attr($atts['term']); ?>"
-         data-meta-key="<?php echo esc_attr($atts['meta_key']); ?>"
-         data-meta-value="<?php echo esc_attr($atts['meta_value']); ?>"
-         data-paged="1">
+         data-filter-meta-key="<?php echo esc_attr($atts['filter_meta_key']); ?>" // Изменено
+    data-filter-meta-value="<?php echo esc_attr($atts['filter_meta_value']); ?>"> // Изменено
+    data-paged="1">
 
-        <!-- Сортировка -->
-        <div class="posts-sort">
-            <select class="sort-select">
-                <option value="date_desc">Сначала свежие</option>
-                <option value="date_asc">Сначала старые</option>
-                <option value="popular">Сначала популярные</option>
-            </select>
-        </div>
+    <!-- Сортировка -->
+    <div class="posts-sort">
+        <select class="sort-select">
+            <option value="date_desc">Сначала свежие</option>
+            <option value="date_asc">Сначала старые</option>
+            <option value="popular">Сначала популярные</option>
+        </select>
+    </div>
 
-        <!-- Контейнер для постов -->
-        <div class="bloglist-wrapper container">
-            <?php echo load_ajax_custom_posts($atts); ?>
-        </div>
+    <!-- Контейнер для постов -->
+    <div class="bloglist-wrapper container">
+        <?php echo load_ajax_custom_posts($atts); ?>
+    </div>
 
-        <!-- Кнопка загрузки -->
-        <div class="load-more-container">
-            <button class="load-more-btn" style="display: none;">
-                Показать ещё
-                <span class="spinner"></span>
-            </button>
-        </div>
+    <!-- Кнопка загрузки -->
+    <div class="load-more-container">
+        <button class="load-more-btn" style="display: none;">
+            Показать ещё
+            <span class="spinner"></span>
+        </button>
+    </div>
     </div>
     <?php
     return ob_get_clean();
@@ -59,8 +59,8 @@ function load_ajax_custom_posts($args = []) {
             'sort' => 'date_desc',
             'taxonomy' => '',
             'term' => '',
-            'meta_key' => '',
-            'meta_value' => ''
+            'filter_meta_key' => '', // Изменено
+            'filter_meta_value' => '' // Изменено
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -82,14 +82,12 @@ function load_ajax_custom_posts($args = []) {
         ];
     }
 
-    // Мета-запрос
-    if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
-        $query_args['meta_query'] = [
-                [
-                        'key' => $args['meta_key'],
-                        'value' => $args['meta_value'],
-                        'compare' => '='
-                ]
+    // Мета-запрос для фильтрации (переименован)
+    if (!empty($args['filter_meta_key']) && !empty($args['filter_meta_value'])) {
+        $query_args['meta_query'][] = [
+                'key' => $args['filter_meta_key'],
+                'value' => $args['filter_meta_value'],
+                'compare' => '='
         ];
     }
 
@@ -100,13 +98,24 @@ function load_ajax_custom_posts($args = []) {
             $query_args['order'] = 'ASC';
             break;
         case 'popular':
-            $query_args['meta_key'] = 'views_count';
-            $query_args['orderby'] = 'meta_value_num';
-            $query_args['order'] = 'DESC';
+            // Добавляем отдельный мета-запрос для сортировки по популярности
+            $query_args['meta_query'][] = [
+                    'key' => 'views_count',
+                    'compare' => 'EXISTS', // Используем EXISTS вместо конкретного значения
+                    'type' => 'NUMERIC'
+            ];
+            $query_args['orderby'] = [
+                    'views_count' => 'DESC'
+            ];
             break;
         default: // date_desc
             $query_args['orderby'] = 'date';
             $query_args['order'] = 'DESC';
+    }
+
+    // Если есть несколько мета-запросов, добавляем отношение
+    if (isset($query_args['meta_query']) && count($query_args['meta_query']) > 1) {
+        $query_args['meta_query']['relation'] = 'AND';
     }
 
     $query = new WP_Query($query_args);
@@ -129,13 +138,7 @@ function load_ajax_custom_posts($args = []) {
                 json_encode(['has_more' => $has_more]) .
                 '</script>';
     } else {
-        // ДЕБАГ:
         $output = '<p>Записи не найдены</p>';
-        $output .= '<div style="display:none;" class="debug-info">';
-        $output .= 'Post Type: ' . $args['post_type'] . '<br>';
-        $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
-        $output .= 'Found Posts: ' . $query->found_posts;
-        $output .= '</div>';
     }
 
     wp_reset_postdata();
@@ -186,8 +189,8 @@ function ajax_load_more_custom_posts() {
     $per_page = intval($_POST['per_page']);
     $taxonomy = sanitize_text_field($_POST['taxonomy']);
     $term = sanitize_text_field($_POST['term']);
-    $meta_key = sanitize_text_field($_POST['meta_key']);
-    $meta_value = sanitize_text_field($_POST['meta_value']);
+    $filter_meta_key = sanitize_text_field($_POST['filter_meta_key']); // Изменено
+    $filter_meta_value = sanitize_text_field($_POST['filter_meta_value']); // Изменено
 
     $args = [
             'paged' => $paged,
@@ -196,8 +199,8 @@ function ajax_load_more_custom_posts() {
             'posts_per_page' => $per_page,
             'taxonomy' => $taxonomy,
             'term' => $term,
-            'meta_key' => $meta_key,
-            'meta_value' => $meta_value
+            'filter_meta_key' => $filter_meta_key, // Изменено
+            'filter_meta_value' => $filter_meta_value // Изменено
     ];
 
     wp_send_json_success([
@@ -227,27 +230,39 @@ function has_more_custom_posts($args) {
         ];
     }
 
-    // Мета-запрос
-    if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
-        $query_args['meta_query'] = [
-                [
-                        'key' => $args['meta_key'],
-                        'value' => $args['meta_value'],
-                        'compare' => '='
-                ]
+    // Мета-запрос для фильтрации
+    if (!empty($args['filter_meta_key']) && !empty($args['filter_meta_value'])) {
+        $query_args['meta_query'][] = [
+                'key' => $args['filter_meta_key'],
+                'value' => $args['filter_meta_value'],
+                'compare' => '='
         ];
     }
 
     // Сортировка
     switch($args['sort']) {
+        case 'date_asc':
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'ASC';
+            break;
         case 'popular':
-            $query_args['meta_key'] = 'views_count';
-            $query_args['orderby'] = 'meta_value_num';
-            $query_args['order'] = 'DESC';
+            $query_args['meta_query'][] = [
+                    'key' => 'views_count',
+                    'compare' => 'EXISTS',
+                    'type' => 'NUMERIC'
+            ];
+            $query_args['orderby'] = [
+                    'views_count' => 'DESC'
+            ];
             break;
         default:
             $query_args['orderby'] = 'date';
             $query_args['order'] = 'DESC';
+    }
+
+    // Если есть несколько мета-запросов, добавляем отношение
+    if (isset($query_args['meta_query']) && count($query_args['meta_query']) > 1) {
+        $query_args['meta_query']['relation'] = 'AND';
     }
 
     $query = new WP_Query($query_args);
@@ -259,7 +274,7 @@ function has_more_custom_posts($args) {
 
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_script('ajax-custom-posts',
-            get_template_directory_uri() . '/assets/js/ajax-posts.js', // Исправлено: get_template_directory_uri()
+            get_template_directory_uri() . '/assets/js/ajax-posts.js',
             ['jquery'],
             null,
             true

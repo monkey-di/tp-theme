@@ -26,8 +26,8 @@ jQuery(document).ready(function($) {
                     per_page: $container.data('perpage'),
                     taxonomy: $container.data('taxonomy'),
                     term: $container.data('term'),
-                    meta_key: $container.data('meta-key'),
-                    meta_value: $container.data('meta-value')
+                    filter_meta_key: $container.data('filter-meta-key'), // Изменено
+                    filter_meta_value: $container.data('filter-meta-value') // Изменено
                 },
                 beforeSend: function() {
                     $wrapper.html('<div class="loading">Загрузка...</div>');
@@ -66,8 +66,8 @@ jQuery(document).ready(function($) {
                     per_page: $container.data('perpage'),
                     taxonomy: $container.data('taxonomy'),
                     term: $container.data('term'),
-                    meta_key: $container.data('meta-key'),
-                    meta_value: $container.data('meta-value')
+                    filter_meta_key: $container.data('filter-meta-key'), // Изменено
+                    filter_meta_value: $container.data('filter-meta-value') // Изменено
                 },
                 success: function(response) {
                     $spinner.hide();
