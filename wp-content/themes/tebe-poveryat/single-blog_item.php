@@ -19,5 +19,5 @@ get_header();
         </div>
     </main>
 <?php
-the_content();
+echo apply_filters( 'the_content', '<!-- wp:acf/blog-intro /-->' );
 get_footer();
