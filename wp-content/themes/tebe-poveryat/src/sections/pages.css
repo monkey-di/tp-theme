@@ -50,7 +50,7 @@
     flex-wrap: wrap;
 }
 .blog-item{
-    width:calc(100% / 3);
+    width:calc(100% / 3 - 12px);
 }
 .post-meta time{
     display:flex;
