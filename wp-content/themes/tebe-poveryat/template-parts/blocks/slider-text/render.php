@@ -11,31 +11,30 @@ if(function_exists('get_field')) {
 
 $has_data = !empty($slider) || !empty($text);
 
-if ($has_data) : ?>
+if ($has_data) { ?>
     <div class="block-slider-text container">
         <div class="block-slider-text_slider">
-            <?php if( have_rows('slider') ) : ?>
+            <?php if( have_rows('slider') ) { ?>
                 <div class="block-slider-text_slider-inner swiper">
                     <div class="swiper-wrapper">
-                        <?php while ( have_rows('slider') ) :
+                        <?php while ( have_rows('slider') ) {
                             the_row(); ?>
                             <div class="block-slider-text_slider-inner-item swiper-slide">
                                 <img src="<?php the_sub_field('slider-image'); ?>" alt="">
                             </div>
-                        <?php endwhile; ?>
+                        <?php } ?>
                     </div>
-
                     <!-- навигация -->
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>
-            <?php endif; ?>
+            <?php } ?>
         </div>
 
         <div class="block-slider-text_text">
-            <?php if($text) : ?>
+            <?php if($text) { ?>
                 <?php echo wp_kses_post($text); ?>
-            <?php endif; ?>
+            <?php } ?>
         </div>
     </div>
-<?php endif; ?>
+<?php } ?>
