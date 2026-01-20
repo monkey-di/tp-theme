@@ -495,6 +495,9 @@ document.addEventListener('DOMContentLoaded', () => {
             loop: true,
             speed: 900,
             loopedSlides: 6,
+            slidesPerView: 1,
+            spaceBetween: 10,
+            centeredSlides: false,
             breakpoints: {
                 768: {
                     slidesPerView: 'auto',
@@ -505,27 +508,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     slidesPerView: 1,
                     centeredSlides: false,
                     spaceBetween: 0
-                }
-            },
-            on: {
-                init: function () {
-                    if(teamSliderProgress) teamSliderProgress.style.opacity = 1;
-                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
-                        this.slideToLoop(0, 0); // Force start at first slide
-                    }
-                },
-                slideChange: function () {
-                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
-                        updateTeamTabletContent(this);
-                    }
-                },
-                resize: function () {
-                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
-                        const activeSlide = this.slides[this.activeIndex];
-                        if (activeSlide && tabletContentContainer) {
-
-                        }
-                    }
                 }
             }
         });
