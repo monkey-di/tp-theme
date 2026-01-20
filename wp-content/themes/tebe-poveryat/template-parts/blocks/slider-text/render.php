@@ -16,7 +16,6 @@ if ($has_data) : ?>
         <div class="block-slider-text_slider">
             <?php if( have_rows('slider') ) : ?>
                 <div class="block-slider-text_slider-inner swiper">
-                    <!-- Обязательный wrapper для Swiper -->
                     <div class="swiper-wrapper">
                         <?php while ( have_rows('slider') ) :
                             the_row(); ?>
@@ -26,7 +25,7 @@ if ($has_data) : ?>
                         <?php endwhile; ?>
                     </div>
 
-                    <!-- Опционально: пагинация -->
+                    <!-- пагинация -->
                     <div class="swiper-pagination"></div>
 
                     <!-- Опционально: кнопки навигации -->
