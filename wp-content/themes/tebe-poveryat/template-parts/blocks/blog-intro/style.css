@@ -27,6 +27,13 @@
     margin-bottom: 16px;
     color: #1E1E1E;
 }
+.blog-intro-block-text a{
+    color: #6063A6;
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 100%;
+}
 .blog-intro-block-col{
     max-width: 650px;
 }
