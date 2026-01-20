@@ -490,7 +490,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Block: Slider Text Slider
     if (document.querySelector('.block-slider-text_slider-inner')) {
-        console.log('slider-text init 2');
         const slider_text = new Swiper('.block-slider-text_slider-inner', {
             loop: true,
             speed: 900,
