@@ -1,3 +1,6 @@
 .block-slider-text{
     display:flex;
 }
+.block-slider-text-col{
+    max-width:650px;
+}
