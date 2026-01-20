@@ -490,6 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Block: Slider Text Slider
     if (document.querySelector('.block-slider-text_slider-inner')) {
+        console.log('slider-text init');
         const teamSliderProgress = document.querySelector('.block-slider-text .slider-progress');
         const tabletContentContainer = document.querySelector('.block-slider-text-content');
 
