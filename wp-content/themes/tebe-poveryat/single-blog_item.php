@@ -7,7 +7,15 @@ get_header();
 ?>
     <main class="site-main blog-single">
         <div class="container">
-            <?php the_title(); ?>
+            <div class="post-meta">
+                <time>
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg">
+                    <span><?php echo get_the_date(); ?></span>
+                </time>
+            </div>
+            <h1 class="blog-single-title">
+                <?php the_title(); ?>
+            </h1>
         </div>
     </main>
 <?php
