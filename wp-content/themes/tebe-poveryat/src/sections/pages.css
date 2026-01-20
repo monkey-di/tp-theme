@@ -90,6 +90,9 @@
     margin-bottom: 16px;
     align-items: center;
 }
+.post-meta time span{
+    padding-left: 4px;
+}
 .post-excerpt{
     font-family: Geologica;
     font-weight: 300;
