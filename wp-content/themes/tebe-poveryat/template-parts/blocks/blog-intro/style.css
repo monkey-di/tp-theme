@@ -25,12 +25,12 @@
     color: #6063A6;
 }
 .blog-intro-block-text p{
-    margin-bottom: 16px;
     color: #1E1E1E;
     font-family: "Geologica";
     font-weight: 300;
     font-size: 20px;
     line-height: 150%;
+    margin-bottom: 12px;
 }
 .blog-intro-block-text a{
     color: #6063A6;
