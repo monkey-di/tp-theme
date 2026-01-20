@@ -1,55 +1,15 @@
 <?php
 
-// ==================== СОБСТВЕННЫЙ СЧЕТЧИК ПРОСМОТРОВ ====================
-
-// Функция для получения количества просмотров
-function get_post_views($post_id) {
-    $count = get_post_meta($post_id, 'post_views_count', true);
-    return $count ? $count : 0;
-}
-
-// Функция для увеличения счетчика просмотров
-function set_post_views($post_id) {
-    $count = get_post_views($post_id);
-    $count++;
-    update_post_meta($post_id, 'post_views_count', $count);
-}
-
-// Подсчет просмотров при загрузке поста
-add_action('wp_head', 'track_post_views');
-function track_post_views() {
-    if (is_single() && !is_user_logged_in()) {
-        global $post;
-        set_post_views($post->ID);
-    }
-}
-
-// Добавляем колонку просмотров в админке
-add_filter('manage_posts_columns', 'add_views_column');
-function add_views_column($columns) {
-    $columns['post_views'] = 'Просмотры';
-    return $columns;
-}
-
-add_action('manage_posts_custom_column', 'display_views_column', 10, 2);
-function display_views_column($column, $post_id) {
-    if ($column === 'post_views') {
-        echo get_post_views($post_id);
-    }
-}
-
-// ==================== AJAX КОД ДЛЯ КАСТОМНЫХ ПОСТОВ ====================
-
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
-            'post_type' => 'blog_item',
+            'post_type' => 'blog_item', // для блога
             'posts_per_page' => 3,
             'sort' => 'date_desc',
-            'taxonomy' => '',
-            'term' => '',
-            'meta_key' => '',
-            'meta_value' => ''
+            'taxonomy' => '', // Таксономия
+            'term' => '', // Термин
+            'meta_key' => '', // Мета-ключ для сортировки
+            'meta_value' => '' // Мета-значение для фильтра
     ], $atts);
 
     ob_start();
@@ -67,9 +27,9 @@ add_shortcode('ajax_custom_posts', function($atts) {
         <!-- Сортировка -->
         <div class="posts-sort">
             <select class="sort-select">
-                <option value="date_desc" <?php selected($atts['sort'], 'date_desc'); ?>>Сначала свежие</option>
-                <option value="date_asc" <?php selected($atts['sort'], 'date_asc'); ?>>Сначала старые</option>
-                <option value="popular" <?php selected($atts['sort'], 'popular'); ?>>Сначала популярные</option>
+                <option value="date_desc">Сначала свежие</option>
+                <option value="date_asc">Сначала старые</option>
+                <option value="popular">Сначала популярные</option>
             </select>
         </div>
 
@@ -82,7 +42,7 @@ add_shortcode('ajax_custom_posts', function($atts) {
         <div class="load-more-container">
             <button class="load-more-btn" style="display: none;">
                 Показать ещё
-                <span class="spinner" style="display: none;">Загрузка...</span>
+                <span class="spinner"></span>
             </button>
         </div>
     </div>
@@ -109,7 +69,6 @@ function load_ajax_custom_posts($args = []) {
             'post_status' => 'publish',
             'posts_per_page' => $args['posts_per_page'],
             'paged' => $args['paged'],
-            'meta_query' => []
     ];
 
     // Таксономия
@@ -123,12 +82,14 @@ function load_ajax_custom_posts($args = []) {
         ];
     }
 
-    // Мета-запрос для фильтрации
+    // Мета-запрос
     if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
-        $query_args['meta_query'][] = [
-                'key' => $args['meta_key'],
-                'value' => $args['meta_value'],
-                'compare' => '='
+        $query_args['meta_query'] = [
+                [
+                        'key' => $args['meta_key'],
+                        'value' => $args['meta_value'],
+                        'compare' => '='
+                ]
         ];
     }
 
@@ -139,29 +100,20 @@ function load_ajax_custom_posts($args = []) {
             $query_args['order'] = 'ASC';
             break;
         case 'popular':
-            // Сортировка по нашему счетчику просмотров
-            $query_args['meta_key'] = 'post_views_count';
+            $query_args['meta_key'] = 'post_views';
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
-            // Добавляем условие для включения постов без счетчика
-            $query_args['meta_query'][] = [
-                    'key' => 'post_views_count',
-                    'compare' => 'EXISTS'
-            ];
             break;
         default: // date_desc
             $query_args['orderby'] = 'date';
             $query_args['order'] = 'DESC';
     }
 
-    // Если есть несколько meta_query, настраиваем отношение
-    if (count($query_args['meta_query']) > 1) {
-        $query_args['meta_query']['relation'] = 'AND';
-    } elseif (count($query_args['meta_query']) === 0) {
-        unset($query_args['meta_query']);
-    }
-
     $query = new WP_Query($query_args);
+
+    // ДЕБАГ: логирование запроса
+    error_log('AJAX Posts Query Args: ' . print_r($query_args, true));
+    error_log('AJAX Posts Found: ' . $query->found_posts);
 
     $output = '';
 
@@ -177,36 +129,39 @@ function load_ajax_custom_posts($args = []) {
                 json_encode(['has_more' => $has_more]) .
                 '</script>';
     } else {
-        $output = '<p class="no-posts-found">Записи не найдены</p>';
+        // ДЕБАГ:
+        $output = '<p>Записи не найдены</p>';
+        $output .= '<div style="display:none;" class="debug-info">';
+        $output .= 'Post Type: ' . $args['post_type'] . '<br>';
+        $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
+        $output .= 'Found Posts: ' . $query->found_posts;
+        $output .= '</div>';
     }
 
     wp_reset_postdata();
     return $output;
 }
 
-// Вывод HTML поста
+// Вывод
 function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
-    $views = get_post_views(get_the_ID());
     ?>
     <article class="blog-item">
         <div class="post-thumbnail">
             <?php if (has_post_thumbnail()) {?>
                 <?php the_post_thumbnail('full'); ?>
             <?php } else { ?>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/nophoto.png" alt="<?php the_title(); ?>">
+                <img src="/wp-content/themes/tebe-poveryat/assets/images/nophoto.png">
             <?php } ?>
         </div>
         <div class="post-content">
             <div class="post-meta">
                 <time>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg" alt="Дата">
-                    <span><?php echo get_the_date(); ?></span>
+                    <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
+                    <span>
+                        <?php echo get_the_date(); ?>
+                    </span>
                 </time>
-                <div class="post-views">
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/eye.svg" alt="Просмотры">
-                    <span><?php echo $views; ?></span>
-                </div>
             </div>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
             <div class="post-excerpt">
@@ -223,19 +178,16 @@ add_action('wp_ajax_load_more_custom_posts', 'ajax_load_more_custom_posts');
 add_action('wp_ajax_nopriv_load_more_custom_posts', 'ajax_load_more_custom_posts');
 
 function ajax_load_more_custom_posts() {
-    // Проверка nonce
-    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'ajax_nonce')) {
-        wp_die('Ошибка безопасности');
-    }
+    check_ajax_referer('ajax_nonce', 'nonce');
 
-    $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-    $post_type = isset($_POST['post_type']) ? sanitize_text_field($_POST['post_type']) : 'blog_item';
-    $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'date_desc';
-    $per_page = isset($_POST['per_page']) ? intval($_POST['per_page']) : 3;
-    $taxonomy = isset($_POST['taxonomy']) ? sanitize_text_field($_POST['taxonomy']) : '';
-    $term = isset($_POST['term']) ? sanitize_text_field($_POST['term']) : '';
-    $meta_key = isset($_POST['meta_key']) ? sanitize_text_field($_POST['meta_key']) : '';
-    $meta_value = isset($_POST['meta_value']) ? sanitize_text_field($_POST['meta_value']) : '';
+    $paged = intval($_POST['paged']) + 1;
+    $post_type = sanitize_text_field($_POST['post_type']);
+    $sort = sanitize_text_field($_POST['sort']);
+    $per_page = intval($_POST['per_page']);
+    $taxonomy = sanitize_text_field($_POST['taxonomy']);
+    $term = sanitize_text_field($_POST['term']);
+    $meta_key = sanitize_text_field($_POST['meta_key']);
+    $meta_value = sanitize_text_field($_POST['meta_value']);
 
     $args = [
             'paged' => $paged,
@@ -248,32 +200,66 @@ function ajax_load_more_custom_posts() {
             'meta_value' => $meta_value
     ];
 
-    $html = load_ajax_custom_posts($args);
-
-    // Проверяем, есть ли еще посты
-    $next_args = $args;
-    $next_args['paged'] = $paged + 1;
-    $next_query = new WP_Query([
-            'post_type' => $next_args['post_type'],
-            'posts_per_page' => 1,
-            'paged' => $next_args['paged'],
-            'fields' => 'ids'
-    ]);
-
-    $has_more = $next_query->have_posts();
-    wp_reset_postdata();
-
     wp_send_json_success([
-            'html' => $html,
+            'html' => load_ajax_custom_posts($args),
             'paged' => $paged,
-            'has_more' => $has_more
+            'has_more' => has_more_custom_posts($args)
     ]);
 }
 
-// Добавляем стили и скрипты
+// Функция проверки наличия дополнительных кастомных постов
+function has_more_custom_posts($args) {
+    $query_args = [
+            'post_type' => $args['post_type'],
+            'post_status' => 'publish',
+            'posts_per_page' => $args['posts_per_page'],
+            'paged' => $args['paged'] + 1,
+    ];
+
+    // Таксономия
+    if (!empty($args['taxonomy']) && !empty($args['term'])) {
+        $query_args['tax_query'] = [
+                [
+                        'taxonomy' => $args['taxonomy'],
+                        'field' => 'slug',
+                        'terms' => $args['term'],
+                ]
+        ];
+    }
+
+    // Мета-запрос
+    if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
+        $query_args['meta_query'] = [
+                [
+                        'key' => $args['meta_key'],
+                        'value' => $args['meta_value'],
+                        'compare' => '='
+                ]
+        ];
+    }
+
+    // Сортировка
+    switch($args['sort']) {
+        case 'popular':
+            $query_args['meta_key'] = 'post_views';
+            $query_args['orderby'] = 'meta_value_num';
+            $query_args['order'] = 'DESC';
+            break;
+        default:
+            $query_args['orderby'] = 'date';
+            $query_args['order'] = 'DESC';
+    }
+
+    $query = new WP_Query($query_args);
+    $has_more = $query->have_posts();
+    wp_reset_postdata();
+
+    return $has_more;
+}
+
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_script('ajax-custom-posts',
-            get_template_directory_uri() . '/assets/js/ajax-posts.js',
+            get_template_directory_uri() . '/assets/js/ajax-posts.js', // Исправлено: get_template_directory_uri()
             ['jquery'],
             null,
             true
@@ -283,26 +269,4 @@ add_action('wp_enqueue_scripts', function() {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ajax_nonce')
     ]);
-
-    // Стили для счетчика просмотров
-    wp_add_inline_style('style', '
-        .post-views {
-            display: inline-flex;
-            align-items: center;
-            margin-left: 15px;
-        }
-        .post-views img {
-            width: 16px;
-            height: 16px;
-            margin-right: 5px;
-        }
-        .load-more-btn.loading {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        .load-more-btn .spinner {
-            margin-left: 10px;
-            display: inline-block;
-        }
-    ');
 });
