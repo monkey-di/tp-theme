@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
         // Событие сортировки
         $sort.on('change', function() {
             $container.data('sort', $(this).val());
-            $container.data('paged', 1);
+            $container.data('paged', 1); // Сбрасываем на первую страницу
 
             $.ajax({
                 url: ajax_object.ajax_url,
@@ -20,14 +20,14 @@ jQuery(document).ready(function($) {
                 data: {
                     action: 'load_more_custom_posts',
                     nonce: ajax_object.nonce,
-                    paged: 0,
+                    paged: 0, // Для первой страницы после смены сортировки
                     post_type: $container.data('post-type'),
                     sort: $(this).val(),
                     per_page: $container.data('perpage'),
                     taxonomy: $container.data('taxonomy'),
                     term: $container.data('term'),
-                    filter_meta_key: $container.data('filter-meta-key'), // Изменено
-                    filter_meta_value: $container.data('filter-meta-value') // Изменено
+                    filter_meta_key: $container.data('filter-meta-key'),
+                    filter_meta_value: $container.data('filter-meta-value')
                 },
                 beforeSend: function() {
                     $wrapper.html('<div class="loading">Загрузка...</div>');
@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
                 success: function(response) {
                     if (response.success) {
                         $wrapper.html(response.data.html);
-                        $container.data('paged', 1);
+                        $container.data('paged', response.data.paged || 1);
                         updateCustomButtonState($container);
                     }
                 }
@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
             e.preventDefault();
             if ($(this).hasClass('disabled')) return;
 
-            const currentPage = parseInt($container.data('paged'));
+            const currentPage = parseInt($container.data('paged')) || 1;
             const $spinner = $(this).find('.spinner');
 
             $spinner.show();
@@ -60,14 +60,14 @@ jQuery(document).ready(function($) {
                 data: {
                     action: 'load_more_custom_posts',
                     nonce: ajax_object.nonce,
-                    paged: currentPage,
+                    paged: currentPage, // Отправляем текущую страницу
                     post_type: $container.data('post-type'),
                     sort: $container.data('sort'),
                     per_page: $container.data('perpage'),
                     taxonomy: $container.data('taxonomy'),
                     term: $container.data('term'),
-                    filter_meta_key: $container.data('filter-meta-key'), // Изменено
-                    filter_meta_value: $container.data('filter-meta-value') // Изменено
+                    filter_meta_key: $container.data('filter-meta-key'),
+                    filter_meta_value: $container.data('filter-meta-value')
                 },
                 success: function(response) {
                     $spinner.hide();
@@ -113,11 +113,21 @@ jQuery(document).ready(function($) {
         const $data = $container.find('.posts-data');
 
         if ($data.length) {
-            const data = JSON.parse($data.text() || $data.html());
-            if (data.has_more) {
-                $btn.show().removeClass('disabled');
-            } else {
-                $btn.hide().addClass('disabled');
+            try {
+                const dataText = $data.text() || $data.html();
+                if (dataText) {
+                    const data = JSON.parse(dataText);
+                    if (data.has_more) {
+                        $btn.show().removeClass('disabled');
+                    } else {
+                        $btn.hide().addClass('disabled');
+                    }
+                } else {
+                    $btn.hide();
+                }
+            } catch (e) {
+                console.error('Error parsing JSON data:', e);
+                $btn.hide();
             }
         } else {
             $btn.hide();

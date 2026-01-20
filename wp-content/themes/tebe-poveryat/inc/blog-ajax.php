@@ -200,10 +200,6 @@ function get_custom_post_html($post_type = 'blog_item') {
                     <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
                     <span><?php echo get_the_date(); ?></span>
                 </time>
-                <div class="post-views">
-                    <img src="/wp-content/themes/tebe-poveryat/assets/images/eye.svg">
-                    <span><?php echo esc_html($views_count); ?></span>
-                </div>
             </div>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
             <div class="post-excerpt">
