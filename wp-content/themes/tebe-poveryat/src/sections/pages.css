@@ -83,6 +83,10 @@
     padding: 16px;
     background: #fff;
 }
+.post-thumbnail img{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
 @media(max-width:1000px){
     .page-head-wrapper{
         flex-direction:column;
