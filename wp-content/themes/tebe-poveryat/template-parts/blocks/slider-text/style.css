@@ -22,3 +22,6 @@
     font-size: 20px;
     line-height: 150%;
 }
+.block-slider-text_slider-navi div{
+    position: relative;
+}
