@@ -276,14 +276,14 @@ function tp_register_blog() {
 
     $args = array(
         'labels'              => $labels,
-        'public'              => false,
-        'publicly_queryable'  => false,
+        'public'              => true,
+        'publicly_queryable'  => true,
         'show_ui'             => true,
         'show_in_menu'        => true,
         'query_var'           => true,
         'rewrite'             => false,
         'capability_type'     => 'post',
-        'has_archive'         => false,
+        'has_archive'         => true,
         'hierarchical'        => false,
         'menu_position'       => 86,
         'menu_icon'           => 'dashicons-edit-page',
