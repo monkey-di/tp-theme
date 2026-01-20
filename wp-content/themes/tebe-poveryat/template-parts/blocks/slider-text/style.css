@@ -1,6 +1,7 @@
 .block-slider-text{
     display:flex;
     justify-content: center;
+    max-width: 1170px;
 }
 .block-slider-text-col{
     max-width:650px;

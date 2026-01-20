@@ -1,6 +1,7 @@
 .blog-intro-block{
     display:flex;
     justify-content: center;
+    max-width: 1170px;
 }
 .blog-intro-block .post-meta time{
     margin-bottom: 24px;
