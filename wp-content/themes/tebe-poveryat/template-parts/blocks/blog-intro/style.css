@@ -7,13 +7,16 @@
     font-size: 40px;
     line-height: 100%;
     text-transform: uppercase;
+    color: #1E1E1E;
 }
 .blog-intro-block .post-meta span{
     font-family: "Geologica";
     font-weight: 300;
     font-size: 14px;
     line-height: 150%;
+    color: #6063A6;
 }
 .blog-intro-block-text p{
     margin-bottom: 16px;
+    color: #1E1E1E;
 }
