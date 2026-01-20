@@ -1,82 +1,102 @@
 <?php
-// УСИЛЕННАЯ ДИАГНОСТИКА
-echo '<div style="background:#fff3cd; padding:15px; border:3px solid #ffc107; margin:10px 0;">';
-echo '<h3 style="margin-top:0;">🔍 ДИАГНОСТИКА БЛОКА ACF 2</h3>';
+/**
+ * Шаблон блока "Интро блога"
+ * Работает в редакторе (админке) и на фронтенде
+ */
 
-// 1. Базовый контекст
-echo '<strong>Контекст:</strong><br>';
-echo 'ID текущего поста: ' . get_the_ID() . '<br>';
-echo 'Имя блока: ' . ($block['name'] ?? 'не определено') . '<br>';
+// 1. Безопасное получение данных (работает в любом контексте)
+$text = '';
+$image = '';
 
-// 2. Проверка ВСЕХ метаполей поста
-$post_meta = get_post_meta(get_the_ID());
-echo '<hr><strong>Все метаполя этого поста (первые 20):</strong><br>';
-$counter = 0;
-foreach($post_meta as $key => $value) {
-    if(strpos($key, 'blog') !== false || strpos($key, 'text') !== false || strpos($key, 'image') !== false) {
-        echo "• <code>$key</code> => " . print_r($value[0], true) . '<br>';
-        $counter++;
-    }
-    if($counter > 20) break;
+// Пробуем получить данные стандартным способом ACF
+if(function_exists('get_field')) {
+    $text = get_field('text');
+    $image = get_field('image');
 }
 
-// 3. Специфичные проверки полей блока
-echo '<hr><strong>Целевые поля блока:</strong><br>';
-$text = get_field('text');
-$image = get_field('image');
+// 2. ДИАГНОСТИКА, которая покажет ГДЕ мы находимся
+$is_admin = is_admin(); // Проверяем, в админке ли мы
+$context = $is_admin ? 'РЕДАКТОР WordPress' : 'ФРОНТЕНД сайта';
+$has_data = !empty($text) || !empty($image);
 
-echo 'Поле "text": ' . (!empty($text) ? 'ЕСТЬ данные (' . strlen($text) . ' символов)' : '<span style="color:red">ПУСТО</span>') . '<br>';
-echo 'Поле "image": ' . (!empty($image) ? 'ЕСТЬ данные (' . $image . ')' : '<span style="color:red">ПУСТО</span>') . '<br>';
+// 3. Вывод диагностической информации (только если нет данных)
+if(!$has_data):
+    ?>
+    <div class="blog-intro-debug" style="
+        background: <?php echo $is_admin ? '#fff3cd' : '#d1ecf1'; ?>;
+        border: 2px solid <?php echo $is_admin ? '#ffc107' : '#0c5460'; ?>;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        ">
+        <strong>🔍 [<?php echo $context; ?>] Блок "Интро блога": ДАННЫХ НЕТ</strong><br>
 
-// 4. Альтернативные способы получения данных
-echo '<hr><strong>Альтернативные проверки:</strong><br>';
-$fields = get_fields();
-echo 'get_fields() вернул: ';
-if(empty($fields)) {
-    echo '<span style="color:red">ПУСТОЙ массив</span>';
-} else {
-    echo '<pre>' . print_r($fields, true) . '</pre>';
-}
+        <?php if($is_admin): ?>
+            <!-- Сообщение для АДМИНКИ -->
+            <span style="color: #856404;">
+            ✏️ Заполните поля "text" и "image" в панели ACF справа →<br>
+            💾 Затем нажмите <strong>"Обновить"</strong> чтобы сохранить данные.
+        </span>
 
-// 5. Проверка через прямой запрос к базе
-echo '<hr><strong>Данные в базе (прямой запрос):</strong><br>';
-global $wpdb;
-$block_data = $wpdb->get_results($wpdb->prepare(
-    "SELECT meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key LIKE '%%_blog_intro_%%'",
-    get_the_ID()
-));
-if(empty($block_data)) {
-    echo 'Нет записей с ключами, содержащими "_blog_intro_"';
-} else {
-    foreach($block_data as $row) {
-        echo "• {$row->meta_key} => {$row->meta_value}<br>";
-    }
-}
+            <!-- Тестовые данные для быстрой проверки -->
+            <div style="margin-top: 10px; font-size: 0.9em;">
+                <button type="button" onclick="
+                document.querySelector('[data-name=\'text\'] input').value='Тестовый текст';
+                document.querySelector('[data-name=\'image\'] input').value='https://example.com/test.jpg';
+                console.log('Тестовые данные заполнены');
+            " style="background:#28a745; color:white; border:none; padding:5px 10px; cursor:pointer;">
+                    Заполнить тестовыми данными
+                </button>
+            </div>
+        <?php else: ?>
+            <!-- Сообщение для ФРОНТЕНДА -->
+            <span style="color: #0c5460;">
+            ⚠️ Данные блока не найдены в базе.<br>
+            📌 Причина: Поля не были сохранены при обновлении записи.<br>
+            🔧 Проверьте: 1) Консоль браузера на ошибки, 2) Кэширующие плагины.
+        </span>
 
-echo '</div>'; // Конец блока диагностики
+            <!-- Информация для разработчика -->
+            <div style="margin-top: 10px; font-size: 0.8em; background: white; padding: 10px;">
+                <strong>Техническая информация:</strong><br>
+                Post ID: <?php echo get_the_ID(); ?><br>
+                <?php
+                // Прямой запрос к базе данных
+                global $wpdb;
+                $block_data = $wpdb->get_results($wpdb->prepare(
+                    "SELECT meta_key FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key LIKE '%%text%%' LIMIT 5",
+                    get_the_ID()
+                ));
+                echo 'Найдено записей с "text": ' . count($block_data);
+                ?>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
 
-// ОСНОВНОЙ ВЫВОД (оставьте ваш оригинальный код ниже)
-?>
-<div class="blog-intro-block">
-    000test234
-    <?php if($text): ?>
-        <div class="post-meta">
-            <time>
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg">
-                <span><?php echo get_the_date(); ?></span>
-            </time>
-        </div>
-        <h1 class="blog-single-title">
-            <?php the_title(); ?>
-        </h1>
-        <div class="blog-intro-block-text">
-            <?php echo wp_kses_post($text); ?>
-        </div>
-    <?php endif; ?>
+    <!-- 4. ОСНОВНОЙ ВЫВОД блока (если данные есть) -->
+<?php if($has_data): ?>
+    <div class="blog-intro-block">
+        <!-- Ваш существующий HTML код -->
+        <?php if($text): ?>
+            <div class="post-meta">
+                <time>
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg">
+                    <span><?php echo get_the_date(); ?></span>
+                </time>
+            </div>
+            <h1 class="blog-single-title">
+                <?php the_title(); ?>
+            </h1>
+            <div class="blog-intro-block-text">
+                <?php echo wp_kses_post($text); ?>
+            </div>
+        <?php endif; ?>
 
-    <?php if($image): ?>
-        <div class="blog-intro-block-image">
-            <img src="<?php echo esc_url($image); ?>">
-        </div>
-    <?php endif; ?>
-</div>
+        <?php if($image): ?>
+            <div class="blog-intro-block-image">
+                <img src="<?php echo esc_url($image); ?>">
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
