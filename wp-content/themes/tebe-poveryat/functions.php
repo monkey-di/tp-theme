@@ -165,3 +165,8 @@ require_once get_template_directory() . '/inc/demo-content/import-demo-content.p
  * Include Blog Listing with sorting and AJAX
  */
 require_once get_template_directory() . '/inc/blog-ajax.php';
+
+/**
+ * Custom blocks with ACF-fields for Gutenberg editor
+ */
+require_once get_template_directory() . '/inc/custom-blocks.php';
