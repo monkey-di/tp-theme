@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tabletContentContainer.style.opacity = '0';
         };
 
-        const slider-text = new Swiper('.block-slider-text_slider-inner', {
+        const slider_text = new Swiper('.block-slider-text_slider-inner', {
             loop: true,
             speed: 900,
             loopedSlides: 6,
