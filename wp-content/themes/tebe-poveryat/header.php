@@ -62,7 +62,7 @@ wp_body_open(); ?>
                class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.projects', 'Проекты', 'Projects'); ?></a>
             <a href="#"
                class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.about_us', 'О нас', 'About Us'); ?></a>
-            <a href="#"
+            <a href="/bloglist/"
                class="header__nav-link text-contrast font-akrobat font-bold text-[20px] leading-none hover:text-primary transition"><?php echo tp_get_text('header.blog', 'Блог', 'Blog'); ?></a>
         </nav>
 
