@@ -47,4 +47,10 @@
     .blog-intro-block-col{
         max-width:100%;
     }
+    .blog-intro-block-image{
+        margin:0 16px;
+    }
+    .blog-intro-block-image img{
+        width: 100%;
+    }
 }
