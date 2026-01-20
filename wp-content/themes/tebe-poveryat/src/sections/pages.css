@@ -55,6 +55,9 @@
     margin:auto;
     margin-bottom: 160px;
     padding-top:35px;
+    background-image: url(/wp-content/themes/tebe-poveryat/assets/images/bloglist-bg.png);
+    background-repeat: no-repeat;
+    background-position: 88% 95%;
 }
 .bloglist-wrapper{
     display:flex;
