@@ -56,10 +56,11 @@
 .blog-item{
     width:calc(100% / 3 - 12px);
 }
-.blog-item h3 a{
+.blog-item h3{
     font-family: 'Akrobat';
     font-weight: 800;
     font-size: 26px;
+    line-height: 100%;
 }
 .post-meta time{
     display:flex;
