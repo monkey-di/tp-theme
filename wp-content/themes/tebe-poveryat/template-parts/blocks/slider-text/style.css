@@ -9,3 +9,6 @@
     object-fit: cover;
     border-radius: 20px;
 }
+.block-slider-text_text{
+    max-width: 440px;
+}
