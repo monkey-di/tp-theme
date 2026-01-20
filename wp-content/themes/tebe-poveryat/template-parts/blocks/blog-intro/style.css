@@ -48,9 +48,14 @@
         max-width:100%;
     }
     .blog-intro-block-image{
-        margin:0 16px;
+        margin:0;
     }
     .blog-intro-block-image img{
         width: 100%;
+    }
+    .blog-intro-block{
+        width:100%;
+        max-width:calc(100% - 32px);
+        margin: 0 16px;
     }
 }
