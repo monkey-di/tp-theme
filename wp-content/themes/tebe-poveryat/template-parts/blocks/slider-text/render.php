@@ -17,10 +17,10 @@ if ($has_data) { ?>
         <div class="block-slider-text_slider">
             <?php
             if( have_rows('slider') ){ ?>
-                <div class="block-slider-text_slider-inner">
+                <div class="block-slider-text_slider-inner swiper">
                     <?php while ( have_rows('slider') ) {
                         the_row();?>
-                        <div class="block-slider-text_slider-inner-item">
+                        <div class="block-slider-text_slider-inner-item swiper-slide">
                             <img src="<?php the_sub_field('slider-image'); ?>">
                         </div>
                     <? } ?>
