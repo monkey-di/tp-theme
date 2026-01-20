@@ -3,7 +3,7 @@
  */
 
 function initSliders() {
-    const sliders = document.querySelectorAll('.hero-slider, .project-slider');
+    const sliders = document.querySelectorAll('.hero-slider, .project-slider, .lock-slider-text_slider-inner');
     
     if (sliders.length === 0) return;
 
