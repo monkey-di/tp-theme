@@ -4,7 +4,7 @@ $image = get_field('image');
 print_r(get_field('text'));
 ?>
 <div class="blog-intro-block">
-    test2
+    test234
     <?php if($text){?>
         <div class="post-meta">
             <time>
