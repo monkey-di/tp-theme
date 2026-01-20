@@ -52,3 +52,11 @@
         margin-left: 32px;
     }
 }
+@media(max-width:990px){
+    .block-slider-text{
+        flex-direction: column-reverse;
+    }
+    .block-slider-text-col{
+        max-width:100%;
+    }
+}
