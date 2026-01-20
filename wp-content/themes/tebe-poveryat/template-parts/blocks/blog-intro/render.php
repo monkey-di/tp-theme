@@ -1,10 +1,10 @@
 <?php
 $text = get_field('text');
 $image = get_field('image');
-print_r(get_field('text'));
+print_r( get_fields() );
 ?>
 <div class="blog-intro-block">
-    test234
+    000test234
     <?php if($text){?>
         <div class="post-meta">
             <time>
