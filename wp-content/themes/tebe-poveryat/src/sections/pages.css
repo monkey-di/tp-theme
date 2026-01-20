@@ -68,9 +68,16 @@
     line-height: 150%;
     text-transform: uppercase;
     padding:16px 110px;
+    border: 1px solid #6063A6;
+    border-radius: 40px;
+    cursor: pointer;
+}
+.load-more-btn:hover{
+    background: #6063A6;
+    color: #fff;
 }
 .load-more-container{
-    text-alig: center;
+    text-align: center;
 }
 .post-meta time{
     display:flex;
@@ -95,6 +102,17 @@
 .post-thumbnail img{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+}
+.posts-sort{
+    margin-bottom: 40px;
+}
+.sort-select{
+    border-radius: 40px;
+    border: 1px solid #6063A666;
+    color: #1E1E1E;
+    font-size: 20px;
+    padding: 16px 20px;
+    background: #fff;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
