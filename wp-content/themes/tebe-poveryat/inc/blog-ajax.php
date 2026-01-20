@@ -1,5 +1,31 @@
 <?php
+// Функция для подсчета просмотров постов
+function set_post_views($post_id) {
+    $count_key = 'views_count';
+    $count = get_post_meta($post_id, $count_key, true);
 
+    if ($count == '') {
+        $count = 0;
+        delete_post_meta($post_id, $count_key);
+        add_post_meta($post_id, $count_key, '0');
+    } else {
+        $count++;
+        update_post_meta($post_id, $count_key, $count);
+    }
+}
+
+// Функция для получения количества просмотров
+function get_post_views($post_id) {
+    $count_key = 'views_count';
+    $count = get_post_meta($post_id, $count_key, true);
+
+    if ($count == '') {
+        delete_post_meta($post_id, $count_key);
+        add_post_meta($post_id, $count_key, '0');
+        return 0;
+    }
+    return $count;
+}
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
@@ -146,12 +172,23 @@ function load_ajax_custom_posts($args = []) {
 }
 
 // Вывод
+function track_post_views() {
+    if (is_single()) {
+        global $post;
+        if ($post) {
+            set_post_views($post->ID);
+        }
+    }
+}
+add_action('wp_head', 'track_post_views');
 function get_custom_post_html($post_type = 'blog_item') {
     ob_start();
+    $post_id = get_the_ID();
+    $views_count = get_post_views($post_id);
     ?>
     <article class="blog-item">
         <div class="post-thumbnail">
-            <?php if (has_post_thumbnail()) {?>
+            <?php if (has_post_thumbnail()) { ?>
                 <?php the_post_thumbnail('full'); ?>
             <?php } else { ?>
                 <img src="/wp-content/themes/tebe-poveryat/assets/images/nophoto.png">
@@ -161,10 +198,12 @@ function get_custom_post_html($post_type = 'blog_item') {
             <div class="post-meta">
                 <time>
                     <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
-                    <span>
-                        <?php echo get_the_date(); ?>
-                    </span>
+                    <span><?php echo get_the_date(); ?></span>
                 </time>
+                <div class="post-views">
+                    <img src="/wp-content/themes/tebe-poveryat/assets/images/eye.svg">
+                    <span><?php echo esc_html($views_count); ?></span>
+                </div>
             </div>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
             <div class="post-excerpt">
