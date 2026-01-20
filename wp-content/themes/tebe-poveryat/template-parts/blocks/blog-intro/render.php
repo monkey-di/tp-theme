@@ -10,7 +10,7 @@ $image = get_field('image');
 
     <?php if($image){ ?>
         <div class="blog-intro-block-image">
-        <img src="<?php echo wp_kses_post($image); ?>" alt="<?php the_title();?>">
+        <img src="<?php echo wp_kses_post($image); ?>">
         </div>
     <?php } ?>
 </div>
