@@ -1,47 +1,4 @@
-
 <?php
-
-// Функция для подсчета просмотров
-function set_post_views($postID) {
-    $count_key = 'views_count';
-    $count = get_post_meta($postID, $count_key, true);
-    if ($count == '') {
-        $count = 0;
-        delete_post_meta($postID, $count_key);
-        add_post_meta($postID, $count_key, '0');
-    } else {
-        $count++;
-        update_post_meta($postID, $count_key, $count);
-    }
-}
-
-// Отслеживание просмотров поста
-function track_post_views($post_id) {
-    if (!is_single()) return;
-    if (empty($post_id)) {
-        global $post;
-        $post_id = $post->ID;
-    }
-    set_post_views($post_id);
-}
-add_action('wp_head', 'track_post_views');
-
-
-add_action('init', function() {
-    if (isset($_GET['test_views']) && current_user_can('manage_options')) {
-        $posts = get_posts([
-                'post_type' => 'blog_item',
-                'posts_per_page' => -1,
-                'post_status' => 'publish'
-        ]);
-
-        foreach ($posts as $post) {
-            $random_views = rand(1, 1000);
-            update_post_meta($post->ID, 'views_count', $random_views);
-            echo "Updated post {$post->ID} with {$random_views} views<br>";
-        }
-    }
-});
 
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
@@ -94,7 +51,6 @@ add_shortcode('ajax_custom_posts', function($atts) {
 });
 
 // Функция загрузки кастомных постов
-// Функция загрузки кастомных постов
 function load_ajax_custom_posts($args = []) {
     $defaults = [
             'paged' => 1,
@@ -126,7 +82,7 @@ function load_ajax_custom_posts($args = []) {
         ];
     }
 
-    // Мета-запрос для фильтрации (если указан meta_key и meta_value)
+    // Мета-запрос
     if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
         $query_args['meta_query'] = [
                 [
@@ -144,7 +100,6 @@ function load_ajax_custom_posts($args = []) {
             $query_args['order'] = 'ASC';
             break;
         case 'popular':
-            // Для сортировки по популярности используем views_count
             $query_args['meta_key'] = 'views_count';
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
@@ -154,25 +109,17 @@ function load_ajax_custom_posts($args = []) {
             $query_args['order'] = 'DESC';
     }
 
-    // ДЕБАГ: логирование параметров сортировки
-    error_log('Sort type: ' . $args['sort']);
-    error_log('Query args for sorting: ' . print_r($query_args, true));
-
     $query = new WP_Query($query_args);
 
-    // ДЕБАГ: проверяем SQL запрос
-    error_log('SQL Query: ' . $query->request);
-    error_log('Found posts: ' . $query->found_posts);
+    // ДЕБАГ: логирование запроса
+    error_log('AJAX Posts Query Args: ' . print_r($query_args, true));
+    error_log('AJAX Posts Found: ' . $query->found_posts);
 
     $output = '';
 
     if ($query->have_posts()) {
         while ($query->have_posts()) {
             $query->the_post();
-            // ДЕБАГ: проверяем значение views_count для каждого поста
-            $views = get_post_meta(get_the_ID(), 'views_count', true);
-            error_log('Post ID: ' . get_the_ID() . ', Title: ' . get_the_title() . ', Views: ' . $views);
-
             $output .= get_custom_post_html($args['post_type']);
         }
 
@@ -182,13 +129,12 @@ function load_ajax_custom_posts($args = []) {
                 json_encode(['has_more' => $has_more]) .
                 '</script>';
     } else {
+        // ДЕБАГ:
         $output = '<p>Записи не найдены</p>';
         $output .= '<div style="display:none;" class="debug-info">';
-        $output .= 'Sort: ' . $args['sort'] . '<br>';
         $output .= 'Post Type: ' . $args['post_type'] . '<br>';
-        $output .= 'Meta Key (filter): ' . $args['meta_key'] . '<br>';
-        $output .= 'Meta Value (filter): ' . $args['meta_value'] . '<br>';
         $output .= 'Query Args: ' . print_r($query_args, true) . '<br>';
+        $output .= 'Found Posts: ' . $query->found_posts;
         $output .= '</div>';
     }
 
@@ -268,7 +214,6 @@ function has_more_custom_posts($args) {
             'post_status' => 'publish',
             'posts_per_page' => $args['posts_per_page'],
             'paged' => $args['paged'] + 1,
-            'fields' => 'ids' // Оптимизация: получаем только ID
     ];
 
     // Таксономия
@@ -282,7 +227,7 @@ function has_more_custom_posts($args) {
         ];
     }
 
-    // Мета-запрос для фильтрации
+    // Мета-запрос
     if (!empty($args['meta_key']) && !empty($args['meta_value'])) {
         $query_args['meta_query'] = [
                 [
@@ -295,16 +240,12 @@ function has_more_custom_posts($args) {
 
     // Сортировка
     switch($args['sort']) {
-        case 'date_asc':
-            $query_args['orderby'] = 'date';
-            $query_args['order'] = 'ASC';
-            break;
         case 'popular':
             $query_args['meta_key'] = 'views_count';
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
             break;
-        default: // date_desc
+        default:
             $query_args['orderby'] = 'date';
             $query_args['order'] = 'DESC';
     }
