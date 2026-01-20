@@ -84,8 +84,8 @@ function load_ajax_custom_posts($args = []) {
             'sort' => 'date_desc',
             'taxonomy' => '',
             'term' => '',
-            'filter_meta_key' => '', // Изменено
-            'filter_meta_value' => '' // Изменено
+            'filter_meta_key' => '',
+            'filter_meta_value' => ''
     ];
 
     $args = wp_parse_args($args, $defaults);
@@ -223,8 +223,8 @@ function ajax_load_more_custom_posts() {
     $per_page = intval($_POST['per_page']);
     $taxonomy = sanitize_text_field($_POST['taxonomy']);
     $term = sanitize_text_field($_POST['term']);
-    $filter_meta_key = sanitize_text_field($_POST['filter_meta_key']); // Изменено
-    $filter_meta_value = sanitize_text_field($_POST['filter_meta_value']); // Изменено
+    $filter_meta_key = sanitize_text_field($_POST['filter_meta_key']);
+    $filter_meta_value = sanitize_text_field($_POST['filter_meta_value']);
 
     $args = [
             'paged' => $paged,
@@ -233,8 +233,8 @@ function ajax_load_more_custom_posts() {
             'posts_per_page' => $per_page,
             'taxonomy' => $taxonomy,
             'term' => $term,
-            'filter_meta_key' => $filter_meta_key, // Изменено
-            'filter_meta_value' => $filter_meta_value // Изменено
+            'filter_meta_key' => $filter_meta_key,
+            'filter_meta_value' => $filter_meta_value
     ];
 
     wp_send_json_success([
@@ -294,7 +294,7 @@ function has_more_custom_posts($args) {
             $query_args['order'] = 'DESC';
     }
 
-    // Если есть несколько мета-запросов, добавляем отношение
+    // Если несколько мета-запросов, добавляем отношение
     if (isset($query_args['meta_query']) && count($query_args['meta_query']) > 1) {
         $query_args['meta_query']['relation'] = 'AND';
     }
@@ -324,7 +324,7 @@ add_action('wp_enqueue_scripts', function() {
 add_filter( 'template_include', 'blog_item_template' );
 function blog_item_template( $template ) {
     global $post;
-    if ( $post->post_type == 'blog_item' && is_single() ) {
+    if ( $post->post_type == 'blog_item') {
         $new_template = '/wp-content/themes/tebe-poveryat/single-blog_item.php';
         if ( file_exists( $new_template ) ) {
             return $new_template;
