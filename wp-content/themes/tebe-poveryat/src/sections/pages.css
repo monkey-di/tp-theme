@@ -45,6 +45,9 @@
         padding-right: var(--wp--preset--spacing--50);
     }
 }
+.bloglist-content{
+    margin:auto;
+}
 .bloglist-wrapper{
     display:flex;
     flex-wrap: wrap;
