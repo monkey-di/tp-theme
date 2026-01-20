@@ -55,6 +55,7 @@
 }
 .blog-item{
     width:calc(100% / 3 - 12px);
+    margin-bottom: 24px;
 }
 .blog-item h3{
     font-family: 'Akrobat';
