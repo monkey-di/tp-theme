@@ -24,6 +24,23 @@ function track_post_views($post_id) {
 }
 add_action('wp_head', 'track_post_views');
 
+
+add_action('init', function() {
+    if (isset($_GET['test_views']) && current_user_can('manage_options')) {
+        $posts = get_posts([
+                'post_type' => 'blog_item',
+                'posts_per_page' => -1,
+                'post_status' => 'publish'
+        ]);
+
+        foreach ($posts as $post) {
+            $random_views = rand(1, 1000);
+            update_post_meta($post->ID, 'views_count', $random_views);
+            echo "Updated post {$post->ID} with {$random_views} views<br>";
+        }
+    }
+});
+
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
