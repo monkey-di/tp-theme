@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Block: Slider Text Slider
     if (document.querySelector('.block-slider-text_slider-inner')) {
-        console.log('slider-text init');
+        console.log('slider-text init 2');
         const teamSliderProgress = document.querySelector('.block-slider-text .slider-progress');
         const tabletContentContainer = document.querySelector('.block-slider-text-content');
 
@@ -498,39 +498,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!tabletContentContainer) return;
 
             tabletContentContainer.style.opacity = '0';
-
-            setTimeout(() => {
-                const activeSlide = swiper.slides[swiper.activeIndex];
-                if (activeSlide) {
-                    const contentSource = activeSlide.querySelector('.team__content');
-                    if (contentSource) {
-                        tabletContentContainer.innerHTML = contentSource.innerHTML;
-
-                        // Add 'Read More' link dynamically if not present
-                        const readMoreHtml = `
-                            <div class="team__tablet-read-more mt-2">
-                                <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
-                                    <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
-                                        <div class="text-primary text-[16px] font-normal font-geologica leading-6">
-                                            Читать далее
-                                        </div>
-                                    </a>
-                                    <div class="h-0 relative shrink-0 w-full">
-                                        <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
-                                            <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                         `;
-                        tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
-                    }
-                }
-                tabletContentContainer.style.opacity = '1';
-            }, 300);
         };
 
-        const teamSwiper = new Swiper('.team__slider', {
+        const slider-text = new Swiper('.block-slider-text_slider-inner', {
             loop: true,
             speed: 900,
             loopedSlides: 6,
