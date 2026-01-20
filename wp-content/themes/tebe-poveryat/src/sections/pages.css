@@ -159,6 +159,7 @@
     line-height: 150%;
     border:1px solid #6063A6;
     cursor: pointer;
+    text-transform: uppercase;
 }
 .page-head-btn:hover{
     background: #fff;
