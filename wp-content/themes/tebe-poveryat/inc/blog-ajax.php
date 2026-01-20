@@ -100,7 +100,7 @@ function load_ajax_custom_posts($args = []) {
             $query_args['order'] = 'ASC';
             break;
         case 'popular':
-            $query_args['meta_key'] = 'views_count';
+            $query_args['meta_key'] = 'post_views';
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
             break;
@@ -241,7 +241,7 @@ function has_more_custom_posts($args) {
     // Сортировка
     switch($args['sort']) {
         case 'popular':
-            $query_args['meta_key'] = 'views_count';
+            $query_args['meta_key'] = 'post_views';
             $query_args['orderby'] = 'meta_value_num';
             $query_args['order'] = 'DESC';
             break;
