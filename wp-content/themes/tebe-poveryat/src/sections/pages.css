@@ -60,6 +60,10 @@
 }
 .post-meta time{
     display:flex;
+    font-family: "Geologica";
+    font-size: 14px;
+    color: #6063A6;
+    font-weight: 300;
 }
 @media(max-width:1000px){
     .page-head-wrapper{
