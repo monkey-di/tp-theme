@@ -25,10 +25,7 @@ if ($has_data) : ?>
                         <?php endwhile; ?>
                     </div>
 
-                    <!-- пагинация -->
-                    <div class="swiper-pagination"></div>
-
-                    <!-- Опционально: кнопки навигации -->
+                    <!-- навигация -->
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>

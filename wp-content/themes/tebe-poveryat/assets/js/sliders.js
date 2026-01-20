@@ -497,6 +497,10 @@ document.addEventListener('DOMContentLoaded', () => {
             slidesPerView: 1,
             spaceBetween: 10,
             centeredSlides: false,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
             breakpoints: {
                 768: {
                     slidesPerView: 'auto',
