@@ -488,5 +488,145 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Block: Slider Text Slider
+    if (document.querySelector('.block-slider-text_slider-inner')) {
+        const teamSliderProgress = document.querySelector('.team__progress .slider-progress');
+        const tabletContentContainer = document.querySelector('.team__tablet-content');
+
+        const updateTeamTabletContent = (swiper) => {
+            if (!tabletContentContainer) return;
+
+            tabletContentContainer.style.opacity = '0';
+
+            setTimeout(() => {
+                const activeSlide = swiper.slides[swiper.activeIndex];
+                if (activeSlide) {
+                    const contentSource = activeSlide.querySelector('.team__content');
+                    if (contentSource) {
+                        tabletContentContainer.innerHTML = contentSource.innerHTML;
+
+                        // Add 'Read More' link dynamically if not present
+                        const readMoreHtml = `
+                            <div class="team__tablet-read-more mt-2">
+                                <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                    <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                        <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                            Читать далее
+                                        </div>
+                                    </a>
+                                    <div class="h-0 relative shrink-0 w-full">
+                                        <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                            <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         `;
+                        tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                    }
+                }
+                tabletContentContainer.style.opacity = '1';
+            }, 300);
+        };
+
+        const teamSwiper = new Swiper('.team__slider', {
+            loop: true,
+            speed: 900,
+            loopedSlides: 6,
+            breakpoints: {
+                768: {
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                    spaceBetween: 24
+                },
+                1280: {
+                    slidesPerView: 1,
+                    centeredSlides: false,
+                    spaceBetween: 0
+                }
+            },
+            pagination: {
+                el: teamSliderProgress,
+                type: 'progressbar',
+            },
+            navigation: {
+                nextEl: '.team-next',
+                prevEl: '.team-prev',
+            },
+            on: {
+                init: function () {
+                    if(teamSliderProgress) teamSliderProgress.style.opacity = 1;
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        this.slideToLoop(0, 0); // Force start at first slide
+
+                        setTimeout(() => {
+                            const activeSlide = this.slides[this.activeIndex];
+                            if (activeSlide && tabletContentContainer) {
+                                const contentSource = activeSlide.querySelector('.team__content');
+                                if (contentSource) {
+                                    tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                    // Add 'Read More' link dynamically
+                                    const readMoreHtml = `
+                                        <div class="team__tablet-read-more mt-2">
+                                            <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                                <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                                    <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                                        Читать далее
+                                                    </div>
+                                                </a>
+                                                <div class="h-0 relative shrink-0 w-full">
+                                                    <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                                        <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     `;
+                                    tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                                    tabletContentContainer.style.opacity = '1';
+                                }
+                            }
+                        }, 50);
+                    }
+                },
+                slideChange: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        updateTeamTabletContent(this);
+                    }
+                },
+                resize: function () {
+                    if (window.innerWidth >= 768 && window.innerWidth < 1280) {
+                        const activeSlide = this.slides[this.activeIndex];
+                        if (activeSlide && tabletContentContainer) {
+                            const contentSource = activeSlide.querySelector('.team__content');
+                            if (contentSource) {
+                                tabletContentContainer.innerHTML = contentSource.innerHTML;
+                                // Add 'Read More' link dynamically
+                                const readMoreHtml = `
+                                    <div class="team__tablet-read-more mt-2">
+                                        <div class="link-more-wrapper inline-flex flex-col justify-start items-start gap-0.5 group cursor-pointer">
+                                            <a href="#" class="inline-flex justify-start items-center gap-3 no-underline">
+                                                <div class="text-primary text-[16px] font-normal font-geologica leading-6">
+                                                    Читать далее
+                                                </div>
+                                            </a>
+                                            <div class="h-0 relative shrink-0 w-full">
+                                                <div class="absolute bottom-0 left-0 right-0 top-[-2px]">
+                                                    <img alt="" class="block max-w-none size-full" src="/wp-content/themes/tebe-poveryat/assets/images/arrow-link-more.svg" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 `;
+                                tabletContentContainer.insertAdjacentHTML('beforeend', readMoreHtml);
+                                tabletContentContainer.style.opacity = '1';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
 
 });
