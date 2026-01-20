@@ -74,12 +74,25 @@ jQuery(document).ready(function($) {
                     $btn.removeClass('loading');
 
                     if (response.success) {
-                        // Удаляем старые данные
+                        // Удаляем старые данные JSON
                         $wrapper.find('.posts-data').remove();
 
-                        // Добавляем новые посты
-                        const $newPosts = $(response.data.html);
-                        $wrapper.append($newPosts.find('*:not(.posts-data)'));
+                        // Разбиваем ответ на отдельные элементы
+                        const $newContent = $(response.data.html);
+
+                        // Находим все article элементы в ответе
+                        const $articles = $newContent.filter('article');
+                        const $jsonData = $newContent.filter('.posts-data');
+
+                        // Добавляем только article элементы
+                        $articles.each(function() {
+                            $wrapper.append($(this));
+                        });
+
+                        // Добавляем JSON данные
+                        if ($jsonData.length) {
+                            $wrapper.append($jsonData);
+                        }
 
                         // Обновляем состояние
                         $container.data('paged', response.data.paged);
@@ -100,7 +113,7 @@ jQuery(document).ready(function($) {
         const $data = $container.find('.posts-data');
 
         if ($data.length) {
-            const data = JSON.parse($data.html());
+            const data = JSON.parse($data.text() || $data.html());
             if (data.has_more) {
                 $btn.show().removeClass('disabled');
             } else {
