@@ -66,6 +66,18 @@
     line-height: 100%;
     margin: 0 0 16px 0;
 }
+.load-more-btn{
+    color: #6063A6;
+    font-family: Geologica;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-transform: uppercase;
+    padding:16px 110px;
+}
+.load-more-container{
+    text-alig: center;
+}
 .post-meta time{
     display:flex;
     font-family: "Geologica";
