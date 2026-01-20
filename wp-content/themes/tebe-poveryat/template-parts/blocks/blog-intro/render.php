@@ -1,7 +1,7 @@
 <?php
 // УСИЛЕННАЯ ДИАГНОСТИКА
 echo '<div style="background:#fff3cd; padding:15px; border:3px solid #ffc107; margin:10px 0;">';
-echo '<h3 style="margin-top:0;">🔍 ДИАГНОСТИКА БЛОКА ACF</h3>';
+echo '<h3 style="margin-top:0;">🔍 ДИАГНОСТИКА БЛОКА ACF 2</h3>';
 
 // 1. Базовый контекст
 echo '<strong>Контекст:</strong><br>';
