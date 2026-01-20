@@ -12,6 +12,7 @@
     line-height: 100%;
     text-transform: uppercase;
     color: #1E1E1E;
+    margin-bottom:32px;
 }
 .blog-intro-block .post-meta span{
     font-family: "Geologica";
@@ -26,4 +27,10 @@
 }
 .blog-intro-block-col{
     max-width: 650px;
+}
+.blog-intro-block-image {
+    margin-left:64px;
+}
+.blog-intro-block-image img{
+    border-radius:20px;
 }
