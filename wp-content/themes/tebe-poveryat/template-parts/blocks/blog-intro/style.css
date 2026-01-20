@@ -2,6 +2,9 @@
     display:flex;
     justify-content: center;
 }
+.blog-intro-block .post-meta time{
+    margin-bottom: 24px;
+}
 .blog-single-title{
     font-family: "Akrobat";
     font-weight: 800;
