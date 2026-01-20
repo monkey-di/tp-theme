@@ -2,14 +2,18 @@
 /**
  * Шаблон блока "Блок видео на всю ширину"
  */
-$url = '';
+$file = '';
 $image = '';
 if(function_exists('get_field')) {
-    $url = get_field('url');
+    $file = get_field('url');
     $image = get_field('image');
 }
 ?>
-<div class="fullvideo-block">
-    <?php echo $url; ?>
-    <?php echo $image; ?>
+<div class="full-video-block">
+    <div class="video-container" data-provider="html5" data-sources='[{"src": "<?php echo $file; ?>">", "type": "video/mp4"}, {"src": "<?php echo $file; ?>", "type": "video/webm"}]'>
+        <div class="video-placeholder">
+            <img src=" <img src="<?php echo $image; ?>">" alt="Preview">
+            <button class="play-button"></button>
+        </div>
+    </div>
 </div>
