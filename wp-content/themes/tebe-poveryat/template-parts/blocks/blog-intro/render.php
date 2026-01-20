@@ -4,7 +4,7 @@ $image = get_field('image');
 ?>
 <div class="blog-intro-block">
     test2
-    <?php if($text){?>
+    <?php// if($text){?>
         <div class="post-meta">
             <time>
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg">
@@ -17,7 +17,7 @@ $image = get_field('image');
         <div class="blog-intro-block-text">
             <?php echo wp_kses_post($text); ?>
         </div>
-    <?php } ?>
+    <?php// } ?>
 
     <?php if($image){ ?>
         <div class="blog-intro-block-image">
