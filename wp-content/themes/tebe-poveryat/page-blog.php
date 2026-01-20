@@ -40,6 +40,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 <div class="page-head-picture">
                     <img src="<?=$pagehead_pic?>">
                 </div>
+                <div class="page-head-btn">
+                    <a href="#">Обратиться за помощью</a>
+                </div>
             </div>
         </div>
     </div>
