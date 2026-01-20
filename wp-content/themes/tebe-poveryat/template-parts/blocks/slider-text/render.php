@@ -12,7 +12,7 @@ if(function_exists('get_field')) {
 $has_data = !empty($slider) || !empty($text);
 
 if ($has_data) { ?>
-    <div class="block-slider-text container">
+    <div class="block-slider-text">
         <div class="block-slider-text_slider block-slider-text-col">
             <?php if( have_rows('slider') ) { ?>
                 <div class="block-slider-text_slider-inner swiper">
