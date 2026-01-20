@@ -25,8 +25,10 @@ if ($has_data) { ?>
                         <?php } ?>
                     </div>
                     <!-- навигация -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
+                    <div class="block-slider-text_slider-navi">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
                 </div>
             <?php } ?>
         </div>
