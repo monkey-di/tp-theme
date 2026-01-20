@@ -11,6 +11,7 @@ if(function_exists('get_field')) {
 }
 
 $has_data = !empty($text) || !empty($image);
+?>
 <?php if($has_data) { ?>
     <div class="blog-intro-block">
         <!-- Ваш существующий HTML код -->
