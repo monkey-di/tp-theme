@@ -46,9 +46,8 @@ add_shortcode('ajax_custom_posts', function($atts) {
          data-sort="<?php echo esc_attr($atts['sort']); ?>"
          data-taxonomy="<?php echo esc_attr($atts['taxonomy']); ?>"
          data-term="<?php echo esc_attr($atts['term']); ?>"
-         data-filter-meta-key="<?php echo esc_attr($atts['filter_meta_key']); ?>" // Изменено
-    data-filter-meta-value="<?php echo esc_attr($atts['filter_meta_value']); ?>"> // Изменено
-    data-paged="1">
+         data-filter-meta-key="<?php echo esc_attr($atts['filter_meta_key']); ?>"
+         data-filter-meta-value="<?php echo esc_attr($atts['filter_meta_value']); ?>">
 
     <!-- Сортировка -->
     <div class="posts-sort">
