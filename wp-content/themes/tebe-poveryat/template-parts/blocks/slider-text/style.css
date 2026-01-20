@@ -27,6 +27,15 @@
 }
 .block-slider-text_slider-navi{
     z-index: 99;
+    height: 56px;
+    display: flex;
+    align-items: flex-start;
+    width: 130px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    margin-top: -48px;
+    margin-left: 24px;
 }
 .block-slider-text_slider-navi .cursor-pointer:after{
     color: #fff;
