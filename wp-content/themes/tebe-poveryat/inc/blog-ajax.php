@@ -1,57 +1,5 @@
 
 <?php
-// 1. Функция для создания/обновления счетчика просмотров
-function setup_views_count_for_all_posts() {
-    if (isset($_GET['setup_views']) && current_user_can('manage_options')) {
-        $posts = get_posts([
-                'post_type' => 'blog_item',
-                'posts_per_page' => -1,
-                'post_status' => 'publish'
-        ]);
-
-        foreach ($posts as $post) {
-            // Устанавливаем случайное значение для тестирования
-            $random_views = rand(10, 500);
-            update_post_meta($post->ID, 'views_count', $random_views);
-        }
-
-        echo 'Счетчики просмотров созданы для ' . count($posts) . ' записей';
-        exit;
-    }
-}
-add_action('init', 'setup_views_count_for_all_posts');
-
-// 2. Функция для подсчета реальных просмотров
-function track_post_views($post_id) {
-    if (!is_single() || !is_singular('blog_item')) return;
-
-    if (empty($post_id)) {
-        global $post;
-        $post_id = $post->ID;
-    }
-
-    $count_key = 'views_count';
-    $count = get_post_meta($post_id, $count_key, true);
-
-    if ($count == '') {
-        $count = 1;
-        delete_post_meta($post_id, $count_key);
-        add_post_meta($post_id, $count_key, $count);
-    } else {
-        $count++;
-        update_post_meta($post_id, $count_key, $count);
-    }
-}
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-add_action('wp_head', 'track_post_views');
-
-// 3. Шорткод для отображения количества просмотров
-function views_count_shortcode() {
-    $views = get_post_meta(get_the_ID(), 'views_count', true);
-    return $views ? $views : '0';
-}
-add_shortcode('views_count', 'views_count_shortcode');
-
 // Шорткод для AJAX-подгрузки кастомных постов
 add_shortcode('ajax_custom_posts', function($atts) {
     $atts = shortcode_atts([
