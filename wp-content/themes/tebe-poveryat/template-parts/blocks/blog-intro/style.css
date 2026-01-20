@@ -1,5 +1,6 @@
 .blog-intro-block{
     display:flex;
+    justify-content: center;
 }
 .blog-single-title{
     font-family: "Akrobat";
