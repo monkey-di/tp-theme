@@ -34,8 +34,8 @@ add_shortcode('ajax_custom_posts', function($atts) {
             'sort' => 'date_desc',
             'taxonomy' => '',
             'term' => '',
-            'filter_meta_key' => '', // Изменено с meta_key на filter_meta_key
-            'filter_meta_value' => '' // Изменено с meta_value на filter_meta_value
+            'filter_meta_key' => '',
+            'filter_meta_value' => ''
     ], $atts);
 
     ob_start();
@@ -190,13 +190,13 @@ function get_custom_post_html($post_type = 'blog_item') {
             <?php if (has_post_thumbnail()) { ?>
                 <?php the_post_thumbnail('full'); ?>
             <?php } else { ?>
-                <img src="/wp-content/themes/tebe-poveryat/assets/images/nophoto.png">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/nophoto.png">
             <?php } ?>
         </div>
         <div class="post-content">
             <div class="post-meta">
                 <time>
-                    <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/calendar.svg">
                     <span><?php echo get_the_date(); ?></span>
                 </time>
             </div>

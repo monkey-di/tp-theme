@@ -281,7 +281,7 @@ function tp_register_blog() {
         'show_ui'             => true,
         'show_in_menu'        => true,
         'query_var'           => true,
-        'rewrite'             => true,
+        'rewrite'             => [ 'slug' => 'blog-item' ],
         'capability_type'     => 'post',
         'has_archive'         => true,
         'hierarchical'        => false,
