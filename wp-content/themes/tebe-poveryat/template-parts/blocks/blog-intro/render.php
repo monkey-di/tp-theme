@@ -10,8 +10,6 @@ if(function_exists('get_field')) {
     $image = get_field('image');
 }
 
-$is_admin = is_admin(); // Проверяем, в админке ли мы
-$context = $is_admin ? 'РЕДАКТОР WordPress' : 'ФРОНТЕНД сайта';
 $has_data = !empty($text) || !empty($image);
 <?php if($has_data) { ?>
     <div class="blog-intro-block">
