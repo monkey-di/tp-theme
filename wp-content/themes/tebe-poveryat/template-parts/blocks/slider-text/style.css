@@ -6,7 +6,7 @@
     align-items: center;
 }
 .block-slider-text-col{
-    max-width:650px;
+    max-width:688px;
 }
 .block-slider-text_slider-inner-item img{
     width: 100%;
@@ -14,7 +14,7 @@
     border-radius: 20px;
 }
 .block-slider-text_text{
-    padding-left:64px;
+    padding-left:42px;
 }
 .block-slider-text_text p{
     font-family: "Geologica";
