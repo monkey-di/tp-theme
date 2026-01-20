@@ -25,3 +25,18 @@
 .block-slider-text_slider-navi div{
     position: relative;
 }
+.block-slider-text_slider-navi{
+    z-index: 99;
+}
+.block-slider-text_slider-navi .cursor-pointer:after{
+    color: #fff;
+    border: 2px solid #fff;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    border-radius: 50%;
+    font-size: 26px;
+}
