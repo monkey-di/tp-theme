@@ -1,7 +1,7 @@
 <?php
 $text = get_field('text');
 $image = get_field('image');
-the_field('text');
+print_r(get_field('text'));
 ?>
 <div class="blog-intro-block">
     test2
