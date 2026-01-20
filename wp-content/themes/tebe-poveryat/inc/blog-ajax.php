@@ -319,3 +319,16 @@ add_action('wp_enqueue_scripts', function() {
             'nonce' => wp_create_nonce('ajax_nonce')
     ]);
 });
+
+// Шаблон для записей
+add_filter( 'template_include', 'blog_item_template' );
+function blog_item_template( $template ) {
+    global $post;
+    if ( $post->post_type == 'blog_item' && is_single() ) {
+        $new_template = '/wp-content/themes/tebe-poveryat/single-blog_item.php';
+        if ( file_exists( $new_template ) ) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
