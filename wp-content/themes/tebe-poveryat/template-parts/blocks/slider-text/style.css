@@ -14,7 +14,7 @@
     border-radius: 20px;
 }
 .block-slider-text_text{
-    padding-left:42px;
+    margin-left:42px;
 }
 .block-slider-text_text p{
     font-family: "Geologica";
@@ -46,4 +46,9 @@
     min-width: 56px;
     border-radius: 50%;
     font-size: 26px;
+}
+@media(max-width:1200px){
+    .block-slider-text_text {
+        margin-left: 32px;
+    }
 }
