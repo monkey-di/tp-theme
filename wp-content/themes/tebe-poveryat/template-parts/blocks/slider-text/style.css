@@ -1,5 +1,6 @@
 .block-slider-text{
     display:flex;
+    justify-content: center;
 }
 .block-slider-text-col{
     max-width:650px;
