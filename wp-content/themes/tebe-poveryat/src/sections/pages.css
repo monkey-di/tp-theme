@@ -77,6 +77,9 @@
     line-height: 150%;
     color: #1E1E1E;
 }
+.post-content{
+    padding: 16px;
+}
 @media(max-width:1000px){
     .page-head-wrapper{
         flex-direction:column;

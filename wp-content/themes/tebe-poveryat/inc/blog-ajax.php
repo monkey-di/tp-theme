@@ -154,15 +154,17 @@ function get_custom_post_html($post_type = 'blog_item') {
                 <img src="/wp-content/themes/tebe-poveryat/assets/images/nophoto.png">
             <?php } ?>
         </div>
-        <div class="post-meta">
-            <time>
-                <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
-                <?php echo get_the_date(); ?>
-            </time>
-        </div>
-        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-        <div class="post-excerpt">
-            <?php the_excerpt(); ?>
+        <div class="post-content">
+            <div class="post-meta">
+                <time>
+                    <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
+                    <?php echo get_the_date(); ?>
+                </time>
+            </div>
+            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+            <div class="post-excerpt">
+                <?php the_excerpt(); ?>
+            </div>
         </div>
     </article>
     <?php
