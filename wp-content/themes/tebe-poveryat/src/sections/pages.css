@@ -69,6 +69,7 @@
     font-size: 14px;
     color: #6063A6;
     font-weight: 300;
+    margin-bottom: 16px;
 }
 .post-excerpt{
     font-family: Geologica;
@@ -79,6 +80,7 @@
 }
 .post-content{
     padding: 16px;
+    background: #fff;
 }
 @media(max-width:1000px){
     .page-head-wrapper{
