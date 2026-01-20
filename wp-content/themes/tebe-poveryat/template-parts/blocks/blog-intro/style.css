@@ -58,4 +58,10 @@
         max-width:calc(100% - 32px);
         margin: 0 16px;
     }
+    .blog-intro-block-col .post-meta{
+        margin-top:24px;
+    }
+    .blog-single-title{
+        font-size:32px;
+    }
 }
