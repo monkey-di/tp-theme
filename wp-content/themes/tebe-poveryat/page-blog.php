@@ -20,7 +20,7 @@ $pagehead_bg_image = get_field('headpage-background');  // ACF фоновое и
 $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 ?>
 <main class="site-main blog-page">
-    <div class="page-head z-20 bg-surface relative [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]"<?php if($pagehead_bg_image != ''){?> style="background:<?=$pagehead_bg_color?>" <?php } ?>>
+    <div class="page-head z-20 bg-surface relative [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]"<?php if($pagehead_bg_color != ''){?> style="background:<?=$pagehead_bg_color?>" <?php } ?>>
         <div class="page-head-wrapper container mx-auto"
             <?php if($pagehead_bg_image != ''){?>
                 style="background-image:url(<?=$pagehead_bg_image?>)"
