@@ -11,7 +11,7 @@ $image = get_field('image');
 
     <?php if($image){ ?>
         <div class="blog-intro-block-image">
-        <img src="<?php echo wp_kses_post($image); ?>">
+         <img src="<?php echo $image; ?>">
         </div>
     <?php } ?>
 </div>
