@@ -40,7 +40,7 @@ function tebe_poveryat_scripts() {
     wp_enqueue_script( 'swiper-js', get_template_directory_uri() . '/assets/vendor/swiper/swiper-bundle.min.js', [], '11.0.0', true );
 
     // Sliders Initialization
-    wp_enqueue_script( 'tp-sliders', get_template_directory_uri() . '/assets/js/sliders.js', ['swiper-js'], '1.0.6', true );
+    wp_enqueue_script( 'tp-sliders', get_template_directory_uri() . '/assets/js/sliders.js', ['swiper-js'], '1.0.1', true );
 
     // Subscribe Form Validation
     wp_enqueue_script( 'tp-subscribe-form', get_template_directory_uri() . '/assets/js/subscribe-form.js', [], '1.0.0', true );
