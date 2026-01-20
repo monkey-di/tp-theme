@@ -3,6 +3,7 @@
     justify-content: center;
     max-width: 1170px;
     margin: auto;
+    padding-top: 56px;
 }
 .blog-intro-block .post-meta time{
     margin-bottom: 24px;
@@ -26,6 +27,10 @@
 .blog-intro-block-text p{
     margin-bottom: 16px;
     color: #1E1E1E;
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 150%;
 }
 .blog-intro-block-text a{
     color: #6063A6;
