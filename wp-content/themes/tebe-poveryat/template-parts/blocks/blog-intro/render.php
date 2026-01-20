@@ -1,8 +1,6 @@
 <?php
-// Простейший пример
 $text = get_field('text');
 $image = get_field('image');
-
 <div class="blog-intro-block">
     <?php if($text){?>
         <div class="blog-intro-block-text">
@@ -12,7 +10,7 @@ $image = get_field('image');
 
     <?php if($image){ ?>
         <div class="blog-intro-block-image">
-        <?php echo wp_kses_post($image); ?>
+        <img src="<?php echo wp_kses_post($image); ?>" alt="<?php the_title();?>">
         </div>
     <?php } ?>
 </div>
