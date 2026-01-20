@@ -2,7 +2,7 @@
     display:flex;
 }
 .block-slider-text-col{
-    max-width:692px;
+    max-width:650px;
 }
 .block-slider-text_slider-inner-item img{
     width: 100%;
@@ -10,5 +10,5 @@
     border-radius: 20px;
 }
 .block-slider-text_text{
-    max-width: 440px;
+
 }
