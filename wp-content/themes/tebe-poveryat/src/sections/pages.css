@@ -47,6 +47,7 @@
 }
 .bloglist-content{
     margin:auto;
+    margin-bottom: 90px;
 }
 .bloglist-wrapper{
     display:flex;
