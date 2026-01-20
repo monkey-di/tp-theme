@@ -25,9 +25,9 @@ if ($has_data) { ?>
                         <?php } ?>
                     </div>
                     <!-- навигация -->
-                    <div class="block-slider-text_slider-navi">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                    <div class="slider-navigation block-slider-text_slider-navi">
+                        <div class="swiper-button-next media-next cursor-pointer hover:opacity-70 transition"></div>
+                        <div class="swiper-button-prev media-prev cursor-pointer hover:opacity-70 transition"></div>
                     </div>
                 </div>
             <?php } ?>
