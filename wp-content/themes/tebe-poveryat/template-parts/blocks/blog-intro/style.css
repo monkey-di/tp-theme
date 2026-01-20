@@ -1,3 +1,16 @@
 .blog-intro-block{
     display:flex;
 }
+.blog-single-title{
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+.blog-intro-block .post-meta span{
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 150%;
+}
