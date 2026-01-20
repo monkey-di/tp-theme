@@ -1,8 +1,7 @@
 <?php
 /*
     Template Name: Blog Item Page
- */
-
+*/
 get_header();
 ?>
     <main class="site-main blog-single">
