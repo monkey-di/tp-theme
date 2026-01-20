@@ -116,15 +116,16 @@
     border: 1px solid #6063A666;
     color: #1E1E1E;
     font-size: 20px;
-    padding: 16px 20px;
+    padding: 8.2px 20px;
     background: #fff;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url(/wp-content/themes/tebe-poveryat/assets/images/arrow-sort.svg);
     background-repeat: no-repeat;
-    background-position: right 10px top 50%;
+    background-position: right 20px top 50%;
     background-size: 16px;
+    width: 324px;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
