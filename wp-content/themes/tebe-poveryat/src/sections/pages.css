@@ -26,6 +26,18 @@
     padding-right: 0;
     padding-top: 40px;
 }
+.blog-page .page-head-wrapper{
+    justify-content: space-evenly;
+}
+.blog-page .page-head-picture img{
+    margin-top: -30px;
+}
+.blog-page .page-head-title{
+    padding-top: 20px;
+}
+.blog-page .page-head-title{
+    font-size: 180px;
+}
 .page-head-description{
     color:#19232E;
     line-height:150%;
@@ -41,7 +53,8 @@
 }
 .bloglist-content{
     margin:auto;
-    margin-bottom: 90px;
+    margin-bottom: 160px;
+    padding-top:35px;
 }
 .bloglist-wrapper{
     display:flex;
@@ -126,6 +139,7 @@
     background-position: right 20px top 50%;
     background-size: 16px;
     width: 324px;
+    font-family: "Akrobat";
 }
 @media(max-width:1400px){
     .page-head-wrapper{
