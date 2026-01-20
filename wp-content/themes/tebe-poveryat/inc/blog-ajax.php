@@ -158,7 +158,9 @@ function get_custom_post_html($post_type = 'blog_item') {
             <div class="post-meta">
                 <time>
                     <img src="/wp-content/themes/tebe-poveryat/assets/images/calendar.svg">
-                    <?php echo get_the_date(); ?>
+                    <span>
+                        <?php echo get_the_date(); ?>
+                    </span>
                 </time>
             </div>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
