@@ -3,6 +3,7 @@ $text = get_field('text');
 $image = get_field('image');
 ?>
 <div class="blog-intro-block">
+    test2
     <?php if($text){?>
         <div class="post-meta">
             <time>
