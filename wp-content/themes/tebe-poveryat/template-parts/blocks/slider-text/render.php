@@ -21,7 +21,7 @@ if ($has_data) { ?>
                     <?php while ( have_rows('slider') ) {
                         the_row();?>
                         <div class="block-slider-text_slider-inner-item">
-                            <img src="<?php the_sub_field('sub_field_name'); ?>">
+                            <img src="<?php the_sub_field('slider-image'); ?>">
                         </div>
                     <? } ?>
                 </div>
