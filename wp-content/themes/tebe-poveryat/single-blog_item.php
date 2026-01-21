@@ -8,6 +8,7 @@ get_header();
         <div class="container mx-auto">
             <?php echo apply_filters( 'the_content', '<!-- wp:acf/blog-intro /-->' ); ?>
             <?php echo apply_filters( 'the_content', '<!-- wp:acf/slider-text /-->' ); ?>
+            <?php echo apply_filters( 'the_content', '<!-- wp:acf/full-video /-->' ); ?>
         </div>
     </main>
 <?php
