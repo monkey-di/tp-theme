@@ -202,7 +202,11 @@ function get_custom_post_html($post_type = 'blog_item') {
             </div>
             <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
             <div class="post-excerpt">
-                <?php the_excerpt(); ?>
+                <?php if(get_field('excerpt')){
+                    the_field('excerpt');
+                } else {
+                    the_excerpt();
+                }?>
             </div>
         </div>
     </article>
