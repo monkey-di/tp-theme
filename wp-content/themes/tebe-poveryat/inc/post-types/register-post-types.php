@@ -248,7 +248,7 @@ function tp_register_team() {
 		'hierarchical'        => false,
 		'menu_position'       => 86,
 		'menu_icon'           => 'dashicons-businessman',
-		'supports'            => array( 'title', 'editor', 'thumbnail' ),
+		'supports'            => array( 'title', 'except', 'editor', 'thumbnail' ),
 		'show_in_rest'        => true,
 	);
 
