@@ -9,25 +9,24 @@ if(function_exists('get_field')) {
     $image = get_field('image');
 }
 ?>
-test video 4
 <div class="full-video-block">
+    <div class="video-container" id="videoContainer">
+        <!-- Заглушка с превью и кнопкой -->
+        <div class="video-placeholder">
+            <img src="<?php echo $image; ?>"
+                 alt="Превью видео"
+                 class="video-thumbnail"
+                 id="videoThumbnail">
+            <button class="play-button" id="playButton"></button>
+        </div>
 
-<div class="video-container" id="videoContainer">
-    <!-- Заглушка с превью и кнопкой -->
-    <div class="video-placeholder">
-        <img src="<?php echo $image; ?>"
-             alt="Превью видео"
-             class="video-thumbnail"
-             id="videoThumbnail">
-        <button class="play-button" id="playButton"></button>
+        <!-- Контейнер для встроенного видео -->
+        <iframe class="video-iframe"
+                id="videoPlayer"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+        </iframe>
     </div>
-
-    <!-- Контейнер для встроенного видео -->
-    <iframe class="video-iframe"
-            id="videoPlayer"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -36,7 +35,7 @@ test video 4
         const videoPlayer = document.getElementById('videoPlayer');
         const videoThumbnail = document.getElementById('videoThumbnail');
 
-        // Замените этот URL на ваш YouTube/Vimeo или другой источник
+        // Источник видео
         const videoUrl = '<?php echo $file; ?>';
 
         // Обработчик клика по кнопке воспроизведения
@@ -44,19 +43,19 @@ test video 4
             // Загружаем видео в iframe
             videoPlayer.src = videoUrl;
 
-            // Добавляем класс для переключения видимости
+            // Класс для переключения видимости
             videoContainer.classList.add('video-started');
 
-            // Опционально: фокус на видео для управления с клавиатуры
+            // Фокус на видео для управления с клавиатуры
             videoPlayer.focus();
         });
 
-        // Опционально: запуск при клике на превью
+        // Запуск при клике на превью
         videoThumbnail.addEventListener('click', function() {
             playButton.click();
         });
 
-        // Опционально: запуск при нажатии пробела или Enter на контейнере
+        // Зпуск при нажатии пробела или Enter на контейнере
         videoContainer.addEventListener('keydown', function(e) {
             if (e.code === 'Space' || e.code === 'Enter') {
                 e.preventDefault();
@@ -64,13 +63,12 @@ test video 4
             }
         });
 
-        // Устанавливаем tabindex для доступности
+        // tabindex для доступности
         videoContainer.setAttribute('tabindex', '0');
         videoContainer.setAttribute('role', 'button');
         videoContainer.setAttribute('aria-label', 'Воспроизвести видео');
     });
 </script>
-</div>
 <style>
     .video-container {
         position: relative;
@@ -133,7 +131,7 @@ test video 4
     .video-placeholder img{
         border-radius: 20px;
     }
-    /* Скрываем элементы после запуска видео */
+    /* Скрыть элементы после запуска видео */
     .video-started .video-placeholder {
         display: none;
     }
