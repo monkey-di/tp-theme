@@ -71,3 +71,72 @@ test video 3
     });
 </script>
 </div>
+<style>
+    .video-container {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+
+    .video-thumbnail {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: opacity 0.3s;
+    }
+
+    .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 0, 0, 0.8);
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .play-button:hover {
+        background: rgba(255, 0, 0, 1);
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .play-button::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 20px solid white;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 5px;
+    }
+
+    .video-iframe {
+        width: 100%;
+        height: 450px;
+        border: none;
+        display: none;
+    }
+
+    .video-placeholder {
+        position: relative;
+    }
+
+    /* Скрываем элементы после запуска видео */
+    .video-started .video-placeholder {
+        display: none;
+    }
+
+    .video-started .video-iframe {
+        display: block;
+    }
+</style>
