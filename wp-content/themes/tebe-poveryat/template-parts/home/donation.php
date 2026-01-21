@@ -228,6 +228,7 @@
     }
     .donation-form__custom-amount:focus-visible {
         border-color: #6063A6;
-        box-shadow: 0 0 0 3px rgba(96, 99, 166, 0.3);
+        box-shadow: 0 0 0 3px #6063A6;
+        outline: none;
     }
 </style>
