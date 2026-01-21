@@ -93,7 +93,7 @@ test video 4
         transform: translate(-50%, -50%);
         width: 80px;
         height: 80px;
-        background: rgba(255, 0, 0, 0.8);
+        background: rgba(254, 241, 236, 0.3)
         border-radius: 50%;
         border: none;
         cursor: pointer;
@@ -105,7 +105,7 @@ test video 4
     }
 
     .play-button:hover {
-        background: rgba(255, 0, 0, 1);
+        background: rgba(254, 241, 236, 1)
         transform: translate(-50%, -50%) scale(1.1);
     }
 
