@@ -93,7 +93,7 @@ test video 4
         transform: translate(-50%, -50%);
         width: 80px;
         height: 80px;
-        background: rgba(254, 241, 236, 0.3)
+        background: rgba(254, 241, 236, 0.3);
         border-radius: 50%;
         border: none;
         cursor: pointer;
