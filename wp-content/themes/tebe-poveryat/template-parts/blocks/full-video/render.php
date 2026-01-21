@@ -130,7 +130,9 @@ test video 4
     .video-placeholder {
         position: relative;
     }
-
+    .video-placeholder img{
+        border-radius: 20px;
+    }
     /* Скрываем элементы после запуска видео */
     .video-started .video-placeholder {
         display: none;
