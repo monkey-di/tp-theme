@@ -230,5 +230,6 @@
         border-color: #6063A6;
         box-shadow: 0 0 0 3px #6063A6;
         outline: none;
+        border: 2px solid #fff;
     }
 </style>
