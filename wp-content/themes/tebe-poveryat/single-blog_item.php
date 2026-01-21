@@ -11,5 +11,6 @@ get_header();
             <?php echo apply_filters( 'the_content', '<!-- wp:acf/full-video /-->' ); ?>
         </div>
     </main>
+<?php the_content();?>
 <?php
 get_footer();
