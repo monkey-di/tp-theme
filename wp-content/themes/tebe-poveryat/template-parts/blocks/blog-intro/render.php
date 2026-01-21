@@ -7,7 +7,7 @@ $text = '';
 $image = '';
 if(function_exists('get_field')) {
     $text = get_field('text');
-    $image = get_field('image');
+    $image = get_field('intro-image');
 }
 
 $has_data = !empty($text) || !empty($image);
