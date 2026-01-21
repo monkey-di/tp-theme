@@ -5,7 +5,7 @@
 $file = '';
 $image = '';
 if(function_exists('get_field')) {
-    $file = get_field('url');
+    $file = get_field('file');
     $image = get_field('image');
 }
 ?>
