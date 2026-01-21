@@ -169,7 +169,8 @@
     margin-bottom: 160px;
 }
 .back-blog-button{
-    margin-top: 40px;
+    margin: 40px auto 0 auto;
+    max-width: 1170px;
 }
 .back-blog-button a{
     color:#6063A6;
