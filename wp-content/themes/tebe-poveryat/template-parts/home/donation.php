@@ -220,4 +220,10 @@
         background-color: #6063A6 !important;
         color: #fff !important;
     }
+    .donation-form__toggle-button{
+        cursor: pointer;
+    }
+    .donation-form__amount-button{
+        cursor: pointer;
+    }
 </style>
