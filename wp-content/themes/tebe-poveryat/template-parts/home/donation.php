@@ -5,7 +5,7 @@
  */
 ?>
 <section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[140px]">
-    
+
     <!-- Mobile Background -->
     <div class="md:hidden">
         <div class="donation-form__decor-svg absolute inset-0 z-0 pointer-events-none">
@@ -48,25 +48,25 @@
         <?php } ?>
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">
             <!-- Toggle Button Group (Разово/Ежемесячно) -->
-            <div class="donation-form__toggle mb-8 w-full">
-                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--active">Разово</button>
-                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--inactive">Ежемесячно</button>
+            <div class="donation-form__toggle mb-8 w-full" data-type-toggle>
+                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--active" data-donation-type="one-time">Разово</button>
+                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--inactive" data-donation-type="monthly">Ежемесячно</button>
             </div>
         </div>
-            <?php if( !is_front_page() ) { ?>
+        <?php if( !is_front_page() ) { ?>
             <div class="donate-description">
                 <p>Спасибо за поддержку! Именно она помогает нам работать. Частные пожертвования делают организацию независимой и устойчивой, ведь грантов может не быть, а бизнес может отказаться от финансирования.
                 </p>
             </div>
-            <?php } ?>
+        <?php } ?>
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">
             <!-- Amount Buttons & Custom Amount Input -->
-            <div class="donation-form__amounts mb-[23px]">
-                <button type="button" class="donation-form__amount-button">100₽</button>
-                <button type="button" class="donation-form__amount-button">300₽</button>
-                <button type="button" class="donation-form__amount-button">500₽</button>
-                <button type="button" class="donation-form__amount-button donation-form__amount-button--selected">1000₽</button>
-                <input type="text" placeholder="Другая сумма" class="donation-form__custom-amount" />
+            <div class="donation-form__amounts mb-[23px]" data-amount-container>
+                <button type="button" class="donation-form__amount-button" data-amount="100">100₽</button>
+                <button type="button" class="donation-form__amount-button" data-amount="300">300₽</button>
+                <button type="button" class="donation-form__amount-button" data-amount="500">500₽</button>
+                <button type="button" class="donation-form__amount-button donation-form__amount-button--selected" data-amount="1000">1000₽</button>
+                <input type="text" placeholder="Другая сумма" class="donation-form__custom-amount" data-custom-amount />
             </div>
             <div class="self-stretch h-px bg-white mb-[23px]" > </div>
             <hr class="border-t border-white  mx-auto max-w-[708px]" />
@@ -97,10 +97,10 @@
 
             <!-- Submit Button -->
             <?php get_template_part('template-parts/components/button', null, [
-                'text' => 'Помочь',
-                'submit' => true,
-                'size' => 'help',
-                'class' => 'w-full md:w-[348px] mx-auto'
+                    'text' => 'Помочь',
+                    'submit' => true,
+                    'size' => 'help',
+                    'class' => 'w-full md:w-[348px] mx-auto'
             ]); ?>
         </div>
     </div>
@@ -108,16 +108,116 @@
 
 <!-- Inline JS for Checkbox Toggle -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-            if (this.checked) {
-                checkmark.classList.remove('hidden');
-            } else {
-                checkmark.classList.add('hidden');
-            }
+    document.addEventListener('DOMContentLoaded', () => {
+        // Checkbox toggle
+        document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                if (this.checked) {
+                    checkmark.classList.remove('hidden');
+                } else {
+                    checkmark.classList.add('hidden');
+                }
+            });
         });
+
+        // Donation type toggle (Разово/Ежемесячно)
+        const typeToggleContainer = document.querySelector('[data-type-toggle]');
+        const typeButtons = document.querySelectorAll('.donation-form__toggle-button');
+
+        if (typeToggleContainer) {
+            typeToggleContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('donation-form__toggle-button')) {
+                    // Remove active class from all buttons
+                    typeButtons.forEach(btn => {
+                        btn.classList.remove('donation-form__toggle-button--active');
+                        btn.classList.add('donation-form__toggle-button--inactive');
+                    });
+
+                    // Add active class to clicked button
+                    e.target.classList.remove('donation-form__toggle-button--inactive');
+                    e.target.classList.add('donation-form__toggle-button--active');
+                }
+            });
+        }
+
+        // Amount buttons and custom input
+        const amountContainer = document.querySelector('[data-amount-container]');
+        const amountButtons = document.querySelectorAll('[data-amount]');
+        const customAmountInput = document.querySelector('[data-custom-amount]');
+
+        if (amountContainer && customAmountInput) {
+            // Handle amount button clicks
+            amountButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove selected class from all buttons
+                    amountButtons.forEach(btn => {
+                        btn.classList.remove('donation-form__amount-button--selected');
+                    });
+
+                    // Add selected class to clicked button
+                    button.classList.add('donation-form__amount-button--selected');
+
+                    // Clear custom input
+                    customAmountInput.value = '';
+                });
+            });
+
+            // Handle custom input focus
+            customAmountInput.addEventListener('focus', () => {
+                // Remove selected class from all amount buttons
+                amountButtons.forEach(btn => {
+                    btn.classList.remove('donation-form__amount-button--selected');
+                });
+            });
+
+            // Allow only numbers in custom input
+            customAmountInput.addEventListener('input', (e) => {
+                // Remove all non-digit characters except for the first character if it's a minus sign (for negative numbers)
+                let value = e.target.value;
+                // Allow only digits
+                value = value.replace(/[^\d]/g, '');
+                e.target.value = value;
+            });
+
+            // Prevent non-numeric input on keydown (optional extra protection)
+            customAmountInput.addEventListener('keydown', (e) => {
+                // Allow: backspace, delete, tab, escape, enter, decimal point
+                if ([46, 8, 9, 27, 13, 110, 190].includes(e.keyCode) ||
+                    // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                    (e.keyCode === 65 && e.ctrlKey === true) ||
+                    (e.keyCode === 67 && e.ctrlKey === true) ||
+                    (e.keyCode === 86 && e.ctrlKey === true) ||
+                    (e.keyCode === 88 && e.ctrlKey === true) ||
+                    // Allow: home, end, left, right
+                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+                    return;
+                }
+
+                // Ensure that it's a number and stop the keypress if not
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        }
     });
-});
 </script>
+
+<style>
+    /* Styles for toggle buttons */
+    .donation-form__toggle-button--active {
+        background-color: #6063A6 !important;
+        color: #fff !important;
+    }
+
+    .donation-form__toggle-button--inactive {
+        background-color: transparent !important;
+        color: inherit !important;
+    }
+
+    /* Styles for amount buttons */
+    .donation-form__amount-button--selected {
+        background-color: #6063A6 !important;
+        color: #fff !important;
+    }
+</style>
