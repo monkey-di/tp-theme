@@ -9,8 +9,7 @@ if(function_exists('get_field')) {
     $image = get_field('image');
 }
 ?>
-test video 2
-<?php print_r($file); ?>
+test video 3
 <div class="full-video-block">
 
 <div class="video-container" id="videoContainer">
