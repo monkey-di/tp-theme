@@ -254,4 +254,7 @@
     .blog-page .page-head-title{
         font-size:32px;
     }
+    .back-blog-button{
+        text-align:center;
+    }
 }
