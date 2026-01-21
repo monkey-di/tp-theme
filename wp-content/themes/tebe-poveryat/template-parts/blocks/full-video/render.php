@@ -74,7 +74,7 @@ test video 4
 <style>
     .video-container {
         position: relative;
-        max-width: 800px;
+        max-width: 1170px;
         margin: 0 auto;
         cursor: pointer;
     }
