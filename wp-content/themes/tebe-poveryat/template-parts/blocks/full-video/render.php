@@ -105,7 +105,7 @@ test video 4
     }
 
     .play-button:hover {
-        background: rgba(254, 241, 236, 1);
+        background: rgba(255, 0, 0, 1);
         transform: translate(-50%, -50%) scale(1.1);
     }
 
