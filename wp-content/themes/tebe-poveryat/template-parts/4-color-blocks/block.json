@@ -1,7 +1,7 @@
 {
-  "name": "acf/4-color-block",
-  "title": "4 цветных блока",
-  "description": "4 цветных блока как для страницы ПОЛУЧИТЬ ЮРИДИЧЕСКУЮ ПОМОЩЬ",
+  "name": "acf/color-blocks",
+  "title": "Цветные блоки",
+  "description": "Цветные блоки как для страницы ПОЛУЧИТЬ ЮРИДИЧЕСКУЮ ПОМОЩЬ",
   "category": "formatting",
   "icon": "admin-comments",
   "keywords": ["color-blocks"],
