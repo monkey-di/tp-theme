@@ -262,3 +262,12 @@
 .ahb_m4 #fbuilder .fields label {
     display: none;
 }
+.ahb_m4 #fbuilder .ui-datepicker-header {
+    background-color: inherit;
+    color: #000000;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    font-family: "Geologica";
+}
