@@ -3,11 +3,14 @@
  * Шаблон блока "Спойлеры FaQ"
  * Работает в редакторе (админке) и на фронтенде
  */
-$faq = '';
-if(function_exists('get_field')) {
-    $faq = get_field('faq-content');
-}
-print_r($faq);
 ?>
-
+<?php
+if( have_rows('faq-content') ){
+    while ( have_rows('faq-content') ) {
+        the_row();
+        the_sub_field('faq-question');
+        the_sub_field('faq-answer');
+    }
+}
+?>
 <?php
