@@ -4,7 +4,7 @@
   "description": "Спойлеры для FaQ",
   "category": "formatting",
   "icon": "admin-comments",
-  "keywords": ["color-blocks"],
+  "keywords": ["FaQ", "spoilers"],
   "acf": {
     "mode": "preview",
     "renderTemplate": "render.php",
