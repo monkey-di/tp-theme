@@ -1,10 +1,9 @@
 <?php
 /**
- * Шаблон блока "Интро блога"
+ * Шаблон блока "Спойлеры FaQ"
  * Работает в редакторе (админке) и на фронтенде
  */
-$text = '';
-$image = '';
+$faq = '';
 if(function_exists('get_field')) {
     $faq = get_field('faq-content');
 }
