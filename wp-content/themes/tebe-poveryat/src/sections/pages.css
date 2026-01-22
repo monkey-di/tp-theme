@@ -259,7 +259,7 @@
     }
 }
 /*Форма и календарь, страница "Получить юридическую помощь"*/
-#fieldlist_1 label{
+#fieldlist_1 #field_1-0 label{
     display: none;
 }
 .fieldCalendarServicefieldname1_1{
