@@ -2,7 +2,7 @@
 		{
 			id:"ftextarea",
 			name:"Text Area",
-			control_category:1
+			control_category:3
 		}
 	);
 	$.fbuilder.controls[ 'ftextarea' ] = function(){};
