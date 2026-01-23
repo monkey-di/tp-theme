@@ -188,8 +188,9 @@
     background: #6063A6;
     color: #fff;
 }
-.faq-spoiler{
+.faq-spoiler-content{
     max-width: 930px;
+    margin:auto;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
