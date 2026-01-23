@@ -20,7 +20,7 @@ $faq_title = get_field('faq-title');
         while ( have_rows('faq-content') ) {
             the_row(); ?>
             <details>
-                <summary><?php wp_kses_post(the_sub_field('faq-question'));?></summary>
+                <summary><span><?php wp_kses_post(the_sub_field('faq-question'));?></span></summary>
                 <div class="faq-details-content"><?php wp_kses_post(the_sub_field('faq-answer'));?></div>
             </details>
        <?php }
