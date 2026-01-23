@@ -26,6 +26,13 @@ $faq_title = get_field('faq-title');
        <?php }
     }
     ?>
+    <?php if(get_field('faq-button-url') || get_field('faq-button-txt')){?>
+        <div class="faq-spoiler-button">
+            <a href="<?php the_field('faq-button-url');?>">
+                <?php the_field('faq-button-txt');?>
+            </a>
+        </div>
+    <?php } ?>
     </div>
 </div>
 <?php
