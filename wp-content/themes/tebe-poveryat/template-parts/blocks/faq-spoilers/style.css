@@ -5,10 +5,18 @@
     display: block;
     margin-top: -100px;
 }
+.faq-spoiler h2{
+    padding-top: 80px;
+}
 .faq-spoiler-content{
     max-width: 930px;
     margin:auto;
 }
 .faq-spoiler-content h2{
     text-align: center;
+}
+.faq-spoiler-content details{
+    background: #FEF1EC;
+    border-radius:16px;
+    padding:20px 0 20px 24px;
 }
