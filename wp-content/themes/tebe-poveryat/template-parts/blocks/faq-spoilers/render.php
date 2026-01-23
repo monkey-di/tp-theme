@@ -12,7 +12,7 @@ $faq_title = get_field('faq-title');
         background: <?php echo $faq_bg_color; ?>;
     }
 </style>
-<div class="faq-spoiler" style="background-color:<?php echo $faq_bg_color; ?>;background-image:url(<?php echo $faq_bg_img; ?>)">
+<div class="faq-spoiler z-20 bg-surface relative [border-radius:0_0_50%_50%_/_0_0_40px_40px] lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]" style="background-color:<?php echo $faq_bg_color; ?>;background-image:url(<?php echo $faq_bg_img; ?>)">
 <div class="faq-spoiler-content">
     <h2><?php echo $faq_title;?></h2>
     <?php
