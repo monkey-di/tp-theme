@@ -35,3 +35,14 @@
     line-height: 150%;
     padding-top: 8px;
 }
+.faq-details-content summary::-webkit-details-marker{display:none;}
+.faq-details-content summary::-moz-list-bullet{list-style-type:none;}
+.faq-details-content summary::marker{display:none;}
+.faq-details-content summary:after{
+    content:'';
+    background:url(/wp-content/themes/tebe-poveryat/assets/images/spolier-arrow.svg);
+    dusplay:block;
+}
+faq-details-content open summary:after{
+    transform: rotate(90deg);
+}
