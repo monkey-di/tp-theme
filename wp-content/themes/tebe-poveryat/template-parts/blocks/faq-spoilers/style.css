@@ -66,3 +66,23 @@
 .faq-spoiler-content details[open] summary:after{
     transform: rotate(180deg);
 }
+.faq-spoiler-button{
+    text-align: center;
+}
+.faq-spoiler-button a{
+    font-family: "Geologica";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-transform: uppercase;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 16px 27.5px;
+    background: #6063A6;
+    cursor: pointer;
+}
+.faq-spoiler-button a:hover{
+    color:#6063A6;
+    background: #fff;
+    border-color: #6063A6;
+}
