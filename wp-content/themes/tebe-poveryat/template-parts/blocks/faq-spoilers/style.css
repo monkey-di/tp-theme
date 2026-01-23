@@ -14,6 +14,7 @@
 }
 .faq-spoiler-content h2{
     text-align: center;
+    padding-bottom: 40px;
 }
 .faq-spoiler-content details{
     background: #FEF1EC;
