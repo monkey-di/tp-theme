@@ -50,6 +50,8 @@
     display:block;
     width: 40px;
     height: 40px;
+    margin-left:8;
+    margin-right:24px;
 }
 .faq-spoiler-content open summary:after{
     transform: rotate(90deg);
