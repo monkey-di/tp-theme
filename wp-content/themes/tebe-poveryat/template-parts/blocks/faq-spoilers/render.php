@@ -6,6 +6,11 @@
 $faq_bg_color = get_field('faq-bg-color');
 $faq_bg_img = get_field('faq-bg-img');
 ?>
+<style>
+    .faq-spoiler:before{
+        background: <?php echo $faq_bg_color; ?>;
+    }
+</style>
 <div class="faq-spoiler" style="background-color:<?php echo $faq_bg_color; ?>;background-image:<?php echo $faq_bg_img; ?>">
 <div class="faq-spoiler-content">
     <h2>Частые вопросы <br>и ответы</h2>

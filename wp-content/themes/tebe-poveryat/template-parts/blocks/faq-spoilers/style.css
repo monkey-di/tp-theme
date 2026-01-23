@@ -1,3 +1,6 @@
+.faq-spoiler:before{
+    content: '';
+}
 .faq-spoiler-content{
     max-width: 930px;
     margin:auto;
