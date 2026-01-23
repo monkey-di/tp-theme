@@ -37,7 +37,10 @@
     line-height: 150%;
     padding-top: 8px;
 }
-.faq-spoiler-content details summary {list-style: none;}
+.faq-spoiler-content details summary {
+    list-style: none;
+    display: flex;
+}
 .faq-spoiler-content details summary::marker {display:none;}
 .faq-spoiler-content details summary::-webkit-details-marker {display:none;}
 .faq-spoiler-content details summary::-moz-list-bullet {list-style-type:none;}
@@ -45,6 +48,8 @@
     content:'';
     background:url(/wp-content/themes/tebe-poveryat/assets/images/spolier-arrow.svg);
     display:block;
+    width: 40px;
+    height: 40px;
 }
 .faq-spoiler-content open summary:after{
     transform: rotate(90deg);
