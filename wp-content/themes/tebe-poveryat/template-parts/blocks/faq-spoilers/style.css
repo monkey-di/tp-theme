@@ -82,6 +82,7 @@
     padding: 16px 27.5px;
     background: #6063A6;
     cursor: pointer;
+    border-radius: 40px;
 }
 .faq-spoiler-button a:hover{
     color:#6063A6;
