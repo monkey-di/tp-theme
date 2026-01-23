@@ -37,12 +37,14 @@
     line-height: 150%;
     padding-top: 8px;
 }
-.faq-details-content details summary::marker{display:none;}
-.faq-details-content details summary:after{
+.faq-spoiler-content details summary::-webkit-details-marker{display:none;}
+.faq-spoiler-content details summary::-moz-list-bullet{list-style-type:none;}
+.faq-spoiler-content details summary::marker{display:none;}
+.faq-spoiler-content details summary:after{
     content:'';
     background:url(/wp-content/themes/tebe-poveryat/assets/images/spolier-arrow.svg);
     display:block;
 }
-.faq-details-content open summary:after{
+.faq-spoiler-content open summary:after{
     transform: rotate(90deg);
 }
