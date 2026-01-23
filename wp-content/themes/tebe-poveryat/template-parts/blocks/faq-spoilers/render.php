@@ -3,8 +3,10 @@
  * Шаблон блока "Спойлеры FaQ"
  * Работает в редакторе (админке) и на фронтенде
  */
+$faq_bg_color = get_field('faq-bg-color');
+$faq_bg_img = get_field('faq-bg-img')
 ?>
-<div class="faq-spoiler">
+<div class="faq-spoiler" style="background-color:<?php echo $faq_bg_color; ?>;background-image:<?php echo $faq_bg_img; ?>">
 <div class="faq-spoiler-content">
     <?php
     if( have_rows('faq-content') ){
