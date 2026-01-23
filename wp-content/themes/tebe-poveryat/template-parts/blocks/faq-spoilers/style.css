@@ -37,8 +37,6 @@
     line-height: 150%;
     padding-top: 8px;
 }
-.faq-details-content details summary::-webkit-details-marker{display:none;}
-.faq-details-content details summary::-moz-list-bullet{list-style-type:none;}
 .faq-details-content details summary::marker{display:none;}
 .faq-details-content details summary:after{
     content:'';
