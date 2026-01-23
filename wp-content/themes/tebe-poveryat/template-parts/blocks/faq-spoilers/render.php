@@ -5,6 +5,7 @@
  */
 $faq_bg_color = get_field('faq-bg-color');
 $faq_bg_img = get_field('faq-bg-img');
+$faq_title = get_field('faq-title');
 ?>
 <style>
     .faq-spoiler:before{
@@ -13,7 +14,7 @@ $faq_bg_img = get_field('faq-bg-img');
 </style>
 <div class="faq-spoiler" style="background-color:<?php echo $faq_bg_color; ?>;background-image:url(<?php echo $faq_bg_img; ?>)">
 <div class="faq-spoiler-content">
-    <h2>Частые вопросы <br>и ответы</h2>
+    <h2><?php echo $faq_title;?></h2>
     <?php
     if( have_rows('faq-content') ){
         while ( have_rows('faq-content') ) {
