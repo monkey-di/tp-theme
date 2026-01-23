@@ -42,6 +42,9 @@
     display: flex;
     justify-content: space-between;
 }
+.faq-spoiler-content details summary span{
+    max-width:calc(100% - 100px);
+}
 .faq-spoiler-content details summary::marker {display:none;}
 .faq-spoiler-content details summary::-webkit-details-marker {display:none;}
 .faq-spoiler-content details summary::-moz-list-bullet {list-style-type:none;}
