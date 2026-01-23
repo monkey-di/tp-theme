@@ -41,6 +41,7 @@
     list-style: none;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 .faq-spoiler-content details .faq-details-content{
     max-width:calc(100% - 100px);
