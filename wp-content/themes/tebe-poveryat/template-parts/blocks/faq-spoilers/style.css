@@ -42,6 +42,9 @@
     display: flex;
     justify-content: space-between;
 }
+.faq-spoiler-content details .faq-details-content{
+    max-width:calc(100% - 100px);
+}
 .faq-spoiler-content details summary span{
     max-width:calc(100% - 100px);
     display: flex;
