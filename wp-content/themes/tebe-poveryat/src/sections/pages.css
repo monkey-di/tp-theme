@@ -261,7 +261,7 @@
     flex-direction: column;
 }
 #fieldname8_1{
-    width: 100%;
+    max-width: 100%;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
