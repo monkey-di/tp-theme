@@ -207,6 +207,10 @@
 #field_1-6{order:50;}
 #field_1-7{order:60;}
 .pbSubmit{order:80;}
+#fbuilder_1{
+    max-width: 1170px;
+    margin: auto;
+}
 #fbuilder .calendar-col-1 input{
     width:100%;
     max-width: 394px;
