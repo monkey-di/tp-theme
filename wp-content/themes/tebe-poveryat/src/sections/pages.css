@@ -221,6 +221,10 @@
     text-align: center;
     vertical-align: middle;
 }
+.slotsCalendarfieldname1_1{
+    display: flex;
+    max-width: 334px
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
