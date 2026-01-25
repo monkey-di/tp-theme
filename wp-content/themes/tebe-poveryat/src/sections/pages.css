@@ -207,7 +207,7 @@
 #field_1-6{order:50;}
 #field_1-7{order:60;}
 .pbSubmit{order:80;}
-.calendar-col-1 input{
+#fbuilder .calendar-col-1 input{
     width:100%;
     max-width: 394px;
     min-width: 394px;
