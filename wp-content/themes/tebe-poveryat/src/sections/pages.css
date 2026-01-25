@@ -246,7 +246,7 @@
     display: flex;
     max-width: 334px;
 }
-.ui-datepicker-calendar tr th{
+.ui-datepicker-calendar tr th span{
     font-family: "Geologica";
     font-weight: 400;
     font-size: 10px;
