@@ -209,6 +209,12 @@
 .calendar-col-1 input{
     width:100%;
     max-width: 394px;
+    min-width: 394px;
+    font-family: "Geologica";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
 }
 .fieldCalendar{
     max-width: 334px;
@@ -223,7 +229,7 @@
 }
 .slotsCalendarfieldname1_1{
     display: flex;
-    max-width: 334px
+    max-width: 334px;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
