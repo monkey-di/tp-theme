@@ -222,7 +222,7 @@
 .fieldCalendar{
     max-width: 334px;
 }
-.ui-datepicker {
+.ui-state-default {
     font-family: "Geologica";
     font-weight: 300;
     font-size: 14px;
