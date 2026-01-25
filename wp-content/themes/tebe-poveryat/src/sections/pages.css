@@ -206,7 +206,7 @@
 #field_1-5{order:30;}
 #field_1-6{order:50;}
 #field_1-7{order:60;}
-.calendar-col-1{
+.calendar-col-1 input{
     width:100%;
     max-width: 394px;
 }
