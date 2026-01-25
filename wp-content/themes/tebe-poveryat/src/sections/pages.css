@@ -211,6 +211,14 @@
     max-width: 1170px;
     margin: auto;
 }
+#fbuilder .calendar-col-1{
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    background: #f5f5f5;
+    box-sizing: border-box;
+    flex: 1 0 calc(50% - 5px);
+}
 #fbuilder .calendar-col-1 input{
     width:100%;
     max-width: 394px;
