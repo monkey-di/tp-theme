@@ -438,8 +438,21 @@
     max-height: 474px;
     overflow-y:auto;
 }
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div a{
+    background:#FEF1EC;
+    color: #1E1E1E;
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 115%;
+}
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed a{
     background:#FBE5EA;
+    color: #D98B99;
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 115%;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
