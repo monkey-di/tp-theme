@@ -528,6 +528,7 @@
     background: #FEF1EC;
     border-radius: 16px;
     width: 100%;
+    position: relative;
     z-index: 30;
 }
 .select-button span{
