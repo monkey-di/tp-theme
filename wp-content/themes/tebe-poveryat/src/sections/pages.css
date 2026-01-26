@@ -405,6 +405,11 @@
     padding: 0 20px 16px 20px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
+    color:#6063A6;
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 100%;
 }
 .availableslot{
     width: 100%;
