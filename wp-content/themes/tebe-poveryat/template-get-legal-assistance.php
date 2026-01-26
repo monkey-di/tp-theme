@@ -47,6 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
+    console.log('test111');
     document.addEventListener('DOMContentLoaded', function() {
         // Находим контейнер с полями формы
         const fieldList = document.getElementById('fieldlist_1');
