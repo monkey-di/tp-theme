@@ -47,7 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test111');
+    console.log('test222');
     document.addEventListener('DOMContentLoaded', function() {
         function wrapElements() {
             // Находим родительский контейнер (можно указать конкретный, если известен)
