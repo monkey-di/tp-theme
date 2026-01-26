@@ -662,6 +662,9 @@
     border-color:transparent;
     background:#fff;
 }
+.ui-datepicker-current-day a{
+    background:#6063A6 !important;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
