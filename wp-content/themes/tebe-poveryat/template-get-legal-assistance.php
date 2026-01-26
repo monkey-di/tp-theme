@@ -49,53 +49,47 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 <script>
     console.log('test111');
     document.addEventListener('DOMContentLoaded', function() {
-        // Находим контейнер с полями формы
-        const fieldList = document.getElementById('fieldlist_1');
-        const pb0 = fieldList.querySelector('.pb0');
+        function wrapElements() {
+            // Находим родительский контейнер (можно указать конкретный, если известен)
+            const container = document.body; // или другой родительский элемент
 
-        if (!pb0) return;
+            // Создаем первую колонку
+            const col1Container = document.createElement('div');
+            col1Container.className = 'anketa-col anketa-col-1';
 
-        // Создаем первую колонку для полей формы
-        const anketaCol1 = document.createElement('div');
-        anketaCol1.className = 'anketa-col-1 anketa-col';
+            // Создаем вторую колонку
+            const col2Container = document.createElement('div');
+            col2Container.className = 'anketa-col anketa-col-2';
 
-        // Создаем вторую колонку для календаря, капчи и кнопки
-        const anketaCol2 = document.createElement('div');
-        anketaCol2.className = 'anketa-col-2 anketa-col';
+            // Находим все элементы и распределяем их
+            const allElements = container.querySelectorAll('.fields, .captcha, .pbSubmit');
 
-        // Собираем все calendar-col-1 в первую колонку
-        const calendarCol1Fields = pb0.querySelectorAll('.calendar-col-1');
-        calendarCol1Fields.forEach(field => {
-            anketaCol1.appendChild(field.cloneNode(true));
-            field.remove(); // Удаляем оригинальные элементы
-        });
+            allElements.forEach(element => {
+                if (element.classList.contains('calendar-col-1')) {
+                    col1Container.appendChild(element);
+                } else if (element.classList.contains('calendar-col-2') ||
+                    element.classList.contains('captcha') ||
+                    element.classList.contains('pbSubmit')) {
+                    col2Container.appendChild(element);
+                }
+            });
 
-        // Собираем calendar-col-2 во вторую колонку
-        const calendarCol2 = pb0.querySelector('.calendar-col-2');
-        if (calendarCol2) {
-            anketaCol2.appendChild(calendarCol2.cloneNode(true));
-            calendarCol2.remove();
+            // Очищаем старую структуру и добавляем новые колонки
+            // Вместо этого можно вставить колонки в нужное место
+            const referenceElement = allElements[0];
+            if (referenceElement && referenceElement.parentNode) {
+                const parent = referenceElement.parentNode;
+
+                // Вставляем первую колонку
+                parent.insertBefore(col1Container, referenceElement);
+
+                // Вставляем вторую колонку после первой
+                parent.insertBefore(col2Container, col1Container.nextSibling);
+            }
         }
 
-        // Собираем капчу во вторую колонку
-        const captcha = pb0.querySelector('.captcha');
-        if (captcha) {
-            anketaCol2.appendChild(captcha.cloneNode(true));
-            captcha.remove();
-        }
-
-        // Собираем кнопку во вторую колонку
-        const submitButton = pb0.querySelector('.pbSubmit');
-        if (submitButton) {
-            anketaCol2.appendChild(submitButton.cloneNode(true));
-            submitButton.remove();
-        }
-
-        // Очищаем pb0 и добавляем новые колонки
-        pb0.innerHTML = '';
-        pb0.appendChild(anketaCol1);
-        pb0.appendChild(anketaCol2);
-        console.log('test');
+// Вызываем функцию после загрузки DOM
+        document.addEventListener('DOMContentLoaded', wrapElements);
     });
 </script>
 <?php
