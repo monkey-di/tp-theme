@@ -47,47 +47,66 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test555');
-    document.addEventListener('DOMContentLoaded', function() {
-        // Находим родительский контейнер
-        const parentContainer = document.querySelector('.pb0');
-        if (!parentContainer) {
-            console.error('Родительский контейнер не найден');
-        } else {
-            // Создаем первый новый контейнер
-            const col1Container = document.createElement('div');
-            col1Container.className = 'anketa-col anketa-col-1';
+    console.log('test666');
+    function restructureForm() {
+        const parentContainer = document.querySelector('.pb0.pbreak');
+        if (!parentContainer) return false;
 
-            // Создаем второй новый контейнер
-            const col2Container = document.createElement('div');
-            col2Container.className = 'anketa-col anketa-col-2';
+        // Проверяем, была ли уже применена реструктуризация
+        if (parentContainer.querySelector('.anketa-col')) {
+            return true;
+        }
 
-            // Собираем все элементы с классом calendar-col-1
-            const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
+        // Создаем контейнеры
+        const col1 = document.createElement('div');
+        col1.className = 'anketa-col anketa-col-1';
 
-            // Собираем элементы для второго контейнера
-            const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
-            const captchaElement = parentContainer.querySelector('.captcha');
-            const buttonElement = parentContainer.querySelector('.pbSubmit');
+        const col2 = document.createElement('div');
+        col2.className = 'anketa-col anketa-col-2';
 
-            // Перемещаем элементы calendar-col-1 в первый контейнер
-            calendarCol1Elements.forEach(element => {
-                col1Container.appendChild(element);
-            });
+        // Собираем элементы
+        const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
+        const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
+        const captchaElement = parentContainer.querySelector('.captcha');
+        const buttonElement = parentContainer.querySelector('.pbSubmit');
 
-            // Перемещаем элементы во второй контейнер, если они существуют
-            if (calendarCol2Element) col2Container.appendChild(calendarCol2Element);
-            if (captchaElement) col2Container.appendChild(captchaElement);
-            if (buttonElement) col2Container.appendChild(buttonElement);
+        // Перемещаем элементы
+        calendarCol1Elements.forEach(element => {
+            col1.appendChild(element);
+        });
 
-            // Очищаем родительский контейнер
-            parentContainer.innerHTML = '';
+        if (calendarCol2Element) col2.appendChild(calendarCol2Element);
+        if (captchaElement) col2.appendChild(captchaElement);
+        if (buttonElement) col2.appendChild(buttonElement);
 
-            // Добавляем новые контейнеры в родительский элемент
-            parentContainer.appendChild(col1Container);
-            parentContainer.appendChild(col2Container);
+        // Очищаем и добавляем новые контейнеры
+        parentContainer.innerHTML = '';
+        parentContainer.appendChild(col1);
+        parentContainer.appendChild(col2);
+
+        console.log('Форма реструктурирована');
+        return true;
+    }
+
+    // Используем MutationObserver для отслеживания появления элемента
+    const observer = new MutationObserver((mutations, obs) => {
+        if (document.querySelector('.pb0.pbreak')) {
+            restructureForm();
+            // Можно отключить observer после выполнения
+            // obs.disconnect();
         }
     });
+
+    // Начинаем наблюдение
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Также проверяем сразу на случай, если элемент уже загружен
+    if (document.querySelector('.pb0.pbreak')) {
+        restructureForm();
+    }
 </script>
 <?php
 get_footer();
