@@ -276,6 +276,7 @@
 .anketa-col-1{
     display:flex;
     flex-wrap: wrap;
+    max-width: 812px;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
