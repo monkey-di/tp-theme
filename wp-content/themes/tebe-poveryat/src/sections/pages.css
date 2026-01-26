@@ -553,6 +553,8 @@
     text-transform: uppercase;
     color:#fff;
     background: rgba(96, 99, 166, 0.4);
+    width: 100%;
+    margin: 22px 0 0 0;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
