@@ -254,7 +254,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
 
         // Функция для добавления инлайн стиля display:none для блока .slotsCalendarfieldname1_1
-        function addInitialHideStyle() {
+      /*  function addInitialHideStyle() {
             const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
             if (targetBlock && !targetBlock.hasAttribute('data-initial-hide')) {
                 targetBlock.setAttribute('data-initial-hide', 'true');
@@ -262,7 +262,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 console.log('Блоку .slotsCalendarfieldname1_1 добавлен display:none');
             }
             return !!targetBlock;
-        }
+        }*/
 
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
