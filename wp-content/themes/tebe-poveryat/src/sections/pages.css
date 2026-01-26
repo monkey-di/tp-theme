@@ -434,10 +434,12 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div a{
     display: flex;
     justify-content: space-between;
+    border: none;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div{
     padding:0;
     margin:0;
+    border: none;
 }
 .slotsCalendar{
     max-height: 474px;
