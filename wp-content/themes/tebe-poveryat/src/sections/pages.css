@@ -384,9 +384,19 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-header{
     padding-top: 0;
 }
+.slotsCalendar .slots{
+    text-align: left;
+    background: #FEF1EC;
+    display: flex;
+    flex-wrap: wrap;
+}
 .slotsCalendar .slots:before{
     content: 'Выбор времени';
     display: block;
+    width:100%;
+}
+.slotsCalendar .slots span{
+    width: 100%;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
