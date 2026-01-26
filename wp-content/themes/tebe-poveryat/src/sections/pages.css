@@ -444,7 +444,7 @@
     margin:0;
     border: none;
 }
-#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div:nth-child(1) a{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div:first-child a{
     border-top-left-radius:16px;
     border-top-right-radius:16px;
 }
