@@ -377,12 +377,12 @@
     border: 1px solid #D98B99;
     color:#0A1811;
 }
-#dp1769408470886 > div > table > tbody > tr > td.ui-datepicker-days-cell-over.ui-datepicker-today{
+.ui-datepicker-calendar ui-datepicker-today a{
     background: #fff;
     border: none;
     border-radius: 0;
 }
-#dp1769408470886 > div > table > tbody > tr > td.ui-datepicker-days-cell-over.ui-datepicker-today{
+.ui-datepicker-calendar .ui-datepicker-today a:after{
     content: '';
     display: block;
     width: calc(100% - 10px);
