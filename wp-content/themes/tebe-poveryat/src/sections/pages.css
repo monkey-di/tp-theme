@@ -588,7 +588,12 @@
 }
 .calendar-legend-item-line{
     width: 16px;
-    height:
+    height:2px;
+    background: #6063A6;
+}
+.calendar-legend-item{
+    display: flex;
+    justify-content: space-between;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
