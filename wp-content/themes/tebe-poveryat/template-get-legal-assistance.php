@@ -94,6 +94,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         pb0.innerHTML = '';
         pb0.appendChild(anketaCol1);
         pb0.appendChild(anketaCol2);
+        console.log('test');
 </script>
 <?php
 get_footer();
