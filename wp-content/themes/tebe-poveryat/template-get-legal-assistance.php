@@ -334,6 +334,145 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return uiWidgets.length > 0;
         }
 
+        // НОВАЯ ФУНКЦИЯ: Создание кнопки "Выбор времени"
+        function createTimeSelectButton() {
+            // Ищем существующую кнопку "Отправить запрос"
+            const submitButton = document.querySelector('.pbSubmit');
+            if (!submitButton) return false;
+
+            // Проверяем, не создана ли уже кнопка "Выбор времени"
+            if (document.getElementById('timeSelectButton')) {
+                return true;
+            }
+
+            // Создаем кнопку "Выбор времени"
+            const timeSelectButton = document.createElement('button');
+            timeSelectButton.type = 'button';
+            timeSelectButton.id = 'timeSelectButton';
+            timeSelectButton.className = 'timeSelectButton';
+            timeSelectButton.textContent = 'Выбор времени';
+            timeSelectButton.disabled = true; // Изначально отключена
+            timeSelectButton.style.cssText = `
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                margin-top: 10px;
+            `;
+
+            // Заменяем кнопку "Отправить запрос" на "Выбор времени"
+            submitButton.parentNode.replaceChild(timeSelectButton, submitButton);
+
+            // Добавляем обработчик для кнопки "Выбор времени"
+            timeSelectButton.addEventListener('click', function() {
+                const slotsCalendar = document.querySelector('.slotsCalendar');
+                if (slotsCalendar) {
+                    slotsCalendar.style.display = 'block';
+                }
+            });
+
+            console.log('Кнопка "Выбор времени" создана');
+            return true;
+        }
+
+        // НОВАЯ ФУНКЦИЯ: Перенос кнопки "Отправить запрос" в блок slots
+        function moveSubmitButtonToSlots() {
+            const submitButton = document.querySelector('.pbSubmit');
+            const slotsBlock = document.querySelector('.slots');
+
+            if (!submitButton || !slotsBlock) return false;
+
+            // Проверяем, не перемещена ли уже кнопка
+            if (slotsBlock.contains(submitButton)) {
+                return true;
+            }
+
+            // Переносим кнопку в конец блока slots
+            slotsBlock.appendChild(submitButton);
+            console.log('Кнопка "Отправить запрос" перемещена в блок slots');
+            return true;
+        }
+
+        // НОВАЯ ФУНКЦИЯ: Проверка наличия свободных слотов и активация кнопки
+        function updateTimeSelectButtonState() {
+            const timeSelectButton = document.getElementById('timeSelectButton');
+            if (!timeSelectButton) return;
+
+            // Находим активный (выбранный) день в календаре
+            const activeDay = document.querySelector('.ui-datepicker-calendar .ui-state-active');
+            if (!activeDay) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.backgroundColor = '#cccccc';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Получаем дату из активного дня
+            const dateCell = activeDay.closest('[class*="2026-"]');
+            if (!dateCell) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.backgroundColor = '#cccccc';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Ищем класс с датой (например, "2026-01-26")
+            const dateClass = Array.from(dateCell.classList).find(cls => cls.match(/^\d{4}-\d{2}-\d{2}$/));
+            if (!dateClass) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.backgroundColor = '#cccccc';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Проверяем, есть ли блок slots для этой даты
+            const slotsBlock = document.querySelector(`.slots[d="${dateClass}"]`);
+            if (!slotsBlock) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.backgroundColor = '#cccccc';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Проверяем наличие свободных слотов
+            const availableSlots = slotsBlock.querySelectorAll('.availableslot');
+            const hasAvailableSlots = availableSlots.length > 0;
+
+            // Обновляем состояние кнопки
+            if (hasAvailableSlots) {
+                timeSelectButton.disabled = false;
+                timeSelectButton.style.backgroundColor = '#4CAF50';
+                timeSelectButton.style.cursor = 'pointer';
+                console.log(`Для даты ${dateClass} найдено ${availableSlots.length} свободных слотов`);
+            } else {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.backgroundColor = '#cccccc';
+                timeSelectButton.style.cursor = 'not-allowed';
+                console.log(`Для даты ${dateClass} нет свободных слотов`);
+            }
+        }
+
+        // НОВАЯ ФУНКЦИЯ: Наблюдение за изменениями в календаре
+        function observeCalendarChanges() {
+            const calendar = document.querySelector('.ui-datepicker-calendar');
+            if (!calendar) return;
+
+            // Обработчик кликов по дням календаря
+            calendar.addEventListener('click', function(e) {
+                const dayCell = e.target.closest('[data-handler="selectDay"]');
+                if (dayCell) {
+                    // Ждем небольшое время для обновления DOM, затем проверяем слоты
+                    setTimeout(updateTimeSelectButtonState, 100);
+                }
+            });
+
+            // Также проверяем начальное состояние (если день уже выбран)
+            setTimeout(updateTimeSelectButtonState, 500);
+        }
+
         // наблюдатель за изменениями DOM
         const observer = new MutationObserver(function(mutations) {
             let changesMade = false;
@@ -351,7 +490,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .ui-widget
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
                             (node.querySelector && node.querySelector('.ui-widget'))) {
-                            setTimeout(() => addCalendarLegend(), 100);
+                            setTimeout(() => {
+                                addCalendarLegend();
+                                observeCalendarChanges();
+                            }, 100);
                             changesMade = true;
                         }
 
@@ -362,6 +504,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
+                                moveSubmitButtonToSlots();
+                                updateTimeSelectButtonState();
                             }, 100);
                             changesMade = true;
                         }
@@ -369,7 +513,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .slots
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
-                            setTimeout(() => wrapSlotsContent(), 100);
+                            setTimeout(() => {
+                                wrapSlotsContent();
+                                moveSubmitButtonToSlots();
+                                updateTimeSelectButtonState();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .pbSubmit (кнопка отправки)
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit'))) {
+                            setTimeout(() => {
+                                createTimeSelectButton();
+                                moveSubmitButtonToSlots();
+                            }, 100);
                             changesMade = true;
                         }
                     }
@@ -379,7 +537,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (mutation.type === 'childList' && mutation.target) {
                     // Проверяем, появился ли .ui-widget внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
-                        setTimeout(() => addCalendarLegend(), 50);
+                        setTimeout(() => {
+                            addCalendarLegend();
+                            observeCalendarChanges();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -388,13 +549,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             decorateSlotsCalendar();
                             wrapSlotsContent();
+                            moveSubmitButtonToSlots();
+                            updateTimeSelectButtonState();
                         }, 50);
                         changesMade = true;
                     }
 
                     // Проверяем, появился ли .slots внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                        setTimeout(() => wrapSlotsContent(), 50);
+                        setTimeout(() => {
+                            wrapSlotsContent();
+                            moveSubmitButtonToSlots();
+                            updateTimeSelectButtonState();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -404,7 +571,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Если изменения произошли внутри .slots, но не внутри .slots-content
                         const inSlots = mutation.target.closest('.slots');
                         if (inSlots && !mutation.target.closest('.slots-content')) {
-                            setTimeout(() => wrapSlotsContent(), 50);
+                            setTimeout(() => {
+                                wrapSlotsContent();
+                                updateTimeSelectButtonState();
+                            }, 50);
                             changesMade = true;
                         }
                     }
@@ -413,6 +583,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
                     if (target && document.getElementById('fieldname8_1')) {
                         setTimeout(() => replaceInputWithTextarea(), 50);
+                        changesMade = true;
+                    }
+
+                    // Проверка для кнопки отправки
+                    if (mutation.target.querySelector && mutation.target.querySelector('.pbSubmit')) {
+                        setTimeout(() => {
+                            createTimeSelectButton();
+                            moveSubmitButtonToSlots();
+                        }, 50);
+                        changesMade = true;
+                    }
+                }
+
+                // Проверяем изменения атрибутов (например, изменение выбранного дня в календаре)
+                if (mutation.type === 'attributes') {
+                    // Если изменился класс у элемента календаря
+                    if (mutation.target.classList &&
+                        (mutation.target.classList.contains('ui-state-active') ||
+                            mutation.target.closest('.ui-datepicker-calendar'))) {
+                        setTimeout(updateTimeSelectButtonState, 50);
                         changesMade = true;
                     }
                 }
@@ -425,6 +615,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
+                    createTimeSelectButton();
+                    moveSubmitButtonToSlots();
+                    observeCalendarChanges();
+                    updateTimeSelectButtonState();
                 }, 100);
             }
         });
@@ -432,7 +626,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Старт наблюдения
         observer.observe(document.body, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class', 'style']
         });
 
         // Начальная проверка при загрузке страницы
@@ -442,6 +638,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
+            createTimeSelectButton();
+            moveSubmitButtonToSlots();
+            observeCalendarChanges();
+            updateTimeSelectButtonState();
         }
 
         // Запускаем начальную проверку
