@@ -228,6 +228,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const span = document.createElement('span');
                     span.textContent = 'Выбрать';
 
+                    // Дополнительный обработчик для span внутри .select-button
+                    span.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Клик по span внутри кнопки "Выбрать"');
+
+                        // Находим и скрываем блок .slotsCalendarfieldname1_1
+                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
+                        if (targetBlock) {
+                            targetBlock.style.display = 'none';
+                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
+                        }
+                    });
+
                     // Добавляем span в блок
                     selectButton.appendChild(span);
 
