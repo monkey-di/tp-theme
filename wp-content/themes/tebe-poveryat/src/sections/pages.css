@@ -386,6 +386,7 @@
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default:hover{
     background: #6063A6;
+    border:1px solid #6063A6;
 }
 #fbuilder #fbuilder_1 #fieldlist_1 .ui-datepicker-calendar .ui-datepicker-today a{
     background: #fff;
