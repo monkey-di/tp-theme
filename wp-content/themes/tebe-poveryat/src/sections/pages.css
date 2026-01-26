@@ -491,8 +491,9 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
 }
+/*
 .slotsCalendar:before{
-    content:'';
+     content:'';
     display:block;
     position: absolute;
     right: 8px;
@@ -504,6 +505,8 @@
     height: 24px;
     cursor: pointer;
 }
+*/
+/*
 .slotsCalendar:after{
     content: 'Выбрать';
     color:#fff;
@@ -515,6 +518,7 @@
     border-radius: 16px;
     cursor:pointer;
 }
+*/
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
     color: #fff;
     background:#6063a6 !important;
