@@ -668,6 +668,9 @@
     color:#fff !important;
     border-radius: 4px !important;
 }
+.slots-content{
+    width: 100%;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
