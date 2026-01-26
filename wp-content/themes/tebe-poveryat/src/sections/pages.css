@@ -492,6 +492,14 @@
     background: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
     cursor:pointer;
 }
+.slotsCalendar:after{
+    content: 'Выбрать';
+    color:#fff;
+    background: #6063A6;
+    padding:16px auto;
+    text-align: center;
+    text-transform: uppercase;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
