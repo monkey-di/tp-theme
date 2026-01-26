@@ -599,6 +599,7 @@
 }
 .calendar-legend-item{
     display: flex;
+    align-items: center;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
