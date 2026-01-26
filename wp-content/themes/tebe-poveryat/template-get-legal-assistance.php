@@ -47,49 +47,46 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test3333');
+    console.log('test444');
     document.addEventListener('DOMContentLoaded', function() {
-        function wrapElements() {
-            // Находим родительский контейнер (можно указать конкретный, если известен)
-            const container = document.body; // или другой родительский элемент
-
-            // Создаем первую колонку
+        // Находим родительский контейнер
+        const parentContainer = document.querySelector('.pb0.pbreak');
+        if (!parentContainer) {
+            console.error('Родительский контейнер не найден');
+        } else {
+            // Создаем первый новый контейнер
             const col1Container = document.createElement('div');
             col1Container.className = 'anketa-col anketa-col-1';
 
-            // Создаем вторую колонку
+            // Создаем второй новый контейнер
             const col2Container = document.createElement('div');
             col2Container.className = 'anketa-col anketa-col-2';
 
-            // Находим все элементы и распределяем их
-            const allElements = container.querySelectorAll('.fields, .captcha, .pbSubmit');
+            // Собираем все элементы с классом calendar-col-1
+            const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
 
-            allElements.forEach(element => {
-                if (element.classList.contains('calendar-col-1')) {
-                    col1Container.appendChild(element);
-                } else if (element.classList.contains('calendar-col-2') ||
-                    element.classList.contains('captcha') ||
-                    element.classList.contains('pbSubmit')) {
-                    col2Container.appendChild(element);
-                }
+            // Собираем элементы для второго контейнера
+            const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
+            const captchaElement = parentContainer.querySelector('.captcha');
+            const buttonElement = parentContainer.querySelector('.pbSubmit');
+
+            // Перемещаем элементы calendar-col-1 в первый контейнер
+            calendarCol1Elements.forEach(element => {
+                col1Container.appendChild(element);
             });
 
-            // Очищаем старую структуру и добавляем новые колонки
-            // Вместо этого можно вставить колонки в нужное место
-            const referenceElement = allElements[0];
-            if (referenceElement && referenceElement.parentNode) {
-                const parent = referenceElement.parentNode;
+            // Перемещаем элементы во второй контейнер, если они существуют
+            if (calendarCol2Element) col2Container.appendChild(calendarCol2Element);
+            if (captchaElement) col2Container.appendChild(captchaElement);
+            if (buttonElement) col2Container.appendChild(buttonElement);
 
-                // Вставляем первую колонку
-                parent.insertBefore(col1Container, referenceElement);
+            // Очищаем родительский контейнер
+            parentContainer.innerHTML = '';
 
-                // Вставляем вторую колонку после первой
-                parent.insertBefore(col2Container, col1Container.nextSibling);
-            }
+            // Добавляем новые контейнеры в родительский элемент
+            parentContainer.appendChild(col1Container);
+            parentContainer.appendChild(col2Container);
         }
-
-// Вызываем функцию после загрузки DOM
-        document.addEventListener('DOMContentLoaded', wrapElements);
     });
 </script>
 <?php
