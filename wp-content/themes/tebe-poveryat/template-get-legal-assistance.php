@@ -112,7 +112,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 // Добавить атрибуты для textarea
                 textarea.setAttribute('rows', '4');
-                textarea.style.minHeight = '100px';
+                textarea.style.minHeight = '217px';
                 textarea.style.resize = 'vertical';
 
                 // Замена элемента
