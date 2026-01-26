@@ -47,31 +47,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
-        // Объект для хранения выбранной даты и времени
-        const selectedDateTime = {
-            date: null,
-            time: null,
-            updateDisplay: function() {
-                const displayBlock = document.getElementById('date-time-display');
-                if (!displayBlock) return;
-
-                // Форматируем дату
-                let dateStr = this.date;
-                if (!dateStr) {
-                    const now = new Date();
-                    dateStr = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
-                }
-
-                // Форматируем время
-                const timeStr = this.time || 'не выбрано';
-
-                displayBlock.innerHTML = `
-                <div class="date-time-display-title">Выбранное время:</div>
-                <div class="date-time-value">${dateStr} ${timeStr}</div>
-            `;
-            }
-        };
-
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
             if (!parentContainer) return false;
@@ -109,48 +84,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             parentContainer.appendChild(col2);
 
             console.log('Форма реструктурирована');
-            return true;
-        }
-
-        // Функция для добавления блока с выбранной датой и временем
-        function addDateTimeDisplayBlock() {
-            // Проверяем, не добавлен ли уже блок
-            if (document.getElementById('date-time-display')) {
-                return false;
-            }
-
-            // Ищем блок anketa-col-2
-            const anketaCol2 = document.querySelector('.anketa-col-2');
-            if (!anketaCol2) {
-                return false;
-            }
-
-            // Создаем блок для отображения даты и времени
-            const displayBlock = document.createElement('div');
-            displayBlock.id = 'date-time-display';
-            displayBlock.className = 'date-time-display';
-
-            // Добавляем стили
-            displayBlock.style.cssText = `
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            font-family: Arial, sans-serif;
-        `;
-
-            // Добавляем блок в начало anketa-col-2
-            if (anketaCol2.firstChild) {
-                anketaCol2.insertBefore(displayBlock, anketaCol2.firstChild);
-            } else {
-                anketaCol2.appendChild(displayBlock);
-            }
-
-            // Инициализируем отображение с текущей датой
-            selectedDateTime.updateDisplay();
-
-            console.log('Блок отображения даты и времени добавлен');
             return true;
         }
 
@@ -253,17 +186,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
-        // Функция для добавления инлайн стиля display:none для блока .slotsCalendarfieldname1_1
-        function addInitialHideStyle() {
-            const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-            if (targetBlock && !targetBlock.hasAttribute('data-initial-hide')) {
-                targetBlock.setAttribute('data-initial-hide', 'true');
-                targetBlock.style.display = 'none';
-                console.log('Блоку .slotsCalendarfieldname1_1 добавлен display:none');
-            }
-            return !!targetBlock;
-        }
-
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
@@ -345,200 +267,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return calendarBlocks.length > 0;
         }
 
-        // Функция для обработки выбора даты из календаря
-        function handleDateSelection(dateElement) {
-            // Получаем дату из календаря
-            // Предполагаем, что дата хранится в тексте или data-атрибутах
-            let dateStr = '';
-
-            // Пробуем получить из текста ссылки
-            const linkText = dateElement.textContent.trim();
-
-            // Пробуем найти родительский календарь для получения месяца и года
-            const calendar = dateElement.closest('.ui-datepicker-calendar');
-            if (calendar) {
-                const datepicker = calendar.closest('.ui-datepicker');
-                if (datepicker) {
-                    // Получаем месяц и год из заголовка календаря
-                    const monthYearElement = datepicker.querySelector('.ui-datepicker-title');
-                    if (monthYearElement) {
-                        const monthYearText = monthYearElement.textContent.trim();
-
-                        // Парсим месяц и год (формат может быть разный, например "November 2024")
-                        const parts = monthYearText.split(' ');
-                        if (parts.length >= 2) {
-                            const monthName = parts[0];
-                            const year = parts[1];
-
-                            // Преобразуем название месяца в число (0-11)
-                            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                                'July', 'August', 'September', 'October', 'November', 'December'];
-                            const monthIndex = monthNames.findIndex(m => m.toLowerCase() === monthName.toLowerCase());
-
-                            if (monthIndex !== -1) {
-                                const day = parseInt(linkText);
-                                if (!isNaN(day)) {
-                                    // Форматируем в dd.mm.yyyy
-                                    dateStr = `${day.toString().padStart(2, '0')}.${(monthIndex + 1).toString().padStart(2, '0')}.${year}`;
-                                    selectedDateTime.date = dateStr;
-                                    selectedDateTime.updateDisplay();
-                                    console.log('Выбрана дата:', dateStr);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Альтернативный способ: если дата хранится в data-атрибутах
-            if (!dateStr) {
-                const day = dateElement.getAttribute('data-day');
-                const month = dateElement.getAttribute('data-month'); // 0-11
-                const year = dateElement.getAttribute('data-year');
-
-                if (day && month && year) {
-                    dateStr = `${day.padStart(2, '0')}.${(parseInt(month) + 1).toString().padStart(2, '0')}.${year}`;
-                    selectedDateTime.date = dateStr;
-                    selectedDateTime.updateDisplay();
-                    console.log('Выбрана дата (из data-атрибутов):', dateStr);
-                }
-            }
-
-            // Находим и показываем блок .slotsCalendarfieldname1_1
-            const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-            if (targetBlock) {
-                targetBlock.style.display = 'block';
-                console.log('Блок .slotsCalendarfieldname1_1 показан');
-            }
-        }
-
-        // Функция для добавления обработчиков клика на ссылки календаря
-        function attachCalendarDateClickHandlers() {
-            // Находим все ссылки в ячейках календаря
-            const dateLinks = document.querySelectorAll('.ui-datepicker-calendar td a');
-
-            dateLinks.forEach(link => {
-                // Проверяем, не добавлен ли уже обработчик
-                if (!link.hasAttribute('data-calendar-date-handler')) {
-                    link.setAttribute('data-calendar-date-handler', 'true');
-
-                    link.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по дате в календаре');
-
-                        // Обрабатываем выбор даты
-                        handleDateSelection(link);
-                    });
-                }
-            });
-
-            return dateLinks.length > 0;
-        }
-
-        // Функция для добавления обработчиков клика на слоты времени
-        function attachTimeSlotHandlers() {
-            // Находим все слоты времени
-            const timeSlots = document.querySelectorAll('.availableslot, .htmlUsed');
-
-            timeSlots.forEach(slot => {
-                // Проверяем, не добавлен ли уже обработчик
-                if (!slot.hasAttribute('data-time-slot-handler')) {
-                    slot.setAttribute('data-time-slot-handler', 'true');
-
-                    slot.addEventListener('click', function(e) {
-                        e.stopPropagation();
-
-                        // Получаем текст времени
-                        const timeText = this.textContent.trim();
-                        selectedDateTime.time = timeText;
-                        selectedDateTime.updateDisplay();
-
-                        console.log('Выбрано время:', timeText);
-
-                        // Убираем выделение у других слотов и выделяем текущий
-                        timeSlots.forEach(s => {
-                            s.style.backgroundColor = '';
-                            s.style.color = '';
-                        });
-
-                        // Выделяем выбранный слот
-                        this.style.backgroundColor = '#007bff';
-                        this.style.color = 'white';
-                    });
-                }
-            });
-
-            return timeSlots.length > 0;
-        }
-
-        // Функция для наблюдения за появлением календаря и добавления обработчиков
-        function observeCalendarUpdates() {
-            // Наблюдаем за изменениями в DOM, особенно за появлением элементов календаря
-            const calendarObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                        for (let node of mutation.addedNodes) {
-                            // Проверяем, появился ли календарь или его элементы
-                            if ((node.nodeType === 1 && node.classList &&
-                                    (node.classList.contains('ui-datepicker-calendar') ||
-                                        node.classList.contains('ui-datepicker'))) ||
-                                (node.querySelector &&
-                                    (node.querySelector('.ui-datepicker-calendar') ||
-                                        node.querySelector('.ui-datepicker')))) {
-
-                                // Даем время на рендеринг
-                                setTimeout(() => {
-                                    attachCalendarDateClickHandlers();
-                                }, 100);
-                            }
-
-                            // Проверяем, появились ли слоты времени
-                            if ((node.nodeType === 1 && node.classList &&
-                                    (node.classList.contains('availableslot') ||
-                                        node.classList.contains('htmlUsed'))) ||
-                                (node.querySelector &&
-                                    (node.querySelector('.availableslot') ||
-                                        node.querySelector('.htmlUsed')))) {
-
-                                setTimeout(() => {
-                                    attachTimeSlotHandlers();
-                                }, 100);
-                            }
-                        }
-                    }
-
-                    // Проверяем изменения в поддереве
-                    if (mutation.type === 'childList' && mutation.target) {
-                        if (mutation.target.querySelector &&
-                            (mutation.target.querySelector('.ui-datepicker-calendar') ||
-                                mutation.target.querySelector('.ui-datepicker'))) {
-
-                            setTimeout(() => {
-                                attachCalendarDateClickHandlers();
-                            }, 50);
-                        }
-
-                        if (mutation.target.querySelector &&
-                            (mutation.target.querySelector('.availableslot') ||
-                                mutation.target.querySelector('.htmlUsed'))) {
-
-                            setTimeout(() => {
-                                attachTimeSlotHandlers();
-                            }, 50);
-                        }
-                    }
-                });
-            });
-
-            // Начинаем наблюдение
-            calendarObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-
-            return calendarObserver;
-        }
-
         // Функция для добавления календарной легенды в блок .ui-widget
         function addCalendarLegend() {
             // Ищем блок .ui-widget
@@ -601,11 +329,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         document.head.appendChild(style);
                     }
                 }
-
-                // Также добавляем обработчики на даты календаря
-                setTimeout(() => {
-                    attachCalendarDateClickHandlers();
-                }, 100);
             });
 
             return uiWidgets.length > 0;
@@ -620,16 +343,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (restructureForm()) changesMade = true;
             }
 
-            // Добавляем блок отображения даты и времени
-            if (document.querySelector('.anketa-col-2')) {
-                if (addDateTimeDisplayBlock()) changesMade = true;
-            }
-
-            // Добавляем начальное скрытие для блока .slotsCalendarfieldname1_1
-            if (document.querySelector('.slotsCalendarfieldname1_1')) {
-                if (addInitialHideStyle()) changesMade = true;
-            }
-
             // Проверка на появление элементов
             mutations.forEach(function(mutation) {
                 // Проверяем добавленные ноды
@@ -639,20 +352,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
                             (node.querySelector && node.querySelector('.ui-widget'))) {
                             setTimeout(() => addCalendarLegend(), 100);
-                            changesMade = true;
-                        }
-
-                        // Проверяем, является ли узел или содержит ли .ui-datepicker-calendar
-                        if ((node.nodeType === 1 && node.classList &&
-                                (node.classList.contains('ui-datepicker-calendar') ||
-                                    node.classList.contains('ui-datepicker'))) ||
-                            (node.querySelector &&
-                                (node.querySelector('.ui-datepicker-calendar') ||
-                                    node.querySelector('.ui-datepicker')))) {
-
-                            setTimeout(() => {
-                                attachCalendarDateClickHandlers();
-                            }, 100);
                             changesMade = true;
                         }
 
@@ -673,27 +372,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => wrapSlotsContent(), 100);
                             changesMade = true;
                         }
-
-                        // Проверяем, появился ли блок .slotsCalendarfieldname1_1
-                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendarfieldname1_1')) ||
-                            (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
-                            setTimeout(() => addInitialHideStyle(), 100);
-                            changesMade = true;
-                        }
-
-                        // Проверяем, появились ли слоты времени
-                        if ((node.nodeType === 1 && node.classList &&
-                                (node.classList.contains('availableslot') ||
-                                    node.classList.contains('htmlUsed'))) ||
-                            (node.querySelector &&
-                                (node.querySelector('.availableslot') ||
-                                    node.querySelector('.htmlUsed')))) {
-
-                            setTimeout(() => {
-                                attachTimeSlotHandlers();
-                            }, 100);
-                            changesMade = true;
-                        }
                     }
                 }
 
@@ -702,17 +380,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Проверяем, появился ли .ui-widget внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
                         setTimeout(() => addCalendarLegend(), 50);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, появился ли .ui-datepicker-calendar внутри измененного элемента
-                    if (mutation.target.querySelector &&
-                        (mutation.target.querySelector('.ui-datepicker-calendar') ||
-                            mutation.target.querySelector('.ui-datepicker'))) {
-
-                        setTimeout(() => {
-                            attachCalendarDateClickHandlers();
-                        }, 50);
                         changesMade = true;
                     }
 
@@ -740,27 +407,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => wrapSlotsContent(), 50);
                             changesMade = true;
                         }
-
-                        setTimeout(() => attachTimeSlotHandlers(), 50);
-                        changesMade = true;
                     }
 
                     // Проверка для поля textarea
                     const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
                     if (target && document.getElementById('fieldname8_1')) {
                         setTimeout(() => replaceInputWithTextarea(), 50);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, появился ли .slotsCalendarfieldname1_1 внутри измененного элемента
-                    if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendarfieldname1_1')) {
-                        setTimeout(() => addInitialHideStyle(), 50);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, появился ли .anketa-col-2
-                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-2')) {
-                        setTimeout(() => addDateTimeDisplayBlock(), 50);
                         changesMade = true;
                     }
                 }
@@ -773,10 +425,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    addInitialHideStyle();
-                    addDateTimeDisplayBlock();
-                    attachCalendarDateClickHandlers();
-                    attachTimeSlotHandlers();
                 }, 100);
             }
         });
@@ -794,11 +442,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            addInitialHideStyle();
-            addDateTimeDisplayBlock();
-            attachCalendarDateClickHandlers();
-            attachTimeSlotHandlers();
-            observeCalendarUpdates();
         }
 
         // Запускаем начальную проверку
