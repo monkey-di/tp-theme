@@ -641,13 +641,14 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-prev{
     transform:rotate(180deg);
 }
-.slotsCalendarfieldname1_1:after{
+.slotsCalendarfieldname1_1:before{
     content: '';
     position: fixed;
     top: 0;
     left: 0;
     width:100%;
     height: 100%;
+    backdrop-filter: blur(10px);
 }
 @media(max-width:1400px){
     .page-head-wrapper{
