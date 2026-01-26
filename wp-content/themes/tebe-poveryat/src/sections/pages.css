@@ -327,6 +327,10 @@
     background-color: #1C5358;
     background-image:url(/wp-content/themes/tebe-poveryat/assets/images/anketa-bg.png);
 }
+.ui-datepicker{
+    padding: 8px 20px;
+    border-radius: 20px;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
