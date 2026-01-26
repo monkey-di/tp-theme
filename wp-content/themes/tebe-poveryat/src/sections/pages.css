@@ -431,6 +431,10 @@
     padding:0;
     margin:0;
 }
+.slotsCalendar{
+    max-height: 474px;
+    overflow-y:auto;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
