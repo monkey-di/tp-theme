@@ -385,7 +385,7 @@
     padding-top: 0;
 }
 .slotsCalendar .slots{
-    text-align: left;
+    text-align: left !important;
     background: #FEF1EC;
     display: flex;
     flex-wrap: wrap;
