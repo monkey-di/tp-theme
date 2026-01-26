@@ -212,10 +212,8 @@
     margin: auto;
 }
 #fbuilder .calendar-col-1{
-    border: 1px solid #ccc;
     padding: 20px;
     text-align: center;
-    background: #f5f5f5;
     box-sizing: border-box;
     flex: 1 0 calc(50% - 5px);
 }
@@ -271,6 +269,9 @@
 }
 .pbSubmit{
     flex: 2;
+}
+#fbuilder .fields, #fbuilder .fform{
+    padding: 0;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
