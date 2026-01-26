@@ -357,6 +357,7 @@
 }
 .ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default{
     background: #D98B99;
+    color: #fff;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
