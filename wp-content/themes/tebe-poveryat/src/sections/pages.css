@@ -491,7 +491,6 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
 }
-
 .slotsCalendar .closer{
     z-index: 30;
     cursor: pointer;
@@ -510,6 +509,7 @@
     padding: 16px;
     background: #FEF1EC;
     border-radius: 16px;
+    width: 100%;
 }
 .select-button span{
     color:#fff;
@@ -520,8 +520,13 @@
     width: 100%;
     border-radius: 16px;
     cursor:pointer;
+    display: block;
+    font-family: "Geologica";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0%;
 }
-*/
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
     color: #fff;
     background:#6063a6 !important;
