@@ -516,13 +516,11 @@
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
     color: #fff;
+    background:#6063a6 !important;
 }
 .slotsCalendar.slotsCalendarfieldname1_1{
     display:flex;
     flex-wrap: wrap;
-}
-#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
-    background:#6063a6;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
