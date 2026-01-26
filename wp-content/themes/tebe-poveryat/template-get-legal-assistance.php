@@ -186,17 +186,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
-        // Функция для добавления инлайн стиля display:none для блока .slotsCalendarfieldname1_1
-        function addInitialHideStyle() {
-            const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-            if (targetBlock && !targetBlock.hasAttribute('data-initial-hide')) {
-                targetBlock.setAttribute('data-initial-hide', 'true');
-                targetBlock.style.display = 'none';
-                console.log('Блоку .slotsCalendarfieldname1_1 добавлен display:none');
-            }
-            return !!targetBlock;
-        }
-
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
@@ -259,18 +248,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             console.log('Блок .slotsCalendarfieldname1_1 скрыт');
                         }
                     });
-
-                    // Дополнительный обработчик для span внутри кнопки (на всякий случай)
-                    span.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по span внутри кнопки "Выбрать"');
-
-                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                        if (targetBlock) {
-                            targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
-                        }
-                    });
                 }
             });
 
@@ -294,7 +271,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Находим и показываем блок .slotsCalendarfieldname1_1
                         const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
                         if (targetBlock) {
-                            targetBlock.style.display = 'block';
+                            targetBlock.style.display = 'block'; // или другое значение, если нужно восстановить исходное состояние
                             console.log('Блок .slotsCalendarfieldname1_1 показан');
                         }
                     });
@@ -431,11 +408,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (restructureForm()) changesMade = true;
             }
 
-            // Добавляем начальное скрытие для блока .slotsCalendarfieldname1_1
-            if (document.querySelector('.slotsCalendarfieldname1_1')) {
-                if (addInitialHideStyle()) changesMade = true;
-            }
-
             // Проверка на появление элементов
             mutations.forEach(function(mutation) {
                 // Проверяем добавленные ноды
@@ -477,13 +449,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
                             setTimeout(() => wrapSlotsContent(), 100);
-                            changesMade = true;
-                        }
-
-                        // Проверяем, появился ли блок .slotsCalendarfieldname1_1
-                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendarfieldname1_1')) ||
-                            (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
-                            setTimeout(() => addInitialHideStyle(), 100);
                             changesMade = true;
                         }
                     }
@@ -540,12 +505,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => replaceInputWithTextarea(), 50);
                         changesMade = true;
                     }
-
-                    // Проверяем, появился ли .slotsCalendarfieldname1_1 внутри измененного элемента
-                    if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendarfieldname1_1')) {
-                        setTimeout(() => addInitialHideStyle(), 50);
-                        changesMade = true;
-                    }
                 }
             });
 
@@ -556,8 +515,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    addInitialHideStyle();
-                    attachCalendarDateClickHandlers();
+                    attachCalendarDateClickHandlers(); // Добавляем проверку обработчиков для дат
                 }, 100);
             }
         });
@@ -575,9 +533,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            addInitialHideStyle();
-            attachCalendarDateClickHandlers();
-            observeCalendarUpdates();
+            attachCalendarDateClickHandlers(); // Добавляем обработчики при начальной загрузке
+            observeCalendarUpdates(); // Запускаем наблюдение за обновлениями календаря
         }
 
         // Запускаем начальную проверку
