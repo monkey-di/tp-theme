@@ -505,7 +505,7 @@
     cursor: pointer;
 }
 .slotsCalendar:after{
-    content: 'Выбрать';
+    content: '<span>Выбрать</span>';
     color:#fff;
     background: #6063A6;
     padding:16px 0;
