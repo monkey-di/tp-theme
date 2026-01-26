@@ -47,7 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test666');
+    console.log('test 999');
 
     function restructureForm() {
         const parentContainer = document.querySelector('.pb0.pbreak');
@@ -89,26 +89,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         return true;
     }
 
-    // Используем MutationObserver для отслеживания появления элемента
-    const observer = new MutationObserver((mutations, obs) => {
-        if (document.querySelector('.pb0.pbreak')) {
-            restructureForm();
-            // Можно отключить observer после выполнения
-            // obs.disconnect();
-        }
-    });
-
-    // Начинаем наблюдение
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-
-    // Также проверяем сразу на случай, если элемент уже загружен
-    if (document.querySelector('.pb0.pbreak')) {
-        restructureForm();
-    }
-
     // Функция для замены input на textarea
     function replaceInputWithTextarea() {
         const input = document.getElementById('fieldname8_1');
@@ -147,8 +127,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         return false;
     }
 
-    // Наблюдатель за изменениями DOM
+    // Объединенный наблюдатель за изменениями DOM
     const observer = new MutationObserver(function(mutations) {
+        // Проверяем, нужно ли реструктурировать форму
+        if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
+            restructureForm();
+        }
+
+        // Проверяем, появился ли наш элемент для замены на textarea
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes && mutation.addedNodes.length > 0) {
                 // Проверяем, появился ли наш элемент
@@ -187,7 +173,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         subtree: true
     });
 
-    // Также проверим сразу, может элемент уже есть
+    // Также проверим сразу на случай, если элементы уже загружены
+    if (document.querySelector('.pb0.pbreak')) {
+        restructureForm();
+    }
+
     if (document.getElementById('fieldname8_1')) {
         replaceInputWithTextarea();
     } else {
