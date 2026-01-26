@@ -124,18 +124,18 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return false;
         }
 
-        // Функция для оборачивания availableslot в slots-content
-        function wrapAvailableSlots() {
+        // Функция для оборачивания availableslot и htmlUsed в slots-content
+        function wrapSlotsContent() {
             // Ищем все блоки .slots
             const slotsBlocks = document.querySelectorAll('.slots');
 
             slotsBlocks.forEach(slotsBlock => {
                 // Проверяем, не обернуты ли уже слоты
                 if (!slotsBlock.querySelector('.slots-content')) {
-                    // Находим все .availableslot внутри текущего .slots
-                    const availableSlots = slotsBlock.querySelectorAll('.availableslot');
+                    // Находим все .availableslot и .htmlUsed внутри текущего .slots
+                    const slotsToWrap = slotsBlock.querySelectorAll('.availableslot, .htmlUsed');
 
-                    if (availableSlots.length > 0) {
+                    if (slotsToWrap.length > 0) {
                         // Создаем контейнер .slots-content
                         const slotsContent = document.createElement('div');
                         slotsContent.className = 'slots-content';
@@ -156,12 +156,29 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             slotsBlock.insertBefore(slotsContent, slotsBlock.firstChild);
                         }
 
-                        // Перемещаем все .availableslot в slotsContent
-                        availableSlots.forEach(slot => {
-                            slotsContent.appendChild(slot);
+                        // Перемещаем все найденные элементы в slotsContent
+                        slotsToWrap.forEach(slot => {
+                            // проверяем, что элемент еще не находится внутри другого slots-content
+                            // (на случай, если уже обернуты в другом месте)
+                            if (!slot.closest('.slots-content')) {
+                                slotsContent.appendChild(slot);
+                            }
                         });
 
-                        console.log('.availableslot обернуты в .slots-content');
+                        console.log('.availableslot и .htmlUsed обернуты в .slots-content');
+                    }
+                } else {
+                    // Если slots-content уже существует, проверяем, не появились ли новые элементы вне его
+                    const slotsContent = slotsBlock.querySelector('.slots-content');
+                    const slotsToWrap = slotsBlock.querySelectorAll('.availableslot:not(.slots-content .availableslot), .htmlUsed:not(.slots-content .htmlUsed)');
+
+                    if (slotsToWrap.length > 0) {
+                        slotsToWrap.forEach(slot => {
+                            if (!slot.closest('.slots-content')) {
+                                slotsContent.appendChild(slot);
+                                console.log('Новый слот добавлен в существующий .slots-content');
+                            }
+                        });
                     }
                 }
             });
@@ -169,56 +186,55 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
-        // Функция для добавления элементов в .slotsCalendar
+        // функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
-            // Ищем все блоки .slotsCalendar
+            // Ищем все .slotsCalendar
             const calendarBlocks = document.querySelectorAll('.slotsCalendar');
 
             calendarBlocks.forEach(block => {
-                // Проверяем, не добавлен ли уже closer
+                // Проверка на сущ-е closer
                 if (!block.querySelector('.closer')) {
                     // Создаем closer
                     const closer = document.createElement('div');
                     closer.className = 'closer';
-                    closer.innerHTML = ''; // добавляем крестик
+                    closer.innerHTML = '';
 
-                    // Добавляем closer в начало блока
+                    // Добавить closer в начало блока
                     block.insertBefore(closer, block.firstChild);
 
                     console.log('Closer добавлен в .slotsCalendar');
 
-                    // Можно добавить обработчик клика на closer
+                    // обработчик клика на closer
                     closer.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по closer');
-                        // Добавьте здесь свою логику закрытия
-                        // Например: block.style.display = 'none';
+                        // логика закрытия типа block.style.display = 'none';
                     });
                 }
 
-                // Проверяем, не добавлена ли уже кнопка
+                // Провка на кнопку
                 if (!block.querySelector('.select-button')) {
-                    // Создаем блок с кнопкой
+                    // Создать блок с кнопкой
                     const selectButton = document.createElement('div');
                     selectButton.className = 'select-button';
 
-                    // Создаем span с текстом
+                    // Создать span с текстом внутри блока
                     const span = document.createElement('span');
                     span.textContent = 'Выбрать';
 
-                    // Добавляем span в блок
+                    // span в блок
                     selectButton.appendChild(span);
 
-                    // Добавляем блок в конец .slotsCalendar
+                    // блок в конец .slotsCalendar
                     block.appendChild(selectButton);
 
                     console.log('Кнопка "Выбрать" добавлена в .slotsCalendar');
 
-                    // Можно добавить обработчик клика на кнопку
+                    // Обработчик клика на кнопку
                     selectButton.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по кнопке "Выбрать"');
-                        // Добавьте здесь свою логику
+                        // логика тут
                     });
                 }
             });
@@ -246,7 +262,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             // Даем время на полную загрузку/рендеринг
                             setTimeout(() => {
                                 decorateSlotsCalendar();
-                                wrapAvailableSlots();
+                                wrapSlotsContent();
                             }, 100);
                             changesMade = true;
                             break;
@@ -255,7 +271,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .slots
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
-                            setTimeout(() => wrapAvailableSlots(), 100);
+                            setTimeout(() => wrapSlotsContent(), 100);
                             changesMade = true;
                         }
                     }
@@ -267,15 +283,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
                         setTimeout(() => {
                             decorateSlotsCalendar();
-                            wrapAvailableSlots();
+                            wrapSlotsContent();
                         }, 50);
                         changesMade = true;
                     }
 
                     // Проверяем, появился ли .slots внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                        setTimeout(() => wrapAvailableSlots(), 50);
+                        setTimeout(() => wrapSlotsContent(), 50);
                         changesMade = true;
+                    }
+
+                    // Проверяем, появились ли новые .availableslot или .htmlUsed
+                    if (mutation.target.querySelector &&
+                        (mutation.target.querySelector('.availableslot') || mutation.target.querySelector('.htmlUsed'))) {
+                        // Если изменения произошли внутри .slots, но не внутри .slots-content
+                        const inSlots = mutation.target.closest('.slots');
+                        if (inSlots && !mutation.target.closest('.slots-content')) {
+                            setTimeout(() => wrapSlotsContent(), 50);
+                            changesMade = true;
+                        }
                     }
 
                     // Проверка для поля textarea
@@ -291,7 +318,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (!changesMade) {
                 setTimeout(() => {
                     decorateSlotsCalendar();
-                    wrapAvailableSlots();
+                    wrapSlotsContent();
                     replaceInputWithTextarea();
                 }, 100);
             }
@@ -308,7 +335,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             restructureForm();
             replaceInputWithTextarea();
             decorateSlotsCalendar();
-            wrapAvailableSlots();
+            wrapSlotsContent();
         }
 
         // Запускаем начальную проверку
