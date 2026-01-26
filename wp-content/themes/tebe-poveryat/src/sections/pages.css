@@ -325,7 +325,7 @@
 }
 #cp_appbooking_pform_1{
     background-color: #1C5358;
-    backgrpund-image:url(/wp-content/themes/tebe-poveryat/assets/images/anketa-bg.png);
+    background-image:url(/wp-content/themes/tebe-poveryat/assets/images/anketa-bg.png);
 }
 @media(max-width:1400px){
     .page-head-wrapper{
