@@ -47,7 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test777');
+    console.log('test666');
 
     function restructureForm() {
         const parentContainer = document.querySelector('.pb0.pbreak');
@@ -109,61 +109,90 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         restructureForm();
     }
 
-    // Функция для замены input на textarea в конкретном блоке
-    function convertInputToTextarea() {
-        // Находим контейнер с id "field_1-6"
-        const fieldContainer = document.getElementById('field_1-6');
+    // Функция для замены input на textarea
+    function replaceInputWithTextarea() {
+        const input = document.getElementById('fieldname8_1');
 
-        if (!fieldContainer) {
-            console.error('Контейнер с id "field_1-6" не найден');
-            return;
+        if (input && input.tagName === 'INPUT' && input.type === 'text') {
+            // Создаем textarea
+            const textarea = document.createElement('textarea');
+
+            // Копируем все атрибуты
+            const attrs = ['id', 'name', 'class', 'placeholder', 'value',
+                'disabled', 'readonly', 'required', 'maxlength',
+                'autocomplete', 'tabindex', 'title'];
+
+            attrs.forEach(attr => {
+                if (attr === 'value') {
+                    textarea.value = input.value;
+                } else if (attr === 'class') {
+                    textarea.className = input.className;
+                } else if (input.hasAttribute(attr)) {
+                    textarea.setAttribute(attr, input.getAttribute(attr));
+                }
+            });
+
+            // Добавляем атрибуты для textarea
+            textarea.setAttribute('rows', '4');
+            textarea.style.minHeight = '100px';
+            textarea.style.resize = 'vertical';
+
+            // Заменяем элемент
+            input.parentNode.replaceChild(textarea, input);
+
+            console.log('Input заменен на textarea');
+            return true;
         }
 
-        // Находим input внутри .dfield
-        const input = fieldContainer.querySelector('.dfield input[type="text"]');
-
-        if (!input) {
-            console.error('Input не найден внутри .dfield');
-            return;
-        }
-
-        // Создаем textarea элемент
-        const textarea = document.createElement('textarea');
-
-        // Копируем основные атрибуты
-        textarea.id = input.id;
-        textarea.name = input.name;
-        textarea.className = input.className;
-        textarea.value = input.value;
-        textarea.placeholder = input.placeholder;
-
-        // Копируем все атрибуты кроме type
-        Array.from(input.attributes).forEach(attr => {
-            if (attr.name !== 'type' && attr.name !== 'value') {
-                textarea.setAttribute(attr.name, attr.value);
-            }
-        });
-
-        // Устанавливаем дополнительные атрибуты для textarea
-        textarea.setAttribute('rows', '4'); // Высота textarea
-        textarea.classList.add('textarea-field'); // Добавляем класс для стилизации
-
-        // Заменяем input на textarea
-        input.parentNode.replaceChild(textarea, input);
-
-        // Обновляем label (если он привязан к id)
-        const label = fieldContainer.querySelector('label[for="' + input.id + '"]');
-        if (label) {
-            // У label уже установлен for на тот же id, поэтому ничего менять не нужно
-            console.log('Label обновлен автоматически');
-        }
-
-        console.log('Input успешно заменен на textarea');
-        return textarea;
+        return false;
     }
 
-    // Запуск функции
-    convertInputToTextarea();
+    // Наблюдатель за изменениями DOM
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                // Проверяем, появился ли наш элемент
+                for (let node of mutation.addedNodes) {
+                    // Проверяем сам узел
+                    if (node.id === 'field_1-6') {
+                        // Даем время на полную загрузку содержимого
+                        setTimeout(() => replaceInputWithTextarea(), 100);
+                        return;
+                    }
+
+                    // Проверяем внутри узла
+                    if (node.querySelector) {
+                        const target = node.querySelector('#field_1-6, #fieldname8_1');
+                        if (target) {
+                            setTimeout(() => replaceInputWithTextarea(), 100);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // Также проверяем при изменениях внутри существующих элементов
+            if (mutation.type === 'childList' && mutation.target) {
+                const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
+                if (target && document.getElementById('fieldname8_1')) {
+                    setTimeout(() => replaceInputWithTextarea(), 50);
+                }
+            }
+        });
+    });
+
+    // Начинаем наблюдение
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
+    // Также проверим сразу, может элемент уже есть
+    if (document.getElementById('fieldname8_1')) {
+        replaceInputWithTextarea();
+    } else {
+        console.log('Ожидание появления поля...');
+    }
 </script>
 <?php
 get_footer();
