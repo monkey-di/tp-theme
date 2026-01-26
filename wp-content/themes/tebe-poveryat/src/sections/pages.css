@@ -581,6 +581,11 @@
     border:1px solid #D98B99;
     background: #D98B99;
 }
+.calendar-legend-item:nth-child(3) .calendar-legend-item-marker{
+    width: 16px;
+    height: 2px;
+    background: #6063A6;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
