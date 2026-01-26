@@ -47,10 +47,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test444');
+    console.log('test555');
     document.addEventListener('DOMContentLoaded', function() {
         // Находим родительский контейнер
-        const parentContainer = document.querySelector('.pb0.pbreak');
+        const parentContainer = document.querySelector('.pb0');
         if (!parentContainer) {
             console.error('Родительский контейнер не найден');
         } else {
