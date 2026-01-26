@@ -539,6 +539,7 @@
 .slots-content{
     max-height: 378px;
     overflow-y:auto;
+    border-radius: 16px;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
