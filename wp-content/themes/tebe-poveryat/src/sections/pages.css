@@ -358,6 +358,14 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td.notavailslot span{
     background: #D98B99;
     color: #fff;
+    display: block;
+    border-radius: 4px;
+}
+#cp_appbooking_pform_1.ahb_m4 #fbuilder td..ui-datepicker-week-end span{
+    display: block;
+    border-radius: 4px;
+    background: #fff;
+    color: #C2C5C4;
 }
 #cp_appbooking_pform_1.ahb_m4 .ui-datepicker-calendar td a {
     font-family: "Geologica";
