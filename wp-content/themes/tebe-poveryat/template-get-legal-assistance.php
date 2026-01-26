@@ -224,17 +224,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     selectButton.className = 'select-button';
 
                     // Создаем span с текстом "Выбрать"
-                    const span = document.createElement('span');
-                    span.textContent = 'Выбрать';
+                   // const span = document.createElement('span');
+                    //span.textContent = 'Выбрать';
 
-                    // Создаем кнопку "Отправить запрос"
+                    // Создаем кнопку "Отправить запрос" // теперь "выбрать"
                     const submitButton = document.createElement('button');
                     submitButton.type = 'button';
                     submitButton.className = 'pbSubmit';
-                    submitButton.textContent = 'Отправить запрос';
+                    submitButton.textContent = 'Выбрать';
 
                     // Добавляем элементы в блок
-                    selectButton.appendChild(span);
+                    //selectButton.appendChild(span);
                     selectButton.appendChild(submitButton);
 
                     // Добавляем блок в конец .slotsCalendar
@@ -243,7 +243,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     console.log('Блок .select-button создан с двумя кнопками');
 
                     // Обработчик клика на span "Выбрать"
-                    span.addEventListener('click', function(e) {
+                    /*span.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по span "Выбрать"');
 
@@ -253,7 +253,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             targetBlock.style.display = 'none';
                             console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
                         }
-                    });
+                    });*/
 
                     // Обработчик клика на кнопку "Отправить запрос"
                     submitButton.addEventListener('click', function(e) {
