@@ -473,8 +473,13 @@
     width: 100%;
 }
 .slotsCalendar:before{
-    content:'x';
+    content:'';
     display:block;
+    position: absolute;
+    right: 8px;
+    top: 0;
+    z-index: 30;
+    background: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
 }
 @media(max-width:1400px){
     .page-head-wrapper{
