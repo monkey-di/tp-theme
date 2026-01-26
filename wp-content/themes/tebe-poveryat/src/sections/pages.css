@@ -429,11 +429,14 @@
     display: block;
 }
 .htmlUsed.currentSelection a:after{
-    content: 'Выбрать';
+    content: 'Свободно';
     color: #fff;
+    background: #6063A6;
 }
 .htmlUsed.currentSelection a{
     color:#fff;
+    background: #6063A6;
+    border-radius: 16px;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots{
     padding:0;
