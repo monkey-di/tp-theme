@@ -370,6 +370,7 @@
     border:1px solid transparent;
     align-items: center;
     justify-content: center;
+    display: flex;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default:hover{
     background: #fff;
