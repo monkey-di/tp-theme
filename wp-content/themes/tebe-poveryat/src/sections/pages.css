@@ -410,10 +410,10 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .fieldCalendar, #fbuilder .slotsCalendar{
     z-index: 30;
 }
-div.htmlUsed.choosen a{
+.htmlUsed.choosen a{
     display: block;
 }
-div.htmlUsed.choosen a:after{
+.htmlUsed.choosen a:after{
     content: 'Занято';
     display: block;
 }
