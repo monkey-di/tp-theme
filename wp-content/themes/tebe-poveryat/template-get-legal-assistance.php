@@ -188,6 +188,108 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
+        // Функция для создания или обновления блока .select-button с кнопками
+        function createOrUpdateSelectButton() {
+            const slotsCalendar = document.querySelector('.slotsCalendar');
+            if (!slotsCalendar) {
+                console.log('Блок .slotsCalendar не найден');
+                return false;
+            }
+
+            // Проверяем, есть ли уже блок .select-button
+            let selectButton = slotsCalendar.querySelector('.select-button');
+            const submitButton = document.querySelector('.pbSubmit');
+
+            if (!selectButton) {
+                // Создаем блок .select-button
+                selectButton = document.createElement('div');
+                selectButton.className = 'select-button';
+
+                // Создаем span с текстом "Выбрать"
+                const chooseSpan = document.createElement('span');
+                chooseSpan.textContent = 'Выбрать';
+
+                // Обработчик для span "Выбрать"
+                chooseSpan.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    console.log('Клик по span "Выбрать"');
+
+                    // Находим и скрываем блок .slotsCalendarfieldname1_1
+                    const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
+                    if (targetBlock) {
+                        targetBlock.style.display = 'none';
+                        console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
+                    }
+                });
+
+                // Добавляем span в блок
+                selectButton.appendChild(chooseSpan);
+
+                // Добавляем перенос строки
+                selectButton.appendChild(document.createElement('br'));
+
+                console.log('Блок .select-button создан');
+            }
+
+            // Проверяем, есть ли уже кнопка "Отправить запрос" в .select-button
+            if (submitButton && !selectButton.querySelector('.pbSubmit')) {
+                // Если кнопка уже где-то есть в DOM
+                if (submitButton.isConnected && submitButton.parentNode !== selectButton) {
+                    // Создаем копию кнопки
+                    const buttonCopy = submitButton.cloneNode(true);
+
+                    // Удаляем оригинальную кнопку
+                    submitButton.parentNode.removeChild(submitButton);
+
+                    // Добавляем копию в .select-button
+                    selectButton.appendChild(buttonCopy);
+
+                    // Обновляем стили кнопки
+                    buttonCopy.style.display = 'block';
+                    buttonCopy.style.marginTop = '10px';
+                    buttonCopy.style.marginLeft = 'auto';
+                    buttonCopy.style.marginRight = 'auto';
+                    buttonCopy.style.width = 'fit-content';
+
+                    console.log('Кнопка "Отправить запрос" добавлена в .select-button');
+                } else if (!submitButton.isConnected) {
+                    // Создаем новую кнопку
+                    const newSubmitButton = document.createElement('button');
+                    newSubmitButton.type = 'button';
+                    newSubmitButton.className = 'pbSubmit';
+                    newSubmitButton.textContent = 'Отправить запрос';
+
+                    // Добавляем обработчик для отправки формы
+                    newSubmitButton.addEventListener('click', function() {
+                        const originalForm = document.querySelector('form');
+                        if (originalForm) {
+                            originalForm.submit();
+                        }
+                    });
+
+                    // Добавляем кнопку в .select-button
+                    selectButton.appendChild(newSubmitButton);
+
+                    // Обновляем стили
+                    newSubmitButton.style.display = 'block';
+                    newSubmitButton.style.marginTop = '10px';
+                    newSubmitButton.style.marginLeft = 'auto';
+                    newSubmitButton.style.marginRight = 'auto';
+                    newSubmitButton.style.width = 'fit-content';
+
+                    console.log('Создана новая кнопка "Отправить запрос"');
+                }
+            }
+
+            // Если .select-button еще не добавлен в .slotsCalendar, добавляем его
+            if (selectButton.parentNode !== slotsCalendar) {
+                slotsCalendar.appendChild(selectButton);
+                console.log('Блок .select-button добавлен в .slotsCalendar');
+            }
+
+            return true;
+        }
+
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
@@ -219,109 +321,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
                     });
                 }
-
-                // Проверяем, есть ли уже блок .select-button
-                let selectButton = block.querySelector('.select-button');
-
-                if (!selectButton) {
-                    // Создаем блок .select-button
-                    selectButton = document.createElement('div');
-                    selectButton.className = 'select-button';
-
-                    // Создаем span с текстом "Выбрать"
-                    const chooseSpan = document.createElement('span');
-                    chooseSpan.textContent = 'Выбрать';
-
-                    // Дополнительный обработчик для span "Выбрать"
-                    chooseSpan.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по span "Выбрать"');
-
-                        // Находим и скрываем блок .slotsCalendarfieldname1_1
-                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                        if (targetBlock) {
-                            targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
-                        }
-                    });
-
-                    // Добавляем span в блок
-                    selectButton.appendChild(chooseSpan);
-
-                    // Добавляем перенос строки между кнопками
-                    selectButton.appendChild(document.createElement('br'));
-
-                    // Добавляем блок .select-button в конец .slotsCalendar
-                    block.appendChild(selectButton);
-
-                    console.log('Блок .select-button создан и добавлен в .slotsCalendar');
-
-                    // Обработчик клика на .select-button (кроме кнопки отправки)
-                    selectButton.addEventListener('click', function(e) {
-                        // Проверяем, был ли клик именно по span "Выбрать" или по самому .select-button
-                        if (e.target === chooseSpan || e.target === selectButton) {
-                            e.stopPropagation();
-                            console.log('Клик по .select-button (кроме кнопки отправки)');
-
-                            // Находим и скрываем блок .slotsCalendarfieldname1_1
-                            const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                            if (targetBlock) {
-                                targetBlock.style.display = 'none';
-                                console.log('Блок .slotsCalendarfieldname1_1 скрыт');
-                            }
-                        }
-                    });
-                }
-
-                // Теперь перемещаем кнопку "Отправить запрос" в .select-button
-                moveSubmitButtonToSelectButton();
             });
 
+            // Создаем или обновляем блок .select-button с кнопками
+            createOrUpdateSelectButton();
+
             return calendarBlocks.length > 0;
-        }
-
-        // Функция для перемещения кнопки "Отправить запрос" в .select-button
-        function moveSubmitButtonToSelectButton() {
-            const slotsCalendar = document.querySelector('.slotsCalendar');
-            const submitButton = document.querySelector('.pbSubmit');
-
-            if (!slotsCalendar || !submitButton) {
-                console.log('Не найден .slotsCalendar или кнопка .pbSubmit');
-                return false;
-            }
-
-            // Находим .select-button внутри .slotsCalendar
-            const selectButton = slotsCalendar.querySelector('.select-button');
-
-            if (!selectButton) {
-                console.log('Не найден .select-button в .slotsCalendar');
-                return false;
-            }
-
-            // Проверяем, не находится ли уже кнопка внутри .select-button
-            if (selectButton.contains(submitButton)) {
-                console.log('Кнопка уже находится в .select-button');
-                return false;
-            }
-
-            // Проверяем, есть ли кнопка в DOM
-            if (submitButton.isConnected) {
-                // Перемещаем кнопку в .select-button
-                selectButton.appendChild(submitButton);
-
-                // Обновляем стили кнопки
-                submitButton.style.display = 'block';
-                submitButton.style.marginTop = '10px';
-                submitButton.style.marginLeft = 'auto';
-                submitButton.style.marginRight = 'auto';
-                submitButton.style.width = 'fit-content';
-
-                console.log('Кнопка "Отправить запрос" перемещена в .select-button');
-                return true;
-            } else {
-                console.log('Кнопка не подключена к DOM');
-                return false;
-            }
         }
 
         // Функция для добавления календарной легенды в блок .ui-widget
@@ -420,6 +425,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => wrapSlotsContent(), 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, появилась ли кнопка отправки
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit'))) {
+                            setTimeout(() => createOrUpdateSelectButton(), 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -466,7 +478,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     // Проверка для кнопки отправки
                     if (mutation.target.querySelector && mutation.target.querySelector('.pbSubmit')) {
-                        setTimeout(() => moveSubmitButtonToSelectButton(), 50);
+                        setTimeout(() => createOrUpdateSelectButton(), 50);
                         changesMade = true;
                     }
                 }
@@ -479,7 +491,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    moveSubmitButtonToSelectButton();
+                    createOrUpdateSelectButton();
                 }, 100);
             }
         });
@@ -497,7 +509,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            moveSubmitButtonToSelectButton();
+            createOrUpdateSelectButton();
         }
 
         // Запускаем начальную проверку
