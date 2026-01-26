@@ -558,7 +558,7 @@
     border-radius: 40px;
 }
 .calendar-legend-item .calendar-legend-item-text{
-    color: #1e1e1e;
+    color: rgba(30, 30, 30, 0.4);
     font-family: "Geologica";
     font-weight: 400;
     font-size: 10px;
