@@ -438,6 +438,9 @@
     max-height: 474px;
     overflow-y:auto;
 }
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
+    width: 100%;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
