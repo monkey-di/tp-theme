@@ -218,49 +218,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     });
                 }
 
-                // Проверяем, не добавлена ли уже кнопка
+                // Проверяем, не добавлен ли уже select-button
                 if (!block.querySelector('.select-button')) {
-                    // Создаем блок с кнопкой
+                    // Создаем блок select-button
                     const selectButton = document.createElement('div');
                     selectButton.className = 'select-button';
-
-                    // Создаем span с текстом
-                    const span = document.createElement('span');
-                    span.textContent = 'Выбрать';
-
-                    // Дополнительный обработчик для span внутри .select-button
-                    span.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по span внутри кнопки "Выбрать"');
-
-                        // Находим и скрываем блок .slotsCalendarfieldname1_1
-                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                        if (targetBlock) {
-                            targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
-                        }
-                    });
-
-                    // Добавляем span в блок
-                    selectButton.appendChild(span);
 
                     // Добавляем блок в конец .slotsCalendar
                     block.appendChild(selectButton);
 
-                    console.log('Кнопка "Выбрать" добавлена в .slotsCalendar');
-
-                    // Обработчик клика на кнопку "Выбрать" для скрытия .slotsCalendarfieldname1_1
-                    selectButton.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по кнопке "Выбрать"');
-
-                        // Находим и скрываем блок .slotsCalendarfieldname1_1
-                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                        if (targetBlock) {
-                            targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт');
-                        }
-                    });
+                    console.log('Контейнер select-button добавлен в .slotsCalendar');
                 }
             });
 
@@ -334,6 +301,153 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return uiWidgets.length > 0;
         }
 
+        // Функция для создания кнопки "Выбор времени"
+        function createTimeSelectButton() {
+            // Ищем существующую кнопку "Отправить запрос"
+            const submitButton = document.querySelector('.pbSubmit');
+            if (!submitButton) return false;
+
+            // Проверяем, не создана ли уже кнопка "Выбор времени"
+            if (document.getElementById('timeSelectButton')) {
+                return true;
+            }
+
+            // Клонируем стили и атрибуты оригинальной кнопки для кнопки "Выбор времени"
+            const timeSelectButton = document.createElement('button');
+            timeSelectButton.type = 'button';
+            timeSelectButton.id = 'timeSelectButton';
+            timeSelectButton.className = submitButton.className;
+            timeSelectButton.textContent = 'Выбор времени';
+            timeSelectButton.disabled = true; // Изначально отключена
+
+            // Копируем атрибуты кроме id и onclick
+            const attrs = ['style', 'title', 'tabindex', 'data-*'];
+            attrs.forEach(attr => {
+                if (attr === 'data-*') {
+                    // Копируем все data-атрибуты
+                    for (let i = 0; i < submitButton.attributes.length; i++) {
+                        const attrName = submitButton.attributes[i].name;
+                        if (attrName.startsWith('data-')) {
+                            timeSelectButton.setAttribute(attrName, submitButton.getAttribute(attrName));
+                        }
+                    }
+                } else if (submitButton.hasAttribute(attr)) {
+                    timeSelectButton.setAttribute(attr, submitButton.getAttribute(attr));
+                }
+            });
+
+            // Заменяем кнопку "Отправить запрос" на "Выбор времени"
+            submitButton.parentNode.replaceChild(timeSelectButton, submitButton);
+
+            // Добавляем обработчик для кнопки "Выбор времени"
+            timeSelectButton.addEventListener('click', function() {
+                const slotsCalendar = document.querySelector('.slotsCalendar');
+                if (slotsCalendar) {
+                    slotsCalendar.style.display = 'block';
+                }
+            });
+
+            console.log('Кнопка "Выбор времени" создана');
+            return true;
+        }
+
+        // Функция для перемещения кнопки "Отправить запрос" в select-button
+        function moveSubmitButtonToSelectButton() {
+            const submitButton = document.querySelector('.pbSubmit');
+            const selectButton = document.querySelector('.select-button');
+
+            if (!submitButton || !selectButton) return false;
+
+            // Проверяем, не перемещена ли уже кнопка
+            if (selectButton.contains(submitButton)) {
+                return true;
+            }
+
+            // Очищаем содержимое select-button и добавляем кнопку
+            selectButton.innerHTML = '';
+            selectButton.appendChild(submitButton);
+
+            console.log('Кнопка "Отправить запрос" перемещена в select-button');
+            return true;
+        }
+
+        // Функция: Проверка наличия свободных слотов и активация кнопки
+        function updateTimeSelectButtonState() {
+            const timeSelectButton = document.getElementById('timeSelectButton');
+            if (!timeSelectButton) return;
+
+            // Находим активный (выбранный) день в календаре
+            const activeDay = document.querySelector('.ui-datepicker-calendar .ui-state-active');
+            if (!activeDay) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.opacity = '0.5';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Получаем дату из активного дня
+            const dateCell = activeDay.closest('[class*="2026-"]');
+            if (!dateCell) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.opacity = '0.5';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Ищем класс с датой (например, "2026-01-26")
+            const dateClass = Array.from(dateCell.classList).find(cls => cls.match(/^\d{4}-\d{2}-\d{2}$/));
+            if (!dateClass) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.opacity = '0.5';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Проверяем, есть ли блок slots для этой даты
+            const slotsBlock = document.querySelector(`.slots[d="${dateClass}"]`);
+            if (!slotsBlock) {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.opacity = '0.5';
+                timeSelectButton.style.cursor = 'not-allowed';
+                return;
+            }
+
+            // Проверяем наличие свободных слотов
+            const availableSlots = slotsBlock.querySelectorAll('.availableslot');
+            const hasAvailableSlots = availableSlots.length > 0;
+
+            // Обновляем состояние кнопки
+            if (hasAvailableSlots) {
+                timeSelectButton.disabled = false;
+                timeSelectButton.style.opacity = '1';
+                timeSelectButton.style.cursor = 'pointer';
+                console.log(`Для даты ${dateClass} найдено ${availableSlots.length} свободных слотов`);
+            } else {
+                timeSelectButton.disabled = true;
+                timeSelectButton.style.opacity = '0.5';
+                timeSelectButton.style.cursor = 'not-allowed';
+                console.log(`Для даты ${dateClass} нет свободных слотов`);
+            }
+        }
+
+        // Функция: Наблюдение за изменениями в календаре
+        function observeCalendarChanges() {
+            const calendar = document.querySelector('.ui-datepicker-calendar');
+            if (!calendar) return;
+
+            // Обработчик кликов по дням календаря
+            calendar.addEventListener('click', function(e) {
+                const dayCell = e.target.closest('[data-handler="selectDay"]');
+                if (dayCell) {
+                    // Ждем небольшое время для обновления DOM, затем проверяем слоты
+                    setTimeout(updateTimeSelectButtonState, 100);
+                }
+            });
+
+            // Также проверяем начальное состояние (если день уже выбран)
+            setTimeout(updateTimeSelectButtonState, 500);
+        }
+
         // наблюдатель за изменениями DOM
         const observer = new MutationObserver(function(mutations) {
             let changesMade = false;
@@ -351,17 +465,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .ui-widget
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
                             (node.querySelector && node.querySelector('.ui-widget'))) {
-                            setTimeout(() => addCalendarLegend(), 100);
+                            setTimeout(() => {
+                                addCalendarLegend();
+                                observeCalendarChanges();
+                            }, 100);
                             changesMade = true;
                         }
 
                         // Проверяем, является ли узел или содержит ли .slotsCalendar
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
                             (node.querySelector && node.querySelector('.slotsCalendar'))) {
-                            // Даем время на полную загрузку/рендеринг
                             setTimeout(() => {
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
+                                moveSubmitButtonToSelectButton();
+                                updateTimeSelectButtonState();
                             }, 100);
                             changesMade = true;
                         }
@@ -369,7 +487,28 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .slots
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
-                            setTimeout(() => wrapSlotsContent(), 100);
+                            setTimeout(() => {
+                                wrapSlotsContent();
+                                updateTimeSelectButtonState();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .pbSubmit (кнопка отправки)
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit'))) {
+                            setTimeout(() => {
+                                createTimeSelectButton();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .select-button
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('select-button')) ||
+                            (node.querySelector && node.querySelector('.select-button'))) {
+                            setTimeout(() => {
+                                moveSubmitButtonToSelectButton();
+                            }, 100);
                             changesMade = true;
                         }
                     }
@@ -379,7 +518,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (mutation.type === 'childList' && mutation.target) {
                     // Проверяем, появился ли .ui-widget внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
-                        setTimeout(() => addCalendarLegend(), 50);
+                        setTimeout(() => {
+                            addCalendarLegend();
+                            observeCalendarChanges();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -388,13 +530,18 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             decorateSlotsCalendar();
                             wrapSlotsContent();
+                            moveSubmitButtonToSelectButton();
+                            updateTimeSelectButtonState();
                         }, 50);
                         changesMade = true;
                     }
 
                     // Проверяем, появился ли .slots внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                        setTimeout(() => wrapSlotsContent(), 50);
+                        setTimeout(() => {
+                            wrapSlotsContent();
+                            updateTimeSelectButtonState();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -404,7 +551,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Если изменения произошли внутри .slots, но не внутри .slots-content
                         const inSlots = mutation.target.closest('.slots');
                         if (inSlots && !mutation.target.closest('.slots-content')) {
-                            setTimeout(() => wrapSlotsContent(), 50);
+                            setTimeout(() => {
+                                wrapSlotsContent();
+                                updateTimeSelectButtonState();
+                            }, 50);
                             changesMade = true;
                         }
                     }
@@ -413,6 +563,33 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
                     if (target && document.getElementById('fieldname8_1')) {
                         setTimeout(() => replaceInputWithTextarea(), 50);
+                        changesMade = true;
+                    }
+
+                    // Проверка для кнопки отправки
+                    if (mutation.target.querySelector && mutation.target.querySelector('.pbSubmit')) {
+                        setTimeout(() => {
+                            createTimeSelectButton();
+                        }, 50);
+                        changesMade = true;
+                    }
+
+                    // Проверка для select-button
+                    if (mutation.target.querySelector && mutation.target.querySelector('.select-button')) {
+                        setTimeout(() => {
+                            moveSubmitButtonToSelectButton();
+                        }, 50);
+                        changesMade = true;
+                    }
+                }
+
+                // Проверяем изменения атрибутов (например, изменение выбранного дня в календаре)
+                if (mutation.type === 'attributes') {
+                    // Если изменился класс у элемента календаря
+                    if (mutation.target.classList &&
+                        (mutation.target.classList.contains('ui-state-active') ||
+                            mutation.target.closest('.ui-datepicker-calendar'))) {
+                        setTimeout(updateTimeSelectButtonState, 50);
                         changesMade = true;
                     }
                 }
@@ -425,6 +602,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
+                    createTimeSelectButton();
+                    moveSubmitButtonToSelectButton();
+                    observeCalendarChanges();
+                    updateTimeSelectButtonState();
                 }, 100);
             }
         });
@@ -432,7 +613,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Старт наблюдения
         observer.observe(document.body, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class', 'style']
         });
 
         // Начальная проверка при загрузке страницы
@@ -442,6 +625,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
+            createTimeSelectButton();
+            moveSubmitButtonToSelectButton();
+            observeCalendarChanges();
+            updateTimeSelectButtonState();
         }
 
         // Запускаем начальную проверку
