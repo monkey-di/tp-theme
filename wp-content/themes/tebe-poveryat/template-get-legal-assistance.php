@@ -48,6 +48,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     </main>
 <script>
     console.log('test666');
+
     function restructureForm() {
         const parentContainer = document.querySelector('.pb0.pbreak');
         if (!parentContainer) return false;
@@ -107,6 +108,62 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     if (document.querySelector('.pb0.pbreak')) {
         restructureForm();
     }
+
+    // Функция для замены input на textarea в конкретном блоке
+    function convertInputToTextarea() {
+        // Находим контейнер с id "field_1-6"
+        const fieldContainer = document.getElementById('field_1-6');
+
+        if (!fieldContainer) {
+            console.error('Контейнер с id "field_1-6" не найден');
+            return;
+        }
+
+        // Находим input внутри .dfield
+        const input = fieldContainer.querySelector('.dfield input[type="text"]');
+
+        if (!input) {
+            console.error('Input не найден внутри .dfield');
+            return;
+        }
+
+        // Создаем textarea элемент
+        const textarea = document.createElement('textarea');
+
+        // Копируем основные атрибуты
+        textarea.id = input.id;
+        textarea.name = input.name;
+        textarea.className = input.className;
+        textarea.value = input.value;
+        textarea.placeholder = input.placeholder;
+
+        // Копируем все атрибуты кроме type
+        Array.from(input.attributes).forEach(attr => {
+            if (attr.name !== 'type' && attr.name !== 'value') {
+                textarea.setAttribute(attr.name, attr.value);
+            }
+        });
+
+        // Устанавливаем дополнительные атрибуты для textarea
+        textarea.setAttribute('rows', '4'); // Высота textarea
+        textarea.classList.add('textarea-field'); // Добавляем класс для стилизации
+
+        // Заменяем input на textarea
+        input.parentNode.replaceChild(textarea, input);
+
+        // Обновляем label (если он привязан к id)
+        const label = fieldContainer.querySelector('label[for="' + input.id + '"]');
+        if (label) {
+            // У label уже установлен for на тот же id, поэтому ничего менять не нужно
+            console.log('Label обновлен автоматически');
+        }
+
+        console.log('Input успешно заменен на textarea');
+        return textarea;
+    }
+
+    // Запуск функции
+    convertInputToTextarea();
 </script>
 <?php
 get_footer();
