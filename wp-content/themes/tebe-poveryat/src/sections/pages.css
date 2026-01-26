@@ -377,12 +377,12 @@
     border: 1px solid #D98B99;
     color:#0A1811;
 }
-#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default.ui-state-active{
+#dp1769408470886 > div > table > tbody > tr > td.ui-datepicker-days-cell-over.ui-datepicker-today{
     background: #fff;
     border: none;
     border-radius: 0;
 }
-#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default.ui-state-active:after{
+#dp1769408470886 > div > table > tbody > tr > td.ui-datepicker-days-cell-over.ui-datepicker-today{
     content: '';
     display: block;
     width: calc(100% - 10px);
