@@ -218,9 +218,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     });
                 }
 
-                // Проверяем, не добавлена ли уже кнопка
+                // Проверяем, не добавлена ли уже кнопка "Выбрать"
                 if (!block.querySelector('.select-button')) {
-                    // Создаем блок с кнопкой
+                    // Создаем блок с кнопкой "Выбрать"
                     const selectButton = document.createElement('div');
                     selectButton.className = 'select-button';
 
@@ -262,6 +262,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
                     });
                 }
+
+                // Перемещаем кнопку "Отправить запрос" в этот блок
+                moveSubmitButtonToSlots();
             });
 
             return calendarBlocks.length > 0;
@@ -334,6 +337,38 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return uiWidgets.length > 0;
         }
 
+        // Функция для перемещения кнопки "Отправить запрос" в блок выбора времени
+        function moveSubmitButtonToSlots() {
+            const slotsCalendar = document.querySelector('.slotsCalendar');
+            const submitButton = document.querySelector('.pbSubmit');
+
+            if (slotsCalendar && submitButton && !slotsCalendar.contains(submitButton)) {
+                // Удаляем кнопку из текущего положения
+                submitButton.remove();
+
+                // Вставляем кнопку в блок выбора времени
+                // после блока .select-button или в конец если его нет
+                const selectButton = slotsCalendar.querySelector('.select-button');
+                if (selectButton) {
+                    slotsCalendar.insertBefore(submitButton, selectButton.nextSibling);
+                } else {
+                    slotsCalendar.appendChild(submitButton);
+                }
+
+                // Обновляем стили кнопки для блока выбора времени
+                submitButton.style.display = 'block';
+                submitButton.style.marginTop = '15px';
+                submitButton.style.marginLeft = 'auto';
+                submitButton.style.marginRight = 'auto';
+                submitButton.style.width = 'fit-content';
+
+                console.log('Кнопка "Отправить запрос" перемещена в блок выбора времени');
+                return true;
+            }
+
+            return false;
+        }
+
         // наблюдатель за изменениями DOM
         const observer = new MutationObserver(function(mutations) {
             let changesMade = false;
@@ -370,6 +405,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
                             setTimeout(() => wrapSlotsContent(), 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, появилась ли кнопка отправки
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit'))) {
+                            setTimeout(() => moveSubmitButtonToSlots(), 100);
                             changesMade = true;
                         }
                     }
@@ -415,6 +457,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => replaceInputWithTextarea(), 50);
                         changesMade = true;
                     }
+
+                    // Проверка для кнопки отправки
+                    if (mutation.target.querySelector && mutation.target.querySelector('.pbSubmit')) {
+                        setTimeout(() => moveSubmitButtonToSlots(), 50);
+                        changesMade = true;
+                    }
                 }
             });
 
@@ -425,6 +473,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
+                    moveSubmitButtonToSlots();
                 }, 100);
             }
         });
@@ -442,6 +491,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
+            moveSubmitButtonToSlots();
         }
 
         // Запускаем начальную проверку
