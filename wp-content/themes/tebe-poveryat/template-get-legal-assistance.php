@@ -158,7 +158,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         // Перемещаем все найденные элементы в slotsContent
                         slotsToWrap.forEach(slot => {
-                            // проверяем, что элемент еще не находится внутри другого slots-content
+                            // Проверяем, что элемент еще не находится внутри другого slots-content
                             // (на случай, если уже обернуты в другом месте)
                             if (!slot.closest('.slots-content')) {
                                 slotsContent.appendChild(slot);
@@ -186,60 +186,127 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
-        // функция для добавления элементов в .slotsCalendar
+        // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
-            // Ищем все .slotsCalendar
+            // Ищем все блоки .slotsCalendar
             const calendarBlocks = document.querySelectorAll('.slotsCalendar');
 
             calendarBlocks.forEach(block => {
-                // Проверка на сущ-е closer
+                // Проверяем, не добавлен ли уже closer
                 if (!block.querySelector('.closer')) {
                     // Создаем closer
                     const closer = document.createElement('div');
                     closer.className = 'closer';
-                    closer.innerHTML = '';
+                    closer.innerHTML = '&times;'; // добавляем крестик
 
-                    // Добавить closer в начало блока
+                    // Добавляем closer в начало блока
                     block.insertBefore(closer, block.firstChild);
 
                     console.log('Closer добавлен в .slotsCalendar');
 
-                    // обработчик клика на closer
+                    // Можно добавить обработчик клика на closer
                     closer.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по closer');
-                        // логика закрытия типа block.style.display = 'none';
+                        // Добавьте здесь свою логику закрытия
+                        // Например: block.style.display = 'none';
                     });
                 }
 
-                // Провка на кнопку
+                // Проверяем, не добавлена ли уже кнопка
                 if (!block.querySelector('.select-button')) {
-                    // Создать блок с кнопкой
+                    // Создаем блок с кнопкой
                     const selectButton = document.createElement('div');
                     selectButton.className = 'select-button';
 
-                    // Создать span с текстом внутри блока
+                    // Создаем span с текстом
                     const span = document.createElement('span');
                     span.textContent = 'Выбрать';
 
-                    // span в блок
+                    // Добавляем span в блок
                     selectButton.appendChild(span);
 
-                    // блок в конец .slotsCalendar
+                    // Добавляем блок в конец .slotsCalendar
                     block.appendChild(selectButton);
 
                     console.log('Кнопка "Выбрать" добавлена в .slotsCalendar');
 
-                    // Обработчик клика на кнопку
+                    // Можно добавить обработчик клика на кнопку
                     selectButton.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по кнопке "Выбрать"');
-                        // логика тут
+                        // Добавьте здесь свою логику
                     });
                 }
             });
 
             return calendarBlocks.length > 0;
+        }
+
+        // Функция для добавления календарной легенды в блок .ui-widget
+        function addCalendarLegend() {
+            // Ищем блок .ui-widget
+            const uiWidgets = document.querySelectorAll('.ui-widget');
+
+            uiWidgets.forEach(uiWidget => {
+                // Проверяем, не добавлена ли уже легенда
+                if (!uiWidget.querySelector('.calendar-legend')) {
+                    // Создаем контейнер для легенды
+                    const calendarLegend = document.createElement('div');
+                    calendarLegend.className = 'calendar-legend';
+
+                    // Создаем три элемента легенды
+                    const legendItems = [
+                        { markerClass: '', text: 'Есть свободное время' },
+                        { markerClass: '', text: 'Нет свободного времени' },
+                        { markerClass: '', text: 'Сегодня' }
+                    ];
+
+                    // Создаем элементы легенды
+                    legendItems.forEach(item => {
+                        const legendItem = document.createElement('div');
+                        legendItem.className = 'calendar-legend-item';
+
+                        // Маркер
+                        const marker = document.createElement('div');
+                        marker.className = 'calendar-legend-item-marker';
+
+                        // Линия (разделитель)
+                        const line = document.createElement('div');
+                        line.className = 'calendar-legend-item-line';
+
+                        // Текст
+                        const text = document.createElement('div');
+                        text.className = 'calendar-legend-item-text';
+                        text.textContent = item.text;
+
+                        // Собираем элемент
+                        legendItem.appendChild(marker);
+                        legendItem.appendChild(document.createTextNode(' '));
+                        legendItem.appendChild(line);
+                        legendItem.appendChild(document.createTextNode(' '));
+                        legendItem.appendChild(text);
+
+                        // Добавляем элемент в легенду
+                        calendarLegend.appendChild(legendItem);
+                    });
+
+                    // Добавляем легенду в .ui-widget
+                    uiWidget.appendChild(calendarLegend);
+                    console.log('Календарная легенда добавлена в .ui-widget');
+
+                    // Добавляем CSS стили для легенды
+                    const style = document.createElement('style');
+
+                    // Добавляем стили в head, если их еще нет
+                    if (!document.querySelector('style[data-calendar-legend]')) {
+                        style.setAttribute('data-calendar-legend', 'true');
+                        document.head.appendChild(style);
+                    }
+                }
+            });
+
+            return uiWidgets.length > 0;
         }
 
         // наблюдатель за изменениями DOM
@@ -256,6 +323,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Проверяем добавленные ноды
                 if (mutation.addedNodes && mutation.addedNodes.length > 0) {
                     for (let node of mutation.addedNodes) {
+                        // Проверяем, является ли узел или содержит ли .ui-widget
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
+                            (node.querySelector && node.querySelector('.ui-widget'))) {
+                            setTimeout(() => addCalendarLegend(), 100);
+                            changesMade = true;
+                        }
+
                         // Проверяем, является ли узел или содержит ли .slotsCalendar
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
                             (node.querySelector && node.querySelector('.slotsCalendar'))) {
@@ -265,7 +339,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 wrapSlotsContent();
                             }, 100);
                             changesMade = true;
-                            break;
                         }
 
                         // Проверяем, является ли узел или содержит ли .slots
@@ -279,6 +352,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 // Проверяем изменения в поддереве
                 if (mutation.type === 'childList' && mutation.target) {
+                    // Проверяем, появился ли .ui-widget внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
+                        setTimeout(() => addCalendarLegend(), 50);
+                        changesMade = true;
+                    }
+
                     // Проверяем, появился ли .slotsCalendar внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
                         setTimeout(() => {
@@ -317,6 +396,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Также запускаем проверку для уже существующих элементов
             if (!changesMade) {
                 setTimeout(() => {
+                    addCalendarLegend();
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
@@ -336,6 +416,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             replaceInputWithTextarea();
             decorateSlotsCalendar();
             wrapSlotsContent();
+            addCalendarLegend();
         }
 
         // Запускаем начальную проверку
