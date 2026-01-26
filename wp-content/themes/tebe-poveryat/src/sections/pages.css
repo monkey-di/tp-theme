@@ -641,6 +641,9 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-prev{
     transform:rotate(180deg);
 }
+.slotsCalendarfieldname1_1{
+    min-width: 454px;
+}
 .slotsCalendarfieldname1_1:before{
     content: '';
     position: fixed;
