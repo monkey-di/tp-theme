@@ -480,6 +480,7 @@
     top: 0;
     z-index: 30;
     background: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
+    cursor:pointer;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
