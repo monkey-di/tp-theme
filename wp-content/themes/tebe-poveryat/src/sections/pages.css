@@ -372,6 +372,7 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default:hover{
     background: #fff;
     border: 1px solid #D98B99;
+    color:#0A1811;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default.ui-state-active{
     background: #3995D0;
