@@ -47,31 +47,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
-        console.log('test');
-        // Объект для хранения выбранной даты и времени
-        const selectedDateTime = {
-            date: null,
-            time: null,
-            updateDisplay: function() {
-                const displayBlock = document.getElementById('date-time-display');
-                if (!displayBlock) return;
-
-                // Форматируем дату
-                let dateStr = this.date;
-                if (!dateStr) {
-                    const now = new Date();
-                    dateStr = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
-                }
-
-                // Форматируем время
-                const timeStr = this.time || 'не выбрано';
-
-                displayBlock.innerHTML = `
-                <div class="date-time-display-title">Выбранное время:</div>
-                <div class="date-time-value">${dateStr} ${timeStr}</div>
-            `;
-            }
-        };
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
             if (!parentContainer) return false;
@@ -111,47 +86,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             console.log('Форма реструктурирована');
             return true;
         }
-        // Функция для добавления блока с выбранной датой и временем
-        function addDateTimeDisplayBlock() {
-            // Проверяем, не добавлен ли уже блок
-            if (document.getElementById('date-time-display')) {
-                return false;
-            }
 
-            // Ищем блок anketa-col-2
-            const anketaCol2 = document.querySelector('.anketa-col-2');
-            if (!anketaCol2) {
-                return false;
-            }
-
-            // Создаем блок для отображения даты и времени
-            const displayBlock = document.createElement('div');
-            displayBlock.id = 'date-time-display';
-            displayBlock.className = 'date-time-display';
-
-            // Добавляем стили
-            displayBlock.style.cssText = `
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            font-family: Arial, sans-serif;
-        `;
-
-            // Добавляем блок в начало anketa-col-2
-            if (anketaCol2.firstChild) {
-                anketaCol2.insertBefore(displayBlock, anketaCol2.firstChild);
-            } else {
-                anketaCol2.appendChild(displayBlock);
-            }
-
-            // Инициализируем отображение с текущей датой
-            selectedDateTime.updateDisplay();
-
-            console.log('Блок отображения даты и времени добавлен');
-            return true;
-        }
         // Функция для замены input на textarea
         function replaceInputWithTextarea() {
             const input = document.getElementById('fieldname8_1');
