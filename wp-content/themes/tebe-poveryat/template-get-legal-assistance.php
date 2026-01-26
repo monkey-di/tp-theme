@@ -271,9 +271,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         const marker = document.createElement('div');
                         marker.className = 'calendar-legend-item-marker';
 
-                        // Линия (разделитель)
+                        // Линия (разделитель) с символом "—"
                         const line = document.createElement('div');
                         line.className = 'calendar-legend-item-line';
+                        line.innerHTML = '—'; // добавляем символ тире
 
                         // Текст
                         const text = document.createElement('div');
