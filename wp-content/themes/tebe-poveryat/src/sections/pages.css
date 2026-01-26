@@ -472,6 +472,10 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
 }
+.slotsCalendar:before{
+    content:'x';
+    display:block;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
