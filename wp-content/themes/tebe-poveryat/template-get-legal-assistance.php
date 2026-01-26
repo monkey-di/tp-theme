@@ -180,7 +180,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Создаем closer
                     const closer = document.createElement('div');
                     closer.className = 'closer';
-                    closer.innerHTML = '&times;'; // добавляем крестик
+                    closer.innerHTML = '';
 
                     // Добавляем closer в начало блока
                     block.insertBefore(closer, block.firstChild);
