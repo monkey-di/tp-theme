@@ -269,6 +269,9 @@
 .calendar-col-2{
     flex: 2;
 }
+.pbSubmit{
+    flex: 2;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
