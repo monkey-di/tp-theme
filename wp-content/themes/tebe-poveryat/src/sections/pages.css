@@ -618,7 +618,7 @@
     padding:0 20px;
     border-top: 1px solid rgba(30, 30, 30, 0.1);
 }
-#cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-next, .ahb_m4 #fbuilder .ui-datepicker-prev{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-next, #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-prev{
     background-image: url(/wp-content/themes/tebe-poveryat/assets/images/arrow-calendar.svg) !important;
     border: none;
     display: block;
@@ -626,6 +626,9 @@
     height: 16px;
     background-repeat: no-repeat !important;
     transform: rotate(0);
+}
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-prev{
+    transform:rotate(180deg);
 }
 @media(max-width:1400px){
     .page-head-wrapper{
