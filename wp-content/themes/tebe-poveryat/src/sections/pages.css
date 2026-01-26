@@ -423,6 +423,10 @@
     content: 'Занято';
     display: block;
 }
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div a{
+    display: flex;
+    justify-content: space-between;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
