@@ -530,6 +530,7 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
     color: #fff;
     background:#6063a6 !important;
+    padding: 16px 20px;
 }
 .slotsCalendar.slotsCalendarfieldname1_1{
     display:flex;
