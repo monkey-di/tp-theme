@@ -381,6 +381,9 @@
     background: #3995D0;
     color: #fff;
 }
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-header{
+    padding-top: 0;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
