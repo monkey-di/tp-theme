@@ -525,10 +525,10 @@
     font-size: 16px;
     line-height: 150%;
     letter-spacing: 0%;
-    border: 1px solid #FEF1EC;
+    border: 1px solid #6063A6;
 }
 .select-button span:hover{
-    color: #FEF1EC;
+    color: #6063A6;
     background: #fff;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection a{
