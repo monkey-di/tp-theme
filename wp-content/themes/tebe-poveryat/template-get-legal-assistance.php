@@ -203,54 +203,61 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 document.querySelector('[id*="subbtn"]');
         }
 
-        // Функция для сохранения оригинальной кнопки
-        function saveOriginalButton() {
-            if (originalSubmitButton && clonedSubmitButton) {
-                console.log('Оригинальная и клонированная кнопки уже сохранены');
-                return;
-            }
+        // Функция для создания кнопки button
+        function createButtonElement() {
+            // Создаем настоящую кнопку button
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'cp_subbtn_button';
+            button.textContent = 'Отправить запрос';
+            button.style.cssText = `
+            display: block;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            width: fit-content;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        `;
 
-            originalSubmitButton = findSubmitButton();
-            if (originalSubmitButton) {
-                console.log('Оригинальная кнопка сохранена:', originalSubmitButton);
+            // Добавляем обработчик наведения
+            button.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#45a049';
+            });
 
-                // Клонируем кнопку
-                clonedSubmitButton = originalSubmitButton.cloneNode(true);
-                clonedSubmitButton.classList.add('cloned-cp-subbtn');
+            button.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '#4CAF50';
+            });
 
-                // Сохраняем оригинальные обработчики событий
-                const originalOnClick = originalSubmitButton.onclick;
-                if (originalOnClick) {
-                    clonedSubmitButton.onclick = originalOnClick;
-                }
+            // Обработчик клика
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('Клик по кнопке "Отправить запрос"');
 
-                // Добавляем обработчик клика, который вызывает клик по оригинальной кнопке
-                clonedSubmitButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('Клик по клонированной кнопке');
+                // Ищем оригинальную кнопку
+                let originalButton = findSubmitButton();
+                if (originalButton) {
+                    console.log('Нажата оригинальная кнопка');
+                    originalButton.click();
+                } else {
+                    console.log('Оригинальная кнопка не найдена');
 
-                    if (originalSubmitButton && originalSubmitButton.isConnected) {
-                        originalSubmitButton.click();
-                    } else {
-                        console.log('Оригинальная кнопка не найдена, пытаемся найти заново');
-                        const newOriginalButton = findSubmitButton();
-                        if (newOriginalButton) {
-                            originalSubmitButton = newOriginalButton;
-                            originalSubmitButton.click();
-                        }
+                    // Пытаемся найти форму и отправить ее
+                    const form = document.querySelector('form');
+                    if (form) {
+                        console.log('Форма найдена, отправляем...');
+                        form.submit();
                     }
-                });
+                }
+            });
 
-                // Настраиваем стили клонированной кнопки
-                clonedSubmitButton.style.display = 'block';
-                clonedSubmitButton.style.marginTop = '10px';
-                clonedSubmitButton.style.marginLeft = 'auto';
-                clonedSubmitButton.style.marginRight = 'auto';
-                clonedSubmitButton.style.width = 'fit-content';
-
-                console.log('Клонированная кнопка создана');
-            }
+            return button;
         }
 
         // Функция для создания или обновления блока .select-button
@@ -319,40 +326,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для обновления кнопки отправки в .select-button
         function updateSubmitButtonInSelectButton(selectButton) {
-            // Сохраняем оригинальную кнопку, если еще не сохранена
-            saveOriginalButton();
+            // Проверяем, есть ли уже кнопка button в .select-button
+            let existingButton = selectButton.querySelector('.cp_subbtn_button');
 
-            // Проверяем, есть ли уже клонированная кнопка в .select-button
-            // Мы можем проверить по классу 'cloned-cp-subbtn' или по переменной clonedSubmitButton, но clonedSubmitButton может быть не в DOM
-            let existingClonedButton = selectButton.querySelector('.cloned-cp-subbtn');
+            if (!existingButton) {
+                // Создаем новую кнопку
+                const newButton = createButtonElement();
 
-            if (existingClonedButton) {
-                console.log('Клонированная кнопка уже в .select-button, проверяем, не нужно ли обновить');
+                // Вставляем кнопку в .select-button
+                selectButton.appendChild(newButton);
+                console.log('Кнопка "Отправить запрос" создана и добавлена в .select-button');
 
-                // Проверяем, что это та же самая кнопка (по ссылке)
-                if (existingClonedButton === clonedSubmitButton) {
-                    console.log('Это та же самая клонированная кнопка, ничего не делаем');
-                    return;
-                } else {
-                    // Если это не наша клонированная кнопка, удаляем ее
-                    console.log('Найдена чужая клонированная кнопка, удаляем');
-                    existingClonedButton.remove();
-                }
-            }
-
-            // Если у нас есть клонированная кнопка, но она не в .select-button, то добавляем ее
-            if (clonedSubmitButton) {
-                // Проверяем, не находится ли клонированная кнопка уже где-то в DOM
-                if (clonedSubmitButton.isConnected && clonedSubmitButton.parentNode !== selectButton) {
-                    // Если кнопка уже подключена к DOM, но не в нашем selectButton, удаляем ее оттуда
-                    clonedSubmitButton.remove();
-                }
-
-                // Вставляем клонированную кнопку в .select-button
-                selectButton.appendChild(clonedSubmitButton);
-                console.log('Клонированная кнопка добавлена в .select-button');
+                // Сохраняем ссылку на клонированную кнопку
+                clonedSubmitButton = newButton;
             } else {
-                console.log('Нет клонированной кнопки для добавления');
+                console.log('Кнопка уже есть в .select-button');
             }
         }
 
@@ -573,7 +561,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    // Не вызываем createOrUpdateSelectButton здесь, чтобы избежать повторных вызовов
                 }, 100);
             }
         });
@@ -586,15 +573,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (target.closest('.ui-datepicker-calendar a') ||
                 target.closest('.availableslot a') ||
                 target.closest('.ui-state-default')) {
-                console.log('Клик по дате/времени, обновляем select-button через 500мс');
+                console.log('Клик по дате/времени, проверяем кнопку через 500мс');
                 setTimeout(() => {
                     const slotsCalendar = document.querySelector('.slotsCalendar');
                     if (slotsCalendar) {
                         const selectButton = slotsCalendar.querySelector('.select-button');
                         if (selectButton) {
                             // Проверяем, есть ли кнопка в select-button
-                            const submitButtonInSelect = selectButton.querySelector('.cloned-cp-subbtn, .cp_subbtn, #cp_subbtn_1, .pbSubmit');
-                            if (!submitButtonInSelect && clonedSubmitButton) {
+                            const submitButtonInSelect = selectButton.querySelector('.cp_subbtn_button');
+                            if (!submitButtonInSelect) {
                                 console.log('Кнопка отсутствует в select-button после клика, добавляем');
                                 updateSubmitButtonInSelectButton(selectButton);
                             }
@@ -617,7 +604,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            saveOriginalButton(); // Сохраняем оригинальную кнопку
             createOrUpdateSelectButton();
 
             // Периодическая проверка наличия кнопки в select-button
@@ -626,8 +612,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (slotsCalendar) {
                     const selectButton = slotsCalendar.querySelector('.select-button');
                     if (selectButton) {
-                        const submitButtonInSelect = selectButton.querySelector('.cloned-cp-subbtn, .cp_subbtn, #cp_subbtn_1, .pbSubmit');
-                        if (!submitButtonInSelect && clonedSubmitButton) {
+                        const submitButtonInSelect = selectButton.querySelector('.cp_subbtn_button');
+                        if (!submitButtonInSelect) {
                             console.log('Периодическая проверка: кнопка отсутствует в select-button, добавляем');
                             updateSubmitButtonInSelectButton(selectButton);
                         }
