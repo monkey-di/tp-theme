@@ -484,6 +484,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
+        console.log('Кнопка скопирована');
     </script>
 <?php
 get_footer();
