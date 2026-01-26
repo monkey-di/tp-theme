@@ -217,6 +217,7 @@
     text-align: center;
     box-sizing: border-box;
     flex: 1 0 calc(50% - 5px);
+    max-width: 394px;
 }
 #fbuilder .calendar-col-1 input{
     width:100%;
@@ -277,6 +278,7 @@
     display:flex;
     flex-wrap: wrap;
     max-width: 812px;
+    justify-content: space-between;
 }
 .ui-datepicker-calendar td{
     border-radisus: 4px;
