@@ -334,229 +334,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return uiWidgets.length > 0;
         }
 
-        // Функция для проверки наличия свободных слотов в выбранный день
-        function checkAvailableSlotsForSelectedDay() {
-            // Находим выбранный день в календаре
-            const selectedDay = document.querySelector('.ui-datepicker-calendar .ui-state-active');
-
-            if (!selectedDay) {
-                console.log('Не выбран день в календаре');
-                return false;
-            }
-
-            // Получаем дату из атрибута data-date или из родительской ячейки
-            let dateCell = selectedDay.closest('td');
-            let date = null;
-
-            if (dateCell) {
-                // Ищем классы с датой формата "2026-01-26"
-                const classList = Array.from(dateCell.classList);
-                const dateClass = classList.find(cls => cls.match(/^\d{4}-\d{2}-\d{2}$/));
-
-                if (dateClass) {
-                    date = dateClass;
-                } else {
-                    // Пробуем найти в атрибутах
-                    const dataDate = dateCell.getAttribute('data-date');
-                    if (dataDate) {
-                        date = dataDate;
-                    }
-                }
-            }
-
-            if (!date) {
-                console.log('Не удалось определить дату выбранного дня');
-                return false;
-            }
-
-            console.log('Проверяем слоты для даты:', date);
-
-            // Теперь проверяем, есть ли слоты для этой даты
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (!slotsCalendar) {
-                console.log('Блок slotsCalendar не найден');
-                return false;
-            }
-
-            // Ищем блок с нужной датой
-            const dateSlots = slotsCalendar.querySelector(`.slots[d="${date}"]`);
-
-            if (!dateSlots) {
-                console.log('Слотов для этой даты не найдено');
-                return false;
-            }
-
-            // Проверяем наличие свободных слотов
-            const availableSlots = dateSlots.querySelectorAll('.availableslot');
-            const hasSlots = availableSlots.length > 0;
-
-            console.log(`Найдено свободных слотов: ${availableSlots.length}`);
-
-            return hasSlots;
-        }
-
-        // Функция для добавления кнопки "Выбрать время" под календарём
-        function addTimeSelectionButton() {
-            // Находим блок календаря
-            const fieldCalendar = document.querySelector('.fieldCalendarfieldname1_1');
-            if (!fieldCalendar) {
-                console.log('Блок календаря не найден');
-                return false;
-            }
-
-            // Проверяем, не добавлена ли уже кнопка "Выбрать время"
-            const existingTimeButton = document.querySelector('.time-selection-button');
-            if (existingTimeButton) {
-                // Обновляем состояние существующей кнопки
-                updateTimeSelectionButtonState(existingTimeButton);
-                return true;
-            }
-
-            // Находим кнопку "Отправить запрос"
-            const submitButton = document.querySelector('.pbSubmit');
-            if (!submitButton) {
-                console.log('Кнопка "Отправить запрос" не найдена');
-                return false;
-            }
-
-            // Находим блок .slotsCalendar (выбор времени)
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (!slotsCalendar) {
-                console.log('Блок slotsCalendar не найден');
-                return false;
-            }
-
-            // Создаем новую кнопку "Выбрать время"
-            const timeButton = document.createElement('button');
-            timeButton.type = 'button';
-            timeButton.className = 'pbSubmit time-selection-button';
-            timeButton.textContent = 'Выбрать время';
-            timeButton.style.marginTop = '10px';
-            timeButton.style.marginBottom = '10px';
-            timeButton.style.opacity = '0.5';
-            timeButton.style.cursor = 'not-allowed';
-            timeButton.disabled = true;
-
-            // Обработчик для кнопки "Выбрать время"
-            timeButton.addEventListener('click', function() {
-                if (!this.disabled) {
-                    console.log('Клик по кнопке "Выбрать время"');
-                    // Показываем блок выбора времени
-                    slotsCalendar.style.display = 'block';
-                }
-            });
-
-            // Вставляем кнопку "Выбрать время" после календаря
-            fieldCalendar.parentNode.insertBefore(timeButton, fieldCalendar.nextSibling);
-            console.log('Кнопка "Выбрать время" добавлена под календарём');
-
-            // Переносим кнопку "Отправить запрос" под блок slotsCalendar
-            // Находим родительский контейнер для slotsCalendar
-            const parentContainer = slotsCalendar.parentNode;
-
-            // Вставляем кнопку "Отправить запрос" после блока slotsCalendar
-            if (parentContainer) {
-                // Проверяем, не находится ли уже submitButton в нужном месте
-                if (submitButton.parentNode !== parentContainer ||
-                    submitButton.previousElementSibling !== slotsCalendar) {
-                    // Удаляем кнопку из текущего места
-                    submitButton.remove();
-                    // Вставляем после slotsCalendar
-                    parentContainer.insertBefore(submitButton, slotsCalendar.nextSibling);
-                    console.log('Кнопка "Отправить запрос" перенесена под блок slots');
-                }
-            }
-
-            // Добавляем дополнительный обработчик для кнопки "Выбрать" в slotsCalendar
-            const selectButton = slotsCalendar.querySelector('.select-button');
-            if (selectButton) {
-                selectButton.addEventListener('click', function(e) {
-                    console.log('Выбрано время, скрываем блок slots и показываем кнопку "Отправить запрос"');
-                    // Прокручиваем страницу к кнопке "Отправить запрос"
-                    setTimeout(() => {
-                        submitButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                });
-            }
-
-            // Обновляем состояние кнопки
-            updateTimeSelectionButtonState(timeButton);
-
-            return true;
-        }
-
-        // Функция для обновления состояния кнопки "Выбрать время"
-        function updateTimeSelectionButtonState(timeButton) {
-            if (!timeButton) {
-                timeButton = document.querySelector('.time-selection-button');
-                if (!timeButton) return;
-            }
-
-            const hasSlots = checkAvailableSlotsForSelectedDay();
-
-            if (hasSlots) {
-                timeButton.style.opacity = '1';
-                timeButton.style.cursor = 'pointer';
-                timeButton.disabled = false;
-                console.log('Кнопка "Выбрать время" активирована (есть свободные слоты)');
-            } else {
-                timeButton.style.opacity = '0.5';
-                timeButton.style.cursor = 'not-allowed';
-                timeButton.disabled = true;
-                console.log('Кнопка "Выбрать время" деактивирована (нет свободных слотов)');
-            }
-        }
-
-        // Функция для отслеживания кликов по календарю
-        function setupCalendarClickHandler() {
-            const calendarTable = document.querySelector('.ui-datepicker-calendar');
-            if (!calendarTable) return;
-
-            // Удаляем старый обработчик, если есть
-            if (calendarTable.hasAttribute('data-time-button-handler')) {
-                calendarTable.removeEventListener('click', calendarTable.timeButtonClickHandler);
-            }
-
-            // Создаем новый обработчик
-            calendarTable.timeButtonClickHandler = function(e) {
-                // Ждем небольшое время, чтобы изменения в DOM успели произойти
-                setTimeout(() => {
-                    updateTimeSelectionButtonState();
-                }, 100);
-            };
-
-            // Добавляем обработчик
-            calendarTable.addEventListener('click', calendarTable.timeButtonClickHandler);
-            calendarTable.setAttribute('data-time-button-handler', 'true');
-            console.log('Обработчик кликов по календарю установлен');
-        }
-
-        // Функция для перемещения кнопки "Отправить запрос" под блок slots (если она не там)
-        function ensureSubmitButtonPosition() {
-            const submitButton = document.querySelector('.pbSubmit:not(.time-selection-button)');
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-
-            if (!submitButton || !slotsCalendar) return false;
-
-            // Проверяем, находится ли кнопка "Отправить запрос" после slotsCalendar
-            const parentContainer = slotsCalendar.parentNode;
-            if (!parentContainer) return false;
-
-            // Проверяем текущее положение кнопки
-            if (submitButton.parentNode !== parentContainer ||
-                submitButton.previousElementSibling !== slotsCalendar) {
-
-                console.log('Переносим кнопку "Отправить запрос" под блок slots');
-                // Удаляем кнопку из текущего места
-                submitButton.remove();
-                // Вставляем после slotsCalendar
-                parentContainer.insertBefore(submitButton, slotsCalendar.nextSibling);
-                return true;
-            }
-
-            return false;
-        }
-
         // наблюдатель за изменениями DOM
         const observer = new MutationObserver(function(mutations) {
             let changesMade = false;
@@ -574,10 +351,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .ui-widget
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
                             (node.querySelector && node.querySelector('.ui-widget'))) {
-                            setTimeout(() => {
-                                addCalendarLegend();
-                                setupCalendarClickHandler();
-                            }, 100);
+                            setTimeout(() => addCalendarLegend(), 100);
                             changesMade = true;
                         }
 
@@ -588,9 +362,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
-                                addTimeSelectionButton();
-                                setupCalendarClickHandler();
-                                ensureSubmitButtonPosition();
                             }, 100);
                             changesMade = true;
                         }
@@ -598,10 +369,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .slots
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
-                            setTimeout(() => {
-                                wrapSlotsContent();
-                                updateTimeSelectionButtonState();
-                            }, 100);
+                            setTimeout(() => wrapSlotsContent(), 100);
                             changesMade = true;
                         }
                     }
@@ -611,10 +379,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (mutation.type === 'childList' && mutation.target) {
                     // Проверяем, появился ли .ui-widget внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
-                        setTimeout(() => {
-                            addCalendarLegend();
-                            setupCalendarClickHandler();
-                        }, 50);
+                        setTimeout(() => addCalendarLegend(), 50);
                         changesMade = true;
                     }
 
@@ -623,19 +388,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             decorateSlotsCalendar();
                             wrapSlotsContent();
-                            addTimeSelectionButton();
-                            setupCalendarClickHandler();
-                            ensureSubmitButtonPosition();
                         }, 50);
                         changesMade = true;
                     }
 
                     // Проверяем, появился ли .slots внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                        setTimeout(() => {
-                            wrapSlotsContent();
-                            updateTimeSelectionButtonState();
-                        }, 50);
+                        setTimeout(() => wrapSlotsContent(), 50);
                         changesMade = true;
                     }
 
@@ -645,10 +404,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Если изменения произошли внутри .slots, но не внутри .slots-content
                         const inSlots = mutation.target.closest('.slots');
                         if (inSlots && !mutation.target.closest('.slots-content')) {
-                            setTimeout(() => {
-                                wrapSlotsContent();
-                                updateTimeSelectionButtonState();
-                            }, 50);
+                            setTimeout(() => wrapSlotsContent(), 50);
                             changesMade = true;
                         }
                     }
@@ -669,10 +425,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    addTimeSelectionButton();
-                    setupCalendarClickHandler();
-                    updateTimeSelectionButtonState();
-                    ensureSubmitButtonPosition();
                 }, 100);
             }
         });
@@ -690,10 +442,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            addTimeSelectionButton();
-            setupCalendarClickHandler();
-            updateTimeSelectionButtonState();
-            ensureSubmitButtonPosition();
         }
 
         // Запускаем начальную проверку
