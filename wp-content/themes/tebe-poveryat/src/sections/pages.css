@@ -197,6 +197,7 @@
 #fbuilder #fieldlist_1 .pb0.pbreak{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 #field_1-0{order:0;}
 #field_1-1{order:10;}
