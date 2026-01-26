@@ -47,7 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test666');
+    console.log('test777');
 
     function restructureForm() {
         const parentContainer = document.querySelector('.pb0.pbreak');
