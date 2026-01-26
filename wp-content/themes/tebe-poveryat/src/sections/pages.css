@@ -335,6 +335,16 @@
     background-color: #1C5358;
     color:#fff;
 }
+.page-template-template-get-legal-assistance h2.wp-block-heading.has-text-align-center:before{
+    content: '';
+    width: 100%;
+    height: 100px;
+    display: block;
+    margin-top: -100px;
+}
+.page-template-template-get-legal-assistance .page-head{
+    z-index: 30;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
