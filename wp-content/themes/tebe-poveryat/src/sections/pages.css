@@ -664,6 +664,8 @@
 }
 .ui-datepicker-current-day a{
     background:#6063A6 !important;
+    color:#fff !important;
+    border-radius: 4px !important;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
