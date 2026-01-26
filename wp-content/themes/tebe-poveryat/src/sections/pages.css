@@ -403,6 +403,10 @@
 .availableslot{
     width: 100%;
 }
+.availableslot a:after{
+    content: "Свободно";
+    display:block;
+}
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .fieldCalendar, #fbuilder .slotsCalendar{
     z-index: 30;
 }
