@@ -493,16 +493,18 @@
 }
 
 .slotsCalendar .closer{
-    display:block;
-    position: absolute;
-    right: 8px;
-    top: 0;
     z-index: 30;
-    background: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
-    cursor:pointer;
+    cursor: pointer;
+    background-image: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
     width: 24px;
     height: 24px;
-    cursor: pointer;
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-size: cover;
+    background-color: green;
+    background-repeat: no-repeat;
 }
 .select-button{
     padding: 16px;
