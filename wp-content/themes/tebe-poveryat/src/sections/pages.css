@@ -359,6 +359,14 @@
     background: #D98B99;
     color: #fff;
 }
+.ui-datepicker-calendar td a {
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    vertical-align: middle;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
