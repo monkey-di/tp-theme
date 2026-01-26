@@ -47,6 +47,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
+        console.log('test');
         // Объект для хранения выбранной даты и времени
         const selectedDateTime = {
             date: null,
