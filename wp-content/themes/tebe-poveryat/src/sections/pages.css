@@ -601,6 +601,11 @@
     display: flex;
     align-items: center;
 }
+.calendar-legend{
+    margin-top:8px;
+    padding-top:8px;
+    border-top: 1px solid #1E1E1E;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
