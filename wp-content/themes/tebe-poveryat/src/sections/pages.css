@@ -367,7 +367,7 @@
     background: #fff;
     color: #C2C5C4;
 }
-#cp_appbooking_pform_1.ahb_m4 .ui-datepicker-calendar td a {
+#cp_appbooking_pform_1.ahb_m4 .ui-datepicker-calendar td a.ui-state-default {
     font-family: "Geologica";
     font-weight: 300;
     font-size: 14px;
