@@ -595,10 +595,10 @@
     text-align: center;
     vertical-align: middle;
     text-transform: uppercase;
+    padding:0 8px;
 }
 .calendar-legend-item{
     display: flex;
-    justify-content: space-between;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
