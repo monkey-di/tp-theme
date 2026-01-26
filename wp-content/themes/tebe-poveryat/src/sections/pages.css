@@ -331,6 +331,10 @@
     padding: 8px 20px;
     border-radius: 20px;
 }
+.page-template-template-get-legal-assistance h2.wp-block-heading.has-text-align-center{
+    background-color: #1C5358;
+    color:#fff;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
