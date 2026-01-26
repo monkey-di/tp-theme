@@ -204,12 +204,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     console.log('Closer добавлен в .slotsCalendar');
 
-                    // Можно добавить обработчик клика на closer
+                    // Обработчик клика на closer для скрытия .slotsCalendarfieldname1_1
                     closer.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по closer');
-                        // Добавьте здесь свою логику закрытия
-                        // Например: block.style.display = 'none';
+
+                        // Находим и скрываем блок .slotsCalendarfieldname1_1
+                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
+                        if (targetBlock) {
+                            targetBlock.style.display = 'none';
+                            console.log('Блок .slotsCalendarfieldname1_1 скрыт');
+                        }
                     });
                 }
 
@@ -231,11 +236,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     console.log('Кнопка "Выбрать" добавлена в .slotsCalendar');
 
-                    // Можно добавить обработчик клика на кнопку
+                    // Обработчик клика на кнопку "Выбрать" для скрытия .slotsCalendarfieldname1_1
                     selectButton.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по кнопке "Выбрать"');
-                        // Добавьте здесь свою логику
+
+                        // Находим и скрываем блок .slotsCalendarfieldname1_1
+                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
+                        if (targetBlock) {
+                            targetBlock.style.display = 'none';
+                            console.log('Блок .slotsCalendarfieldname1_1 скрыт');
+                        }
                     });
                 }
             });
