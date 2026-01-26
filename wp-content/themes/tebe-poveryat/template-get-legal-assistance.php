@@ -46,140 +46,211 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         the_content();
         ?>
     </main>
-<script>
-    function restructureForm() {
-        const parentContainer = document.querySelector('.pb0.pbreak');
-        if (!parentContainer) return false;
+    <script>
+        function restructureForm() {
+            const parentContainer = document.querySelector('.pb0.pbreak');
+            if (!parentContainer) return false;
 
-        // Проверка на новую структуру
-        if (parentContainer.querySelector('.anketa-col')) {
+            // Проверка на новую структуру
+            if (parentContainer.querySelector('.anketa-col')) {
+                return true;
+            }
+
+            // контейнеры
+            const col1 = document.createElement('div');
+            col1.className = 'anketa-col anketa-col-1';
+
+            const col2 = document.createElement('div');
+            col2.className = 'anketa-col anketa-col-2';
+
+            // сбор элементов контейнера
+            const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
+            const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
+            const captchaElement = parentContainer.querySelector('.captcha');
+            const buttonElement = parentContainer.querySelector('.pbSubmit');
+
+            // Перемещение элементов
+            calendarCol1Elements.forEach(element => {
+                col1.appendChild(element);
+            });
+
+            if (calendarCol2Element) col2.appendChild(calendarCol2Element);
+            if (captchaElement) col2.appendChild(captchaElement);
+            if (buttonElement) col2.appendChild(buttonElement);
+
+            // очистка и добавление контейнеров
+            parentContainer.innerHTML = '';
+            parentContainer.appendChild(col1);
+            parentContainer.appendChild(col2);
+
+            console.log('Форма реструктурирована');
             return true;
         }
 
-        // контейнеры
-        const col1 = document.createElement('div');
-        col1.className = 'anketa-col anketa-col-1';
+        // Функция для замены input на textarea
+        function replaceInputWithTextarea() {
+            const input = document.getElementById('fieldname8_1');
 
-        const col2 = document.createElement('div');
-        col2.className = 'anketa-col anketa-col-2';
+            if (input && input.tagName === 'INPUT' && input.type === 'text') {
+                // Создание textarea
+                const textarea = document.createElement('textarea');
 
-        // сбор элементов контейнера
-        const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
-        const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
-        const captchaElement = parentContainer.querySelector('.captcha');
-        const buttonElement = parentContainer.querySelector('.pbSubmit');
+                // Копия атрибутов
+                const attrs = ['id', 'name', 'class', 'placeholder', 'value',
+                    'disabled', 'readonly', 'required', 'maxlength',
+                    'autocomplete', 'tabindex', 'title'];
 
-        // Перемещение элементов
-        calendarCol1Elements.forEach(element => {
-            col1.appendChild(element);
-        });
+                attrs.forEach(attr => {
+                    if (attr === 'value') {
+                        textarea.value = input.value;
+                    } else if (attr === 'class') {
+                        textarea.className = input.className;
+                    } else if (input.hasAttribute(attr)) {
+                        textarea.setAttribute(attr, input.getAttribute(attr));
+                    }
+                });
 
-        if (calendarCol2Element) col2.appendChild(calendarCol2Element);
-        if (captchaElement) col2.appendChild(captchaElement);
-        if (buttonElement) col2.appendChild(buttonElement);
+                // Добавить атрибуты для textarea
+                textarea.setAttribute('rows', '4');
+                textarea.style.minHeight = '100px';
+                textarea.style.resize = 'vertical';
 
-        // очистка и добавление контейнеров
-        parentContainer.innerHTML = '';
-        parentContainer.appendChild(col1);
-        parentContainer.appendChild(col2);
+                // Замена элемента
+                input.parentNode.replaceChild(textarea, input);
+                console.log('Input заменен на textarea');
+                return true;
+            }
 
-        console.log('Форма реструктурирована');
-        return true;
-    }
+            return false;
+        }
 
-    // Функция для замены input на textarea
-    function replaceInputWithTextarea() {
-        const input = document.getElementById('fieldname8_1');
+        // Функция для добавления элементов в .slotsCalendar
+        function decorateSlotsCalendar() {
+            // Ищем все блоки .slotsCalendar
+            const calendarBlocks = document.querySelectorAll('.slotsCalendar');
 
-        if (input && input.tagName === 'INPUT' && input.type === 'text') {
-            // Создание textarea
-            const textarea = document.createElement('textarea');
+            calendarBlocks.forEach(block => {
+                // Проверяем, не добавлен ли уже closer
+                if (!block.querySelector('.closer')) {
+                    // Создаем closer
+                    const closer = document.createElement('div');
+                    closer.className = 'closer';
+                    closer.innerHTML = '&times;'; // добавляем крестик
 
-            // Копия атрибутов
-            const attrs = ['id', 'name', 'class', 'placeholder', 'value',
-                'disabled', 'readonly', 'required', 'maxlength',
-                'autocomplete', 'tabindex', 'title'];
+                    // Добавляем closer в начало блока
+                    block.insertBefore(closer, block.firstChild);
 
-            attrs.forEach(attr => {
-                if (attr === 'value') {
-                    textarea.value = input.value;
-                } else if (attr === 'class') {
-                    textarea.className = input.className;
-                } else if (input.hasAttribute(attr)) {
-                    textarea.setAttribute(attr, input.getAttribute(attr));
+                    console.log('Closer добавлен в .slotsCalendar');
+
+                    // Можно добавить обработчик клика на closer
+                    closer.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Клик по closer');
+                        // Добавьте здесь свою логику закрытия
+                        // Например: block.style.display = 'none';
+                    });
+                }
+
+                // Проверяем, не добавлена ли уже кнопка
+                if (!block.querySelector('.select-button')) {
+                    // Создаем блок с кнопкой
+                    const selectButton = document.createElement('div');
+                    selectButton.className = 'select-button';
+
+                    // Создаем span с текстом
+                    const span = document.createElement('span');
+                    span.textContent = 'Выбрать';
+
+                    // Добавляем span в блок
+                    selectButton.appendChild(span);
+
+                    // Добавляем блок в конец .slotsCalendar
+                    block.appendChild(selectButton);
+
+                    console.log('Кнопка "Выбрать" добавлена в .slotsCalendar');
+
+                    // Можно добавить обработчик клика на кнопку
+                    selectButton.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Клик по кнопке "Выбрать"');
+                        // Добавьте здесь свою логику
+                    });
                 }
             });
 
-            // Добавить атрибуты для textarea
-            textarea.setAttribute('rows', '4');
-            textarea.style.minHeight = '100px';
-            textarea.style.resize = 'vertical';
-
-            // Замена элемента
-            input.parentNode.replaceChild(textarea, input);
-            console.log('Input заменен на textarea');
-            return true;
+            return calendarBlocks.length > 0;
         }
 
-        return false;
-    }
+        // наблюдатель за изменениями DOM
+        const observer = new MutationObserver(function(mutations) {
+            let changesMade = false;
 
-    // наблюдатель за изменениями DOM
-    const observer = new MutationObserver(function(mutations) {
-        // Проверяем, нужно ли реструктурировать форму
-        if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
-            restructureForm();
-        }
+            // Проверяем, нужно ли реструктурировать форму
+            if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
+                if (restructureForm()) changesMade = true;
+            }
 
-        // Проверка, появился инпут для замены на textarea
-        mutations.forEach(function(mutation) {
-            if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                // появился элемент
-                for (let node of mutation.addedNodes) {
-                    // Проверка узла
-                    if (node.id === 'field_1-6') {
-                        //  Время на загрузку контента
-                        setTimeout(() => replaceInputWithTextarea(), 100);
-                        return;
-                    }
-
-                    // Проверка внутри узла
-                    if (node.querySelector) {
-                        const target = node.querySelector('#field_1-6, #fieldname8_1');
-                        if (target) {
-                            setTimeout(() => replaceInputWithTextarea(), 100);
-                            return;
+            // Проверка на появление .slotsCalendar
+            mutations.forEach(function(mutation) {
+                // Проверяем добавленные ноды
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    for (let node of mutation.addedNodes) {
+                        // Проверяем, является ли узел или содержит ли .slotsCalendar
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
+                            (node.querySelector && node.querySelector('.slotsCalendar'))) {
+                            // Даем время на полную загрузку/рендеринг
+                            setTimeout(() => decorateSlotsCalendar(), 100);
+                            changesMade = true;
+                            break;
                         }
                     }
                 }
-            }
 
-            // проверка при изменениях внутри существующих элементов
-            if (mutation.type === 'childList' && mutation.target) {
-                const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
-                if (target && document.getElementById('fieldname8_1')) {
-                    setTimeout(() => replaceInputWithTextarea(), 50);
+                // Проверяем изменения в поддереве
+                if (mutation.type === 'childList' && mutation.target) {
+                    // Проверяем, появился ли .slotsCalendar внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
+                        setTimeout(() => decorateSlotsCalendar(), 50);
+                        changesMade = true;
+                    }
+
+                    // Проверка для поля textarea
+                    const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
+                    if (target && document.getElementById('fieldname8_1')) {
+                        setTimeout(() => replaceInputWithTextarea(), 50);
+                        changesMade = true;
+                    }
                 }
+            });
+
+            // Также запускаем проверку для уже существующих элементов
+            if (!changesMade) {
+                setTimeout(() => {
+                    decorateSlotsCalendar();
+                    replaceInputWithTextarea();
+                }, 100);
             }
         });
-    });
 
-    // Старт наблюдения
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+        // Старт наблюдения
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
 
-    // Проверка на случай, если элементы уже загружены
-    if (document.querySelector('.pb0.pbreak')) {
-        restructureForm();
-    }
+        // Начальная проверка при загрузке страницы
+        function initialCheck() {
+            restructureForm();
+            replaceInputWithTextarea();
+            decorateSlotsCalendar();
+        }
 
-    if (document.getElementById('fieldname8_1')) {
-        replaceInputWithTextarea();
-    } else {
-        console.log('Ожидание появления поля...');
-    }
-</script>
+        // Запускаем начальную проверку
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialCheck);
+        } else {
+            initialCheck();
+        }
+    </script>
 <?php
 get_footer();
