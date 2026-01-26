@@ -296,6 +296,15 @@
 .dfield.fapp{
     display: flex;
 }
+.ui-datepicker-title{
+    font-family: "Geologica";
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 150%;
+    text-align: center;
+    vertical-align: middle;
+    color:#0A1811;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
