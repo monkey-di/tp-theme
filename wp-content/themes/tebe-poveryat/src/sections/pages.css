@@ -201,11 +201,11 @@
 }
 #field_1-0{order:0;}
 #field_1-1{order:10;}
-#field_1-2{order:20;margin-top:-60px !important;}
-#field_1-3{order:30;margin-top:-60px !important;}
-#field_1-4{order:40;margin-top:-60px !important;}
-#field_1-5{order:30;margin-top:-60px !important;}
-#field_1-6{order:50;margin-top:-60px !important;}
+#field_1-2{order:20;}
+#field_1-3{order:30;}
+#field_1-4{order:40;}
+#field_1-5{order:30;}
+#field_1-6{order:50;}
 #field_1-7{order:60;}
 .pbSubmit{order:80;}
 #fbuilder_1{
@@ -291,7 +291,6 @@
 .anketa-col-1 .fields{
     max-width: 394px;
     width: 394px;
-    height: 72px;
 }
 .dfield.fapp{
     display: flex;
