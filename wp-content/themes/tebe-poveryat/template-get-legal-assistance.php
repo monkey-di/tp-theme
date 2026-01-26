@@ -124,6 +124,51 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return false;
         }
 
+        // Функция для оборачивания availableslot в slots-content
+        function wrapAvailableSlots() {
+            // Ищем все блоки .slots
+            const slotsBlocks = document.querySelectorAll('.slots');
+
+            slotsBlocks.forEach(slotsBlock => {
+                // Проверяем, не обернуты ли уже слоты
+                if (!slotsBlock.querySelector('.slots-content')) {
+                    // Находим все .availableslot внутри текущего .slots
+                    const availableSlots = slotsBlock.querySelectorAll('.availableslot');
+
+                    if (availableSlots.length > 0) {
+                        // Создаем контейнер .slots-content
+                        const slotsContent = document.createElement('div');
+                        slotsContent.className = 'slots-content';
+
+                        // Находим элемент после которого нужно вставить .slots-content
+                        // Это будет либо <br>, либо <span>, если <br> нет
+                        let insertAfterElement = slotsBlock.querySelector('br');
+                        if (!insertAfterElement) {
+                            insertAfterElement = slotsBlock.querySelector('span');
+                        }
+
+                        // Если нашли элемент, после которого нужно вставить
+                        if (insertAfterElement) {
+                            // Вставляем slots-content после найденного элемента
+                            insertAfterElement.parentNode.insertBefore(slotsContent, insertAfterElement.nextSibling);
+                        } else {
+                            // Если не нашли, вставляем в начало
+                            slotsBlock.insertBefore(slotsContent, slotsBlock.firstChild);
+                        }
+
+                        // Перемещаем все .availableslot в slotsContent
+                        availableSlots.forEach(slot => {
+                            slotsContent.appendChild(slot);
+                        });
+
+                        console.log('.availableslot обернуты в .slots-content');
+                    }
+                }
+            });
+
+            return slotsBlocks.length > 0;
+        }
+
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
@@ -135,7 +180,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Создаем closer
                     const closer = document.createElement('div');
                     closer.className = 'closer';
-                    closer.innerHTML = ''; // добавляем крестик
+                    closer.innerHTML = '&times;'; // добавляем крестик
 
                     // Добавляем closer в начало блока
                     block.insertBefore(closer, block.firstChild);
@@ -190,7 +235,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (restructureForm()) changesMade = true;
             }
 
-            // Проверка на появление .slotsCalendar
+            // Проверка на появление элементов
             mutations.forEach(function(mutation) {
                 // Проверяем добавленные ноды
                 if (mutation.addedNodes && mutation.addedNodes.length > 0) {
@@ -199,9 +244,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
                             (node.querySelector && node.querySelector('.slotsCalendar'))) {
                             // Даем время на полную загрузку/рендеринг
-                            setTimeout(() => decorateSlotsCalendar(), 100);
+                            setTimeout(() => {
+                                decorateSlotsCalendar();
+                                wrapAvailableSlots();
+                            }, 100);
                             changesMade = true;
                             break;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .slots
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
+                            (node.querySelector && node.querySelector('.slots'))) {
+                            setTimeout(() => wrapAvailableSlots(), 100);
+                            changesMade = true;
                         }
                     }
                 }
@@ -210,7 +265,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (mutation.type === 'childList' && mutation.target) {
                     // Проверяем, появился ли .slotsCalendar внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
-                        setTimeout(() => decorateSlotsCalendar(), 50);
+                        setTimeout(() => {
+                            decorateSlotsCalendar();
+                            wrapAvailableSlots();
+                        }, 50);
+                        changesMade = true;
+                    }
+
+                    // Проверяем, появился ли .slots внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
+                        setTimeout(() => wrapAvailableSlots(), 50);
                         changesMade = true;
                     }
 
@@ -227,6 +291,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (!changesMade) {
                 setTimeout(() => {
                     decorateSlotsCalendar();
+                    wrapAvailableSlots();
                     replaceInputWithTextarea();
                 }, 100);
             }
@@ -243,6 +308,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             restructureForm();
             replaceInputWithTextarea();
             decorateSlotsCalendar();
+            wrapAvailableSlots();
         }
 
         // Запускаем начальную проверку
