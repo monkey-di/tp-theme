@@ -395,10 +395,16 @@
     display: block;
     width:100%;
     background: #FEF1EC;
+    padding: 16px 20px 0 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 .slotsCalendar .slots span{
     width: 100%;
     background: #FEF1EC;
+    padding: 0 20px 16px 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .availableslot{
     width: 100%;
