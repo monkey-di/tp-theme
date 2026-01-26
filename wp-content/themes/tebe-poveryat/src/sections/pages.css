@@ -500,6 +500,8 @@
     z-index: 30;
     background: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
     cursor:pointer;
+    width: 24px;
+    height: 24px;
 }
 .slotsCalendar:after{
     content: 'Выбрать';
