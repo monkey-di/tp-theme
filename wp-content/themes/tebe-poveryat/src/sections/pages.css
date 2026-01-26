@@ -285,54 +285,54 @@
 }
 
 /* Основной блок с полями и календарем */
-.pb0 {
+#fieldlist_1 .pb0 {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
 /* Создаем две основные колонки */
-.pb0::before,
-.pb0::after {
+#fieldlist_1 .pb0::before,
+#fieldlist_1 .pb0::after {
     content: '';
     display: none;
 }
 
 /* Первая колонка (левая) - обертка для 6 полей */
-.pb0 {
+#fieldlist_1 .pb0 {
     display: flex;
 }
 
 /* Создаем виртуальные колонки через флекс-пропорции */
-.calendar-col-1 {
+#fieldlist_1 .calendar-col-1 {
     flex: 0 0 calc(50% - 20px);
     min-width: 0;
 }
 
 /* Специфичные стили для размещения в двухколоночной сетке */
-#field_1-0, /* Имя */
-#field_1-1, /* Почта */
-#field_1-2  /* Повторить почту */ {
+#fieldlist_1 #field_1-0, /* Имя */
+#fieldlist_1 #field_1-1, /* Почта */
+#fieldlist_1 #field_1-2  /* Повторить почту */ {
     flex-basis: calc(50% - 20px);
     order: 1;
 }
 
-#field_1-3, /* Способ связи */
-#field_1-4, /* Город */
-#field_1-5  /* Возраст */ {
+#fieldlist_1 #field_1-3, /* Способ связи */
+#fieldlist_1 #field_1-4, /* Город */
+#fieldlist_1 #field_1-5  /* Возраст */ {
     flex-basis: calc(50% - 20px);
     order: 2;
 }
 
 /* Поле "Ваше сообщение" - занимает всю ширину первой колонки */
-#field_1-6 {
+#fieldlist_1 #field_1-6 {
     flex-basis: calc(100% - 20px);
     order: 3;
     margin-top: 15px;
 }
 
 /* Календарь - правая колонка */
-.calendar-col-2 {
+#fieldlist_1 .calendar-col-2 {
     flex: 0 0 calc(50% - 20px);
     order: 4;
     align-self: flex-start;
@@ -340,7 +340,7 @@
 }
 
 /* Кнопка отправки */
-.pbSubmit {
+#fieldlist_1 .pbSubmit {
     margin-top: 15px;
     padding: 10px 30px;
     background: #007bff;
@@ -354,17 +354,17 @@
     margin-left: auto;
 }
 
-.pbSubmit:hover {
+#fieldlist_1 .pbSubmit:hover {
     background: #0056b3;
 }
 
 /* Контейнер для календаря */
-.fieldCalendar {
+#fieldlist_1 .fieldCalendar {
     width: 100%;
 }
 
 /* Для размещения календаря и кнопки в одной колонке */
-#field_1-7 {
+#fieldlist_1 #field_1-7 {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -373,17 +373,17 @@
 }
 
 /* Убедимся, что слоты календаря отображаются правильно */
-.slotsCalendar {
+#fieldlist_1 .slotsCalendar {
     max-height: 300px;
     overflow-y: auto;
 }
 
 /* Стили для полей ввода */
-.dfield {
+#fieldlist_1 .dfield {
     width: 100%;
 }
 
-input.field {
+#fieldlist_1 input.field {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -391,61 +391,6 @@ input.field {
     box-sizing: border-box;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .calendar-col-1,
-    .calendar-col-2 {
-        flex-basis: 100% !important;
-        order: 0 !important;
-    }
-
-    #field_1-7 {
-        order: 4;
-        margin-left: 0;
-    }
-
-    .pbSubmit {
-        order: 5;
-        margin-left: 0;
-        width: 100%;
-    }
-}
-
-/* Дополнительные стили для выравнивания */
-.fields {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.r {
-    color: #ff0000;
-}
-
-/* Для лучшего отображения календаря */
-.fieldCalendarServicefieldname1_1 {
-    margin-bottom: 10px;
-}
-
-.availableslot a {
-    display: inline-block;
-    padding: 8px 12px;
-    margin: 3px;
-    background: #f0f0f0;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #333;
-}
-
-.availableslot a:hover {
-    background: #007bff;
-    color: white;
-}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
