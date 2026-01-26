@@ -348,14 +348,14 @@
 .page-template-template-get-legal-assistance .page-head{
     z-index: 30;
 }
-.ahb_m4 #fbuilder .ui-datepicker-inline{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-inline{
     padding: 20px 8px;
     border-radius: 20px;
 }
 .ui-datepicker-calendar td{
     border-radius: 4px;
 }
-.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default{
     background: #D98B99;
     color: #fff;
 }
@@ -369,7 +369,7 @@
     border-radius: 4px;
     border:1px solid transparent;
 }
-.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default:hover{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default:hover{
     background: #fff;
     border: 1px solid #D98B99;
 }
