@@ -355,7 +355,7 @@
 .ui-datepicker-calendar td{
     border-radius: 4px;
 }
-#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default{
+#cp_appbooking_pform_1.ahb_m4 #fbuilder td.notavailslot span{
     background: #D98B99;
     color: #fff;
 }
@@ -630,6 +630,7 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-prev{
     transform:rotate(180deg);
 }
+
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
