@@ -491,9 +491,8 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
 }
-/*
-.slotsCalendar:before{
-     content:'';
+
+.slotsCalendar .closer{
     display:block;
     position: absolute;
     right: 8px;
@@ -505,10 +504,12 @@
     height: 24px;
     cursor: pointer;
 }
-*/
-/*
-.slotsCalendar:after{
-    content: 'Выбрать';
+.select-button{
+    padding: 16px;
+    background: #FEF1EC;
+    border-radius: 16px;
+}
+.select-button span{
     color:#fff;
     background: #6063A6;
     padding:16px 0;
