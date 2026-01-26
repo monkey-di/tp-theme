@@ -380,7 +380,14 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default.ui-state-active{
     background: #fff;
     border: none;
-    border-bottom: 2px solid #6063A6;
+    border-radius: 0;
+}
+#cp_appbooking_pform_1.ahb_m4 #fbuilder td:not(.ui-datepicker-unselectable) a.ui-state-default.ui-state-active:after{
+    content: '';
+    display: block;
+    width: calc(100% - 10px);
+    height: 2px;
+    background: #6063A6;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-header{
     padding-top: 0;
