@@ -468,10 +468,6 @@
     border-bottom-left-radius:16px;
     border-bottom-right-radius:16px;
 }
-.slotsCalendar{
-    max-height: 474px;
-    overflow-y:auto;
-}
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div a{
     background:#FEF1EC;
     color: #1E1E1E;
@@ -538,6 +534,10 @@
 .slotsCalendar.slotsCalendarfieldname1_1{
     display:flex;
     flex-wrap: wrap;
+}
+.slots-content{
+    max-height: 378px;
+    overflow-y:auto;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
