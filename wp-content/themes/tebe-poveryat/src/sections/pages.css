@@ -430,6 +430,7 @@
 }
 .htmlUsed.currentSelection a:after{
     content: 'Выбрать';
+    color: #fff;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots{
     padding:0;
