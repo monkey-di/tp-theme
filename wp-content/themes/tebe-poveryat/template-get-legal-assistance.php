@@ -228,6 +228,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const span = document.createElement('span');
                     span.textContent = 'Выбрать';
 
+                    // Дополнительный обработчик для span внутри .select-button
+                    span.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        console.log('Клик по span внутри кнопки "Выбрать"');
+
+                        // Находим и скрываем блок .slotsCalendarfieldname1_1
+                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
+                        if (targetBlock) {
+                            targetBlock.style.display = 'none';
+                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
+                        }
+                    });
+
                     // Добавляем span в блок
                     selectButton.appendChild(span);
 
@@ -252,79 +265,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             });
 
             return calendarBlocks.length > 0;
-        }
-
-        // Функция для добавления обработчиков клика на ссылки календаря
-        function attachCalendarDateClickHandlers() {
-            // Находим все ссылки в ячейках календаря
-            const dateLinks = document.querySelectorAll('.ui-datepicker-calendar td a');
-
-            dateLinks.forEach(link => {
-                // Проверяем, не добавлен ли уже обработчик
-                if (!link.hasAttribute('data-calendar-date-handler')) {
-                    link.setAttribute('data-calendar-date-handler', 'true');
-
-                    link.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по дате в календаре');
-
-                        // Находим и показываем блок .slotsCalendarfieldname1_1
-                        const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                        if (targetBlock) {
-                            targetBlock.style.display = 'block'; // или другое значение, если нужно восстановить исходное состояние
-                            console.log('Блок .slotsCalendarfieldname1_1 показан');
-                        }
-                    });
-                }
-            });
-
-            return dateLinks.length > 0;
-        }
-
-        // Функция для наблюдения за появлением календаря и добавления обработчиков
-        function observeCalendarUpdates() {
-            // Наблюдаем за изменениями в DOM, особенно за появлением элементов календаря
-            const calendarObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                        for (let node of mutation.addedNodes) {
-                            // Проверяем, появился ли календарь или его элементы
-                            if ((node.nodeType === 1 && node.classList &&
-                                    (node.classList.contains('ui-datepicker-calendar') ||
-                                        node.classList.contains('ui-datepicker'))) ||
-                                (node.querySelector &&
-                                    (node.querySelector('.ui-datepicker-calendar') ||
-                                        node.querySelector('.ui-datepicker')))) {
-
-                                // Даем время на рендеринг
-                                setTimeout(() => {
-                                    attachCalendarDateClickHandlers();
-                                }, 100);
-                            }
-                        }
-                    }
-
-                    // Проверяем изменения в поддереве
-                    if (mutation.type === 'childList' && mutation.target) {
-                        if (mutation.target.querySelector &&
-                            (mutation.target.querySelector('.ui-datepicker-calendar') ||
-                                mutation.target.querySelector('.ui-datepicker'))) {
-
-                            setTimeout(() => {
-                                attachCalendarDateClickHandlers();
-                            }, 50);
-                        }
-                    }
-                });
-            });
-
-            // Начинаем наблюдение
-            calendarObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-
-            return calendarObserver;
         }
 
         // Функция для добавления календарной легенды в блок .ui-widget
@@ -389,11 +329,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         document.head.appendChild(style);
                     }
                 }
-
-                // Также добавляем обработчики на даты календаря
-                setTimeout(() => {
-                    attachCalendarDateClickHandlers();
-                }, 100);
             });
 
             return uiWidgets.length > 0;
@@ -417,20 +352,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
                             (node.querySelector && node.querySelector('.ui-widget'))) {
                             setTimeout(() => addCalendarLegend(), 100);
-                            changesMade = true;
-                        }
-
-                        // Проверяем, является ли узел или содержит ли .ui-datepicker-calendar
-                        if ((node.nodeType === 1 && node.classList &&
-                                (node.classList.contains('ui-datepicker-calendar') ||
-                                    node.classList.contains('ui-datepicker'))) ||
-                            (node.querySelector &&
-                                (node.querySelector('.ui-datepicker-calendar') ||
-                                    node.querySelector('.ui-datepicker')))) {
-
-                            setTimeout(() => {
-                                attachCalendarDateClickHandlers();
-                            }, 100);
                             changesMade = true;
                         }
 
@@ -459,17 +380,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Проверяем, появился ли .ui-widget внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
                         setTimeout(() => addCalendarLegend(), 50);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, появился ли .ui-datepicker-calendar внутри измененного элемента
-                    if (mutation.target.querySelector &&
-                        (mutation.target.querySelector('.ui-datepicker-calendar') ||
-                            mutation.target.querySelector('.ui-datepicker'))) {
-
-                        setTimeout(() => {
-                            attachCalendarDateClickHandlers();
-                        }, 50);
                         changesMade = true;
                     }
 
@@ -515,7 +425,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
-                    attachCalendarDateClickHandlers(); // Добавляем проверку обработчиков для дат
                 }, 100);
             }
         });
@@ -533,8 +442,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
-            attachCalendarDateClickHandlers(); // Добавляем обработчики при начальной загрузке
-            observeCalendarUpdates(); // Запускаем наблюдение за обновлениями календаря
         }
 
         // Запускаем начальную проверку
