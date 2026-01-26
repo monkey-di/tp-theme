@@ -208,7 +208,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем настоящую кнопку button
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'cp_subbtn_button';
+            button.className = 'pbSubmit';
             button.textContent = 'Отправить запрос';
             button.style.cssText = `
             display: block;
