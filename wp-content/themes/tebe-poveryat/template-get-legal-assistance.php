@@ -47,31 +47,29 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
 <script>
-    console.log('test 999');
-
     function restructureForm() {
         const parentContainer = document.querySelector('.pb0.pbreak');
         if (!parentContainer) return false;
 
-        // Проверяем, была ли уже применена реструктуризация
+        // Проверка на новую структуру
         if (parentContainer.querySelector('.anketa-col')) {
             return true;
         }
 
-        // Создаем контейнеры
+        // контейнеры
         const col1 = document.createElement('div');
         col1.className = 'anketa-col anketa-col-1';
 
         const col2 = document.createElement('div');
         col2.className = 'anketa-col anketa-col-2';
 
-        // Собираем элементы
+        // сбор элементов контейнера
         const calendarCol1Elements = Array.from(parentContainer.querySelectorAll('.calendar-col-1'));
         const calendarCol2Element = parentContainer.querySelector('.calendar-col-2');
         const captchaElement = parentContainer.querySelector('.captcha');
         const buttonElement = parentContainer.querySelector('.pbSubmit');
 
-        // Перемещаем элементы
+        // Перемещение элементов
         calendarCol1Elements.forEach(element => {
             col1.appendChild(element);
         });
@@ -80,7 +78,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         if (captchaElement) col2.appendChild(captchaElement);
         if (buttonElement) col2.appendChild(buttonElement);
 
-        // Очищаем и добавляем новые контейнеры
+        // очистка и добавление контейнеров
         parentContainer.innerHTML = '';
         parentContainer.appendChild(col1);
         parentContainer.appendChild(col2);
@@ -94,10 +92,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         const input = document.getElementById('fieldname8_1');
 
         if (input && input.tagName === 'INPUT' && input.type === 'text') {
-            // Создаем textarea
+            // Создание textarea
             const textarea = document.createElement('textarea');
 
-            // Копируем все атрибуты
+            // Копия атрибутов
             const attrs = ['id', 'name', 'class', 'placeholder', 'value',
                 'disabled', 'readonly', 'required', 'maxlength',
                 'autocomplete', 'tabindex', 'title'];
@@ -112,14 +110,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             });
 
-            // Добавляем атрибуты для textarea
+            // Добавить атрибуты для textarea
             textarea.setAttribute('rows', '4');
             textarea.style.minHeight = '100px';
             textarea.style.resize = 'vertical';
 
-            // Заменяем элемент
+            // Замена элемента
             input.parentNode.replaceChild(textarea, input);
-
             console.log('Input заменен на textarea');
             return true;
         }
@@ -127,26 +124,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         return false;
     }
 
-    // Объединенный наблюдатель за изменениями DOM
+    // наблюдатель за изменениями DOM
     const observer = new MutationObserver(function(mutations) {
         // Проверяем, нужно ли реструктурировать форму
         if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
             restructureForm();
         }
 
-        // Проверяем, появился ли наш элемент для замены на textarea
+        // Проверка, появился инпут для замены на textarea
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                // Проверяем, появился ли наш элемент
+                // появился элемент
                 for (let node of mutation.addedNodes) {
-                    // Проверяем сам узел
+                    // Проверка узла
                     if (node.id === 'field_1-6') {
-                        // Даем время на полную загрузку содержимого
+                        //  Время на загрузку контента
                         setTimeout(() => replaceInputWithTextarea(), 100);
                         return;
                     }
 
-                    // Проверяем внутри узла
+                    // Проверка внутри узла
                     if (node.querySelector) {
                         const target = node.querySelector('#field_1-6, #fieldname8_1');
                         if (target) {
@@ -157,7 +154,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
 
-            // Также проверяем при изменениях внутри существующих элементов
+            // проверка при изменениях внутри существующих элементов
             if (mutation.type === 'childList' && mutation.target) {
                 const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
                 if (target && document.getElementById('fieldname8_1')) {
@@ -167,13 +164,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
     });
 
-    // Начинаем наблюдение
+    // Старт наблюдения
     observer.observe(document.body, {
         childList: true,
         subtree: true
     });
 
-    // Также проверим сразу на случай, если элементы уже загружены
+    // Проверка на случай, если элементы уже загружены
     if (document.querySelector('.pb0.pbreak')) {
         restructureForm();
     }
