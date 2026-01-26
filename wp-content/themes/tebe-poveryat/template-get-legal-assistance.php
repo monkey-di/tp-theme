@@ -48,58 +48,52 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     </main>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const pb0 = document.querySelector('.pb0');
+        // Находим контейнер с полями формы
+        const fieldList = document.getElementById('fieldlist_1');
+        const pb0 = fieldList.querySelector('.pb0');
+
         if (!pb0) return;
 
-        // контейнеры для колонок
-        const formFieldsContainer = document.createElement('div');
-        formFieldsContainer.className = 'form-fields-container';
+        // Создаем первую колонку для полей формы
+        const anketaCol1 = document.createElement('div');
+        anketaCol1.className = 'anketa-col-1 anketa-col';
 
-        const calendarButtonContainer = document.createElement('div');
-        calendarButtonContainer.className = 'calendar-button-container';
+        // Создаем вторую колонку для календаря, капчи и кнопки
+        const anketaCol2 = document.createElement('div');
+        anketaCol2.className = 'anketa-col-2 anketa-col';
 
-        // первые 6 полей
-        const fieldsGrid = document.createElement('div');
-        fieldsGrid.className = 'fields-grid';
+        // Собираем все calendar-col-1 в первую колонку
+        const calendarCol1Fields = pb0.querySelectorAll('.calendar-col-1');
+        calendarCol1Fields.forEach(field => {
+            anketaCol1.appendChild(field.cloneNode(true));
+            field.remove(); // Удаляем оригинальные элементы
+        });
 
-        // Сбор элементов
-        const allFields = Array.from(pb0.children);
-        const messageField = document.getElementById('field_1-6');
-        const calendarField = document.getElementById('field_1-7');
-        const captcha = document.querySelector('.captcha');
-        const submitButton = document.querySelector('.pbSubmit');
-
-        // первые 6 полей в сетку
-        for (let i = 0; i < 6; i++) {
-            if (allFields[i] && allFields[i].classList.contains('fields')) {
-                fieldsGrid.appendChild(allFields[i].cloneNode(true));
-            }
+        // Собираем calendar-col-2 во вторую колонку
+        const calendarCol2 = pb0.querySelector('.calendar-col-2');
+        if (calendarCol2) {
+            anketaCol2.appendChild(calendarCol2.cloneNode(true));
+            calendarCol2.remove();
         }
 
-        // Сетка полей и поле сообщения в первую колонку
-        formFieldsContainer.appendChild(fieldsGrid);
-        if (messageField) {
-            formFieldsContainer.appendChild(messageField.cloneNode(true));
-        }
-
-        // календарь и кнопку во вторую колонку
-        if (calendarField) {
-            calendarButtonContainer.appendChild(calendarField.cloneNode(true));
-        }
-        if (submitButton) {
-            calendarButtonContainer.appendChild(submitButton.cloneNode(true));
-        }
-
-        // исходный контейнер и добавляем новые колонки
-        pb0.innerHTML = '';
-        pb0.appendChild(formFieldsContainer);
-        pb0.appendChild(calendarButtonContainer);
-
-        // captcha внизу
+        // Собираем капчу во вторую колонку
+        const captcha = pb0.querySelector('.captcha');
         if (captcha) {
-            pb0.appendChild(captcha.cloneNode(true));
+            anketaCol2.appendChild(captcha.cloneNode(true));
+            captcha.remove();
         }
-    });
+
+        // Собираем кнопку во вторую колонку
+        const submitButton = pb0.querySelector('.pbSubmit');
+        if (submitButton) {
+            anketaCol2.appendChild(submitButton.cloneNode(true));
+            submitButton.remove();
+        }
+
+        // Очищаем pb0 и добавляем новые колонки
+        pb0.innerHTML = '';
+        pb0.appendChild(anketaCol1);
+        pb0.appendChild(anketaCol2);
 </script>
 <?php
 get_footer();
