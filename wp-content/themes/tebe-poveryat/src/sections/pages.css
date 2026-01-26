@@ -651,6 +651,7 @@
     left: 0;
     width:100%;
     height: 100%;
+    background:rgba(30, 30, 30, 0.5);
     backdrop-filter: blur(10px);
 }
 #dp1769412036415{
