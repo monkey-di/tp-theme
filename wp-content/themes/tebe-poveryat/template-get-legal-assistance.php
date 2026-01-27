@@ -612,15 +612,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
 
-            // Получаем выбранное время из слотов
-            const selectedSlot = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.selected');
-            if (selectedSlot) {
-                const timeLink = selectedSlot.querySelector('a');
-                if (timeLink) {
-                    selectedTime = timeLink.textContent.trim();
+            // Получаем выбранное время из slots-content
+            const slotsContent = document.querySelector('.slotsCalendarfieldname1_1 .slots-content');
+            if (slotsContent) {
+                // Ищем выбранный слот (например, с классом selected или active)
+                let selectedSlot = slotsContent.querySelector('.availableslot.selected');
+
+                // Если нет выбранного слота, берем первый доступный слот
+                if (!selectedSlot) {
+                    selectedSlot = slotsContent.querySelector('.availableslot');
+                }
+
+                if (selectedSlot) {
+                    const timeLink = selectedSlot.querySelector('a');
+                    if (timeLink) {
+                        selectedTime = timeLink.textContent.trim();
+                    }
                 }
             }
 
+            console.log('Получены дата и время:', { selectedDate, selectedTime });
             return { selectedDate, selectedTime };
         }
 
@@ -658,7 +669,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     // Создаем и показываем модальное окно
                     createAndShowModal(message);
-                }, 500); // Даем время на загрузку всех элементов
+                }, 1000); // Увеличил время ожидания для полной загрузки
             }
         }
 
@@ -667,16 +678,38 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = ``;
+            modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
 
             // Создаем содержимое модального окна
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = ``;
+            modalContent.style.cssText = `
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        `;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
-            title.textContent = '';
-            title.style.cssText = ``;
+            title.textContent = 'Запись успешно отправлена!';
+            title.style.cssText = `
+            margin: 0 0 20px 0;
+            text-align: center;
+            color: #333;
+        `;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
