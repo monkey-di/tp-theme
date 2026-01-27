@@ -493,7 +493,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Добавляем кнопку в конец блока .anketa-col-2
                 anketaCol2.appendChild(callButton);
 
-                console.log('Кнопка "КНОПКА ВЫЗОВА" добавлена');
+                console.log('Кнопка "Отправить заявку" добавлена');
             }
 
             // Обработчик клика для кнопки
