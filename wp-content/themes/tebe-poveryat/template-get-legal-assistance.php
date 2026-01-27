@@ -251,7 +251,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const submitButton = document.createElement('button');
                     submitButton.type = 'button';
                     submitButton.className = 'pbSubmit';
-                    submitButton.textContent = 'Выбрать';
+                    submitButton.textContent = 'Отправить запрос';
 
                     // Добавляем элементы в блок
                     selectButton.appendChild(span);
@@ -487,7 +487,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 callButton = document.createElement('button');
                 callButton.type = 'button';
                 callButton.className = 'call-button';
-                callButton.textContent = 'Отправить заявку';
+                callButton.textContent = 'КНОПКА ВЫЗОВА';
                 callButton.disabled = false; // Кнопка всегда активна
 
                 // Добавляем кнопку в конец блока .anketa-col-2
@@ -531,6 +531,49 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
+            style.textContent = `
+            .call-button {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 20px auto 10px;
+                padding: 12px 24px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+
+            .call-button:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            .call-button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            .call-button:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .cpefb_error.message {
+                color: #ff0000;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+        `;
+
             document.head.appendChild(style);
             console.log('Стили для кнопки вызова добавлены');
         }
@@ -549,6 +592,198 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (!slotsCalendar.querySelector('.closer')) {
                     decorateSlotsCalendar();
                 }
+            }
+        }
+
+        // Функция для получения выбранной даты и времени
+        function getSelectedDateTime() {
+            let selectedDate = '';
+            let selectedTime = '';
+
+            // Получаем выбранную дату из календаря
+            const activeDate = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
+            if (activeDate) {
+                const day = activeDate.getAttribute('data-date') || activeDate.textContent;
+                const monthYearElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-datepicker-title');
+                if (monthYearElement) {
+                    const month = monthYearElement.querySelector('.ui-datepicker-month').textContent;
+                    const year = monthYearElement.querySelector('.ui-datepicker-year').textContent;
+                    selectedDate = `${day}.${this.getMonthNumber(month)}.${year}`;
+                }
+            }
+
+            // Получаем выбранное время из слотов
+            const selectedSlot = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.selected');
+            if (selectedSlot) {
+                const timeLink = selectedSlot.querySelector('a');
+                if (timeLink) {
+                    selectedTime = timeLink.textContent.trim();
+                }
+            }
+
+            return { selectedDate, selectedTime };
+        }
+
+        // Вспомогательная функция для преобразования месяца в число
+        function getMonthNumber(monthName) {
+            const months = {
+                'январь': '01', 'февраль': '02', 'март': '03', 'апрель': '04',
+                'май': '05', 'июнь': '06', 'июль': '07', 'август': '08',
+                'сентябрь': '09', 'октябрь': '10', 'ноябрь': '11', 'декабрь': '12'
+            };
+            return months[monthName.toLowerCase()] || '01';
+        }
+
+        // Функция для создания модального окна успешной записи
+        function createSuccessModal() {
+            // Проверяем, не существует ли уже модальное окно
+            if (document.getElementById('successModal')) return;
+
+            const modalHTML = `
+            <div id="successModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.7); z-index:9999;">
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:30px; border-radius:8px; max-width:400px; width:90%; box-shadow:0 4px 20px rgba(0,0,0,0.2);">
+                    <div style="text-align:center;">
+                        <div style="font-size:24px; color:#4CAF50; margin-bottom:15px;">✓</div>
+                        <h3 style="margin:0 0 20px 0; color:#333;">Запись успешно отправлена!</h3>
+                        <p id="successMessage" style="font-size:16px; line-height:1.5; color:#555; margin-bottom:25px;"></p>
+                        <button id="closeSuccessModal" style="background-color:#4CAF50; color:white; border:none; padding:10px 25px; border-radius:4px; font-size:16px; cursor:pointer; transition:background-color 0.3s;">
+                            Закрыть
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+            // Добавляем обработчик закрытия модального окна
+            document.getElementById('closeSuccessModal').addEventListener('click', function() {
+                document.getElementById('successModal').style.display = 'none';
+            });
+
+            // Закрытие модального окна при клике на фон
+            document.getElementById('successModal').addEventListener('click', function(e) {
+                if (e.target.id === 'successModal') {
+                    document.getElementById('successModal').style.display = 'none';
+                }
+            });
+
+            console.log('Модальное окно успешной записи создано');
+        }
+
+        // Функция для перехвата отправки формы
+        function interceptFormSubmit() {
+            // Находим все кнопки отправки формы
+            const submitButtons = document.querySelectorAll('.pbSubmit:not(.select-button .pbSubmit)');
+
+            submitButtons.forEach(button => {
+                // Удаляем старый обработчик и добавляем новый
+                button.removeEventListener('click', handleFormSubmit);
+                button.addEventListener('click', handleFormSubmit);
+            });
+
+            // Также обрабатываем форму, если она отправляется через нажатие Enter
+            const form = document.querySelector('form');
+            if (form) {
+                form.removeEventListener('submit', handleFormSubmit);
+                form.addEventListener('submit', handleFormSubmit);
+            }
+        }
+
+        // Обработчик отправки формы
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            console.log('Перехвачена отправка формы');
+
+            // Проверяем все обязательные поля
+            const allValid = validateAllRequiredFields();
+
+            if (!allValid) {
+                console.log('Не все обязательные поля заполнены');
+                // Прокручиваем к первой ошибке
+                const firstError = document.querySelector('.cpefb_error.message');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return false;
+            }
+
+            // Получаем выбранные дату и время
+            const { selectedDate, selectedTime } = getSelectedDateTime();
+
+            // Формируем сообщение
+            let message = 'Вы записаны на юридическую консультацию';
+            if (selectedDate) {
+                message += ` ${selectedDate}`;
+                if (selectedTime) {
+                    message += ` в ${selectedTime}`;
+                }
+            } else {
+                message += '.';
+            }
+
+            // Показываем модальное окно
+            const successModal = document.getElementById('successModal');
+            const successMessage = document.getElementById('successMessage');
+
+            if (successModal && successMessage) {
+                successMessage.textContent = message;
+                successModal.style.display = 'block';
+
+                // Скрываем модальное окно через 5 секунд автоматически
+                setTimeout(() => {
+                    successModal.style.display = 'none';
+                }, 5000);
+            } else {
+                // Если модальное окно не создано, создаем его
+                createSuccessModal();
+                const newSuccessModal = document.getElementById('successModal');
+                const newSuccessMessage = document.getElementById('successMessage');
+                newSuccessMessage.textContent = message;
+                newSuccessModal.style.display = 'block';
+
+                // Скрываем модальное окно через 5 секунд автоматически
+                setTimeout(() => {
+                    newSuccessModal.style.display = 'none';
+                }, 5000);
+            }
+
+            // Очищаем форму (опционально)
+            // clearForm();
+
+            return false;
+        }
+
+        // Функция для очистки формы (опционально)
+        function clearForm() {
+            const form = document.querySelector('form');
+            if (form) {
+                form.reset();
+
+                // Очищаем выбранную дату и время
+                const activeDate = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
+                if (activeDate) {
+                    activeDate.classList.remove('ui-state-active');
+                }
+
+                const selectedSlot = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.selected');
+                if (selectedSlot) {
+                    selectedSlot.classList.remove('selected');
+                }
+
+                // Очищаем сообщения об ошибках
+                const errorMessages = document.querySelectorAll('.cpefb_error.message');
+                errorMessages.forEach(error => {
+                    error.style.display = 'none';
+                });
+
+                // Восстанавливаем рамки полей
+                const requiredFields = document.querySelectorAll('.required');
+                requiredFields.forEach(field => {
+                    field.style.borderColor = '';
+                });
             }
         }
 
@@ -606,6 +841,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
                             setTimeout(() => {
                                 initSlotsCalendar();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .pbSubmit
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit'))) {
+                            setTimeout(() => {
+                                interceptFormSubmit();
                             }, 100);
                             changesMade = true;
                         }
@@ -674,6 +918,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     addCallButtonStyles();
                     addCallButton();
                     initSlotsCalendar();
+                    createSuccessModal();
+                    interceptFormSubmit();
                 }, 100);
             }
         });
@@ -694,6 +940,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCallButtonStyles();
             addCallButton();
             initSlotsCalendar();
+            createSuccessModal();
+            interceptFormSubmit();
         }
 
         // Запускаем начальную проверку
@@ -702,7 +950,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test button 6');
     </script>
 <?php
 get_footer();
