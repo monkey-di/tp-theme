@@ -789,7 +789,7 @@
     line-height: 150%;
     text-transform: uppercase;
 }
-.nonfront label{
+.nonfrontlabel label{
     display: flex;
     justify-content: center;
 }
