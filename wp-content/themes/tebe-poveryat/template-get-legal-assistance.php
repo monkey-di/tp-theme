@@ -656,7 +656,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Создаем второй чекбокс (условия оферты)
             const checkbox2Container = document.createElement('div');
-            checkbox2Container.className = 'fields';
+            checkbox2Container.className = 'fieldscheck';
             checkbox2Container.setAttribute('data-checkbox', 'offer');
 
             const checkbox2Label = document.createElement('label');
