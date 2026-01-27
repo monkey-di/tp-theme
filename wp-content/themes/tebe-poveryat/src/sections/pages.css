@@ -369,8 +369,8 @@
     border-radius: 4px;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td.notavailslot span{
-    background: #D98B99;
-    color: #fff;
+    background: #D98B99 !important;
+    color: #fff !important;
     display: block;
     border-radius: 4px;
     display: flex;
