@@ -5,6 +5,11 @@
     display: block;
     margin-top: -100px;
 }
+.faq-spoiler{
+    background-repeat: no-repeat;
+    background-position-y: 63%;
+    background-position-x: center;
+}
 .faq-spoiler h2{
     padding-top: 50px;
 }
