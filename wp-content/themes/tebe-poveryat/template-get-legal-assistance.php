@@ -846,6 +846,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
+        console.log('test button');
     </script>
 <?php
 get_footer();
