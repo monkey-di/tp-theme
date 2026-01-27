@@ -804,6 +804,9 @@
     padding-bottom: 40px;
     padding-top: 0;
 }
+.page-template-template-get-legal-assistance .page-head-description.text-p{
+    max-width: 580px;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);

@@ -46,7 +46,7 @@
     cursor: pointer;
 }
 .faq-spoiler-content details .faq-details-content{
-    max-width:calc(100% - 100px);
+    max-width:calc(100% - 90px);
 }
 .faq-spoiler-content details summary span{
     max-width:calc(100% - 100px);
