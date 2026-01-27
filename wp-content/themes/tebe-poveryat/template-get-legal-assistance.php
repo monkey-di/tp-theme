@@ -1115,14 +1115,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     let message = 'Вы записаны на юридическую консультацию';
                     let hasData = false;
 
-                    if (selectedDate && selectedTime) {
-                        message += ` ${selectedDate} в ${selectedTime}`;
+                    if (selectedDateValue && selectedTimeValue) {
+                        message += ` ${selectedDateValue} в ${selectedTimeValue}`;
                         hasData = true;
-                    } else if (selectedDate) {
-                        message += ` ${selectedDate}`;
+                    } else if (selectedDateValue) {
+                        message += ` ${selectedDateValue}`;
                         hasData = true;
                         if (selectedTime) {
-                            message += ` в ${selectedTime}`;
+                            message += ` в ${selectedTimeValue}`;
                         }
                     } else {
                         message += '.';
