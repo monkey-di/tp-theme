@@ -432,12 +432,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     errorElement.id = errorId;
                     errorElement.className = 'cpefb_error message';
                     errorElement.textContent = 'Обязательное поле';
+                    errorElement.style.color = '#ff0000';
+                    errorElement.style.fontSize = '12px';
+                    errorElement.style.marginTop = '5px';
 
                     // Вставляем ошибку после поля
                     const fieldContainer = field.closest('.fields') || field.parentNode;
                     fieldContainer.appendChild(errorElement);
+
+                    // Добавляем красную рамку полю
+                    field.style.borderColor = '#ff0000';
                 } else {
                     errorElement.style.display = 'block';
+                    field.style.borderColor = '#ff0000';
                 }
             } else if (errorElement) {
                 errorElement.style.display = 'none';
@@ -465,60 +472,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             });
 
             return allValid;
-        }
-
-        // Функция для проверки всех обязательных полей без отображения ошибок (для кнопки)
-        function checkRequiredFieldsFilled() {
-            const requiredFields = document.querySelectorAll('.required');
-            let allFilled = true;
-
-            requiredFields.forEach(field => {
-                // Пропускаем скрытые поля
-                if (field.type === 'hidden') {
-                    return;
-                }
-
-                let isValid = true;
-
-                // Проверяем текстовые поля и textarea
-                if ((field.tagName === 'INPUT' && field.type === 'text') ||
-                    field.tagName === 'TEXTAREA' ||
-                    field.tagName === 'SELECT') {
-                    if (!field.value || field.value.trim() === '') {
-                        isValid = false;
-                    }
-                }
-
-                // Для checkbox проверяем checked
-                if (field.type === 'checkbox') {
-                    if (!field.checked) {
-                        isValid = false;
-                    }
-                }
-
-                // Для радио-кнопок проверяем хотя бы одну выбранную
-                if (field.type === 'radio') {
-                    const name = field.name;
-                    const group = document.querySelectorAll(`[name="${name}"]`);
-                    let groupChecked = false;
-
-                    group.forEach(item => {
-                        if (item.checked) {
-                            groupChecked = true;
-                        }
-                    });
-
-                    if (!groupChecked) {
-                        isValid = false;
-                    }
-                }
-
-                if (!isValid) {
-                    allFilled = false;
-                }
-            });
-
-            return allFilled;
         }
 
         // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
@@ -568,89 +521,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             });
 
-            // Убираем автоматическую проверку при изменении полей
-            // setupRequiredFieldsListeners(callButton);
-
-            return true;
-        }
-
-        // Функция для обновления состояния кнопки вызова
-        function updateCallButtonState(callButton) {
-            if (!callButton) return;
-
-            const allFilled = checkRequiredFieldsFilled();
-            callButton.disabled = false; // Кнопка всегда активна
-
-            // Добавляем/удаляем класс для визуальной обратной связи
-            if (allFilled) {
-                callButton.classList.remove('disabled');
-                callButton.classList.add('enabled');
-            } else {
-                callButton.classList.add('disabled');
-                callButton.classList.remove('enabled');
-            }
-        }
-
-        // Функция для настройки обработчиков событий на обязательные поля
-        function setupRequiredFieldsListeners(callButton) {
-            const requiredFields = document.querySelectorAll('.required');
-
-            requiredFields.forEach(field => {
-                // Удаляем старые обработчики (если были) и добавляем новые
-                const handleFieldChange = function() {
-                    // validateRequiredField(this);
-                    // updateCallButtonState(callButton);
-                };
-
-                field.removeEventListener('input', handleFieldChange);
-                field.removeEventListener('change', handleFieldChange);
-
-                field.addEventListener('input', handleFieldChange);
-                field.addEventListener('change', handleFieldChange);
-
-                // Для радио-кнопок добавляем обработчик на все элементы группы
-                if (field.type === 'radio') {
-                    const name = field.name;
-                    const group = document.querySelectorAll(`[name="${name}"]`);
-
-                    group.forEach(radio => {
-                        radio.removeEventListener('change', handleFieldChange);
-                        radio.addEventListener('change', handleFieldChange);
-                    });
-                }
-            });
-        }
-
-        // Функция для поиска и отслеживания изменений в .anketa-col-1
-        function monitorAnketaCol1() {
-            const anketaCol1 = document.querySelector('.anketa-col-1');
-            if (!anketaCol1) return false;
-
-            // Наблюдаем за изменениями внутри .anketa-col-1
-            const col1Observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    // Если добавляются/изменяются элементы
-                    if (mutation.type === 'childList' || mutation.type === 'attributes') {
-                        // Обновляем кнопку вызова
-                        const callButton = document.querySelector('.call-button');
-                        if (callButton) {
-                            updateCallButtonState(callButton);
-                            // Переустанавливаем обработчики на случай новых полей
-                            setupRequiredFieldsListeners(callButton);
-                        }
-                    }
-                });
-            });
-
-            // Начинаем наблюдение
-            col1Observer.observe(anketaCol1, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['value', 'checked']
-            });
-
-            console.log('Наблюдение за .anketa-col-1 начато');
             return true;
         }
 
@@ -679,7 +549,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 text-align: center;
             }
 
-            .call-button:hover:not(:disabled) {
+            .call-button:hover {
                 background-color: #45a049;
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -691,19 +561,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 opacity: 0.6;
             }
 
-            .call-button.disabled {
-                background-color: #cccccc;
-                cursor: not-allowed;
-                opacity: 0.6;
-            }
-
-            .call-button.enabled {
-                background-color: #4CAF50;
-                cursor: pointer;
-                opacity: 1;
-            }
-
-            .call-button:active:not(:disabled) {
+            .call-button:active {
                 transform: translateY(0);
                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             }
@@ -713,10 +571,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 font-size: 12px;
                 margin-top: 5px;
                 display: block;
-            }
-
-            .required.error {
-                border-color: #ff0000 !important;
             }
         `;
 
@@ -763,21 +617,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             changesMade = true;
                         }
 
-                        // Проверяем, является ли узел или содержит ли .anketa-col-1
-                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-1')) ||
-                            (node.querySelector && node.querySelector('.anketa-col-1'))) {
-                            setTimeout(() => {
-                                // Обновляем кнопку вызова и начинаем мониторинг
-                                const callButton = document.querySelector('.call-button');
-                                if (callButton) {
-                                    updateCallButtonState(callButton);
-                                    setupRequiredFieldsListeners(callButton);
-                                }
-                                monitorAnketaCol1();
-                            }, 100);
-                            changesMade = true;
-                        }
-
                         // Проверяем, является ли узел или содержит ли .anketa-col-2
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
                             (node.querySelector && node.querySelector('.anketa-col-2'))) {
@@ -813,19 +652,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         changesMade = true;
                     }
 
-                    // Проверяем, появился ли .anketa-col-1 или .anketa-col-2 внутри измененного элемента
-                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-1')) {
-                        setTimeout(() => {
-                            const callButton = document.querySelector('.call-button');
-                            if (callButton) {
-                                updateCallButtonState(callButton);
-                                setupRequiredFieldsListeners(callButton);
-                            }
-                            monitorAnketaCol1();
-                        }, 50);
-                        changesMade = true;
-                    }
-
+                    // Проверяем, появился ли .anketa-col-2 внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-2')) {
                         setTimeout(() => {
                             addCallButtonStyles();
@@ -852,19 +679,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         changesMade = true;
                     }
                 }
-
-                // Проверяем изменения атрибутов (например, value, checked)
-                if (mutation.type === 'attributes' && mutation.target) {
-                    // Если изменяется обязательное поле в .anketa-col-1
-                    if (mutation.target.classList && mutation.target.classList.contains('required') &&
-                        mutation.target.closest('.anketa-col-1')) {
-                        const callButton = document.querySelector('.call-button');
-                        if (callButton) {
-                            // validateRequiredField(mutation.target);
-                            updateCallButtonState(callButton);
-                        }
-                    }
-                }
             });
 
             // Также запускаем проверку для уже существующих элементов
@@ -876,14 +690,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     replaceInputWithTextarea();
                     addCallButtonStyles();
                     addCallButton();
-                    monitorAnketaCol1();
-
-                    // Проверяем все обязательные поля при загрузке
-                    const callButton = document.querySelector('.call-button');
-                    if (callButton) {
-                        // checkRequiredFieldsFilled();
-                        updateCallButtonState(callButton);
-                    }
                 }, 100);
             }
         });
@@ -891,9 +697,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Старт наблюдения
         observer.observe(document.body, {
             childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['value', 'checked']
+            subtree: true
         });
 
         // Начальная проверка при загрузке страницы
@@ -905,14 +709,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCalendarLegend();
             addCallButtonStyles();
             addCallButton();
-            monitorAnketaCol1();
-
-            // Проверяем все обязательные поля при загрузке
-            const callButton = document.querySelector('.call-button');
-            if (callButton) {
-                // checkRequiredFieldsFilled();
-                updateCallButtonState(callButton);
-            }
         }
 
         // Запускаем начальную проверку
@@ -921,7 +717,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test button 3');
     </script>
 <?php
 get_footer();
