@@ -695,6 +695,7 @@
     border: 1px solid #6063A6;
     border-radius: 40px;
     cursor: pointer;
+    padding: 16px 0;
 }
 #cp_appbooking_pform_1 #fbuilder .select-button .pbSubmit:hover{
     background: #fff;
