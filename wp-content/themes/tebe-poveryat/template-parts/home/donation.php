@@ -43,7 +43,7 @@
     </div>
 
     <div class="donation-form__container container mx-auto px-4 relative z-20 md:pt-0 md:pb-24 lg:pb-0">
-        <?php if( is_front_page() || ( is_page(153)) { ?>
+        <?php if( is_front_page() ||  is_page(153) ) { ?>
             <h2 class="donation-form__title text-center text-white text-h2 md:text-[64px] font-ura uppercase mb-8 md:leading-[64px] lg:mb-[35px]">Поддержите нас</h2>
         <?php } ?>
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">
