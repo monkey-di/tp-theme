@@ -883,6 +883,8 @@ a.donation-adv span{
     background:#1C5358;
     border-radius:40px;
     padding: 16px 0;
+    width: 348px;
+    text-align: center;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
