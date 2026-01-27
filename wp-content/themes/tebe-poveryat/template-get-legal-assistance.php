@@ -186,6 +186,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
+        // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
             const calendarBlocks = document.querySelectorAll('.slotsCalendar');
@@ -224,17 +225,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     selectButton.className = 'select-button';
 
                     // Создаем span с текстом "Выбрать"
-                   // const span = document.createElement('span');
-                    //span.textContent = 'Выбрать';
+                    const span = document.createElement('span');
+                    span.textContent = 'Выбрать';
 
-                    // Создаем кнопку "Отправить запрос" // теперь "выбрать"
+                    // Создаем кнопку "Отправить запрос"
                     const submitButton = document.createElement('button');
                     submitButton.type = 'button';
                     submitButton.className = 'pbSubmit';
-                    submitButton.textContent = 'Выбрать';
+                    submitButton.textContent = 'Отправить запрос';
 
                     // Добавляем элементы в блок
-                    //selectButton.appendChild(span);
+                    selectButton.appendChild(span);
                     selectButton.appendChild(submitButton);
 
                     // Добавляем блок в конец .slotsCalendar
@@ -243,7 +244,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     console.log('Блок .select-button создан с двумя кнопками');
 
                     // Обработчик клика на span "Выбрать"
-                    /*span.addEventListener('click', function(e) {
+                    span.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по span "Выбрать"');
 
@@ -253,7 +254,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             targetBlock.style.display = 'none';
                             console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
                         }
-                    });*/
+                    });
 
                     // Обработчик клика на кнопку "Отправить запрос"
                     submitButton.addEventListener('click', function(e) {
@@ -353,19 +354,224 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Добавляем легенду в .ui-widget
                     uiWidget.appendChild(calendarLegend);
                     console.log('Календарная легенда добавлена в .ui-widget');
-
-                    // Добавляем CSS стили для легенды
-                    const style = document.createElement('style');
-
-                    // Добавляем стили в head, если их еще нет
-                    if (!document.querySelector('style[data-calendar-legend]')) {
-                        style.setAttribute('data-calendar-legend', 'true');
-                        document.head.appendChild(style);
-                    }
                 }
             });
 
             return uiWidgets.length > 0;
+        }
+
+        // Функция для проверки заполненности обязательных полей в .anketa-col-1
+        function checkRequiredFieldsFilled() {
+            const requiredFields = document.querySelectorAll('.anketa-col-1 .required');
+            let allFilled = true;
+
+            requiredFields.forEach(field => {
+                // Пропускаем скрытые поля
+                if (field.type === 'hidden') {
+                    return;
+                }
+
+                // Проверяем текстовые поля и textarea
+                if ((field.tagName === 'INPUT' && field.type === 'text') ||
+                    field.tagName === 'TEXTAREA' ||
+                    field.tagName === 'SELECT') {
+                    if (!field.value || field.value.trim() === '') {
+                        allFilled = false;
+                    }
+                }
+
+                // Для checkbox проверяем checked
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    // Если есть группа с одинаковым name, проверяем хотя бы один выбран
+                    const name = field.name;
+                    const group = document.querySelectorAll(`[name="${name}"]`);
+                    let groupChecked = false;
+
+                    group.forEach(item => {
+                        if (item.checked) {
+                            groupChecked = true;
+                        }
+                    });
+
+                    if (!groupChecked) {
+                        allFilled = false;
+                    }
+                }
+            });
+
+            return allFilled;
+        }
+
+        // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
+        function addCallButton() {
+            const anketaCol2 = document.querySelector('.anketa-col-2');
+            if (!anketaCol2) return false;
+
+            // Проверяем, не добавлена ли уже кнопка
+            let callButton = anketaCol2.querySelector('.call-button');
+
+            if (!callButton) {
+                // Создаем кнопку
+                callButton = document.createElement('button');
+                callButton.type = 'button';
+                callButton.className = 'call-button';
+                callButton.textContent = 'КНОПКА ВЫЗОВА';
+                callButton.disabled = true; // По умолчанию неактивна
+
+                // Добавляем кнопку в конец блока .anketa-col-2
+                anketaCol2.appendChild(callButton);
+
+                console.log('Кнопка "КНОПКА ВЫЗОВА" добавлена');
+            }
+
+            // Обработчик клика для кнопки
+            callButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                console.log('Клик по кнопке "КНОПКА ВЫЗОВА"');
+
+                // Показываем блок .slotsCalendarfieldname1_1
+                const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+                if (slotsCalendar) {
+                    slotsCalendar.style.display = 'block';
+                    console.log('Блок .slotsCalendarfieldname1_1 показан');
+                }
+            });
+
+            // Проверяем состояние полей и обновляем кнопку
+            updateCallButtonState(callButton);
+
+            // Добавляем обработчики для полей в .anketa-col-1
+            setupRequiredFieldsListeners(callButton);
+
+            return true;
+        }
+
+        // Функция для обновления состояния кнопки вызова
+        function updateCallButtonState(callButton) {
+            if (!callButton) return;
+
+            const allFilled = checkRequiredFieldsFilled();
+            callButton.disabled = !allFilled;
+
+            // Добавляем/удаляем класс для визуальной обратной связи
+            if (allFilled) {
+                callButton.classList.remove('disabled');
+                callButton.classList.add('enabled');
+            } else {
+                callButton.classList.add('disabled');
+                callButton.classList.remove('enabled');
+            }
+        }
+
+        // Функция для настройки обработчиков событий на обязательные поля
+        function setupRequiredFieldsListeners(callButton) {
+            const requiredFields = document.querySelectorAll('.anketa-col-1 .required');
+
+            requiredFields.forEach(field => {
+                // Удаляем старые обработчики (если были) и добавляем новые
+                field.removeEventListener('input', handleFieldChange);
+                field.removeEventListener('change', handleFieldChange);
+
+                field.addEventListener('input', handleFieldChange);
+                field.addEventListener('change', handleFieldChange);
+            });
+
+            // Обработчик изменения полей
+            function handleFieldChange() {
+                updateCallButtonState(callButton);
+            }
+        }
+
+        // Функция для поиска и отслеживания изменений в .anketa-col-1
+        function monitorAnketaCol1() {
+            const anketaCol1 = document.querySelector('.anketa-col-1');
+            if (!anketaCol1) return false;
+
+            // Наблюдаем за изменениями внутри .anketa-col-1
+            const col1Observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    // Если добавляются/изменяются элементы
+                    if (mutation.type === 'childList' || mutation.type === 'attributes') {
+                        // Обновляем кнопку вызова
+                        const callButton = document.querySelector('.call-button');
+                        if (callButton) {
+                            updateCallButtonState(callButton);
+                            // Переустанавливаем обработчики на случай новых полей
+                            setupRequiredFieldsListeners(callButton);
+                        }
+                    }
+                });
+            });
+
+            // Начинаем наблюдение
+            col1Observer.observe(anketaCol1, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                attributeFilter: ['value', 'checked']
+            });
+
+            console.log('Наблюдение за .anketa-col-1 начато');
+            return true;
+        }
+
+        // Функция для добавления стилей для кнопки вызова
+        function addCallButtonStyles() {
+            // Проверяем, не добавлены ли уже стили
+            if (document.querySelector('style[data-call-button]')) return;
+
+            const style = document.createElement('style');
+            style.setAttribute('data-call-button', 'true');
+            style.textContent = `
+            .call-button {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 20px auto 10px;
+                padding: 12px 24px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+
+            .call-button:hover:not(:disabled) {
+                background-color: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            .call-button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            .call-button.disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            .call-button.enabled {
+                background-color: #4CAF50;
+                cursor: pointer;
+                opacity: 1;
+            }
+
+            .call-button:active:not(:disabled) {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+        `;
+
+            document.head.appendChild(style);
+            console.log('Стили для кнопки вызова добавлены');
         }
 
         // наблюдатель за изменениями DOM
@@ -406,6 +612,31 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => wrapSlotsContent(), 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, является ли узел или содержит ли .anketa-col-1
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-1')) ||
+                            (node.querySelector && node.querySelector('.anketa-col-1'))) {
+                            setTimeout(() => {
+                                // Обновляем кнопку вызова и начинаем мониторинг
+                                const callButton = document.querySelector('.call-button');
+                                if (callButton) {
+                                    updateCallButtonState(callButton);
+                                    setupRequiredFieldsListeners(callButton);
+                                }
+                                monitorAnketaCol1();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .anketa-col-2
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
+                            (node.querySelector && node.querySelector('.anketa-col-2'))) {
+                            setTimeout(() => {
+                                addCallButtonStyles();
+                                addCallButton();
+                            }, 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -432,6 +663,27 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         changesMade = true;
                     }
 
+                    // Проверяем, появился ли .anketa-col-1 или .anketa-col-2 внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-1')) {
+                        setTimeout(() => {
+                            const callButton = document.querySelector('.call-button');
+                            if (callButton) {
+                                updateCallButtonState(callButton);
+                                setupRequiredFieldsListeners(callButton);
+                            }
+                            monitorAnketaCol1();
+                        }, 50);
+                        changesMade = true;
+                    }
+
+                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-2')) {
+                        setTimeout(() => {
+                            addCallButtonStyles();
+                            addCallButton();
+                        }, 50);
+                        changesMade = true;
+                    }
+
                     // Проверяем, появились ли новые .availableslot или .htmlUsed
                     if (mutation.target.querySelector &&
                         (mutation.target.querySelector('.availableslot') || mutation.target.querySelector('.htmlUsed'))) {
@@ -450,6 +702,18 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         changesMade = true;
                     }
                 }
+
+                // Проверяем изменения атрибутов (например, value, checked)
+                if (mutation.type === 'attributes' && mutation.target) {
+                    // Если изменяется обязательное поле в .anketa-col-1
+                    if (mutation.target.classList && mutation.target.classList.contains('required') &&
+                        mutation.target.closest('.anketa-col-1')) {
+                        const callButton = document.querySelector('.call-button');
+                        if (callButton) {
+                            updateCallButtonState(callButton);
+                        }
+                    }
+                }
             });
 
             // Также запускаем проверку для уже существующих элементов
@@ -459,6 +723,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     decorateSlotsCalendar();
                     wrapSlotsContent();
                     replaceInputWithTextarea();
+                    addCallButtonStyles();
+                    addCallButton();
+                    monitorAnketaCol1();
                 }, 100);
             }
         });
@@ -466,7 +733,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Старт наблюдения
         observer.observe(document.body, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['value', 'checked']
         });
 
         // Начальная проверка при загрузке страницы
@@ -476,6 +745,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             decorateSlotsCalendar();
             wrapSlotsContent();
             addCalendarLegend();
+            addCallButtonStyles();
+            addCallButton();
+            monitorAnketaCol1();
         }
 
         // Запускаем начальную проверку
@@ -484,7 +756,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('Кнопка скопирована');
     </script>
 <?php
 get_footer();
