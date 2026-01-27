@@ -951,6 +951,10 @@ a.donation-adv span{
     .blog-page .page-head-title{
         font-size:100px;
     }
+    .back-blog-button{
+        text-align:center;
+        margin-left: 20px;
+    }
 }
 @media(max-width:710px){
     .page-head-wrapper h1{
@@ -988,10 +992,7 @@ a.donation-adv span{
     .blog-page .page-head-title{
         font-size:32px;
     }
-    .back-blog-button{
-        text-align:center;
-        margin-left: 20px;
-    }
+
     .posts-sort{
         padding-left: 20px;
     }
