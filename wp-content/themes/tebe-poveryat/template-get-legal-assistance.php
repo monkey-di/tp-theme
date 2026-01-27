@@ -578,6 +578,23 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             console.log('Стили для кнопки вызова добавлены');
         }
 
+        // Функция для проверки и инициализации календаря
+        function initSlotsCalendar() {
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (slotsCalendar) {
+                // Убедимся, что календарь скрыт по умолчанию
+                if (slotsCalendar.style.display !== 'none') {
+                    slotsCalendar.style.display = 'none';
+                    console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
+                }
+
+                // Проверяем, не добавлены ли уже элементы
+                if (!slotsCalendar.querySelector('.closer')) {
+                    decorateSlotsCalendar();
+                }
+            }
+        }
+
         // наблюдатель за изменениями DOM
         const observer = new MutationObserver(function(mutations) {
             let changesMade = false;
@@ -623,6 +640,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 addCallButtonStyles();
                                 addCallButton();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .slotsCalendarfieldname1_1
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendarfieldname1_1')) ||
+                            (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
+                            setTimeout(() => {
+                                initSlotsCalendar();
                             }, 100);
                             changesMade = true;
                         }
@@ -690,6 +716,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     replaceInputWithTextarea();
                     addCallButtonStyles();
                     addCallButton();
+                    initSlotsCalendar();
                 }, 100);
             }
         });
@@ -709,6 +736,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCalendarLegend();
             addCallButtonStyles();
             addCallButton();
+            initSlotsCalendar();
         }
 
         // Запускаем начальную проверку
@@ -717,7 +745,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test button 5');
+        console.log('test button 6');
     </script>
 <?php
 get_footer();
