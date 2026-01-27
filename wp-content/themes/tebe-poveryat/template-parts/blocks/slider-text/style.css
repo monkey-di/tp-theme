@@ -63,4 +63,7 @@
     .block-slider-text_slider-navi{
         justify-content: space-between;
     }
+    .block-slider-text_text{
+        margin-left: 0;
+    }
 }
