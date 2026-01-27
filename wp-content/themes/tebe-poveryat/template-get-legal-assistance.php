@@ -866,7 +866,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 e.target.value = value;
             });
 
-            // Обработчик изменения даты вручную
+            // Обработчик изменения даты вручную - обновляем календарь
             dateInput.addEventListener('change', function(e) {
                 const value = e.target.value;
                 // Проверяем формат даты
@@ -877,7 +877,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const month = match[2];
                     const year = match[3];
 
-                    // Ищем соответствующую дату в календаре
+                    // Обновляем selectedDateValue
+                    selectedDateValue = value;
+
+                    // Ищем соответствующую дату в календаре и выбираем ее
                     selectDateInCalendar(day, month, year);
                 } else {
                     console.log('Неверный формат даты');
@@ -935,15 +938,140 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 // Обновляем selectedDateValue
                 selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+
                 // Сохраняем в sessionStorage
                 saveToSessionStorage();
+
+                // Также обновляем поле ввода даты
                 updateDateInputFieldFromSelectedDate();
 
                 return true;
             } else {
                 console.log('Дата не найдена в текущем месяце:', dateStr);
+
+                // Пробуем переключить месяц
+                return trySwitchCalendarMonth(day, month, year);
+            }
+        }
+
+        // Функция для переключения месяца в календаре
+        function trySwitchCalendarMonth(day, month, year) {
+            const calendar = document.querySelector('.fieldCalendarfieldname1_1');
+            if (!calendar) return false;
+
+            // Получаем текущий месяц и год из календаря
+            const monthElement = calendar.querySelector('.ui-datepicker-month');
+            const yearElement = calendar.querySelector('.ui-datepicker-year');
+
+            if (!monthElement || !yearElement) return false;
+
+            const currentMonth = monthElement.textContent;
+            const currentYear = yearElement.textContent;
+
+            // Преобразуем названия месяцев в номера (нумерация с 0)
+            const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            const monthNamesGenitive = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+                'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+            let currentMonthIndex = monthNames.findIndex(m => m === currentMonth);
+            if (currentMonthIndex === -1) {
+                currentMonthIndex = monthNamesGenitive.findIndex(m => m === currentMonth);
+            }
+
+            // Целевой месяц (месяцы в JavaScript начинаются с 0, поэтому month-1)
+            const targetMonthIndex = parseInt(month) - 1;
+            const targetYear = parseInt(year);
+
+            if (currentMonthIndex === -1) {
+                console.log('Не удалось определить текущий месяц');
                 return false;
             }
+
+            // Вычисляем разницу в месяцах
+            const currentTotalMonths = parseInt(currentYear) * 12 + currentMonthIndex;
+            const targetTotalMonths = targetYear * 12 + targetMonthIndex;
+            const monthDiff = targetTotalMonths - currentTotalMonths;
+
+            console.log(`Разница в месяцах: ${monthDiff} (текущий: ${currentMonthIndex+1}.${currentYear}, целевой: ${month}.${year})`);
+
+            // Определяем, нужно ли переключать месяц
+            if (monthDiff === 0) {
+                // Месяц совпадает, но дата не найдена - возможно, дата неактивна
+                console.log('Месяц совпадает, но дата не найдена - возможно, дата неактивна');
+                return false;
+            }
+
+            // Определяем направление переключения
+            const isForward = monthDiff > 0;
+            const buttonClass = isForward ? '.ui-datepicker-next' : '.ui-datepicker-prev';
+            const switchButton = calendar.querySelector(buttonClass);
+
+            if (!switchButton) {
+                console.log('Кнопка переключения месяца не найдена');
+                return false;
+            }
+
+            // Кликаем по кнопке нужное количество раз
+            let attempts = Math.abs(monthDiff);
+            let success = false;
+
+            const switchMonth = function(remainingAttempts) {
+                if (remainingAttempts <= 0) {
+                    // После всех переключений пробуем найти дату
+                    setTimeout(function() {
+                        const dateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+                        const dateElement = calendar.querySelector(`[data-date="${dateStr}"]`);
+                        if (dateElement) {
+                            // Удаляем класс ui-state-active у всех элементов
+                            const allActiveElements = calendar.querySelectorAll('.ui-state-active');
+                            allActiveElements.forEach(el => {
+                                el.classList.remove('ui-state-active');
+                            });
+
+                            // Добавляем класс ui-state-active к выбранному элементу
+                            const linkElement = dateElement.querySelector('a');
+                            if (linkElement) {
+                                linkElement.classList.add('ui-state-active');
+                            }
+
+                            // Кликаем по элементу для выбора даты
+                            dateElement.click();
+                            console.log('Дата выбрана в календаре после переключения месяца:', dateStr);
+
+                            // Обновляем selectedDateValue
+                            selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+
+                            // Сохраняем в sessionStorage
+                            saveToSessionStorage();
+
+                            // Также обновляем поле ввода даты
+                            updateDateInputFieldFromSelectedDate();
+
+                            success = true;
+                        } else {
+                            console.log('Дата не найдена даже после переключения месяца');
+                            success = false;
+                        }
+                    }, 300); // Даем время на обновление календаря
+                    return;
+                }
+
+                // Кликаем по кнопке переключения
+                switchButton.click();
+                console.log(`Переключение месяца (осталось попыток: ${remainingAttempts - 1})`);
+
+                // Ждем и продолжаем
+                setTimeout(function() {
+                    switchMonth(remainingAttempts - 1);
+                }, 300);
+            };
+
+            // Начинаем переключение
+            switchMonth(attempts);
+
+            // Возвращаем успех (хотя операция асинхронная)
+            return true;
         }
 
         // Функция для обновления поля ввода даты при выборе даты в календаре
@@ -962,8 +1090,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (parts.length === 3) {
                         selectedDateValue = `${parts[2]}.${parts[1]}.${parts[0]}`;
                         dateInput.value = selectedDateValue;
+
                         // Сохраняем в sessionStorage
                         saveToSessionStorage();
+
                         console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
                     }
                 }
@@ -982,16 +1112,20 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         const monthNum = parseInt(month) + 1;
                         selectedDateValue = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
                         dateInput.value = selectedDateValue;
+
                         // Сохраняем в sessionStorage
                         saveToSessionStorage();
+
                         console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
                     }
                 } else {
                     // Если нет активной даты и нет today, оставляем поле пустым
                     dateInput.value = '';
                     selectedDateValue = '';
+
                     // Сохраняем в sessionStorage
                     saveToSessionStorage();
+
                     console.log('Нет активной даты в календаре, поле очищено');
                 }
             }
@@ -1578,7 +1712,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('333333333333333333');
+        console.log('888877666433242');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
