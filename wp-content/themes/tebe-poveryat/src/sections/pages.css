@@ -373,6 +373,9 @@
     color: #fff;
     display: block;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #cp_appbooking_pform_1.ahb_m4 #fbuilder td..ui-datepicker-week-end span{
     display: block;
