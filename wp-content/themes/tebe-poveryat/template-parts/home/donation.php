@@ -4,7 +4,7 @@
  * Mobile First.
  */
 ?>
-<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[140px]">
+<section class="donation-form donation-section w-full bg-secondary relative overflow-hidden z-10 mt-[-40px] mb-[-40px] lg:mt-[-80px] lg:mb-[-80px] pt-[80px] pb-[80px] lg:pt-[160px] lg:pb-[140px]  <?php if( !is_front_page() ) { ?>nonfront<? }?>">
 
     <!-- Mobile Background -->
     <div class="md:hidden">
