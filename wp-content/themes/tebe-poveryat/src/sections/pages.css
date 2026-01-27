@@ -230,6 +230,17 @@
     border-radius: 40px;
     background: #fff;
 }
+#fbuilder .calendar-col-2 input{
+    width:100%;
+    min-width: 394px;
+    font-family: "Geologica";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    padding:12px 20px;
+    border-radius: 40px;
+    background: #fff;
+}
 .fieldCalendar{
     max-width: 334px;
 }
