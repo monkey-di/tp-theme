@@ -620,39 +620,113 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return months[normalizedMonth] || '01';
         }
 
-        // Функция для проверки URL и показа модального окна (обновленная)
+        // Функция для проверки URL и показа модального окна с использованием наблюдателя
         function checkSuccessUrlAndShowModal() {
             // Проверяем, есть ли в URL hash #success
             if (window.location.hash === '#success') {
-                console.log('Обнаружен #success в URL');
+                console.log('Обнаружен #success в URL, ожидаем загрузку элементов...');
 
-                // Даем больше времени для полной загрузки всех элементов
-                setTimeout(() => {
-                    console.log('Начинаем получение даты и времени...');
+                // Убираем hash из URL без перезагрузки страницы
+                history.replaceState(null, null, window.location.pathname);
 
-                    // Пробуем получить выбранные дату и время
+                // Создаем наблюдатель для отслеживания появления нужных элементов
+                const modalObserver = new MutationObserver(function(mutations) {
+                    console.log('MutationObserver для модального окна: изменения обнаружены');
+
+                    // Проверяем наличие элементов каждый раз при изменениях
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
-                    console.log('Полученные данные:', { selectedDate, selectedTime });
+                    // Если оба значения найдены, показываем модальное окно и останавливаем наблюдатель
+                    if (selectedDate || selectedTime) {
+                        console.log('Найдены данные для модального окна:', { selectedDate, selectedTime });
 
-                    // Формируем сообщение
-                    let message = 'Вы записаны на юридическую консультацию';
-                    if (selectedDate && selectedTime) {
-                        message += ` ${selectedDate} в ${selectedTime}`;
-                    } else if (selectedDate) {
-                        message += ` ${selectedDate}`;
-                        if (selectedTime) {
-                            message += ` в ${selectedTime}`;
+                        // Формируем сообщение
+                        let message = 'Вы записаны на юридическую консультацию';
+                        if (selectedDate && selectedTime) {
+                            message += ` ${selectedDate} в ${selectedTime}`;
+                        } else if (selectedDate) {
+                            message += ` ${selectedDate}`;
+                            if (selectedTime) {
+                                message += ` в ${selectedTime}`;
+                            }
+                        } else {
+                            message += '.';
                         }
-                    } else {
-                        message += '.';
+
+                        console.log('Сообщение для модального окна:', message);
+
+                        // Останавливаем наблюдатель
+                        modalObserver.disconnect();
+
+                        // Показываем модальное окно с небольшой задержкой для надежности
+                        setTimeout(() => {
+                            createAndShowModal(message);
+                        }, 300);
                     }
+                });
 
-                    console.log('Сообщение для модального окна:', message);
+                // Начинаем наблюдение за изменениями в документе
+                modalObserver.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
 
-                    // Создаем и показываем модальное окно
-                    createAndShowModal(message);
-                }, 1500); // Увеличил время ожидания
+                // Также запускаем немедленную проверку на случай, если элементы уже загружены
+                setTimeout(() => {
+                    const { selectedDate, selectedTime } = getSelectedDateTime();
+
+                    if (selectedDate || selectedTime) {
+                        console.log('Элементы уже загружены, показываем модальное окно');
+
+                        // Формируем сообщение
+                        let message = 'Вы записаны на юридическую консультацию';
+                        if (selectedDate && selectedTime) {
+                            message += ` ${selectedDate} в ${selectedTime}`;
+                        } else if (selectedDate) {
+                            message += ` ${selectedDate}`;
+                            if (selectedTime) {
+                                message += ` в ${selectedTime}`;
+                            }
+                        } else {
+                            message += '.';
+                        }
+
+                        // Останавливаем наблюдатель
+                        modalObserver.disconnect();
+
+                        // Показываем модальное окно
+                        createAndShowModal(message);
+                    } else {
+                        console.log('Элементы еще не загружены, продолжаем наблюдение...');
+                    }
+                }, 500);
+
+                // Ограничиваем время ожидания 10 секундами
+                setTimeout(() => {
+                    modalObserver.disconnect();
+                    console.log('Наблюдатель остановлен по таймауту');
+
+                    // Проверяем еще раз
+                    const { selectedDate, selectedTime } = getSelectedDateTime();
+                    if (selectedDate || selectedTime) {
+                        let message = 'Вы записаны на юридическую консультацию';
+                        if (selectedDate && selectedTime) {
+                            message += ` ${selectedDate} в ${selectedTime}`;
+                        } else if (selectedDate) {
+                            message += ` ${selectedDate}`;
+                            if (selectedTime) {
+                                message += ` в ${selectedTime}`;
+                            }
+                        } else {
+                            message += '.';
+                        }
+                        createAndShowModal(message);
+                    } else {
+                        // Если ничего не найдено, показываем общее сообщение
+                        console.log('Данные о дате и времени не найдены, показываем общее сообщение');
+                        createAndShowModal('Вы записаны на юридическую консультацию.');
+                    }
+                }, 10000); // 10 секунд таймаут
             }
         }
         // Также обновим initialCheck чтобы он тоже проверял URL
