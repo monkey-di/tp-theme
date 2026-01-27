@@ -839,7 +839,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 });
 
                 // Добавляем обработчик изменения состояния инпута
-                input.addEventListener('change', function() {
+                /*input.addEventListener('change', function() {
                     if (input.checked) {
                         icon.classList.remove('hidden');
                         customCheckbox.classList.add('checked');
@@ -847,7 +847,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         icon.classList.add('hidden');
                         customCheckbox.classList.remove('checked');
                     }
-                });
+                });*/
 
                 // Добавляем обработчик для ссылок (чтобы они работали нормально)
                 const links = textSpan.querySelectorAll('a');
