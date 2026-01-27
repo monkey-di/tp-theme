@@ -942,7 +942,8 @@ a.donation-adv span{
 }
 @media(max-width:860px){
     .blog-item{
-        width:100%;
+        width:calc(100% - 40px);
+        margin-left:20px;
     }
     .page-head-btn{
         display:none;
