@@ -796,6 +796,9 @@
 .page-template-template-get-legal-assistance .donate-description{
     display: none;
 }
+.page-template-template-get-legal-assistance .page-head{
+    padding-bottom: 100px;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
