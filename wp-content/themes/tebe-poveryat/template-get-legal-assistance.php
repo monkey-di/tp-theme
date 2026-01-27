@@ -697,6 +697,32 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
         }
 
+        // Функция для добавления классов к блоку .ahb_m4
+        function addClassesToAhbM4() {
+            const ahbM4Elements = document.querySelectorAll('.ahb_m4');
+
+            ahbM4Elements.forEach(element => {
+                // Проверяем, не добавлены ли уже классы
+                if (!element.classList.contains('z-20') ||
+                    !element.classList.contains('bg-surface') ||
+                    !element.classList.contains('relative')) {
+
+                    // Добавляем все необходимые классы
+                    element.classList.add(
+                        'z-20',
+                        'bg-surface',
+                        'relative',
+                        '[border-radius:0_0_50%_50%_/_0_0_40px_40px]',
+                        'lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]'
+                    );
+
+                    console.log('Классы добавлены к элементу .ahb_m4');
+                }
+            });
+
+            return ahbM4Elements.length > 0;
+        }
+
         // Функция для создания и показа модального окна
         function createAndShowModal(message) {
             // Проверяем, не существует ли уже модальное окно
@@ -886,7 +912,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
-                                // Запускаем наблюдение за выбором
                                 startSelectionObservation();
                             }, 100);
                             changesMade = true;
@@ -917,9 +942,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
                             setTimeout(() => {
                                 initSlotsCalendar();
-                                // Запускаем наблюдение за выбором
                                 startSelectionObservation();
                             }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .ahb_m4
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('ahb_m4')) ||
+                            (node.querySelector && node.querySelector('.ahb_m4'))) {
+                            setTimeout(() => addClassesToAhbM4(), 100);
                             changesMade = true;
                         }
                     }
@@ -958,6 +989,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             addCallButtonStyles();
                             addCallButton();
                         }, 50);
+                        changesMade = true;
+                    }
+
+                    // Проверяем, появился ли .ahb_m4 внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.ahb_m4')) {
+                        setTimeout(() => addClassesToAhbM4(), 50);
                         changesMade = true;
                     }
 
@@ -1008,6 +1045,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     startSelectionObservation();
                     updateSelectedDate();
                     updateSelectedTime();
+                    addClassesToAhbM4();
                 }, 100);
             }
         });
@@ -1037,6 +1075,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Обновляем начальные значения
             updateSelectedDate();
             updateSelectedTime();
+
+            // Добавляем классы к .ahb_m4
+            addClassesToAhbM4();
 
             // Проверяем URL и показываем модальное окно, если нужно
             checkSuccessUrlAndShowModal();
