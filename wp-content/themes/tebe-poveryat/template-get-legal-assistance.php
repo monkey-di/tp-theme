@@ -251,7 +251,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const submitButton = document.createElement('button');
                     submitButton.type = 'button';
                     submitButton.className = 'pbSubmit';
-                    submitButton.textContent = 'Отправить запрос';
+                    submitButton.textContent = 'Выбрать';
 
                     // Добавляем элементы в блок
                     selectButton.appendChild(span);
