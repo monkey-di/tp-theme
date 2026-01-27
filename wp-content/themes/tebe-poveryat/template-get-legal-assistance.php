@@ -1026,7 +1026,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return ahbM4Elements.length > 0;
         }
 
-        // Функция для создания и показа модального окна
+        // Функция для создания и показа модального окна с корректными данными
         function createAndShowModal(message) {
             // Проверяем, не существует ли уже модальное окно
             if (document.getElementById('successModal')) {
@@ -1127,6 +1127,25 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             console.log('Модальное окно показано');
         }
 
+        // Функция для формирования корректного сообщения
+        function getSuccessMessage() {
+            let message = 'Вы записаны на юридическую консультацию';
+
+            // Добавляем дату, если она есть
+            if (selectedDateValue) {
+                message += ` ${selectedDateValue}`;
+
+                // Добавляем время, если оно есть
+                if (selectedTimeValue) {
+                    message += ` в ${selectedTimeValue}`;
+                }
+            } else {
+                message += '.';
+            }
+
+            return message;
+        }
+
         // Функция для проверки URL и показа модального окна
         function checkSuccessUrlAndShowModal() {
             if (window.location.hash === '#success') {
@@ -1137,9 +1156,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 // Ждем появления необходимых элементов
                 const checkInterval = setInterval(function() {
-                    const { selectedDate, selectedTime } = getSelectedDateTime();
+                    // Обновляем данные из DOM перед формированием сообщения
+                    updateSelectedDate();
+                    updateSelectedTime();
 
-                    // Формируем сообщение
+                    const { selectedDate, selectedTime } = getSelectedDateTime();
+                    console.log('Проверка данных - Дата:', selectedDate, 'Время:', selectedTime);
+
+                    // Формируем корректное сообщение
                     let message = 'Вы записаны на юридическую консультацию';
                     let hasData = false;
 
@@ -1167,20 +1191,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Таймаут 10 секунд
                 setTimeout(function() {
                     clearInterval(checkInterval);
-                    const { selectedDate, selectedTime } = getSelectedDateTime();
 
-                    let message = 'Вы записаны на юридическую консультацию';
-                    if (selectedDate && selectedTime) {
-                        message += ` ${selectedDate} в ${selectedTime}`;
-                    } else if (selectedDate) {
-                        message += ` ${selectedDate}`;
-                        if (selectedTime) {
-                            message += ` в ${selectedTime}`;
-                        }
-                    } else {
-                        message += '.';
-                    }
+                    // Последняя попытка получить данные
+                    updateSelectedDate();
+                    updateSelectedTime();
 
+                    // Используем функцию getSuccessMessage для формирования сообщения
+                    const message = getSuccessMessage();
                     console.log('Показываем модальное окно по таймауту:', message);
                     createAndShowModal(message);
                 }, 10000);
@@ -1457,7 +1474,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkSuccessUrlAndShowModal();
             }
         });
-        console.log('111111');
+        console.log('2222222222222');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
