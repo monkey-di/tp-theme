@@ -897,10 +897,26 @@ a.donation-adv span{
     text-transform: uppercase;
     display: block;
 }
+@media(max-width: 1600px){
+    .page-template-template-get-legal-assistance .page-head-col:nth-child(2) .page-head-btn{
+        right: 20px;
+    }
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
         padding-right: var(--wp--preset--spacing--50);
+    }
+}
+@media(max-width:1300px){
+    #fbuilder #fieldlist_1 .pb0.pbreak{
+        flex-direction:column;
+    }
+    .anketa-col.anketa-col-1{
+        max-width:100%;
+    }
+    #fbuilder .calendar-col-1{
+        max-width:calc(50% - 5px);
     }
 }
 @media(max-width:1100px){
