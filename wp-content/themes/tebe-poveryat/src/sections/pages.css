@@ -126,6 +126,9 @@
 .posts-sort{
     margin-bottom: 40px;
 }
+.posts-sort *{
+    cursor: pointer !important;
+}
 .sort-select{
     border-radius: 40px;
     border: 1px solid #6063A666;
