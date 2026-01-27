@@ -808,6 +808,9 @@
 .page-template-template-get-legal-assistance .page-head-description.text-p{
     max-width: 580px;
 }
+#fbuilder .top_aligned .fields .dfield{
+    margin-bottom: 15px;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
