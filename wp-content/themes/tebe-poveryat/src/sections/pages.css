@@ -921,7 +921,11 @@ a.donation-adv span{
     }
     #fbuilder .donation-form__checkboxes{
         position: absolute;
-        bottom: 40px;
+        bottom: 0;
+        padding-bottom: 80px;
+    }
+    .call-button{
+        margin-top: 110px;
     }
     .anketa-col.anketa-col-1{
         max-width:100%;
