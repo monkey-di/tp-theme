@@ -487,13 +487,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 callButton = document.createElement('button');
                 callButton.type = 'button';
                 callButton.className = 'call-button';
-                callButton.textContent = 'Отправить заявку';
+                callButton.textContent = 'КНОПКА ВЫЗОВА';
                 callButton.disabled = false; // Кнопка всегда активна
 
                 // Добавляем кнопку в конец блока .anketa-col-2
                 anketaCol2.appendChild(callButton);
 
-                console.log('Кнопка "Отправить заявку" добавлена');
+                console.log('Кнопка "КНОПКА ВЫЗОВА" добавлена');
             }
 
             // Обработчик клика для кнопки
@@ -531,388 +531,192 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
+            style.textContent = `
+            .call-button {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 20px auto 10px;
+                padding: 12px 24px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+
+            .call-button:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            .call-button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            .call-button:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .cpefb_error.message {
+                color: #ff0000;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+        `;
+
             document.head.appendChild(style);
-            console.log('Стили для кнопки вызова и модальных окон добавлены');
+            console.log('Стили для кнопки вызова добавлены');
         }
 
-        // Функция для проверки и инициализации календаря
-        function initSlotsCalendar() {
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (slotsCalendar) {
-                // Убедимся, что календарь скрыт по умолчанию
-                if (slotsCalendar.style.display !== 'none') {
-                    slotsCalendar.style.display = 'none';
-                    console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
+        // наблюдатель за изменениями DOM
+        const observer = new MutationObserver(function(mutations) {
+            let changesMade = false;
+
+            // Проверяем, нужно ли реструктурировать форму
+            if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
+                if (restructureForm()) changesMade = true;
+            }
+
+            // Проверка на появление элементов
+            mutations.forEach(function(mutation) {
+                // Проверяем добавленные ноды
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    for (let node of mutation.addedNodes) {
+                        // Проверяем, является ли узел или содержит ли .ui-widget
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
+                            (node.querySelector && node.querySelector('.ui-widget'))) {
+                            setTimeout(() => addCalendarLegend(), 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .slotsCalendar
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
+                            (node.querySelector && node.querySelector('.slotsCalendar'))) {
+                            // Даем время на полную загрузку/рендеринг
+                            setTimeout(() => {
+                                decorateSlotsCalendar();
+                                wrapSlotsContent();
+                            }, 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .slots
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
+                            (node.querySelector && node.querySelector('.slots'))) {
+                            setTimeout(() => wrapSlotsContent(), 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .anketa-col-2
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
+                            (node.querySelector && node.querySelector('.anketa-col-2'))) {
+                            setTimeout(() => {
+                                addCallButtonStyles();
+                                addCallButton();
+                            }, 100);
+                            changesMade = true;
+                        }
+                    }
                 }
 
-                // Проверяем, не добавлены ли уже элементы
-                if (!slotsCalendar.querySelector('.closer')) {
-                    decorateSlotsCalendar();
-                }
-            }
-        }
-
-        // Функция для получения выбранной даты и времени
-        function getSelectedDateTime() {
-            let selectedDate = '';
-            let selectedTime = '';
-
-            // Получаем выбранную дату из календаря
-            const activeDate = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
-            if (activeDate) {
-                const day = activeDate.getAttribute('data-date') || activeDate.textContent;
-                const monthYearElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-datepicker-title');
-                if (monthYearElement) {
-                    const month = monthYearElement.querySelector('.ui-datepicker-month').textContent;
-                    const year = monthYearElement.querySelector('.ui-datepicker-year').textContent;
-                    selectedDate = `${day}.${this.getMonthNumber(month)}.${year}`;
-                }
-            }
-
-            // Получаем выбранное время из слотов
-            const selectedSlot = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.selected');
-            if (selectedSlot) {
-                const timeLink = selectedSlot.querySelector('a');
-                if (timeLink) {
-                    selectedTime = timeLink.textContent.trim();
-                }
-            }
-
-            return { selectedDate, selectedTime };
-        }
-
-        // Вспомогательная функция для преобразования месяца в число
-        function getMonthNumber(monthName) {
-            const months = {
-                'январь': '01', 'февраль': '02', 'март': '03', 'апрель': '04',
-                'май': '05', 'июнь': '06', 'июль': '07', 'август': '08',
-                'сентябрь': '09', 'октябрь': '10', 'ноябрь': '11', 'декабрь': '12'
-            };
-            return months[monthName.toLowerCase()] || '01';
-        }
-
-        // Функция для создания модальных окон успешной записи и поддержки
-        function createModals() {
-            // Проверяем, не существует ли уже модальные окна
-            if (document.getElementById('successModalOverlay')) return;
-
-            const modalHTML = `
-            <div id="successModalOverlay" class="modal-overlay">
-                <div class="modal-container">
-                    <!-- Первое модальное окно - успешная запись -->
-            <div class="modal-success">
-            <div class="modal-header">
-            <div class="modal-icon">✓</div>
-            <h3 class="modal-title">Запись успешно отправлена!</h3>
-            </div>
-            <div class="modal-body">
-            <p id="successMessage" class="modal-message"></p>
-            </div>
-            <div class="modal-footer">
-            <button id="closeModalsBtn" class="close-modal-btn">Закрыть</button>
-            </div>
-            </div>
-
-                <!-- Второе модальное окно - поддержка -->
-            <div class="modal-support">
-            <div class="modal-header">
-            <h3 class="modal-title">Поддержите нас</h3>
-            </div>
-            <div class="modal-body">
-            <p>Мы стремимся предоставлять качественные юридические консультации. Если наша работа была полезной для вас, пожалуйста, поддержите нас!</p>
-            <p>Ваша поддержка поможет нам продолжать помогать людям в решении их юридических вопросов.</p>
-            </div>
-            </div>
-            </div>
-            </div>
-            `;
-
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-        // Добавляем обработчик закрытия модальных окон
-        document.getElementById('closeModalsBtn').addEventListener('click', function() {
-            document.getElementById('successModalOverlay').style.display = 'none';
-        });
-
-        // Закрытие модального окна при клике на фон
-        document.getElementById('successModalOverlay').addEventListener('click', function(e) {
-            if (e.target.id === 'successModalOverlay') {
-                document.getElementById('successModalOverlay').style.display = 'none';
-            }
-        });
-
-        console.log('Модальные окна созданы');
-    }
-
-    // Функция для перехвата отправки формы
-    function interceptFormSubmit() {
-        // Находим все кнопки отправки формы
-        const submitButtons = document.querySelectorAll('.pbSubmit:not(.select-button .pbSubmit)');
-
-        submitButtons.forEach(button => {
-            // Удаляем старый обработчик и добавляем новый
-            button.removeEventListener('click', handleFormSubmit);
-            button.addEventListener('click', handleFormSubmit);
-        });
-
-        // Также обрабатываем форму, если она отправляется через нажатие Enter
-        const form = document.querySelector('form');
-        if (form) {
-            form.removeEventListener('submit', handleFormSubmit);
-            form.addEventListener('submit', handleFormSubmit);
-        }
-    }
-
-    // Обработчик отправки формы
-    function handleFormSubmit(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        console.log('Перехвачена отправка формы');
-
-        // Проверяем все обязательные поля
-        const allValid = validateAllRequiredFields();
-
-        if (!allValid) {
-            console.log('Не все обязательные поля заполнены');
-            // Прокручиваем к первой ошибке
-            const firstError = document.querySelector('.cpefb_error.message');
-            if (firstError) {
-                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            return false;
-        }
-
-        // Получаем выбранные дату и время
-        const { selectedDate, selectedTime } = getSelectedDateTime();
-
-        // Формируем сообщение
-        let message = 'Вы записаны на юридическую консультацию';
-        if (selectedDate) {
-            message += ` ${selectedDate}`;
-            if (selectedTime) {
-                message += ` в ${selectedTime}`;
-            }
-        } else {
-            message += '.';
-        }
-
-        // Показываем модальные окна
-        const successModalOverlay = document.getElementById('successModalOverlay');
-        const successMessage = document.getElementById('successMessage');
-
-        if (successModalOverlay && successMessage) {
-            successMessage.textContent = message;
-            successModalOverlay.style.display = 'block';
-        } else {
-            // Если модальные окна не созданы, создаем их
-            createModals();
-            const newSuccessModalOverlay = document.getElementById('successModalOverlay');
-            const newSuccessMessage = document.getElementById('successMessage');
-            newSuccessMessage.textContent = message;
-            newSuccessModalOverlay.style.display = 'block';
-        }
-
-        // УБРАЛИ автоматическое скрытие через 5 секунд
-        // Окно теперь закрывается только по кнопке "Закрыть"
-
-        return false;
-    }
-
-    // Функция для очистки формы (опционально)
-    function clearForm() {
-        const form = document.querySelector('form');
-        if (form) {
-            form.reset();
-
-            // Очищаем выбранную дату и время
-            const activeDate = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
-            if (activeDate) {
-                activeDate.classList.remove('ui-state-active');
-            }
-
-            const selectedSlot = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.selected');
-            if (selectedSlot) {
-                selectedSlot.classList.remove('selected');
-            }
-
-            // Очищаем сообщения об ошибках
-            const errorMessages = document.querySelectorAll('.cpefb_error.message');
-            errorMessages.forEach(error => {
-                error.style.display = 'none';
-            });
-
-            // Восстанавливаем рамки полей
-            const requiredFields = document.querySelectorAll('.required');
-            requiredFields.forEach(field => {
-                field.style.borderColor = '';
-            });
-        }
-    }
-
-    // наблюдатель за изменениями DOM
-    const observer = new MutationObserver(function(mutations) {
-        let changesMade = false;
-
-        // Проверяем, нужно ли реструктурировать форму
-        if (document.querySelector('.pb0.pbreak') && !document.querySelector('.pb0.pbreak .anketa-col')) {
-            if (restructureForm()) changesMade = true;
-        }
-
-        // Проверка на появление элементов
-        mutations.forEach(function(mutation) {
-            // Проверяем добавленные ноды
-            if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                for (let node of mutation.addedNodes) {
-                    // Проверяем, является ли узел или содержит ли .ui-widget
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('ui-widget')) ||
-                        (node.querySelector && node.querySelector('.ui-widget'))) {
-                        setTimeout(() => addCalendarLegend(), 100);
+                // Проверяем изменения в поддереве
+                if (mutation.type === 'childList' && mutation.target) {
+                    // Проверяем, появился ли .ui-widget внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
+                        setTimeout(() => addCalendarLegend(), 50);
                         changesMade = true;
                     }
 
-                    // Проверяем, является ли узел или содержит ли .slotsCalendar
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendar')) ||
-                        (node.querySelector && node.querySelector('.slotsCalendar'))) {
-                        // Даем время на полную загрузку/рендеринг
+                    // Проверяем, появился ли .slotsCalendar внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
                         setTimeout(() => {
                             decorateSlotsCalendar();
                             wrapSlotsContent();
-                        }, 100);
+                        }, 50);
                         changesMade = true;
                     }
 
-                    // Проверяем, является ли узел или содержит ли .slots
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
-                        (node.querySelector && node.querySelector('.slots'))) {
-                        setTimeout(() => wrapSlotsContent(), 100);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, является ли узел или содержит ли .anketa-col-2
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
-                        (node.querySelector && node.querySelector('.anketa-col-2'))) {
-                        setTimeout(() => {
-                            addCallButtonStyles();
-                            addCallButton();
-                        }, 100);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, является ли узел или содержит ли .slotsCalendarfieldname1_1
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendarfieldname1_1')) ||
-                        (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
-                        setTimeout(() => {
-                            initSlotsCalendar();
-                        }, 100);
-                        changesMade = true;
-                    }
-
-                    // Проверяем, является ли узел или содержит ли .pbSubmit
-                    if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit')) ||
-                        (node.querySelector && node.querySelector('.pbSubmit'))) {
-                        setTimeout(() => {
-                            interceptFormSubmit();
-                        }, 100);
-                        changesMade = true;
-                    }
-                }
-            }
-
-            // Проверяем изменения в поддереве
-            if (mutation.type === 'childList' && mutation.target) {
-                // Проверяем, появился ли .ui-widget внутри измененного элемента
-                if (mutation.target.querySelector && mutation.target.querySelector('.ui-widget')) {
-                    setTimeout(() => addCalendarLegend(), 50);
-                    changesMade = true;
-                }
-
-                // Проверяем, появился ли .slotsCalendar внутри измененного элемента
-                if (mutation.target.querySelector && mutation.target.querySelector('.slotsCalendar')) {
-                    setTimeout(() => {
-                        decorateSlotsCalendar();
-                        wrapSlotsContent();
-                    }, 50);
-                    changesMade = true;
-                }
-
-                // Проверяем, появился ли .slots внутри измененного элемента
-                if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                    setTimeout(() => wrapSlotsContent(), 50);
-                    changesMade = true;
-                }
-
-                // Проверяем, появился ли .anketa-col-2 внутри измененного элемента
-                if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-2')) {
-                    setTimeout(() => {
-                        addCallButtonStyles();
-                        addCallButton();
-                    }, 50);
-                    changesMade = true;
-                }
-
-                // Проверяем, появились ли новые .availableslot или .htmlUsed
-                if (mutation.target.querySelector &&
-                    (mutation.target.querySelector('.availableslot') || mutation.target.querySelector('.htmlUsed'))) {
-                    // Если изменения произошли внутри .slots, но не внутри .slots-content
-                    const inSlots = mutation.target.closest('.slots');
-                    if (inSlots && !mutation.target.closest('.slots-content')) {
+                    // Проверяем, появился ли .slots внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
                         setTimeout(() => wrapSlotsContent(), 50);
                         changesMade = true;
                     }
-                }
 
-                // Проверка для поля textarea
-                const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
-                if (target && document.getElementById('fieldname8_1')) {
-                    setTimeout(() => replaceInputWithTextarea(), 50);
-                    changesMade = true;
+                    // Проверяем, появился ли .anketa-col-2 внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-2')) {
+                        setTimeout(() => {
+                            addCallButtonStyles();
+                            addCallButton();
+                        }, 50);
+                        changesMade = true;
+                    }
+
+                    // Проверяем, появились ли новые .availableslot или .htmlUsed
+                    if (mutation.target.querySelector &&
+                        (mutation.target.querySelector('.availableslot') || mutation.target.querySelector('.htmlUsed'))) {
+                        // Если изменения произошли внутри .slots, но не внутри .slots-content
+                        const inSlots = mutation.target.closest('.slots');
+                        if (inSlots && !mutation.target.closest('.slots-content')) {
+                            setTimeout(() => wrapSlotsContent(), 50);
+                            changesMade = true;
+                        }
+                    }
+
+                    // Проверка для поля textarea
+                    const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
+                    if (target && document.getElementById('fieldname8_1')) {
+                        setTimeout(() => replaceInputWithTextarea(), 50);
+                        changesMade = true;
+                    }
                 }
+            });
+
+            // Также запускаем проверку для уже существующих элементов
+            if (!changesMade) {
+                setTimeout(() => {
+                    addCalendarLegend();
+                    decorateSlotsCalendar();
+                    wrapSlotsContent();
+                    replaceInputWithTextarea();
+                    addCallButtonStyles();
+                    addCallButton();
+                }, 100);
             }
         });
 
-        // Также запускаем проверку для уже существующих элементов
-        if (!changesMade) {
-            setTimeout(() => {
-                addCalendarLegend();
-                decorateSlotsCalendar();
-                wrapSlotsContent();
-                replaceInputWithTextarea();
-                addCallButtonStyles();
-                addCallButton();
-                initSlotsCalendar();
-                createModals();
-                interceptFormSubmit();
-            }, 100);
+        // Старт наблюдения
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        // Начальная проверка при загрузке страницы
+        function initialCheck() {
+            restructureForm();
+            replaceInputWithTextarea();
+            decorateSlotsCalendar();
+            wrapSlotsContent();
+            addCalendarLegend();
+            addCallButtonStyles();
+            addCallButton();
         }
-    });
 
-    // Старт наблюдения
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-
-    // Начальная проверка при загрузке страницы
-    function initialCheck() {
-        restructureForm();
-        replaceInputWithTextarea();
-        decorateSlotsCalendar();
-        wrapSlotsContent();
-        addCalendarLegend();
-        addCallButtonStyles();
-        addCallButton();
-        initSlotsCalendar();
-        createModals();
-        interceptFormSubmit();
-    }
-
-    // Запускаем начальную проверку
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialCheck);
-    } else {
-        initialCheck();
-    }
-</script>
+        // Запускаем начальную проверку
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialCheck);
+        } else {
+            initialCheck();
+        }
+    </script>
 <?php
 get_footer();
