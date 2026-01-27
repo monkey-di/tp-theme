@@ -279,6 +279,7 @@
     flex-wrap: wrap;
     max-width: 812px;
     justify-content: space-between;
+    align-content: flex-start;
 }
 .ui-datepicker-calendar td{
     border-radisus: 4px;
