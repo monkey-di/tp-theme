@@ -556,6 +556,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для получения выбранной даты и времени
         // Функция для получения выбранной даты и времени
+        // Функция для получения выбранной даты и времени
         function getSelectedDateTime() {
             let selectedDate = '';
             let selectedTime = '';
@@ -586,17 +587,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if (choosenSelection) {
                             selectedTime = choosenSelection.textContent.trim();
                             console.log('Найдено время из .choosen a:', selectedTime);
-                        } else {
-                            // Проверяем скрытое поле fieldname1_1
-                            const hiddenField = document.getElementById('fieldname1_1');
-                            if (hiddenField && hiddenField.value) {
-                                // Пытаемся извлечь время из формата "2026-01-27 10:00-11:00"
-                                const timeMatch = hiddenField.value.match(/\s(\d{2}:\d{2})/);
-                                if (timeMatch) {
-                                    selectedTime = timeMatch[1];
-                                    console.log('Извлечено время из hidden field:', selectedTime);
-                                }
-                            }
                         }
                     }
                 }
