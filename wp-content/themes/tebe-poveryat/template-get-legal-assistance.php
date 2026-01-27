@@ -561,88 +561,45 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             let selectedTime = '';
 
             try {
-                // Ищем основной контейнер с календарем
+                // Получаем дату из .slots span в блоке slotsCalendarfieldname1_1
                 const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-
-                if (!slotsCalendar) {
-                    console.log('Не найден блок .slotsCalendarfieldname1_1');
-                    return { selectedDate, selectedTime };
-                }
-
-                // 1. Получаем дату из .slots span
-                const slotsBlock = slotsCalendar.querySelector('.slots');
-                if (slotsBlock) {
-                    const dateSpan = slotsBlock.querySelector('span');
-                    if (dateSpan) {
-                        selectedDate = dateSpan.textContent.trim();
-                        console.log('Дата найдена:', selectedDate);
-                    } else {
-                        console.log('Не найден span с датой в .slots');
-                    }
-                } else {
-                    console.log('Не найден блок .slots');
-                }
-
-                // 2. Получаем время из .currentSelection a
-                const currentSlot = slotsCalendar.querySelector('.currentSelection');
-                if (currentSlot) {
-                    const timeLink = currentSlot.querySelector('a');
-                    if (timeLink) {
-                        selectedTime = timeLink.textContent.trim();
-                        console.log('Время найдено (currentSelection):', selectedTime);
-                    } else {
-                        console.log('Не найдена ссылка в .currentSelection');
-                    }
-                } else {
-                    // Проверяем альтернативные варианты
-                    const choosenSlot = slotsCalendar.querySelector('.choosen');
-                    if (choosenSlot) {
-                        const timeLink = choosenSlot.querySelector('a');
-                        if (timeLink) {
-                            selectedTime = timeLink.textContent.trim();
-                            console.log('Время найдено (choosen):', selectedTime);
-                        }
-                    } else {
-                        console.log('Не найдены элементы .currentSelection или .choosen');
-
-                        // Проверяем, есть ли выбранный слот в hidden поле
-                        const hiddenField = document.getElementById('fieldname1_1');
-                        if (hiddenField && hiddenField.value) {
-                            console.log('Значение hidden field:', hiddenField.value);
-                            // Парсим значение типа "2026-01-27 10:00-11:00"
-                            const parts = hiddenField.value.split(' ');
-                            if (parts.length >= 2) {
-                                const timePart = parts[1]; // "10:00-11:00"
-                                const startTime = timePart.split('-')[0]; // "10:00"
-                                selectedTime = startTime;
-                                console.log('Время извлечено из hidden field:', selectedTime);
-                            }
+                if (slotsCalendar) {
+                    // Ищем блок .slots внутри slotsCalendar
+                    const slotsContainer = slotsCalendar.querySelector('.slots');
+                    if (slotsContainer) {
+                        // Получаем дату из span
+                        const dateSpan = slotsContainer.querySelector('span');
+                        if (dateSpan) {
+                            selectedDate = dateSpan.textContent.trim();
+                            console.log('Найдена дата из .slots span:', selectedDate);
                         }
                     }
-                }
 
-                // Если дата не найдена в .slots span, пытаемся получить из календаря
-                if (!selectedDate) {
-                    const calendarContainer = document.querySelector('.fieldCalendarfieldname1_1');
-                    if (calendarContainer) {
-                        const activeDate = calendarContainer.querySelector('.ui-state-active, .ui-datepicker-current-day');
-                        if (activeDate) {
-                            const monthYearElement = calendarContainer.querySelector('.ui-datepicker-title');
-                            if (monthYearElement) {
-                                const monthText = monthYearElement.querySelector('.ui-datepicker-month').textContent;
-                                const yearText = monthYearElement.querySelector('.ui-datepicker-year').textContent;
-                                const dayText = activeDate.textContent.trim();
-
-                                if (monthText && yearText && dayText) {
-                                    const monthNum = getMonthNumber(monthText);
-                                    selectedDate = `${dayText.padStart(2, '0')}.${monthNum}.${yearText}`;
-                                    console.log('Дата получена из календаря:', selectedDate);
+                    // Получаем время из .currentSelection a
+                    const currentSelection = slotsCalendar.querySelector('.currentSelection a');
+                    if (currentSelection) {
+                        selectedTime = currentSelection.textContent.trim();
+                        console.log('Найдено время из .currentSelection a:', selectedTime);
+                    } else {
+                        // Если нет currentSelection, проверяем .choosen a (возможная опечатка в HTML)
+                        const choosenSelection = slotsCalendar.querySelector('.choosen a');
+                        if (choosenSelection) {
+                            selectedTime = choosenSelection.textContent.trim();
+                            console.log('Найдено время из .choosen a:', selectedTime);
+                        } else {
+                            // Проверяем скрытое поле fieldname1_1
+                            const hiddenField = document.getElementById('fieldname1_1');
+                            if (hiddenField && hiddenField.value) {
+                                // Пытаемся извлечь время из формата "2026-01-27 10:00-11:00"
+                                const timeMatch = hiddenField.value.match(/\s(\d{2}:\d{2})/);
+                                if (timeMatch) {
+                                    selectedTime = timeMatch[1];
+                                    console.log('Извлечено время из hidden field:', selectedTime);
                                 }
                             }
                         }
                     }
                 }
-
             } catch (error) {
                 console.error('Ошибка при получении даты и времени:', error);
             }
@@ -959,7 +916,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test!1');
+        console.log('test!2');
     </script>
 <?php
 get_footer();
