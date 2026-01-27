@@ -55,6 +55,7 @@
 @media(max-width:990px){
     .block-slider-text{
         flex-direction: column;
+        padding: 0 20px;
     }
     .block-slider-text-col{
         max-width:100%;
