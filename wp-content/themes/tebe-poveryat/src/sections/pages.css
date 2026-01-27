@@ -230,7 +230,7 @@
     border-radius: 40px;
     background: #fff;
 }
-#fbuilder .calendar-col-2 input{
+#dateInputField{
     width:100%;
     min-width: 394px;
     font-family: "Geologica";
