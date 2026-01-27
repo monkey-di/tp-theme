@@ -1768,6 +1768,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
+        console.log('000001111');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
