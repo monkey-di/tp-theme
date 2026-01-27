@@ -1112,17 +1112,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
                     // Формируем сообщение
-                    let message = '!!!!Вы записаны на юридическую консультацию';
+                    let message = 'Вы записаны на юридическую консультацию';
                     let hasData = false;
 
-                    if (selectedDateValue && selectedTimeValue) {
-                        message += ` ${selectedDateValue} в ${selectedTimeValue}`;
+                    if (selectedDate && selectedTime) {
+                        message += ` ${selectedDate} в ${selectedTime}`;
                         hasData = true;
-                    } else if (selectedDateValue) {
-                        message += ` ${selectedDateValue}`;
+                    } else if (selectedDate) {
+                        message += ` ${selectedDate}`;
                         hasData = true;
                         if (selectedTime) {
-                            message += ` в ${selectedTimeValue}`;
+                            message += ` в ${selectedTime}`;
                         }
                     } else {
                         message += '.';
@@ -1142,12 +1142,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
                     let message = 'Вы записаны на юридическую консультацию';
-                    if (selectedDateValue && selectedTimeValue) {
-                        message += ` ${selectedDateValue} в ${selectedTimeValue}`;
-                    } else if (selectedDateValue) {
-                        message += ` ${selectedDateValue}`;
-                        if (selectedTimeValue) {
-                            message += ` в ${selectedTimeValue}`;
+                    if (selectedDate && selectedTime) {
+                        message += ` ${selectedDate} в ${selectedTime}`;
+                    } else if (selectedDate) {
+                        message += ` ${selectedDate}`;
+                        if (selectedTime) {
+                            message += ` в ${selectedTime}`;
                         }
                     } else {
                         message += '.';
