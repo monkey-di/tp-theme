@@ -432,19 +432,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     errorElement.id = errorId;
                     errorElement.className = 'cpefb_error message';
                     errorElement.textContent = 'Обязательное поле';
-                    errorElement.style.color = '#ff0000';
-                    errorElement.style.fontSize = '12px';
-                    errorElement.style.marginTop = '5px';
 
                     // Вставляем ошибку после поля
                     const fieldContainer = field.closest('.fields') || field.parentNode;
                     fieldContainer.appendChild(errorElement);
-
-                    // Добавляем красную рамку полю
-                    field.style.borderColor = '#ff0000';
                 } else {
                     errorElement.style.display = 'block';
-                    field.style.borderColor = '#ff0000';
                 }
             } else if (errorElement) {
                 errorElement.style.display = 'none';
@@ -928,7 +921,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test button 2');
+        console.log('test button 3');
     </script>
 <?php
 get_footer();
