@@ -818,6 +818,10 @@
 }
 .anketa-col-1 .fieldscheck .dfield{
     color:#fff;
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 150%;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
