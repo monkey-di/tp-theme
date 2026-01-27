@@ -820,7 +820,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     }
 
                     // Переключаем состояние чекбокса
-                    input.checked = !input.checked;
+                    /*input.checked = !input.checked;
 
                     // Обновляем визуальное состояние кастомного чекбокса
                     if (input.checked) {
@@ -829,7 +829,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     } else {
                         icon.classList.add('hidden');
                         customCheckbox.classList.remove('checked');
-                    }
+                    }*/
 
                     // Запускаем валидацию для этого поля
                     validateRequiredField(input);
