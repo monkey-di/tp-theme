@@ -909,6 +909,32 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return true;
         }
 
+        // Функция для поиска даты в календаре по классу
+        function findDateElementInCalendar(dateStr) {
+            const calendar = document.querySelector('.fieldCalendarfieldname1_1');
+            if (!calendar) return null;
+
+            // Ищем элемент с классом, содержащим дату (например, "2026-02-20")
+            // Дата может быть в классе как "2026-02-20", так и "d2026-02-20"
+            const dateElement = calendar.querySelector(`[class*="${dateStr}"]`);
+
+            if (!dateElement) {
+                // Также пробуем найти по data-date (только день)
+                const day = dateStr.split('-')[2];
+                const elements = calendar.querySelectorAll(`[data-date="${day}"]`);
+
+                for (let element of elements) {
+                    // Проверяем, что у родительского элемента есть класс с датой
+                    const parent = element.closest('td');
+                    if (parent && parent.className.includes(dateStr)) {
+                        return parent;
+                    }
+                }
+            }
+
+            return dateElement;
+        }
+
         // Функция для выбора даты в календаре
         function selectDateInCalendar(day, month, year) {
             const calendar = document.querySelector('.fieldCalendarfieldname1_1');
@@ -918,7 +944,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const dateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 
             // Ищем элемент с соответствующей датой
-            const dateElement = calendar.querySelector(`[data-date="${dateStr}"]`);
+            const dateElement = findDateElementInCalendar(dateStr);
+
             if (dateElement) {
                 // Удаляем класс ui-state-active у всех элементов
                 const allActiveElements = calendar.querySelectorAll('.ui-state-active');
@@ -997,8 +1024,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Определяем, нужно ли переключать месяц
             if (monthDiff === 0) {
-                // Месяц совпадает, но дата не найдена - возможно, дата неактивна
-                console.log('Месяц совпадает, но дата не найдена - возможно, дата неактивна');
+                // Месяц совпадает, но дата не найдена - возможно, дата неактивна или скрыта
+                console.log('Месяц совпадает, но дата не найдена');
                 return false;
             }
 
@@ -1021,7 +1048,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // После всех переключений пробуем найти дату
                     setTimeout(function() {
                         const dateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-                        const dateElement = calendar.querySelector(`[data-date="${dateStr}"]`);
+                        const dateElement = findDateElementInCalendar(dateStr);
+
                         if (dateElement) {
                             // Удаляем класс ui-state-active у всех элементов
                             const allActiveElements = calendar.querySelectorAll('.ui-state-active');
@@ -1053,7 +1081,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             console.log('Дата не найдена даже после переключения месяца');
                             success = false;
                         }
-                    }, 300); // Даем время на обновление календаря
+                    }, 500); // Даем время на обновление календаря
                     return;
                 }
 
@@ -1064,7 +1092,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Ждем и продолжаем
                 setTimeout(function() {
                     switchMonth(remainingAttempts - 1);
-                }, 300);
+                }, 500);
             };
 
             // Начинаем переключение
@@ -1082,20 +1110,47 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Ищем активную дату в календаре
             const activeDateElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
             if (activeDateElement) {
-                // Получаем дату из атрибута data-date
-                const dateStr = activeDateElement.getAttribute('data-date');
-                if (dateStr) {
-                    // Преобразуем из формата yyyy-mm-dd в dd.mm.yyyy
-                    const parts = dateStr.split('-');
-                    if (parts.length === 3) {
-                        selectedDateValue = `${parts[2]}.${parts[1]}.${parts[0]}`;
-                        dateInput.value = selectedDateValue;
+                // Находим родительскую ячейку (td)
+                const tdElement = activeDateElement.closest('td');
+                if (tdElement) {
+                    // Ищем класс с датой в формате yyyy-mm-dd
+                    const classList = Array.from(tdElement.classList);
+                    const dateClass = classList.find(cls => cls.match(/^\d{4}-\d{2}-\d{2}$/) || cls.match(/^d\d{4}-\d{2}-\d{2}$/));
 
-                        // Сохраняем в sessionStorage
-                        saveToSessionStorage();
+                    if (dateClass) {
+                        // Убираем префикс 'd' если есть
+                        const dateStr = dateClass.replace(/^d/, '');
+                        // Преобразуем из формата yyyy-mm-dd в dd.mm.yyyy
+                        const parts = dateStr.split('-');
+                        if (parts.length === 3) {
+                            selectedDateValue = `${parts[2]}.${parts[1]}.${parts[0]}`;
+                            dateInput.value = selectedDateValue;
 
-                        console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
+                            // Сохраняем в sessionStorage
+                            saveToSessionStorage();
+
+                            console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
+                            return;
+                        }
                     }
+                }
+
+                // Альтернативный способ: получаем дату из атрибутов
+                const month = tdElement ? tdElement.getAttribute('data-month') : null;
+                const year = tdElement ? tdElement.getAttribute('data-year') : null;
+                const day = activeDateElement.getAttribute('data-date');
+
+                if (month !== null && year !== null && day !== null) {
+                    // Месяцы в JavaScript начинаются с 0, добавляем 1
+                    const monthNum = parseInt(month) + 1;
+                    selectedDateValue = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
+                    dateInput.value = selectedDateValue;
+
+                    // Сохраняем в sessionStorage
+                    saveToSessionStorage();
+
+                    console.log('Поле ввода даты обновлено из календаря (через атрибуты):', selectedDateValue);
+                    return;
                 }
             } else {
                 // Если активной даты нет, проверяем текущий день (today)
@@ -1117,6 +1172,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         saveToSessionStorage();
 
                         console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
+                        return;
                     }
                 } else {
                     // Если нет активной даты и нет today, оставляем поле пустым
@@ -1712,7 +1768,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('888877666433242');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
