@@ -34,13 +34,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 <div class="page-head-description text-p">
                     <?=$pagehead_description?>
                 </div>
-                <div class="page-head-btn">
-                    <a class="head-button" href="#anketa">Обратиться за помощью</a>
-                </div>
+
             </div>
             <div class="page-head-col">
                 <div class="page-head-picture">
                     <img src="<?=$pagehead_pic?>">
+                </div>
+                <div class="page-head-btn">
+                    <a class="head-button" href="#anketa">Обратиться за помощью</a>
                 </div>
             </div>
         </div>
