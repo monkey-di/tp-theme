@@ -787,6 +787,18 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Ищем элемент с соответствующей датой
             const dateElement = calendar.querySelector(`[data-date="${dateStr}"]`);
             if (dateElement) {
+                // Удаляем класс ui-state-active у всех элементов
+                const allActiveElements = calendar.querySelectorAll('.ui-state-active');
+                allActiveElements.forEach(el => {
+                    el.classList.remove('ui-state-active');
+                });
+
+                // Добавляем класс ui-state-active к выбранному элементу
+                const linkElement = dateElement.querySelector('a');
+                if (linkElement) {
+                    linkElement.classList.add('ui-state-active');
+                }
+
                 // Кликаем по элементу для выбора даты
                 dateElement.click();
                 console.log('Дата выбрана в календаре:', dateStr);
@@ -816,54 +828,64 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         console.log('Поле ввода даты обновлено:', formattedDate);
                     }
                 }
+            } else {
+                // Если активной даты нет, проверяем текущий день (today)
+                const todayElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-datepicker-today');
+                if (todayElement) {
+                    // Получаем дату из атрибутов data-*
+                    const month = todayElement.getAttribute('data-month');
+                    const year = todayElement.getAttribute('data-year');
+                    const dayElement = todayElement.querySelector('a');
+
+                    if (dayElement && month !== null && year !== null) {
+                        const day = dayElement.getAttribute('data-date') || dayElement.textContent.trim();
+                        // Месяцы в JavaScript начинаются с 0, добавляем 1
+                        const monthNum = parseInt(month) + 1;
+                        const formattedDate = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
+                        dateInput.value = formattedDate;
+                        console.log('Поле ввода даты обновлено (сегодня):', formattedDate);
+                    }
+                } else {
+                    // Если нет активной даты и нет today, оставляем поле пустым
+                    dateInput.value = '';
+                    console.log('Нет активной даты в календаре, поле очищено');
+                }
             }
         }
 
-        // Наблюдатель за изменениями в календаре для обновления поля ввода даты
+        // Наблюдатель за кликами в календаре (вместо наблюдения за классами)
         function startDateInputObservation() {
             if (dateInputObserver) {
                 dateInputObserver.disconnect();
             }
 
             dateInputObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    // Проверяем изменения классов
-                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                        const target = mutation.target;
-                        if (target.classList && target.classList.contains('ui-state-active')) {
-                            // Обновляем поле ввода даты
-                            updateDateInputFromCalendar();
-                        }
-                    }
-
-                    // Проверяем добавление элементов с активной датой
-                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-                        for (let node of mutation.addedNodes) {
-                            if (node.nodeType === 1 && node.classList && node.classList.contains('ui-state-active')) {
-                                setTimeout(() => updateDateInputFromCalendar(), 50);
-                            }
-
-                            if (node.querySelector && node.querySelector('.ui-state-active')) {
-                                setTimeout(() => updateDateInputFromCalendar(), 50);
-                            }
-                        }
-                    }
-                });
+                // При любых изменениях в календаре проверяем активную дату
+                setTimeout(() => updateDateInputFromCalendar(), 50);
             });
 
             // Начинаем наблюдение за календарем
             const calendar = document.querySelector('.fieldCalendarfieldname1_1');
             if (calendar) {
+                // Добавляем обработчик клика для календаря (делегирование событий)
+                calendar.addEventListener('click', function(e) {
+                    // Проверяем, кликнули ли по элементу с датой
+                    const target = e.target;
+                    if (target.tagName === 'A' && target.closest('.fieldCalendarfieldname1_1')) {
+                        // Даем время на обновление классов
+                        setTimeout(() => updateDateInputFromCalendar(), 100);
+                    }
+                });
+
                 dateInputObserver.observe(calendar, {
                     childList: true,
                     subtree: true,
-                    attributes: true,
-                    attributeFilter: ['class']
+                    attributes: true
                 });
                 console.log('Наблюдение за календарем для поля ввода даты начато');
 
                 // Обновляем поле ввода начальным значением
-                setTimeout(() => updateDateInputFromCalendar(), 100);
+                setTimeout(() => updateDateInputFromCalendar(), 200);
             }
         }
 
@@ -1320,14 +1342,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         (target.classList.contains('currentSelection') || target.classList.contains('choosen') ||
                             target.classList.contains('availableslot') || target.classList.contains('htmlUsed'))) {
                         setTimeout(() => updateSelectedTime(), 50);
-                        changesMade = true;
-                    }
-
-                    // Отслеживаем изменения активной даты в календаре
-                    if (target.classList && target.classList.contains('ui-state-active')) {
-                        setTimeout(() => {
-                            updateDateInputFromCalendar();
-                        }, 50);
                         changesMade = true;
                     }
                 }
