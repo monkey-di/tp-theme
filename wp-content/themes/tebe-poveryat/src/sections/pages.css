@@ -906,8 +906,8 @@ a.donation-adv span{
     }
 }
 @media(max-width:1400px){
-    .posts-sort{
-        padding-left: 20px;
+    .bloglist-content{
+        padding:0 20px;
     }
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
