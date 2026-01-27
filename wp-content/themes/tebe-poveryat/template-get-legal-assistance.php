@@ -496,11 +496,25 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (dateSpan) {
                         selectedDateValue = dateSpan.textContent.trim();
                         console.log('Дата обновлена:', selectedDateValue);
+
+                        // Обновление поля ввода даты
+                        updateDateInputFieldFromSelectedDate();
                         return true;
                     }
                 }
             }
             return false;
+        }
+
+        // Новая функция для обновления поля ввода даты из selectedDateValue
+        function updateDateInputFieldFromSelectedDate() {
+            const dateInput = document.getElementById('dateInputField');
+            if (!dateInput || !selectedDateValue) return;
+
+            // Форматирование даты для поля ввода (уже в правильном формате dd.mm.yyyy)
+            // selectedDateValue уже содержит дату в формате "25.02.2026"
+            dateInput.value = selectedDateValue;
+            console.log('Поле ввода даты обновлено из selectedDateValue:', selectedDateValue);
         }
 
         // Функция для обновления выбранного времени при изменении
@@ -609,6 +623,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для получения текущих выбранных даты и времени
         function getSelectedDateTime() {
+            // Перед возвратом убедимся, что поле ввода даты синхронизировано
+            if (selectedDateValue) {
+                const dateInput = document.getElementById('dateInputField');
+                if (dateInput && !dateInput.value) {
+                    dateInput.value = selectedDateValue;
+                }
+            }
+
             return {
                 selectedDate: selectedDateValue,
                 selectedTime: selectedTimeValue
@@ -802,6 +824,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Кликаем по элементу для выбора даты
                 dateElement.click();
                 console.log('Дата выбрана в календаре:', dateStr);
+
+                // Обновляем selectedDateValue
+                selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+                updateDateInputFieldFromSelectedDate();
+
                 return true;
             } else {
                 console.log('Дата не найдена в текущем месяце:', dateStr);
@@ -823,9 +850,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Преобразуем из формата yyyy-mm-dd в dd.mm.yyyy
                     const parts = dateStr.split('-');
                     if (parts.length === 3) {
-                        const formattedDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
-                        dateInput.value = formattedDate;
-                        console.log('Поле ввода даты обновлено:', formattedDate);
+                        selectedDateValue = `${parts[2]}.${parts[1]}.${parts[0]}`;
+                        dateInput.value = selectedDateValue;
+                        console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
                     }
                 }
             } else {
@@ -841,13 +868,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         const day = dayElement.getAttribute('data-date') || dayElement.textContent.trim();
                         // Месяцы в JavaScript начинаются с 0, добавляем 1
                         const monthNum = parseInt(month) + 1;
-                        const formattedDate = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
-                        dateInput.value = formattedDate;
-                        console.log('Поле ввода даты обновлено (сегодня):', formattedDate);
+                        selectedDateValue = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
+                        dateInput.value = selectedDateValue;
+                        console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
                     }
                 } else {
                     // Если нет активной даты и нет today, оставляем поле пустым
                     dateInput.value = '';
+                    selectedDateValue = '';
                     console.log('Нет активной даты в календаре, поле очищено');
                 }
             }
@@ -1012,66 +1040,66 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const modal = document.createElement('div');
             modal.id = 'successModal';
             modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.7);
-                z-index: 10000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            `;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        `;
 
             // Создаем содержимое модального окна
             const modalContent = document.createElement('div');
             modalContent.style.cssText = `
-                background-color: white;
-                padding: 30px;
-                border-radius: 8px;
-                max-width: 500px;
-                width: 90%;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            `;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        `;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
             title.textContent = 'Запись успешно отправлена!';
             title.style.cssText = `
-                margin: 0 0 20px 0;
-                text-align: center;
-                color: #333;
-            `;
+            margin: 0 0 20px 0;
+            text-align: center;
+            color: #333;
+        `;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
             messageElement.style.cssText = `
-                font-size: 16px;
-                line-height: 1.5;
-                color: #555;
-                margin-bottom: 25px;
-                text-align: center;
-            `;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 25px;
+            text-align: center;
+        `;
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия
             const closeButton = document.createElement('button');
             closeButton.textContent = 'Закрыть';
             closeButton.style.cssText = `
-                display: block;
-                margin: 0 auto;
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                padding: 10px 25px;
-                border-radius: 4px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            `;
+            display: block;
+            margin: 0 auto;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        `;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {
@@ -1406,6 +1434,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             startDateInputObservation();
             updateDateInputFromCalendar();
 
+            // Синхронизируем поле ввода даты с selectedDateValue
+            if (selectedDateValue) {
+                updateDateInputFieldFromSelectedDate();
+            }
+
             // Проверяем URL и показываем модальное окно, если нужно
             checkSuccessUrlAndShowModal();
         }
@@ -1424,6 +1457,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkSuccessUrlAndShowModal();
             }
         });
+        console.log('111111');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
