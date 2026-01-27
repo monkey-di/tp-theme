@@ -57,6 +57,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectedDateValue = '';
         let selectedTimeValue = '';
         let selectionObserver = null;
+        let dateInputObserver = null;
 
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
@@ -627,7 +628,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Создаем первый чекбокс (обработка персональных данных)
             const checkbox1Container = document.createElement('div');
-            checkbox1Container.className = 'fieldscheck';
+            checkbox1Container.className = 'fields';
             checkbox1Container.setAttribute('data-checkbox', 'personal-data');
 
             const checkbox1Label = document.createElement('label');
@@ -655,7 +656,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Создаем второй чекбокс (условия оферты)
             const checkbox2Container = document.createElement('div');
-            checkbox2Container.className = 'fieldscheck';
+            checkbox2Container.className = 'fields';
             checkbox2Container.setAttribute('data-checkbox', 'offer');
 
             const checkbox2Label = document.createElement('label');
@@ -687,6 +688,183 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             console.log('Обязательные чекбоксы добавлены в .anketa-col-1');
             return true;
+        }
+
+        // Функция для добавления текстового поля даты в .anketa-col-2
+        function addDateInputField() {
+            const anketaCol2 = document.querySelector('.anketa-col-2');
+            if (!anketaCol2) return false;
+
+            // Проверяем, не добавлено ли уже поле
+            if (anketaCol2.querySelector('#dateInputField')) {
+                return true;
+            }
+
+            // Создаем контейнер для поля ввода даты
+            const dateInputContainer = document.createElement('div');
+            dateInputContainer.className = 'fields';
+
+            // Создаем label
+            const label = document.createElement('label');
+            label.setAttribute('for', 'dateInputField');
+            label.textContent = 'Дата:';
+
+            // Создаем dfield
+            const dfield = document.createElement('div');
+            dfield.className = 'dfield';
+
+            // Создаем input для даты
+            const dateInput = document.createElement('input');
+            dateInput.type = 'text';
+            dateInput.id = 'dateInputField';
+            dateInput.name = 'dateInputField';
+            dateInput.className = 'field large';
+            dateInput.placeholder = 'дд.мм.гггг';
+            dateInput.pattern = '\\d{2}\\.\\d{2}\\.\\d{4}';
+            dateInput.title = 'Введите дату в формате дд.мм.гггг';
+
+            // Добавляем маску ввода
+            dateInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/[^\d]/g, '');
+                if (value.length >= 2 && value.length < 4) {
+                    value = value.substring(0, 2) + '.' + value.substring(2);
+                } else if (value.length >= 4 && value.length < 6) {
+                    value = value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4);
+                } else if (value.length >= 6) {
+                    value = value.substring(0, 2) + '.' + value.substring(2, 4) + '.' + value.substring(4, 8);
+                }
+                e.target.value = value;
+            });
+
+            // Обработчик изменения даты вручную
+            dateInput.addEventListener('change', function(e) {
+                const value = e.target.value;
+                // Проверяем формат даты
+                const regex = /^(\d{2})\.(\d{2})\.(\d{4})$/;
+                const match = value.match(regex);
+                if (match) {
+                    const day = match[1];
+                    const month = match[2];
+                    const year = match[3];
+
+                    // Ищем соответствующую дату в календаре
+                    selectDateInCalendar(day, month, year);
+                } else {
+                    console.log('Неверный формат даты');
+                }
+            });
+
+            dfield.appendChild(dateInput);
+
+            // Создаем span для ошибок
+            const uhSpan = document.createElement('span');
+            uhSpan.className = 'uh';
+
+            dateInputContainer.appendChild(label);
+            dateInputContainer.appendChild(dfield);
+            dateInputContainer.appendChild(uhSpan);
+
+            // Создаем clearer
+            const clearer = document.createElement('div');
+            clearer.className = 'clearer';
+            dateInputContainer.appendChild(clearer);
+
+            // Добавляем поле в начало .anketa-col-2
+            anketaCol2.insertBefore(dateInputContainer, anketaCol2.firstChild);
+
+            console.log('Поле ввода даты добавлено в начало .anketa-col-2');
+            return true;
+        }
+
+        // Функция для выбора даты в календаре
+        function selectDateInCalendar(day, month, year) {
+            const calendar = document.querySelector('.fieldCalendarfieldname1_1');
+            if (!calendar) return false;
+
+            // Формируем дату в формате yyyy-mm-dd
+            const dateStr = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+            // Ищем элемент с соответствующей датой
+            const dateElement = calendar.querySelector(`[data-date="${dateStr}"]`);
+            if (dateElement) {
+                // Кликаем по элементу для выбора даты
+                dateElement.click();
+                console.log('Дата выбрана в календаре:', dateStr);
+                return true;
+            } else {
+                console.log('Дата не найдена в текущем месяце:', dateStr);
+                return false;
+            }
+        }
+
+        // Функция для обновления поля ввода даты при выборе даты в календаре
+        function updateDateInputFromCalendar() {
+            const dateInput = document.getElementById('dateInputField');
+            if (!dateInput) return;
+
+            // Ищем активную дату в календаре
+            const activeDateElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
+            if (activeDateElement) {
+                // Получаем дату из атрибута data-date
+                const dateStr = activeDateElement.getAttribute('data-date');
+                if (dateStr) {
+                    // Преобразуем из формата yyyy-mm-dd в dd.mm.yyyy
+                    const parts = dateStr.split('-');
+                    if (parts.length === 3) {
+                        const formattedDate = `${parts[2]}.${parts[1]}.${parts[0]}`;
+                        dateInput.value = formattedDate;
+                        console.log('Поле ввода даты обновлено:', formattedDate);
+                    }
+                }
+            }
+        }
+
+        // Наблюдатель за изменениями в календаре для обновления поля ввода даты
+        function startDateInputObservation() {
+            if (dateInputObserver) {
+                dateInputObserver.disconnect();
+            }
+
+            dateInputObserver = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    // Проверяем изменения классов
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const target = mutation.target;
+                        if (target.classList && target.classList.contains('ui-state-active')) {
+                            // Обновляем поле ввода даты
+                            updateDateInputFromCalendar();
+                        }
+                    }
+
+                    // Проверяем добавление элементов с активной датой
+                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                        for (let node of mutation.addedNodes) {
+                            if (node.nodeType === 1 && node.classList && node.classList.contains('ui-state-active')) {
+                                setTimeout(() => updateDateInputFromCalendar(), 50);
+                            }
+
+                            if (node.querySelector && node.querySelector('.ui-state-active')) {
+                                setTimeout(() => updateDateInputFromCalendar(), 50);
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Начинаем наблюдение за календарем
+            const calendar = document.querySelector('.fieldCalendarfieldname1_1');
+            if (calendar) {
+                dateInputObserver.observe(calendar, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+                console.log('Наблюдение за календарем для поля ввода даты начато');
+
+                // Обновляем поле ввода начальным значением
+                setTimeout(() => updateDateInputFromCalendar(), 100);
+            }
         }
 
         // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
@@ -1017,6 +1195,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 addCallButtonStyles();
                                 addCallButton();
+                                addDateInputField();
+                                startDateInputObservation();
                             }, 100);
                             changesMade = true;
                         }
@@ -1035,6 +1215,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('ahb_m4')) ||
                             (node.querySelector && node.querySelector('.ahb_m4'))) {
                             setTimeout(() => addClassesToAhbM4(), 100);
+                            changesMade = true;
+                        }
+
+                        // Проверяем, является ли узел или содержит ли .fieldCalendarfieldname1_1
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('fieldCalendarfieldname1_1')) ||
+                            (node.querySelector && node.querySelector('.fieldCalendarfieldname1_1'))) {
+                            setTimeout(() => {
+                                startDateInputObservation();
+                                updateDateInputFromCalendar();
+                            }, 100);
                             changesMade = true;
                         }
                     }
@@ -1080,6 +1270,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             addCallButtonStyles();
                             addCallButton();
+                            addDateInputField();
+                            startDateInputObservation();
                         }, 50);
                         changesMade = true;
                     }
@@ -1087,6 +1279,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Проверяем, появился ли .ahb_m4 внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.ahb_m4')) {
                         setTimeout(() => addClassesToAhbM4(), 50);
+                        changesMade = true;
+                    }
+
+                    // Проверяем, появился ли .fieldCalendarfieldname1_1 внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.fieldCalendarfieldname1_1')) {
+                        setTimeout(() => {
+                            startDateInputObservation();
+                            updateDateInputFromCalendar();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -1121,6 +1322,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => updateSelectedTime(), 50);
                         changesMade = true;
                     }
+
+                    // Отслеживаем изменения активной даты в календаре
+                    if (target.classList && target.classList.contains('ui-state-active')) {
+                        setTimeout(() => {
+                            updateDateInputFromCalendar();
+                        }, 50);
+                        changesMade = true;
+                    }
                 }
             });
 
@@ -1139,6 +1348,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     updateSelectedTime();
                     addClassesToAhbM4();
                     addRequiredCheckboxes();
+                    addDateInputField();
+                    startDateInputObservation();
+                    updateDateInputFromCalendar();
                 }, 100);
             }
         });
@@ -1174,6 +1386,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем обязательные чекбоксы
             addRequiredCheckboxes();
+
+            // Добавляем поле ввода даты
+            addDateInputField();
+            startDateInputObservation();
+            updateDateInputFromCalendar();
 
             // Проверяем URL и показываем модальное окно, если нужно
             checkSuccessUrlAndShowModal();
