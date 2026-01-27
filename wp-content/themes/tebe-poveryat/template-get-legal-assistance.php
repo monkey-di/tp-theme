@@ -1058,4 +1058,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
     </script>
 <?php
+    get_template_part( 'template-parts/home/donation' );
+?>
+<?php
 get_footer();
