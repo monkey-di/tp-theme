@@ -528,8 +528,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         function addCallButtonStyles() {
             // Проверяем, не добавлены ли уже стили
             if (document.querySelector('style[data-call-button]')) return;
+
+            const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
             document.head.appendChild(style);
+            console.log('Стили для кнопки вызова и модальных окон добавлены');
         }
 
         // Функция для проверки и инициализации календаря
