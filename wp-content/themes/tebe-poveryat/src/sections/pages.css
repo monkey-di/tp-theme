@@ -685,6 +685,9 @@
     z-index: 20;
     position: relative;
 }
+.hasDatepicker .ui-datepicker{
+    margin-bottom: 32px;
+}
 .call-button {
     display: block;
     width: 100%;
