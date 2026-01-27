@@ -673,10 +673,10 @@
     width: 100%;
 }
 .pbSubmit{
-    display: none;
+    display: none !important;
 }
 .select-button .pbSubmit{
-    display: block;
+    display: block !important;
 }
 .hasDatepicker{
     z-index: 20;
