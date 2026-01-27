@@ -924,6 +924,11 @@ a.donation-adv span{
         max-width:calc(50% - 5px);
     }
 }
+@media(max-width:1200px){
+    #fbuilder{
+        padding:0 20px;
+    }
+}
 @media(max-width:1100px){
     .blog-item{
         width:calc(50% - 12px);
@@ -945,6 +950,10 @@ a.donation-adv span{
         padding-bottom:0;
         font-size:64px;
         text-align: center;
+    }
+    .faq-spoiler-content{
+        padding-left: 20px;
+        padding-right: 20px;
     }
 }
 @media(max-width:860px){
