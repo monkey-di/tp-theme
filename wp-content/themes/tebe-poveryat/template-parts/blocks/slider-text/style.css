@@ -60,4 +60,7 @@
     .block-slider-text-col{
         max-width:100%;
     }
+    .block-slider-text_slider-navi{
+        justify-content: space-between;
+    }
 }
