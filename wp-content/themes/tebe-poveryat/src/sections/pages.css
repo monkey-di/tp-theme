@@ -872,6 +872,7 @@
 }
 .anketa-col-2 .donation-form__checkboxes{
     order: 99;
+    width: 100%;
 }
 .anketa-col-2 .donation-form__checkbox-label{
     display: flex;
