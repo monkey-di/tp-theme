@@ -836,6 +836,7 @@
 }
 .ui-datepicker-calendar td{
     max-height: 32px;
+    border: none !important;
 }
 .ahb_m4 #fbuilder .ui-datepicker-unselectable .ui-state-default{
     color: #C2C5C4 !important;
