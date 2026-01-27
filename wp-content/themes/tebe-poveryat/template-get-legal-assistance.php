@@ -813,11 +813,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 label.appendChild(textSpan);
 
                 // Добавляем обработчик клика по label для переключения состояния
-                label.addEventListener('click', function(e) {
+             /*   label.addEventListener('click', function(e) {
                     // Если клик был по ссылке, не переключаем чекбокс
                     if (e.target.tagName === 'A') {
                         return;
-                    }
+                    }*/
 
                     // Переключаем состояние чекбокса
                     /*input.checked = !input.checked;
@@ -832,10 +832,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     }*/
 
                     // Запускаем валидацию для этого поля
-                    validateRequiredField(input);
+               //     validateRequiredField(input);
 
                     // Предотвращаем дальнейшее всплытие
-                    e.stopPropagation();
+                 //   e.stopPropagation();
                 });
 
                 // Добавляем обработчик изменения состояния инпута
@@ -850,14 +850,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 });*/
 
                 // Добавляем обработчик для ссылок (чтобы они работали нормально)
-                const links = textSpan.querySelectorAll('a');
+              /*  const links = textSpan.querySelectorAll('a');
                 links.forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.stopPropagation();
                         // Здесь можно добавить открытие модального окна или переход по ссылке
                         console.log('Клик по ссылке:', link.href);
                     });
-                });
+                });*/
 
                 // Добавляем label в контейнер
                 checkboxesContainer.appendChild(label);
