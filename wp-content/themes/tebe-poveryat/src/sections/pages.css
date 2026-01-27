@@ -67,7 +67,6 @@
 }
 .blog-item{
     width:calc(100% / 3 - 12px);
-    margin-bottom: 24px;
     background: #fff;
     border-radius: 20px;
 }
