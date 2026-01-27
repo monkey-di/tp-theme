@@ -555,59 +555,165 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
 
         // Функция для получения выбранной даты и времени
+        // Функция для получения выбранной даты и времени
         function getSelectedDateTime() {
             let selectedDate = '';
             let selectedTime = '';
 
-            // Получаем выбранную дату из календаря
-            const activeDate = document.querySelector('.fieldCalendarfieldname1_1 .ui-state-active');
-            if (activeDate) {
-                const day = activeDate.getAttribute('data-date') || activeDate.textContent;
-                const monthYearElement = document.querySelector('.fieldCalendarfieldname1_1 .ui-datepicker-title');
-                if (monthYearElement) {
-                    const month = monthYearElement.querySelector('.ui-datepicker-month').textContent;
-                    const year = monthYearElement.querySelector('.ui-datepicker-year').textContent;
-                    selectedDate = `${day}.${getMonthNumber(month)}.${year}`;
+            try {
+                // Получаем выбранную дату из календаря - ищем активный элемент в календаре
+                const calendarContainer = document.querySelector('.fieldCalendarfieldname1_1');
+                if (calendarContainer) {
+                    // Ищем активную дату (сегодняшний день или выбранный)
+                    const activeDateElement = calendarContainer.querySelector('.ui-state-active, .ui-datepicker-current-day');
+                    if (activeDateElement) {
+                        // Получаем дату из атрибута data-date или текста
+                        const dateAttr = activeDateElement.getAttribute('data-date');
+                        const dayText = activeDateElement.textContent.trim();
+
+                        // Получаем месяц и год из заголовка календаря
+                        const monthYearElement = calendarContainer.querySelector('.ui-datepicker-title');
+                        if (monthYearElement) {
+                            const monthElement = monthYearElement.querySelector('.ui-datepicker-month');
+                            const yearElement = monthYearElement.querySelector('.ui-datepicker-year');
+
+                            if (monthElement && yearElement) {
+                                const monthText = monthElement.textContent.trim();
+                                const yearText = yearElement.textContent.trim();
+
+                                // Преобразуем месяц в число
+                                const monthNum = getMonthNumber(monthText);
+
+                                // Используем дату из атрибута или из текста
+                                let dayNum = '';
+                                if (dateAttr) {
+                                    // dateAttr в формате "2026-01-27"
+                                    const dateParts = dateAttr.split('-');
+                                    if (dateParts.length === 3) {
+                                        selectedDate = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+                                    }
+                                } else if (dayText) {
+                                    dayNum = dayText.padStart(2, '0');
+                                    selectedDate = `${dayNum}.${monthNum}.${yearText}`;
+                                }
+
+                                console.log('Найдена дата из календаря:', selectedDate);
+                            }
+                        }
+                    }
                 }
+
+                // Получаем выбранное время из slotsCalendarfieldname1_1
+                const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+                if (slotsCalendar) {
+                    // Ищем текущий выбранный слот (должен быть один)
+                    const currentSlot = slotsCalendar.querySelector('.currentSelection');
+                    if (currentSlot) {
+                        const timeLink = currentSlot.querySelector('a');
+                        if (timeLink) {
+                            selectedTime = timeLink.textContent.trim();
+                            console.log('Найдено время из currentSelection:', selectedTime);
+                        }
+                    } else {
+                        // Если нет currentSelection, проверяем choosen
+                        const chosenSlot = slotsCalendar.querySelector('.choosen');
+                        if (chosenSlot) {
+                            const timeLink = chosenSlot.querySelector('a');
+                            if (timeLink) {
+                                selectedTime = timeLink.textContent.trim();
+                                console.log('Найдено время из choosen:', selectedTime);
+                            }
+                        } else {
+                            // Проверяем, есть ли выбранный слот в hidden поле
+                            const hiddenField = document.getElementById('fieldname1_1');
+                            if (hiddenField && hiddenField.value) {
+                                // Формат может быть "2026-01-27 10:00-11:00"
+                                const value = hiddenField.value;
+                                console.log('Значение hidden field:', value);
+
+                                // Пытаемся извлечь время
+                                const timeMatch = value.match(/\s(\d{2}:\d{2})/);
+                                if (timeMatch) {
+                                    selectedTime = timeMatch[1];
+                                    console.log('Извлечено время из hidden field:', selectedTime);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Альтернативный способ: ищем в скрытом поле использованных слотов
+                if (!selectedTime) {
+                    const usedSlotsContainer = document.querySelector('.usedSlotsfieldname1_1');
+                    if (usedSlotsContainer) {
+                        const slotLinks = usedSlotsContainer.querySelectorAll('a');
+                        if (slotLinks.length > 0) {
+                            // Берем первый слот
+                            selectedTime = slotLinks[0].textContent.trim();
+                            console.log('Найдено время из usedSlots:', selectedTime);
+                        }
+                    }
+                }
+
+                // Если дата не найдена из календаря, пытаемся найти из текста в .slots
+                if (!selectedDate && slotsCalendar) {
+                    const dateSpan = slotsCalendar.querySelector('.slots span');
+                    if (dateSpan) {
+                        selectedDate = dateSpan.textContent.trim();
+                        console.log('Найдена дата из .slots span:', selectedDate);
+                    }
+                }
+
+            } catch (error) {
+                console.error('Ошибка при получении даты и времени:', error);
             }
 
-            // Получаем выбранное время из currentSelection
-            const currentSelection = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.currentSelection');
-            if (currentSelection) {
-                const timeLink = currentSelection.querySelector('a');
-                if (timeLink) {
-                    selectedTime = timeLink.textContent.trim();
-                }
-            }
-
-            console.log('Получены дата и время из currentSelection:', { selectedDate, selectedTime });
+            console.log('Итоговые дата и время:', { selectedDate, selectedTime });
             return { selectedDate, selectedTime };
         }
 
         // Вспомогательная функция для преобразования месяца в число
         function getMonthNumber(monthName) {
             const months = {
-                'январь': '01', 'февраль': '02', 'март': '03', 'апрель': '04',
-                'май': '05', 'июнь': '06', 'июль': '07', 'август': '08',
-                'сентябрь': '09', 'октябрь': '10', 'ноябрь': '11', 'декабрь': '12'
+                'январь': '01', 'января': '01',
+                'февраль': '02', 'февраля': '02',
+                'март': '03', 'марта': '03',
+                'апрель': '04', 'апреля': '04',
+                'май': '05', 'мая': '05',
+                'июнь': '06', 'июня': '06',
+                'июль': '07', 'июля': '07',
+                'август': '08', 'августа': '08',
+                'сентябрь': '09', 'сентября': '09',
+                'октябрь': '10', 'октября': '10',
+                'ноябрь': '11', 'ноября': '11',
+                'декабрь': '12', 'декабря': '12'
             };
-            return months[monthName.toLowerCase()] || '01';
+
+            // Приводим к нижнему регистру и обрезаем пробелы
+            const normalizedMonth = monthName.toLowerCase().trim();
+            return months[normalizedMonth] || '01';
         }
 
-        // Функция для проверки URL и показа модального окна
+        // Функция для проверки URL и показа модального окна (обновленная)
         function checkSuccessUrlAndShowModal() {
             // Проверяем, есть ли в URL hash #success
             if (window.location.hash === '#success') {
                 console.log('Обнаружен #success в URL');
 
-                // Ждем немного, чтобы все элементы загрузились
+                // Даем больше времени для полной загрузки всех элементов
                 setTimeout(() => {
+                    console.log('Начинаем получение даты и времени...');
+
                     // Пробуем получить выбранные дату и время
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
+                    console.log('Полученные данные:', { selectedDate, selectedTime });
+
                     // Формируем сообщение
                     let message = 'Вы записаны на юридическую консультацию';
-                    if (selectedDate) {
+                    if (selectedDate && selectedTime) {
+                        message += ` ${selectedDate} в ${selectedTime}`;
+                    } else if (selectedDate) {
                         message += ` ${selectedDate}`;
                         if (selectedTime) {
                             message += ` в ${selectedTime}`;
@@ -616,10 +722,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         message += '.';
                     }
 
+                    console.log('Сообщение для модального окна:', message);
+
                     // Создаем и показываем модальное окно
                     createAndShowModal(message);
-                }, 1000); // Увеличил время ожидания для полной загрузки
+                }, 1500); // Увеличил время ожидания
             }
+        }
+        // Также обновим initialCheck чтобы он тоже проверял URL
+        function initialCheck() {
+            restructureForm();
+            replaceInputWithTextarea();
+            decorateSlotsCalendar();
+            wrapSlotsContent();
+            addCalendarLegend();
+            addCallButtonStyles();
+            addCallButton();
+            initSlotsCalendar();
+
+            // Проверяем URL и показываем модальное окно, если нужно
+            checkSuccessUrlAndShowModal();
         }
 
         // Функция для создания и показа модального окна
