@@ -232,7 +232,7 @@
 }
 #dateInputField{
     width:100%;
-    min-width: 394px;
+    min-width: 0;
     font-family: "Geologica";
     font-weight: 400;
     font-size: 16px;
