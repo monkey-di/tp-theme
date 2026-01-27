@@ -955,6 +955,9 @@ a.donation-adv span{
         padding-left: 20px;
         padding-right: 20px;
     }
+    #dateInputField{
+        width:auto !important;
+    }
 }
 @media(max-width:860px){
     .blog-item{
