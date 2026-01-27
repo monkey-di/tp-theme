@@ -1768,7 +1768,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('000001111');
+        $(function() {
+            $( "#field_1-7" ).datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: false
+            });
+        });
+        console.log('2222000001111');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
