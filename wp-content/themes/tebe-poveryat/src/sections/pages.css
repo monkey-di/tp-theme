@@ -870,11 +870,11 @@
 .anketa-col-2 .fields:nth-child(1){
     height: 55px;
 }
-.anketa-col-1 .donation-form__checkboxes{
+#fbuilder .anketa-col-1 .donation-form__checkboxes{
     order: 99;
     width: 100%;
 }
-.anketa-col-1 .donation-form__checkbox-label{
+#fbuilder .anketa-col-1 .donation-form__checkbox-label{
     display: flex;
     align-items: center;
 }
