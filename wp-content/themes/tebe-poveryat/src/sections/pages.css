@@ -689,14 +689,14 @@
 .hasDatepicker .ui-datepicker{
     margin-bottom: 32px;
 }
-#cp_appbooking_pform_1 #fbuilder .pbSubmit .select-button{
+#cp_appbooking_pform_1 #fbuilder .select-button .pbSubmit{
     color:#fff;
     background: #6063A6;
     border: 1px solid #6063A6;
     border-radius: 40px;
     cursor: pointer;
 }
-#cp_appbooking_pform_1 #fbuilder .pbSubmit .select-button:hover{
+#cp_appbooking_pform_1 #fbuilder .select-button .pbSubmit:hover{
     background: #fff;
     color: #6063A6;
 }
