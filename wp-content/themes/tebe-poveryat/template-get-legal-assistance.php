@@ -47,6 +47,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
+        // Переменные для хранения выбранной даты и времени
+        let selectedDateValue = '';
+        let selectedTimeValue = '';
+        let selectionObserver = null;
+
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
             if (!parentContainer) return false;
@@ -474,6 +479,135 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return allValid;
         }
 
+        // Функция для обновления выбранной даты из .slots span
+        function updateSelectedDate() {
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (slotsCalendar) {
+                const slotsContainer = slotsCalendar.querySelector('.slots');
+                if (slotsContainer) {
+                    const dateSpan = slotsContainer.querySelector('span');
+                    if (dateSpan) {
+                        selectedDateValue = dateSpan.textContent.trim();
+                        console.log('Дата обновлена:', selectedDateValue);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        // Функция для обновления выбранного времени при изменении
+        function updateSelectedTime() {
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (slotsCalendar) {
+                // Ищем .currentSelection a
+                const currentSelection = slotsCalendar.querySelector('.currentSelection a');
+                if (currentSelection) {
+                    selectedTimeValue = currentSelection.textContent.trim();
+                    console.log('Время обновлено (currentSelection):', selectedTimeValue);
+                    return true;
+                }
+
+                // Или .choosen a
+                const choosenSelection = slotsCalendar.querySelector('.choosen a');
+                if (choosenSelection) {
+                    selectedTimeValue = choosenSelection.textContent.trim();
+                    console.log('Время обновлено (choosen):', selectedTimeValue);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Наблюдатель за появлением .slots span и изменением .currentSelection
+        function startSelectionObservation() {
+            if (selectionObserver) {
+                selectionObserver.disconnect();
+            }
+
+            selectionObserver = new MutationObserver(function(mutations) {
+                let dateUpdated = false;
+                let timeUpdated = false;
+
+                mutations.forEach(function(mutation) {
+                    // Проверяем добавление .slots span
+                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                        for (let node of mutation.addedNodes) {
+                            if (node.nodeType === 1 && node.classList && node.classList.contains('slots')) {
+                                setTimeout(() => {
+                                    updateSelectedDate();
+                                }, 100);
+                                dateUpdated = true;
+                            }
+
+                            if (node.nodeType === 1 && node.classList &&
+                                (node.classList.contains('currentSelection') || node.classList.contains('choosen'))) {
+                                setTimeout(() => {
+                                    updateSelectedTime();
+                                }, 100);
+                                timeUpdated = true;
+                            }
+
+                            if (node.querySelector &&
+                                (node.querySelector('.slots') || node.querySelector('.currentSelection') || node.querySelector('.choosen'))) {
+                                setTimeout(() => {
+                                    updateSelectedDate();
+                                    updateSelectedTime();
+                                }, 100);
+                                dateUpdated = true;
+                                timeUpdated = true;
+                            }
+                        }
+                    }
+
+                    // Проверяем изменения атрибутов
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const target = mutation.target;
+                        if (target.classList &&
+                            (target.classList.contains('currentSelection') || target.classList.contains('choosen') ||
+                                target.classList.contains('availableslot') || target.classList.contains('htmlUsed'))) {
+                            setTimeout(() => {
+                                updateSelectedTime();
+                            }, 100);
+                            timeUpdated = true;
+                        }
+                    }
+                });
+
+                // Также обновляем дату при любых изменениях в .slotsCalendarfieldname1_1
+                if (!dateUpdated) {
+                    updateSelectedDate();
+                }
+                if (!timeUpdated) {
+                    updateSelectedTime();
+                }
+            });
+
+            // Начинаем наблюдение
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (slotsCalendar) {
+                selectionObserver.observe(slotsCalendar, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+                console.log('Наблюдение за выбором даты и времени начато');
+
+                // Обновляем начальные значения
+                updateSelectedDate();
+                updateSelectedTime();
+            }
+        }
+
+        // Функция для получения текущих выбранных даты и времени
+        function getSelectedDateTime() {
+            return {
+                selectedDate: selectedDateValue,
+                selectedTime: selectedTimeValue
+            };
+        }
+
         // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
         function addCallButton() {
             const anketaCol2 = document.querySelector('.anketa-col-2');
@@ -499,7 +633,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Обработчик клика для кнопки
             callButton.addEventListener('click', function(e) {
                 e.stopPropagation();
-                console.log('Клик по кнопке "КНОПКА ВЫЗОВА"');
+                console.log('Клик по кнопке "Отправить заявку"');
 
                 // Проверяем все обязательные поля
                 const allValid = validateAllRequiredFields();
@@ -551,91 +685,155 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (!slotsCalendar.querySelector('.closer')) {
                     decorateSlotsCalendar();
                 }
+
+                // Запускаем наблюдение за выбором даты и времени
+                startSelectionObservation();
             }
         }
 
-        // Функция для получения выбранной даты и времени
-        // Функция для получения выбранной даты и времени
-        // Функция для получения выбранной даты и времени
-        function getSelectedDateTime() {
-            let selectedDate = '';
-            let selectedTime = '';
+        // Функция для создания и показа модального окна
+        function createAndShowModal(message) {
+            // Проверяем, не существует ли уже модальное окно
+            if (document.getElementById('successModal')) {
+                console.log('Модальное окно уже существует');
+                return;
+            }
 
-            try {
-                // Получаем дату из .slots span в блоке slotsCalendarfieldname1_1
-                const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-                if (slotsCalendar) {
-                    // Ищем блок .slots внутри slotsCalendar
-                    const slotsContainer = slotsCalendar.querySelector('.slots');
-                    if (slotsContainer) {
-                        // Получаем дату из span
-                        const dateSpan = slotsContainer.querySelector('span');
-                        if (dateSpan) {
-                            selectedDate = dateSpan.textContent.trim();
-                            console.log('Найдена дата из .slots span:', selectedDate);
-                        }
-                    }
+            console.log('Создаем модальное окно с сообщением:', message);
 
-                    // Получаем время из .currentSelection a
-                    const currentSelection = slotsCalendar.querySelector('.currentSelection a');
-                    if (currentSelection) {
-                        selectedTime = currentSelection.textContent.trim();
-                        console.log('Найдено время из .currentSelection a:', selectedTime);
-                    } else {
-                        // Если нет currentSelection, проверяем .choosen a (возможная опечатка в HTML)
-                        const choosenSelection = slotsCalendar.querySelector('.choosen a');
-                        if (choosenSelection) {
-                            selectedTime = choosenSelection.textContent.trim();
-                            console.log('Найдено время из .choosen a:', selectedTime);
-                        }
-                    }
+            // Создаем модальное окно
+            const modal = document.createElement('div');
+            modal.id = 'successModal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                z-index: 10000;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            `;
+
+            // Создаем содержимое модального окна
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background-color: white;
+                padding: 30px;
+                border-radius: 8px;
+                max-width: 500px;
+                width: 90%;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            `;
+
+            // Добавляем заголовок
+            const title = document.createElement('h3');
+            title.textContent = 'Запись успешно отправлена!';
+            title.style.cssText = `
+                margin: 0 0 20px 0;
+                text-align: center;
+                color: #333;
+            `;
+            modalContent.appendChild(title);
+
+            // Добавляем сообщение
+            const messageElement = document.createElement('p');
+            messageElement.textContent = message;
+            messageElement.style.cssText = `
+                font-size: 16px;
+                line-height: 1.5;
+                color: #555;
+                margin-bottom: 25px;
+                text-align: center;
+            `;
+            modalContent.appendChild(messageElement);
+
+            // Добавляем кнопку закрытия
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Закрыть';
+            closeButton.style.cssText = `
+                display: block;
+                margin: 0 auto;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 10px 25px;
+                border-radius: 4px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            `;
+
+            // Обработчик закрытия модального окна
+            closeButton.addEventListener('click', function() {
+                const modal = document.getElementById('successModal');
+                if (modal) {
+                    document.body.removeChild(modal);
+                    console.log('Модальное окно закрыто');
                 }
-            } catch (error) {
-                console.error('Ошибка при получении даты и времени:', error);
-            }
+            });
 
-            console.log('Итоговые дата и время:', { selectedDate, selectedTime });
-            return { selectedDate, selectedTime };
+            // Также закрываем по клику на фон
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                    console.log('Модальное окно закрыто по клику на фон');
+                }
+            });
+
+            modalContent.appendChild(closeButton);
+            modal.appendChild(modalContent);
+
+            // Добавляем модальное окно в body
+            document.body.appendChild(modal);
+
+            console.log('Модальное окно показано');
         }
 
-        // Вспомогательная функция для преобразования месяца в число
-        function getMonthNumber(monthName) {
-            const months = {
-                'январь': '01', 'января': '01',
-                'февраль': '02', 'февраля': '02',
-                'март': '03', 'марта': '03',
-                'апрель': '04', 'апреля': '04',
-                'май': '05', 'мая': '05',
-                'июнь': '06', 'июня': '06',
-                'июль': '07', 'июля': '07',
-                'август': '08', 'августа': '08',
-                'сентябрь': '09', 'сентября': '09',
-                'октябрь': '10', 'октября': '10',
-                'ноябрь': '11', 'ноября': '11',
-                'декабрь': '12', 'декабря': '12'
-            };
-
-            // Приводим к нижнему регистру и обрезаем пробелы
-            const normalizedMonth = monthName.toLowerCase().trim();
-            return months[normalizedMonth] || '01';
-        }
-
-        // Функция для проверки URL и показа модального окна (обновленная)
+        // Функция для проверки URL и показа модального окна
         function checkSuccessUrlAndShowModal() {
-            // Проверяем, есть ли в URL hash #success
             if (window.location.hash === '#success') {
                 console.log('Обнаружен #success в URL');
 
-                // Даем больше времени для полной загрузки всех элементов
-                setTimeout(() => {
-                    console.log('Начинаем получение даты и времени...');
+                // Убираем hash из URL
+                history.replaceState(null, null, window.location.pathname);
 
-                    // Пробуем получить выбранные дату и время
+                // Ждем появления необходимых элементов
+                const checkInterval = setInterval(function() {
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
-                    console.log('Полученные данные:', { selectedDate, selectedTime });
-
                     // Формируем сообщение
+                    let message = 'Вы записаны на юридическую консультацию';
+                    let hasData = false;
+
+                    if (selectedDate && selectedTime) {
+                        message += ` ${selectedDate} в ${selectedTime}`;
+                        hasData = true;
+                    } else if (selectedDate) {
+                        message += ` ${selectedDate}`;
+                        hasData = true;
+                        if (selectedTime) {
+                            message += ` в ${selectedTime}`;
+                        }
+                    } else {
+                        message += '.';
+                    }
+
+                    // Если есть данные или прошло 10 секунд, показываем модальное окно
+                    if (hasData) {
+                        clearInterval(checkInterval);
+                        console.log('Данные получены, показываем модальное окно:', message);
+                        createAndShowModal(message);
+                    }
+                }, 500);
+
+                // Таймаут 10 секунд
+                setTimeout(function() {
+                    clearInterval(checkInterval);
+                    const { selectedDate, selectedTime } = getSelectedDateTime();
+
                     let message = 'Вы записаны на юридическую консультацию';
                     if (selectedDate && selectedTime) {
                         message += ` ${selectedDate} в ${selectedTime}`;
@@ -648,109 +846,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         message += '.';
                     }
 
-                    console.log('Сообщение для модального окна:', message);
-
-                    // Создаем и показываем модальное окно
+                    console.log('Показываем модальное окно по таймауту:', message);
                     createAndShowModal(message);
-                }, 1500); // Увеличил время ожидания
+                }, 10000);
             }
-        }
-        // Также обновим initialCheck чтобы он тоже проверял URL
-        function initialCheck() {
-            restructureForm();
-            replaceInputWithTextarea();
-            decorateSlotsCalendar();
-            wrapSlotsContent();
-            addCalendarLegend();
-            addCallButtonStyles();
-            addCallButton();
-            initSlotsCalendar();
-
-            // Проверяем URL и показываем модальное окно, если нужно
-            checkSuccessUrlAndShowModal();
-        }
-
-        // Функция для создания и показа модального окна
-        function createAndShowModal(message) {
-            // Создаем модальное окно
-            const modal = document.createElement('div');
-            modal.id = 'successModal';
-            modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `;
-
-            // Создаем содержимое модального окна
-            const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        `;
-
-            // Добавляем заголовок
-            const title = document.createElement('h3');
-            title.textContent = 'Запись успешно отправлена!';
-            title.style.cssText = `
-            margin: 0 0 20px 0;
-            text-align: center;
-            color: #333;
-        `;
-            modalContent.appendChild(title);
-
-            // Добавляем сообщение
-            const messageElement = document.createElement('p');
-            messageElement.textContent = message;
-            messageElement.style.cssText = `
-            font-size: 16px;
-            line-height: 1.5;
-            color: #555;
-            margin-bottom: 25px;
-            text-align: center;
-        `;
-            modalContent.appendChild(messageElement);
-
-            // Добавляем кнопку закрытия
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'Закрыть';
-            closeButton.style.cssText = `
-            display: block;
-            margin: 0 auto;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        `;
-
-            // Обработчик закрытия модального окна
-            closeButton.addEventListener('click', function() {
-                document.body.removeChild(modal);
-                // Убираем hash из URL без перезагрузки страницы
-                history.replaceState(null, null, window.location.pathname);
-            });
-
-            modalContent.appendChild(closeButton);
-            modal.appendChild(modalContent);
-
-            // Добавляем модальное окно в body
-            document.body.appendChild(modal);
-
-            console.log('Модальное окно показано с сообщением:', message);
         }
 
         // наблюдатель за изменениями DOM
@@ -781,6 +880,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
+                                // Запускаем наблюдение за выбором
+                                startSelectionObservation();
                             }, 100);
                             changesMade = true;
                         }
@@ -788,7 +889,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Проверяем, является ли узел или содержит ли .slots
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slots')) ||
                             (node.querySelector && node.querySelector('.slots'))) {
-                            setTimeout(() => wrapSlotsContent(), 100);
+                            setTimeout(() => {
+                                wrapSlotsContent();
+                                updateSelectedDate();
+                            }, 100);
                             changesMade = true;
                         }
 
@@ -807,6 +911,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
                             setTimeout(() => {
                                 initSlotsCalendar();
+                                // Запускаем наблюдение за выбором
+                                startSelectionObservation();
                             }, 100);
                             changesMade = true;
                         }
@@ -826,13 +932,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             decorateSlotsCalendar();
                             wrapSlotsContent();
+                            startSelectionObservation();
                         }, 50);
                         changesMade = true;
                     }
 
                     // Проверяем, появился ли .slots внутри измененного элемента
                     if (mutation.target.querySelector && mutation.target.querySelector('.slots')) {
-                        setTimeout(() => wrapSlotsContent(), 50);
+                        setTimeout(() => {
+                            wrapSlotsContent();
+                            updateSelectedDate();
+                        }, 50);
                         changesMade = true;
                     }
 
@@ -854,12 +964,26 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => wrapSlotsContent(), 50);
                             changesMade = true;
                         }
+
+                        // Обновляем время при изменении слотов
+                        setTimeout(() => updateSelectedTime(), 50);
                     }
 
                     // Проверка для поля textarea
                     const target = mutation.target.querySelector('#field_1-6, #fieldname8_1');
                     if (target && document.getElementById('fieldname8_1')) {
                         setTimeout(() => replaceInputWithTextarea(), 50);
+                        changesMade = true;
+                    }
+                }
+
+                // Отслеживаем изменения классов для выбора времени
+                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                    const target = mutation.target;
+                    if (target.classList &&
+                        (target.classList.contains('currentSelection') || target.classList.contains('choosen') ||
+                            target.classList.contains('availableslot') || target.classList.contains('htmlUsed'))) {
+                        setTimeout(() => updateSelectedTime(), 50);
                         changesMade = true;
                     }
                 }
@@ -875,6 +999,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     addCallButtonStyles();
                     addCallButton();
                     initSlotsCalendar();
+                    startSelectionObservation();
+                    updateSelectedDate();
+                    updateSelectedTime();
                 }, 100);
             }
         });
@@ -882,7 +1009,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Старт наблюдения
         observer.observe(document.body, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class']
         });
 
         // Начальная проверка при загрузке страницы
@@ -896,6 +1025,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCallButton();
             initSlotsCalendar();
 
+            // Запускаем наблюдение за выбором даты и времени
+            startSelectionObservation();
+
+            // Обновляем начальные значения
+            updateSelectedDate();
+            updateSelectedTime();
+
             // Проверяем URL и показываем модальное окно, если нужно
             checkSuccessUrlAndShowModal();
         }
@@ -906,7 +1042,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         } else {
             initialCheck();
         }
-        console.log('test!3');
+
+        // Слушатель hashchange
+        window.addEventListener('hashchange', function() {
+            if (window.location.hash === '#success') {
+                console.log('Обнаружен #success через hashchange');
+                checkSuccessUrlAndShowModal();
+            }
+        });
+        console.log('test5');
     </script>
 <?php
 get_footer();
