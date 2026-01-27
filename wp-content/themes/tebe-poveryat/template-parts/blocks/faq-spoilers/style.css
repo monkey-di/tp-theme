@@ -16,6 +16,7 @@
 .faq-spoiler-content h2{
     text-align: center;
     padding-bottom: 40px;
+    text-transform: uppercase;
 }
 .faq-spoiler-content details{
     background: #FEF1EC;

@@ -800,6 +800,10 @@
 .page-template-template-get-legal-assistance .page-head{
     padding-bottom: 100px;
 }
+.page-template-template-get-legal-assistance .page-head-title{
+    padding-bottom: 40px;
+    padding-top: 0;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
