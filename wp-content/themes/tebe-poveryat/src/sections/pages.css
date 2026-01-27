@@ -923,7 +923,7 @@ a.donation-adv span{
     #fbuilder .calendar-col-1{
         max-width:calc(50% - 5px);
     }
-    #dateInputField{
+    #fbuilder #dateInputField{
         width:auto !important;
     }
 }
