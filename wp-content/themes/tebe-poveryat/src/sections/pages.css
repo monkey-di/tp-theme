@@ -878,6 +878,12 @@
     display: flex;
     align-items: center;
 }
+a.donation-adv span{
+    color:#fff;
+    background:#1C5358;
+    border-radius:40px;
+    padding: 16px 0;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);

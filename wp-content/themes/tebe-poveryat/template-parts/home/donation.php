@@ -104,7 +104,7 @@
                     'class' => 'w-full md:w-[348px] mx-auto'
             ]); ?>
             <?php if( !is_front_page() ) { ?>
-                    <a href="#" class="donation-adv">Помочь другим способом</a>
+                <a href="#" class="donation-adv"><span>Помочь другим способом</span></a>
             <?php } ?>
         </div>
     </div>
