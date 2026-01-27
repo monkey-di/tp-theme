@@ -873,6 +873,10 @@
 .anketa-col-2 .donation-form__checkboxes{
     order: 99;
 }
+.anketa-col-2 .donation-form__checkbox-label{
+    display: flex;
+    align-items: center;
+}
 @media(max-width:1400px){
     .page-head-wrapper{
         padding-left: var(--wp--preset--spacing--50);
