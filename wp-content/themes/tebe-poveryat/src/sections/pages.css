@@ -863,7 +863,7 @@
     padding:0;
     margin:0;
 }
-.anketa-col-2 .fields:nth-childs(1){
+.anketa-col-2 .fields:nth-child(1){
     height: 52px;
 }
 @media(max-width:1400px){
