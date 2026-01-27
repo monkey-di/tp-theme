@@ -667,38 +667,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `;
+            modal.style.cssText = ``;
 
             // Создаем содержимое модального окна
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        `;
+            modalContent.style.cssText = ``;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
-            title.textContent = 'Запись успешно отправлена!';
-            title.style.cssText = `
-            margin: 0 0 20px 0;
-            text-align: center;
-            color: #333;
-        `;
+            title.textContent = '';
+            title.style.cssText = ``;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
