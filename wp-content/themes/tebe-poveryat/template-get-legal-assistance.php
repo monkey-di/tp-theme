@@ -20,7 +20,7 @@ $pagehead_bg_image = get_field('headpage-background');  // ACF фоновое и
 $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 ?>
     <style>
-        .page-template-template-help header.header{
+        .page-template-template-get-legal-assistance .header{
             background-color: <?php echo $pagehead_bg_color; ?>
         }
     </style>
