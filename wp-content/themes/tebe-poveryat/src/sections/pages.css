@@ -916,6 +916,12 @@ a.donation-adv span{
 @media(max-width:1300px){
     #fbuilder #fieldlist_1 .pb0.pbreak{
         flex-direction:column;
+        position:relative;
+        padding-bottom: 40px;
+    }
+    #fbuilder .donation-form__checkboxes{
+        position: absolute;
+        bottom: 40px;
     }
     .anketa-col.anketa-col-1{
         max-width:100%;
