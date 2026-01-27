@@ -838,8 +838,8 @@
     max-height: 32px;
 }
 .ahb_m4 #fbuilder .ui-datepicker-unselectable .ui-state-default{
-    color: #C2C5C4;
-    background: #fff;
+    color: #C2C5C4 !important;
+    background: #fff !important;
     font-family: "Geologica";
     font-weight: 300;
     font-size: 14px;
@@ -847,8 +847,8 @@
     text-align: center;
 }
 .ahb_m4 #fbuilder .ui-datepicker-unselectable .ui-state-default{
-    color: #C2C5C4;
-    background: #fff;
+    color: #C2C5C4 !important;
+    background: #fff !important;
     font-family: "Geologica";
     font-weight: 300;
     font-size: 14px;
