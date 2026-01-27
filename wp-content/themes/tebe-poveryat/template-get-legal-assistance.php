@@ -1320,7 +1320,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем заголовок
             const title = document.createElement('h3');
-            title.textContent = '';
+            let msg = 'Вы записаны на юридическую консультацию';
+            if (selectedDateValue) {
+                msg += ` ${selectedDateValue}`;
+
+                // Добавляем время, если оно есть
+                if (selectedTimeValue) {
+                    msg += ` ${selectedTimeValue}`;
+                }
+            }
+            title.textContent = msg;
             title.style.cssText = ``;
             modalContent.appendChild(title);
 
