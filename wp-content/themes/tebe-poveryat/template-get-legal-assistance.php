@@ -59,6 +59,103 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectionObserver = null;
         let dateInputObserver = null;
 
+        // Константы для ключей sessionStorage
+        const STORAGE_KEYS = {
+            DATE: 'selectedDateValue',
+            TIME: 'selectedTimeValue',
+            HAS_SUCCESS: 'hasSuccessRedirect'
+        };
+
+        // Функция для сохранения данных в sessionStorage
+        function saveToSessionStorage() {
+            try {
+                if (selectedDateValue) {
+                    sessionStorage.setItem(STORAGE_KEYS.DATE, selectedDateValue);
+                }
+                if (selectedTimeValue) {
+                    sessionStorage.setItem(STORAGE_KEYS.TIME, selectedTimeValue);
+                }
+                console.log('Данные сохранены в sessionStorage:', { selectedDateValue, selectedTimeValue });
+            } catch (e) {
+                console.error('Ошибка при сохранении в sessionStorage:', e);
+            }
+        }
+
+        // Функция для загрузки данных из sessionStorage
+        function loadFromSessionStorage() {
+            try {
+                const savedDate = sessionStorage.getItem(STORAGE_KEYS.DATE);
+                const savedTime = sessionStorage.getItem(STORAGE_KEYS.TIME);
+
+                if (savedDate) {
+                    selectedDateValue = savedDate;
+                    console.log('Дата загружена из sessionStorage:', selectedDateValue);
+                }
+                if (savedTime) {
+                    selectedTimeValue = savedTime;
+                    console.log('Время загружено из sessionStorage:', selectedTimeValue);
+                }
+
+                return { savedDate, savedTime };
+            } catch (e) {
+                console.error('Ошибка при загрузке из sessionStorage:', e);
+                return { savedDate: null, savedTime: null };
+            }
+        }
+
+        // Функция для очистки данных из sessionStorage
+        function clearSessionStorage() {
+            try {
+                sessionStorage.removeItem(STORAGE_KEYS.DATE);
+                sessionStorage.removeItem(STORAGE_KEYS.TIME);
+                sessionStorage.removeItem(STORAGE_KEYS.HAS_SUCCESS);
+                console.log('sessionStorage очищен');
+            } catch (e) {
+                console.error('Ошибка при очистке sessionStorage:', e);
+            }
+        }
+
+        // Функция для обработки отправки формы (перехват отправки)
+        function setupFormSubmitHandler() {
+            // Ищем основную кнопку отправки формы
+            const mainSubmitButton = document.querySelector('.pbSubmit:not(.select-button .pbSubmit)');
+            if (mainSubmitButton) {
+                mainSubmitButton.addEventListener('click', function(e) {
+                    console.log('Клик по основной кнопке отправки, сохраняем данные в sessionStorage');
+                    saveToSessionStorage();
+                    // Добавляем флаг, что была отправка формы
+                    sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
+                });
+            }
+
+            // Также перехватываем клик по кнопке в select-button
+            const selectSubmitButton = document.querySelector('.select-button .pbSubmit');
+            if (selectSubmitButton) {
+                selectSubmitButton.addEventListener('click', function(e) {
+                    console.log('Клик по кнопке отправки в select-button, сохраняем данные в sessionStorage');
+                    saveToSessionStorage();
+                    // Добавляем флаг, что была отправка формы
+                    sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
+                });
+            }
+
+            // Также можем перехватить саму отправку формы
+            const form = document.getElementById('cp_appbooking_pform_1');
+            if (form) {
+                const originalSubmit = form.onsubmit;
+                form.onsubmit = function(e) {
+                    console.log('Форма отправляется, сохраняем данные в sessionStorage');
+                    saveToSessionStorage();
+                    sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
+
+                    // Вызываем оригинальный обработчик, если он есть
+                    if (originalSubmit) {
+                        return originalSubmit.call(this, e);
+                    }
+                };
+            }
+        }
+
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
             if (!parentContainer) return false;
@@ -497,6 +594,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         selectedDateValue = dateSpan.textContent.trim();
                         console.log('Дата обновлена:', selectedDateValue);
 
+                        // Сохраняем в sessionStorage при каждом изменении
+                        saveToSessionStorage();
+
                         // Обновление поля ввода даты
                         updateDateInputFieldFromSelectedDate();
                         return true;
@@ -526,6 +626,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (currentSelection) {
                     selectedTimeValue = currentSelection.textContent.trim();
                     console.log('Время обновлено (currentSelection):', selectedTimeValue);
+
+                    // Сохраняем в sessionStorage при каждом изменении
+                    saveToSessionStorage();
+
                     return true;
                 }
 
@@ -534,6 +638,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (choosenSelection) {
                     selectedTimeValue = choosenSelection.textContent.trim();
                     console.log('Время обновлено (choosen):', selectedTimeValue);
+
+                    // Сохраняем в sessionStorage при каждом изменении
+                    saveToSessionStorage();
+
                     return true;
                 }
             }
@@ -827,6 +935,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 // Обновляем selectedDateValue
                 selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
+                // Сохраняем в sessionStorage
+                saveToSessionStorage();
                 updateDateInputFieldFromSelectedDate();
 
                 return true;
@@ -852,6 +962,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (parts.length === 3) {
                         selectedDateValue = `${parts[2]}.${parts[1]}.${parts[0]}`;
                         dateInput.value = selectedDateValue;
+                        // Сохраняем в sessionStorage
+                        saveToSessionStorage();
                         console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
                     }
                 }
@@ -870,12 +982,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         const monthNum = parseInt(month) + 1;
                         selectedDateValue = `${day.padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}.${year}`;
                         dateInput.value = selectedDateValue;
+                        // Сохраняем в sessionStorage
+                        saveToSessionStorage();
                         console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
                     }
                 } else {
                     // Если нет активной даты и нет today, оставляем поле пустым
                     dateInput.value = '';
                     selectedDateValue = '';
+                    // Сохраняем в sessionStorage
+                    saveToSessionStorage();
                     console.log('Нет активной даты в календаре, поле очищено');
                 }
             }
@@ -1146,62 +1262,43 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return message;
         }
 
-        // Функция для проверки URL и показа модального окна
-        function checkSuccessUrlAndShowModal() {
-            if (window.location.hash === '#success') {
-                console.log('Обнаружен #success в URL');
+        // Основная функция для проверки и показа модального окна
+        function checkAndShowSuccessModal() {
+            // Проверяем sessionStorage на наличие данных об успешной отправке
+            const hasSuccessRedirect = sessionStorage.getItem(STORAGE_KEYS.HAS_SUCCESS) === 'true';
 
-                // Убираем hash из URL
-                history.replaceState(null, null, window.location.pathname);
+            // Также проверяем URL на наличие #success
+            const hasSuccessHash = window.location.hash === '#success';
 
-                // Ждем появления необходимых элементов
-                const checkInterval = setInterval(function() {
-                    // Обновляем данные из DOM перед формированием сообщения
-                    updateSelectedDate();
-                    updateSelectedTime();
+            if (hasSuccessRedirect || hasSuccessHash) {
+                console.log('Обнаружена успешная отправка формы');
 
-                    const { selectedDate, selectedTime } = getSelectedDateTime();
-                    console.log('Проверка данных - Дата:', selectedDate, 'Время:', selectedTime);
+                // Загружаем данные из sessionStorage
+                const { savedDate, savedTime } = loadFromSessionStorage();
 
-                    // Формируем корректное сообщение
-                    let message = 'Вы записаны на юридическую консультацию';
-                    let hasData = false;
+                // Обновляем переменные из sessionStorage
+                if (savedDate) selectedDateValue = savedDate;
+                if (savedTime) selectedTimeValue = savedTime;
 
-                    if (selectedDate && selectedTime) {
-                        message += ` ${selectedDate} в ${selectedTime}`;
-                        hasData = true;
-                    } else if (selectedDate) {
-                        message += ` ${selectedDate}`;
-                        hasData = true;
-                        if (selectedTime) {
-                            message += ` в ${selectedTime}`;
-                        }
-                    } else {
-                        message += '.';
-                    }
+                // Формируем сообщение
+                const message = getSuccessMessage();
+                console.log('Показываем модальное окно с данными из sessionStorage:', message);
 
-                    // Если есть данные или прошло 10 секунд, показываем модальное окно
-                    if (hasData) {
-                        clearInterval(checkInterval);
-                        console.log('Данные получены, показываем модальное окно:', message);
-                        createAndShowModal(message);
-                    }
-                }, 500);
+                // Показываем модальное окно
+                createAndShowModal(message);
 
-                // Таймаут 10 секунд
-                setTimeout(function() {
-                    clearInterval(checkInterval);
+                // Очищаем sessionStorage после показа
+                clearSessionStorage();
 
-                    // Последняя попытка получить данные
-                    updateSelectedDate();
-                    updateSelectedTime();
+                // Убираем hash из URL, если он есть
+                if (hasSuccessHash) {
+                    history.replaceState(null, null, window.location.pathname);
+                }
 
-                    // Используем функцию getSuccessMessage для формирования сообщения
-                    const message = getSuccessMessage();
-                    console.log('Показываем модальное окно по таймауту:', message);
-                    createAndShowModal(message);
-                }, 10000);
+                return true;
             }
+
+            return false;
         }
 
         // наблюдатель за изменениями DOM
@@ -1410,6 +1507,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     addDateInputField();
                     startDateInputObservation();
                     updateDateInputFromCalendar();
+                    setupFormSubmitHandler();
                 }, 100);
             }
         });
@@ -1424,6 +1522,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Начальная проверка при загрузке страницы
         function initialCheck() {
+            // Сначала загружаем данные из sessionStorage
+            loadFromSessionStorage();
+
             restructureForm();
             replaceInputWithTextarea();
             decorateSlotsCalendar();
@@ -1456,8 +1557,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 updateDateInputFieldFromSelectedDate();
             }
 
-            // Проверяем URL и показываем модальное окно, если нужно
-            checkSuccessUrlAndShowModal();
+            // Настраиваем обработчик отправки формы
+            setupFormSubmitHandler();
+
+            // Проверяем и показываем модальное окно, если нужно
+            checkAndShowSuccessModal();
         }
 
         // Запускаем начальную проверку
@@ -1471,10 +1575,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         window.addEventListener('hashchange', function() {
             if (window.location.hash === '#success') {
                 console.log('Обнаружен #success через hashchange');
-                checkSuccessUrlAndShowModal();
+                checkAndShowSuccessModal();
             }
         });
-        console.log('2222222222222');
+        console.log('333333333333333333');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
