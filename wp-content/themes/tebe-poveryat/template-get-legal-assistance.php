@@ -1311,67 +1311,28 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        `;
+            modal.style.cssText = ``;
 
             // Создаем содержимое модального окно
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        `;
+            modalContent.style.cssText = ``;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
-            title.textContent = 'Запись успешно отправлена!';
-            title.style.cssText = `
-            margin: 0 0 20px 0;
-            text-align: center;
-            color: #333;
-        `;
+            title.textContent = 'З';
+            title.style.cssText = ``;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
-            messageElement.style.cssText = `
-            font-size: 16px;
-            line-height: 1.5;
-            color: #555;
-            margin-bottom: 25px;
-            text-align: center;
-        `;
+            messageElement.style.cssText = ``;
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия
             const closeButton = document.createElement('button');
             closeButton.textContent = 'Закрыть';
-            closeButton.style.cssText = `
-            display: block;
-            margin: 0 auto;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        `;
+            closeButton.style.cssText = ``;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {
