@@ -487,13 +487,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 callButton = document.createElement('button');
                 callButton.type = 'button';
                 callButton.className = 'call-button';
-                callButton.textContent = 'Отправить заявку';
+                callButton.textContent = 'КНОПКА ВЫЗОВА';
                 callButton.disabled = false; // Кнопка всегда активна
 
                 // Добавляем кнопку в конец блока .anketa-col-2
                 anketaCol2.appendChild(callButton);
 
-                console.log('Кнопка "Отправить заявку" добавлена');
+                console.log('Кнопка "КНОПКА ВЫЗОВА" добавлена');
             }
 
             // Обработчик клика для кнопки
@@ -531,7 +531,48 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
-            style.textContent = ``;
+            style.textContent = `
+            .call-button {
+                display: block;
+                width: 100%;
+                max-width: 300px;
+                margin: 20px auto 10px;
+                padding: 12px 24px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+            }
+
+            .call-button:hover {
+                background-color: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            .call-button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+            .call-button:active {
+                transform: translateY(0);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .cpefb_error.message {
+                color: #ff0000;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+        `;
 
             document.head.appendChild(style);
             console.log('Стили для кнопки вызова добавлены');
@@ -571,16 +612,37 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
 
-            // Получаем выбранное время из currentSelection
-            const currentSelection = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.currentSelection');
-            if (currentSelection) {
-                const timeLink = currentSelection.querySelector('a');
-                if (timeLink) {
-                    selectedTime = timeLink.textContent.trim();
+            // Получаем выбранное время из #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection
+            // Пробуем несколько вариантов селекторов
+            const currentSelectionSelectors = [
+                '#cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.currentSelection',
+                '#cp_appbooking_pform_1 #fbuilder .slots div.currentSelection',
+                '.slots div.currentSelection',
+                '.slots-content .availableslot.currentSelection',
+                '.slotsCalendarfieldname1_1 .availableslot.currentSelection'
+            ];
+
+            let currentSelection = null;
+            for (const selector of currentSelectionSelectors) {
+                currentSelection = document.querySelector(selector);
+                if (currentSelection) {
+                    console.log('Найден currentSelection по селектору:', selector);
+                    break;
                 }
             }
 
-            console.log('Получены дата и время из currentSelection:', { selectedDate, selectedTime });
+            if (currentSelection) {
+                // Ищем ссылку с временем внутри currentSelection
+                const timeLink = currentSelection.querySelector('a');
+                if (timeLink) {
+                    selectedTime = timeLink.textContent.trim();
+                } else {
+                    // Если нет ссылки, берем текст самого элемента
+                    selectedTime = currentSelection.textContent.trim();
+                }
+            }
+
+            console.log('Получены дата и время:', { selectedDate, selectedTime });
             return { selectedDate, selectedTime };
         }
 
@@ -618,7 +680,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     // Создаем и показываем модальное окно
                     createAndShowModal(message);
-                }, 1000); // Увеличил время ожидания для полной загрузки
+                }, 1500); // Увеличил время ожидания для полной загрузки
             }
         }
 
