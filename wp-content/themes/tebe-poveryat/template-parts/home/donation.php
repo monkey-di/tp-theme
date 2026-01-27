@@ -78,7 +78,8 @@
             </div>
 
             <!-- Checkboxes -->
-            <div class="donation-form__checkboxes mb-8">
+
+            <div class="donation-form__checkboxes mb-8 <?php if( !is_front_page() ) { ?>nonfront<? }?>">
                 <label class="donation-form__checkbox-label">
                     <input type="checkbox" class="hidden donation-form__checkbox-input" />
                     <span class="donation-form__checkbox-custom">
