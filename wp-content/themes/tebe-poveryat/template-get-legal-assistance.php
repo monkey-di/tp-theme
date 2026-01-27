@@ -1112,7 +1112,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const { selectedDate, selectedTime } = getSelectedDateTime();
 
                     // Формируем сообщение
-                    let message = 'Вы записаны на юридическую консультацию';
+                    let message = '!!!!Вы записаны на юридическую консультацию';
                     let hasData = false;
 
                     if (selectedDateValue && selectedTimeValue) {
