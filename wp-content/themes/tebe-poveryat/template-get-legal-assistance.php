@@ -627,7 +627,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Создаем первый чекбокс (обработка персональных данных)
             const checkbox1Container = document.createElement('div');
-            checkbox1Container.className = 'fields';
+            checkbox1Container.className = 'fieldscheck';
             checkbox1Container.setAttribute('data-checkbox', 'personal-data');
 
             const checkbox1Label = document.createElement('label');
@@ -655,7 +655,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Создаем второй чекбокс (условия оферты)
             const checkbox2Container = document.createElement('div');
-            checkbox2Container.className = 'fields';
+            checkbox2Container.className = 'fieldscheck';
             checkbox2Container.setAttribute('data-checkbox', 'offer');
 
             const checkbox2Label = document.createElement('label');
