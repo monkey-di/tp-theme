@@ -961,6 +961,9 @@ a.donation-adv span{
     }
 }
 @media(max-width:520px){
+    .blog-single{
+        margin-bottom: 120px;
+    }
     .bloglist-content{
         margin-bottom: 120px;
     }
