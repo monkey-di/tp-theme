@@ -878,6 +878,10 @@
     display: flex;
     align-items: center;
 }
+a.donation-adv {
+    display: flex;
+    justify-content: center;
+}
 a.donation-adv span{
     color:#fff;
     background:#1C5358;
@@ -891,7 +895,7 @@ a.donation-adv span{
     font-size: 16px;
     line-height: 150%;
     text-transform: uppercase;
-
+    display: block;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
