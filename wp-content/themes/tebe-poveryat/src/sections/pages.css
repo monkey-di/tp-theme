@@ -678,6 +678,9 @@
 .select-button .pbSubmit{
     display: block !important;
 }
+.select-button span{
+    display: none;
+}
 .hasDatepicker{
     z-index: 20;
     position: relative;
