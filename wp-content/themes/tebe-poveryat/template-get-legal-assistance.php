@@ -487,7 +487,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 callButton = document.createElement('button');
                 callButton.type = 'button';
                 callButton.className = 'call-button';
-                callButton.textContent = 'КНОПКА ВЫЗОВА';
+                callButton.textContent = 'Отправить заявку';
                 callButton.disabled = false; // Кнопка всегда активна
 
                 // Добавляем кнопку в конец блока .anketa-col-2
