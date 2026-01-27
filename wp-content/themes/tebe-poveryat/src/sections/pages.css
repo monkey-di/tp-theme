@@ -961,6 +961,9 @@ a.donation-adv span{
     }
 }
 @media(max-width:520px){
+    .bloglist-content{
+        margin-bottom: 120px;
+    }
     .page-head-wrapper{
         padding-top: 0;
         background-size: 220%;
