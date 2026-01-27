@@ -864,7 +864,7 @@
     margin:0;
 }
 .anketa-col-2 .fields:nth-child(1){
-    height: 65px;
+    height: 55px;
 }
 @media(max-width:1400px){
     .page-head-wrapper{
