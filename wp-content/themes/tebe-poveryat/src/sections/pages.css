@@ -645,7 +645,8 @@
     transform:rotate(180deg);
 }
 .slotsCalendarfieldname1_1{
-    min-width: 454px;
+    min-width: 474px;
+    left: calc(50% - 474px / 2);
 }
 .slotsCalendarfieldname1_1:before{
     content: '';
