@@ -886,6 +886,12 @@ a.donation-adv span{
     width: 348px;
     text-align: center;
     margin-top: 16px;
+    font-family: "Geologica";
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-transform: uppercase;
+
 }
 @media(max-width:1400px){
     .page-head-wrapper{
