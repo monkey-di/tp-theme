@@ -984,6 +984,9 @@ a.donation-adv span{
     .back-blog-button{
         text-align:center;
     }
+    .posts-sort{
+        padding-left: 20px;
+    }
 }
 /*Форма и календарь, страница "Получить юридическую помощь"*/
 .ahb_m4 #fbuilder .fields label {
