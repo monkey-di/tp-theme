@@ -612,26 +612,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
 
-            // Получаем выбранное время из slots-content
-            const slotsContent = document.querySelector('.slotsCalendarfieldname1_1 .slots-content');
-            if (slotsContent) {
-                // Ищем выбранный слот (например, с классом selected или active)
-                let selectedSlot = slotsContent.querySelector('.availableslot.selected');
-
-                // Если нет выбранного слота, берем первый доступный слот
-                if (!selectedSlot) {
-                    selectedSlot = slotsContent.querySelector('.availableslot');
-                }
-
-                if (selectedSlot) {
-                    const timeLink = selectedSlot.querySelector('a');
-                    if (timeLink) {
-                        selectedTime = timeLink.textContent.trim();
-                    }
+            // Получаем выбранное время из currentSelection
+            const currentSelection = document.querySelector('.slotsCalendarfieldname1_1 .availableslot.currentSelection');
+            if (currentSelection) {
+                const timeLink = currentSelection.querySelector('a');
+                if (timeLink) {
+                    selectedTime = timeLink.textContent.trim();
                 }
             }
 
-            console.log('Получены дата и время:', { selectedDate, selectedTime });
+            console.log('Получены дата и время из currentSelection:', { selectedDate, selectedTime });
             return { selectedDate, selectedTime };
         }
 
