@@ -364,6 +364,7 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .ui-datepicker-inline{
     padding: 10px 8px 20px 8px;
     border-radius: 20px;
+    max-width: 100% !important;
 }
 .ui-datepicker-calendar td{
     border-radius: 4px;
