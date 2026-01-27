@@ -750,73 +750,123 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const anketaCol1 = document.querySelector('.anketa-col-1');
             if (!anketaCol1) return false;
 
-            // Проверяем, не добавлены ли уже чекбоксы
-            const existingCheckboxes = anketaCol1.querySelectorAll('[data-checkbox="personal-data"], [data-checkbox="offer"]');
-            if (existingCheckboxes.length > 0) {
+            // Удаляем старые чекбоксы если они есть
+            const oldCheckboxes = anketaCol1.querySelectorAll('[data-checkbox="personal-data"], [data-checkbox="offer"]');
+            oldCheckboxes.forEach(cb => cb.remove());
+
+            // Проверяем, не добавлены ли уже новые чекбоксы
+            if (anketaCol1.querySelector('.donation-form__checkboxes')) {
                 return true;
             }
 
-            // Создаем первый чекбокс (обработка персональных данных)
-            const checkbox1Container = document.createElement('div');
-            checkbox1Container.className = 'fieldscheck';
-            checkbox1Container.setAttribute('data-checkbox', 'personal-data');
+            // Создаем контейнер для новых чекбоксов
+            const checkboxesContainer = document.createElement('div');
+            checkboxesContainer.className = 'donation-form__checkboxes mb-8';
 
-            const checkbox1Label = document.createElement('label');
+            // Массив данных для чекбоксов
+            const checkboxesData = [
+                {
+                    name: 'personal_data_agreement',
+                    text: 'Я соглашаюсь на обработку моих <a href="#">персональных данных</a>',
+                    link: '#'
+                },
+                {
+                    name: 'offer_agreement',
+                    text: 'Я соглашаюсь с <a href="#">условиями оферты</a>',
+                    link: '#'
+                }
+            ];
 
-            const checkbox1Input = document.createElement('input');
-            checkbox1Input.type = 'checkbox';
-            checkbox1Input.className = 'required';
-            checkbox1Input.required = true;
-            checkbox1Input.name = 'personal_data_agreement';
+            // Создаем каждый чекбокс
+            checkboxesData.forEach(data => {
+                const label = document.createElement('label');
+                label.className = 'donation-form__checkbox-label';
 
-            const checkbox1Text = document.createTextNode(' Я соглашаюсь на обработку моих персональных данных');
+                // Input (скрытый)
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.className = 'hidden donation-form__checkbox-input required';
+                input.name = data.name;
+                input.required = true;
 
-            checkbox1Label.appendChild(checkbox1Input);
-            checkbox1Label.appendChild(checkbox1Text);
+                // Кастомный чекбокс
+                const customCheckbox = document.createElement('span');
+                customCheckbox.className = 'donation-form__checkbox-custom';
 
-            const dfield1 = document.createElement('div');
-            dfield1.className = 'dfield';
-            dfield1.appendChild(checkbox1Label);
+                // Иконка галочки (скрытая по умолчанию)
+                const icon = document.createElement('svg');
+                icon.className = 'donation-form__checkbox-icon hidden w-4 h-4 text-primary';
+                icon.setAttribute('fill', 'currentColor');
+                icon.setAttribute('viewBox', '0 0 20 20');
+                icon.innerHTML = '<path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>';
 
-            const clearer1 = document.createElement('div');
-            clearer1.className = 'clearer';
+                customCheckbox.appendChild(icon);
 
-            checkbox1Container.appendChild(dfield1);
-            checkbox1Container.appendChild(clearer1);
+                // Текст с ссылкой
+                const textSpan = document.createElement('span');
+                textSpan.className = 'donation-form__checkbox-text';
+                textSpan.innerHTML = data.text;
 
-            // Создаем второй чекбокс (условия оферты)
-            const checkbox2Container = document.createElement('div');
-            checkbox2Container.className = 'fieldscheck';
-            checkbox2Container.setAttribute('data-checkbox', 'offer');
+                // Собираем label
+                label.appendChild(input);
+                label.appendChild(customCheckbox);
+                label.appendChild(textSpan);
 
-            const checkbox2Label = document.createElement('label');
+                // Добавляем обработчик клика по label для переключения состояния
+                label.addEventListener('click', function(e) {
+                    // Если клик был по ссылке, не переключаем чекбокс
+                    if (e.target.tagName === 'A') {
+                        return;
+                    }
 
-            const checkbox2Input = document.createElement('input');
-            checkbox2Input.type = 'checkbox';
-            checkbox2Input.className = 'required';
-            checkbox2Input.required = true;
-            checkbox2Input.name = 'offer_agreement';
+                    // Переключаем состояние чекбокса
+                    input.checked = !input.checked;
 
-            const checkbox2Text = document.createTextNode(' Я соглашаюсь с условиями оферты');
+                    // Обновляем визуальное состояние кастомного чекбокса
+                    if (input.checked) {
+                        icon.classList.remove('hidden');
+                        customCheckbox.classList.add('checked');
+                    } else {
+                        icon.classList.add('hidden');
+                        customCheckbox.classList.remove('checked');
+                    }
 
-            checkbox2Label.appendChild(checkbox2Input);
-            checkbox2Label.appendChild(checkbox2Text);
+                    // Запускаем валидацию для этого поля
+                    validateRequiredField(input);
 
-            const dfield2 = document.createElement('div');
-            dfield2.className = 'dfield';
-            dfield2.appendChild(checkbox2Label);
+                    // Предотвращаем дальнейшее всплытие
+                    e.stopPropagation();
+                });
 
-            const clearer2 = document.createElement('div');
-            clearer2.className = 'clearer';
+                // Добавляем обработчик изменения состояния инпута
+                input.addEventListener('change', function() {
+                    if (input.checked) {
+                        icon.classList.remove('hidden');
+                        customCheckbox.classList.add('checked');
+                    } else {
+                        icon.classList.add('hidden');
+                        customCheckbox.classList.remove('checked');
+                    }
+                });
 
-            checkbox2Container.appendChild(dfield2);
-            checkbox2Container.appendChild(clearer2);
+                // Добавляем обработчик для ссылок (чтобы они работали нормально)
+                const links = textSpan.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        // Здесь можно добавить открытие модального окна или переход по ссылке
+                        console.log('Клик по ссылке:', link.href);
+                    });
+                });
 
-            // Добавляем чекбоксы в конец .anketa-col-1
-            anketaCol1.appendChild(checkbox1Container);
-            anketaCol1.appendChild(checkbox2Container);
+                // Добавляем label в контейнер
+                checkboxesContainer.appendChild(label);
+            });
 
-            console.log('Обязательные чекбоксы добавлены в .anketa-col-1');
+            // Добавляем контейнер в .anketa-col-1
+            anketaCol1.appendChild(checkboxesContainer);
+
+            console.log('Новые чекбоксы добавлены в .anketa-col-1');
             return true;
         }
 
@@ -1358,7 +1408,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             align-items: center;
         `;
 
-            // Создаем содержимое модального окна
+            // Создаем содержимое модального окно
             const modalContent = document.createElement('div');
             modalContent.style.cssText = `
             background-color: white;
@@ -1768,13 +1818,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        $(function() {
-            $( "#field_1-7" ).datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: false
-            });
-        });
-        console.log('2222000001111');
+        console.log('test 4423!');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
