@@ -960,6 +960,9 @@ a.donation-adv span{
     }
 }
 @media(max-width:860px){
+    #fbuilder .calendar-col-1{
+        min-width: 100%;
+    }
     .blog-item{
         width:calc(100% - 40px);
         margin-left:20px;
