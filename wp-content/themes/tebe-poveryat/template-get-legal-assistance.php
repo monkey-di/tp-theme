@@ -360,7 +360,82 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return uiWidgets.length > 0;
         }
 
-        // Функция для проверки заполненности обязательных полей в .anketa-col-1
+        // Функция для проверки одного обязательного поля
+        function validateRequiredField(field) {
+            let isValid = true;
+
+            // Пропускаем скрытые поля
+            if (field.type === 'hidden') {
+                return true;
+            }
+
+            // Проверяем текстовые поля и textarea
+            if ((field.tagName === 'INPUT' && field.type === 'text') ||
+                field.tagName === 'TEXTAREA' ||
+                field.tagName === 'SELECT') {
+                if (!field.value || field.value.trim() === '') {
+                    isValid = false;
+                }
+            }
+
+            // Для checkbox проверяем checked
+            if (field.type === 'checkbox') {
+                if (!field.checked) {
+                    isValid = false;
+                }
+            }
+
+            // Для радио-кнопок проверяем хотя бы одну выбранную
+            if (field.type === 'radio') {
+                const name = field.name;
+                const group = document.querySelectorAll(`[name="${name}"]`);
+                let groupChecked = false;
+
+                group.forEach(item => {
+                    if (item.checked) {
+                        groupChecked = true;
+                    }
+                });
+
+                if (!groupChecked) {
+                    isValid = false;
+                }
+            }
+
+            // Показываем или скрываем ошибку
+            const errorId = field.id + '-error';
+            let errorElement = document.getElementById(errorId);
+
+            if (!isValid) {
+                if (!errorElement) {
+                    // Создаем элемент ошибки
+                    errorElement = document.createElement('div');
+                    errorElement.id = errorId;
+                    errorElement.className = 'cpefb_error message';
+                    errorElement.textContent = 'Обязательное поле';
+                    errorElement.style.color = '#ff0000';
+                    errorElement.style.fontSize = '12px';
+                    errorElement.style.marginTop = '5px';
+
+                    // Вставляем ошибку после поля
+                    const fieldContainer = field.closest('.fields') || field.parentNode;
+                    fieldContainer.appendChild(errorElement);
+
+                    // Добавляем красную рамку полю
+                    field.style.borderColor = '#ff0000';
+                } else {
+                    errorElement.style.display = 'block';
+                    field.style.borderColor = '#ff0000';
+                }
+            } else if (errorElement) {
+                errorElement.style.display = 'none';
+                field.style.borderColor = '';
+            }
+
+            return isValid;
+        }
+
+        // Функция для проверки всех обязательных полей в .anketa-col-1
         function checkRequiredFieldsFilled() {
             const requiredFields = document.querySelectorAll('.anketa-col-1 .required');
             let allFilled = true;
@@ -371,31 +446,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     return;
                 }
 
-                // Проверяем текстовые поля и textarea
-                if ((field.tagName === 'INPUT' && field.type === 'text') ||
-                    field.tagName === 'TEXTAREA' ||
-                    field.tagName === 'SELECT') {
-                    if (!field.value || field.value.trim() === '') {
-                        allFilled = false;
-                    }
-                }
-
-                // Для checkbox проверяем checked
-                if (field.type === 'checkbox' || field.type === 'radio') {
-                    // Если есть группа с одинаковым name, проверяем хотя бы один выбран
-                    const name = field.name;
-                    const group = document.querySelectorAll(`[name="${name}"]`);
-                    let groupChecked = false;
-
-                    group.forEach(item => {
-                        if (item.checked) {
-                            groupChecked = true;
-                        }
-                    });
-
-                    if (!groupChecked) {
-                        allFilled = false;
-                    }
+                const isValid = validateRequiredField(field);
+                if (!isValid) {
+                    allFilled = false;
                 }
             });
 
@@ -469,17 +522,28 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             requiredFields.forEach(field => {
                 // Удаляем старые обработчики (если были) и добавляем новые
+                const handleFieldChange = function() {
+                    validateRequiredField(this);
+                    updateCallButtonState(callButton);
+                };
+
                 field.removeEventListener('input', handleFieldChange);
                 field.removeEventListener('change', handleFieldChange);
 
                 field.addEventListener('input', handleFieldChange);
                 field.addEventListener('change', handleFieldChange);
-            });
 
-            // Обработчик изменения полей
-            function handleFieldChange() {
-                updateCallButtonState(callButton);
-            }
+                // Для радио-кнопок добавляем обработчик на все элементы группы
+                if (field.type === 'radio') {
+                    const name = field.name;
+                    const group = document.querySelectorAll(`[name="${name}"]`);
+
+                    group.forEach(radio => {
+                        radio.removeEventListener('change', handleFieldChange);
+                        radio.addEventListener('change', handleFieldChange);
+                    });
+                }
+            });
         }
 
         // Функция для поиска и отслеживания изменений в .anketa-col-1
@@ -567,6 +631,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             .call-button:active:not(:disabled) {
                 transform: translateY(0);
                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+
+            .cpefb_error.message {
+                color: #ff0000;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
+
+            .required.error {
+                border-color: #ff0000 !important;
             }
         `;
 
@@ -710,6 +785,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         mutation.target.closest('.anketa-col-1')) {
                         const callButton = document.querySelector('.call-button');
                         if (callButton) {
+                            validateRequiredField(mutation.target);
                             updateCallButtonState(callButton);
                         }
                     }
@@ -726,6 +802,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     addCallButtonStyles();
                     addCallButton();
                     monitorAnketaCol1();
+
+                    // Проверяем все обязательные поля при загрузке
+                    const callButton = document.querySelector('.call-button');
+                    if (callButton) {
+                        checkRequiredFieldsFilled();
+                        updateCallButtonState(callButton);
+                    }
                 }, 100);
             }
         });
@@ -748,6 +831,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCallButtonStyles();
             addCallButton();
             monitorAnketaCol1();
+
+            // Проверяем все обязательные поля при загрузке
+            const callButton = document.querySelector('.call-button');
+            if (callButton) {
+                checkRequiredFieldsFilled();
+                updateCallButtonState(callButton);
+            }
         }
 
         // Запускаем начальную проверку
