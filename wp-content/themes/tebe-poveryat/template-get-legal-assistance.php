@@ -1052,7 +1052,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkSuccessUrlAndShowModal();
             }
         });
-        console.log('test5');
     </script>
 <?php
 get_footer();
