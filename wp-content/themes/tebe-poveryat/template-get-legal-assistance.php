@@ -1311,6 +1311,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
+            modal.classList.add = ('closer');
             modal.style.cssText = ``;
 
             // Создаем содержимое модального окно
@@ -1319,7 +1320,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем заголовок
             const title = document.createElement('h3');
-            title.textContent = 'З';
+            title.textContent = '';
             title.style.cssText = ``;
             modalContent.appendChild(title);
 
@@ -1330,8 +1331,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия
-            const closeButton = document.createElement('button');
-            closeButton.textContent = 'Закрыть';
+            const closeButton = document.createElement('div');
+            closeButton.textContent = '';
             closeButton.style.cssText = ``;
 
             // Обработчик закрытия модального окна
