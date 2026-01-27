@@ -614,6 +614,81 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             };
         }
 
+        // Функция для добавления обязательных чекбоксов в .anketa-col-1
+        function addRequiredCheckboxes() {
+            const anketaCol1 = document.querySelector('.anketa-col-1');
+            if (!anketaCol1) return false;
+
+            // Проверяем, не добавлены ли уже чекбоксы
+            const existingCheckboxes = anketaCol1.querySelectorAll('[data-checkbox="personal-data"], [data-checkbox="offer"]');
+            if (existingCheckboxes.length > 0) {
+                return true;
+            }
+
+            // Создаем первый чекбокс (обработка персональных данных)
+            const checkbox1Container = document.createElement('div');
+            checkbox1Container.className = 'fields';
+            checkbox1Container.setAttribute('data-checkbox', 'personal-data');
+
+            const checkbox1Label = document.createElement('label');
+
+            const checkbox1Input = document.createElement('input');
+            checkbox1Input.type = 'checkbox';
+            checkbox1Input.className = 'required';
+            checkbox1Input.required = true;
+            checkbox1Input.name = 'personal_data_agreement';
+
+            const checkbox1Text = document.createTextNode(' Я соглашаюсь на обработку моих персональных данных');
+
+            checkbox1Label.appendChild(checkbox1Input);
+            checkbox1Label.appendChild(checkbox1Text);
+
+            const dfield1 = document.createElement('div');
+            dfield1.className = 'dfield';
+            dfield1.appendChild(checkbox1Label);
+
+            const clearer1 = document.createElement('div');
+            clearer1.className = 'clearer';
+
+            checkbox1Container.appendChild(dfield1);
+            checkbox1Container.appendChild(clearer1);
+
+            // Создаем второй чекбокс (условия оферты)
+            const checkbox2Container = document.createElement('div');
+            checkbox2Container.className = 'fields';
+            checkbox2Container.setAttribute('data-checkbox', 'offer');
+
+            const checkbox2Label = document.createElement('label');
+
+            const checkbox2Input = document.createElement('input');
+            checkbox2Input.type = 'checkbox';
+            checkbox2Input.className = 'required';
+            checkbox2Input.required = true;
+            checkbox2Input.name = 'offer_agreement';
+
+            const checkbox2Text = document.createTextNode(' Я соглашаюсь с условиями оферты');
+
+            checkbox2Label.appendChild(checkbox2Input);
+            checkbox2Label.appendChild(checkbox2Text);
+
+            const dfield2 = document.createElement('div');
+            dfield2.className = 'dfield';
+            dfield2.appendChild(checkbox2Label);
+
+            const clearer2 = document.createElement('div');
+            clearer2.className = 'clearer';
+
+            checkbox2Container.appendChild(dfield2);
+            checkbox2Container.appendChild(clearer2);
+
+            // Добавляем чекбоксы в конец .anketa-col-1
+            anketaCol1.appendChild(checkbox1Container);
+            anketaCol1.appendChild(checkbox2Container);
+
+            console.log('Обязательные чекбоксы добавлены в .anketa-col-1');
+            return true;
+        }
+
         // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
         function addCallButton() {
             const anketaCol2 = document.querySelector('.anketa-col-2');
@@ -927,6 +1002,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             changesMade = true;
                         }
 
+                        // Проверяем, является ли узел или содержит ли .anketa-col-1
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-1')) ||
+                            (node.querySelector && node.querySelector('.anketa-col-1'))) {
+                            setTimeout(() => {
+                                addRequiredCheckboxes();
+                            }, 100);
+                            changesMade = true;
+                        }
+
                         // Проверяем, является ли узел или содержит ли .anketa-col-2
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
                             (node.querySelector && node.querySelector('.anketa-col-2'))) {
@@ -979,6 +1063,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             wrapSlotsContent();
                             updateSelectedDate();
+                        }, 50);
+                        changesMade = true;
+                    }
+
+                    // Проверяем, появился ли .anketa-col-1 внутри измененного элемента
+                    if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-1')) {
+                        setTimeout(() => {
+                            addRequiredCheckboxes();
                         }, 50);
                         changesMade = true;
                     }
@@ -1046,6 +1138,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     updateSelectedDate();
                     updateSelectedTime();
                     addClassesToAhbM4();
+                    addRequiredCheckboxes();
                 }, 100);
             }
         });
@@ -1078,6 +1171,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем классы к .ahb_m4
             addClassesToAhbM4();
+
+            // Добавляем обязательные чекбоксы
+            addRequiredCheckboxes();
 
             // Проверяем URL и показываем модальное окно, если нужно
             checkSuccessUrlAndShowModal();
