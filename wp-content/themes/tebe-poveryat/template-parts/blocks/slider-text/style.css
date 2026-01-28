@@ -47,6 +47,17 @@
     border-radius: 50%;
     font-size: 26px;
 }
+.block-slider-text_slider-inner .swiper-pagination{
+    bottom: 0;
+    position: absolute;
+    top: auto;
+    background: #fff;
+    border-radius: 40px;
+}
+.block-slider-text_slider-inner .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
+    background:#D98B99;
+    border-radius: 40px;
+}
 @media(max-width:1200px){
     .block-slider-text_text {
         margin-left: 32px;
