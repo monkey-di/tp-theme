@@ -29,6 +29,7 @@ if ($has_data) { ?>
                         <div class="swiper-button-prev media-prev cursor-pointer hover:opacity-70 transition"></div>
                         <div class="swiper-button-next media-next cursor-pointer hover:opacity-70 transition"></div>
                     </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             <?php } ?>
         </div>

@@ -502,7 +502,35 @@ document.addEventListener('DOMContentLoaded', () => {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
             },
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'progressbar',
+            },
             breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    centeredSlides: false,
+                    spaceBetween: 10,
+                    navigation: {
+                        enabled: false, // Отключаем стрелки
+                    },
+                    pagination: {
+                        enabled: true, // Включаем пагинацию
+                        type: 'progressbar',
+                    }
+                },
+                // От 901px до 1279px
+                901: {
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                    spaceBetween: 24,
+                    navigation: {
+                        enabled: true, // Включаем стрелки
+                    },
+                    pagination: {
+                        enabled: false, // Отключаем пагинацию
+                    }
+                },
                 768: {
                     slidesPerView: 'auto',
                     centeredSlides: true,
