@@ -1065,6 +1065,16 @@ a.donation-adv span{
     }
 }
 @media(max-width:710px){
+    .fieldCalendar{
+        max-width: 100%;
+    }
+    .anketa-col-2{
+        display: flex;
+        flex-direction: column;
+    }
+    .anketa-col-2 .fields{
+        z-index: 90;
+    }
     .page-head-wrapper h1{
         font-size: 48px;
     }
