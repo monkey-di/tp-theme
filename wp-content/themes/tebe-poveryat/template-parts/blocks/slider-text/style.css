@@ -54,6 +54,7 @@
     background: #fff;
     border-radius: 40px;
 }
+
 .block-slider-text_slider-inner .swiper-pagination-progressbar .swiper-pagination-progressbar-fill{
     background:#D98B99;
     border-radius: 40px;
@@ -78,5 +79,13 @@
     }
     .block-slider-text_text{
         margin-left: 0;
+    }
+    @media(max-width:900px){
+        .block-slider-text_slider-inner .swiper-wrapper{
+            margin-bottom:24px;
+        }
+        .block-slider-text_slider{
+            margin-bottom: 24px;
+        }
     }
 }
