@@ -780,14 +780,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
                 <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
                     <span class="donation-form__checkbox-custom">
                         <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                     </span>
                     <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
                 </label>
                 <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
                     <span class="donation-form__checkbox-custom">
                         <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                     </span>
