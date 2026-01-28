@@ -1010,7 +1010,7 @@ a.donation-adv span{
     }
     .call-button{
         position: relative;
-        z-index: 999;
+        z-index: 8;
     }
 }
 @media(max-width:1200px){
