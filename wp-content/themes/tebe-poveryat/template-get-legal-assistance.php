@@ -745,6 +745,22 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             };
         }
 
+        // Функция для инициализации обработчиков чекбоксов
+        function initializeCheckboxHandlers() {
+            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                    if (this.checked) {
+                        checkmark.classList.remove('hidden');
+                    } else {
+                        checkmark.classList.add('hidden');
+                    }
+                });
+            });
+
+            console.log('Обработчики чекбоксов инициализированы');
+        }
+
         // Функция для добавления обязательных чекбоксов в .anketa-col-1
         function addRequiredCheckboxes() {
             const anketaCol1 = document.querySelector('.anketa-col-1');
@@ -784,27 +800,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             console.log('Новые чекбоксы добавлены в .anketa-col-1');
             return true;
-        }
-
-        function initializeCheckboxHandlers() {
-            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-                    if (this.checked) {
-                        checkmark.classList.remove('hidden');
-                    } else {
-                        checkmark.classList.add('hidden');
-                    }
-                });
-
-                // Инициализируем начальное состояние
-                const checkmark = checkbox.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-                if (!checkbox.checked) {
-                    checkmark.classList.add('hidden');
-                }
-            });
-
-            console.log('Обработчики чекбоксов инициализированы');
         }
 
         // Функция для добавления текстового поля даты в .anketa-col-2
@@ -1489,6 +1484,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             (node.querySelector && node.querySelector('.anketa-col-1'))) {
                             setTimeout(() => {
                                 addRequiredCheckboxes();
+                                initializeCheckboxHandlers();
                             }, 100);
                             changesMade = true;
                         }
@@ -1531,6 +1527,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }, 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, является ли узел или содержит ли .donation-form__checkboxes
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('donation-form__checkboxes')) ||
+                            (node.querySelector && node.querySelector('.donation-form__checkboxes'))) {
+                            setTimeout(() => {
+                                initializeCheckboxHandlers();
+                            }, 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -1565,6 +1570,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (mutation.target.querySelector && mutation.target.querySelector('.anketa-col-1')) {
                         setTimeout(() => {
                             addRequiredCheckboxes();
+                            initializeCheckboxHandlers();
                         }, 50);
                         changesMade = true;
                     }
@@ -1615,6 +1621,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => replaceInputWithTextarea(), 50);
                         changesMade = true;
                     }
+
+                    // Проверяем, появились ли .donation-form__checkboxes
+                    if (mutation.target.querySelector && mutation.target.querySelector('.donation-form__checkboxes')) {
+                        setTimeout(() => {
+                            initializeCheckboxHandlers();
+                        }, 50);
+                        changesMade = true;
+                    }
                 }
 
                 // Отслеживаем изменения классов для выбора времени
@@ -1644,6 +1658,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     updateSelectedTime();
                     addClassesToAhbM4();
                     addRequiredCheckboxes();
+                    initializeCheckboxHandlers();
                     addDateInputField();
                     startDateInputObservation();
                     updateDateInputFromCalendar();
@@ -1687,6 +1702,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Добавляем обязательные чекбоксы
             addRequiredCheckboxes();
 
+            // Инициализируем обработчики чекбоксов
+            initializeCheckboxHandlers();
+
             // Добавляем поле ввода даты
             addDateInputField();
             startDateInputObservation();
@@ -1718,7 +1736,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('555333zzz test 000111222333!');
+        console.log('ТЕСТ22');
     </script>
 
 <?php
