@@ -1316,20 +1316,20 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для создания и показа модального окна с корректными данными
         function createAndShowModal(message) {
-            // Проверяем, не существует ли уже модальное окно
-            if (document.getElementById('successModal')) {
-                console.log('Модальное окно уже существует');
+            // Проверяем, не существует ли уже модальные окна
+            if (document.getElementById('successModal') || document.getElementById('supportModal')) {
+                console.log('Модальные окна уже существуют');
                 return;
             }
 
-            console.log('Создаем модальное окно с сообщением:', message);
+            console.log('Создаем модальные окна с сообщением:', message);
 
-            // Создаем модальное окно
-            const modal = document.createElement('div');
-            modal.id = 'successModal';
+            // Создаем первое модальное окно (успех)
+            const modal1 = document.createElement('div');
+            modal1.id = 'successModal';
 
-            // Создаем содержимое модального окна
-            const modalContent = document.createElement('div');
+            // Создаем содержимое первого модального окна
+            const modalContent1 = document.createElement('div');
 
             // Добавляем заголовок
             const title = document.createElement('h3');
@@ -1343,55 +1343,64 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
             title.innerHTML = msg;
-            modalContent.appendChild(title);
+            modalContent1.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
-            modalContent.appendChild(messageElement);
-
-            // Добавляем второе модальное окно с просьбой о поддержке (под первым)
-            const supportSection = document.createElement('div');
-            supportSection.classList.add('supportModalBlock');
-            supportSection.style.cssText = ``;
-
-            const supportTitle = document.createElement('h3');
-            supportTitle.textContent = 'Поддержите нас';
-            supportSection.appendChild(supportTitle);
-
-            const supportContent = document.createElement('div');
-            supportContent.innerHTML = `
-        <p>Консультации проводятся благодаря пожертвованиям и мы будем рады любой помощи.</p>
-        <p>Ваше участие позволяет нам каждый день поддерживать переживших</p>
-        <a href="/help/">Поддержать</a>
-    `;
-            supportSection.appendChild(supportContent);
-
-            modalContent.appendChild(supportSection);
+            modalContent1.appendChild(messageElement);
 
             // Добавляем кнопку закрытия (closer)
             const closeButton = document.createElement('div');
             closeButton.classList.add('closer');
             closeButton.textContent = '';
 
-            // Обработчик закрытия модального окна
+            // Обработчик закрытия обоих модальных окон
             closeButton.addEventListener('click', function() {
-                const modal = document.getElementById('successModal');
-                if (modal) {
-                    document.body.removeChild(modal);
-                    console.log('Модальное окно закрыто');
+                const modal1 = document.getElementById('successModal');
+                const modal2 = document.getElementById('supportModal');
+                if (modal1) {
+                    document.body.removeChild(modal1);
                 }
+                if (modal2) {
+                    document.body.removeChild(modal2);
+                }
+                console.log('Оба модальных окна закрыты');
             });
 
-            modalContent.appendChild(closeButton);
-            modal.appendChild(modalContent);
+            modalContent1.appendChild(closeButton);
+            modal1.appendChild(modalContent1);
 
-            // Добавляем модальное окно в body
-            document.body.appendChild(modal);
+            // Создаем второе модальное окно (поддержка)
+            const modal2 = document.createElement('div');
+            modal2.id = 'supportModal';
+            modal2.classList.add('supportModalBlock');
 
-            console.log('Модальное окно с двумя разделами показано');
+            // Создаем содержимое второго модального окна
+            const modalContent2 = document.createElement('div');
+
+            // Добавляем заголовок
+            const supportTitle = document.createElement('h3');
+            supportTitle.textContent = 'Поддержите нас';
+            modalContent2.appendChild(supportTitle);
+
+            // Добавляем контент
+            const supportContent = document.createElement('div');
+            supportContent.innerHTML = `
+        <p>Консультации проводятся благодаря пожертвованиям и мы будем рады любой помощи.</p>
+        <p>Ваше участие позволяет нам каждый день поддерживать переживших</p>
+        <a href="/help/">Поддержать</a>
+    `;
+            modalContent2.appendChild(supportContent);
+
+            modal2.appendChild(modalContent2);
+
+            // Добавляем оба модальных окна в body
+            document.body.appendChild(modal1);
+            document.body.appendChild(modal2);
+
+            console.log('Оба модальных окна показаны');
         }
-
         // Функция для формирования корректного сообщения
         function getSuccessMessage() {
             let message = 'Вы записаны на юридическую консультацию';
@@ -1750,7 +1759,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ5');
+        console.log('ТЕСТ6');
     </script>
 
 <?php

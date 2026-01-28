@@ -928,6 +928,9 @@ a.donation-adv span{
 #successModal h3 span{
     color:#6063A6;
 }
+.supportModalBlock{
+
+}
 @media(max-width: 1600px){
     .page-template-template-get-legal-assistance .page-head-col:nth-child(2) .page-head-btn{
         right: 20px;
