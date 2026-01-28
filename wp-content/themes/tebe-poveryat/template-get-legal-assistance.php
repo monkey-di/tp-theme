@@ -58,7 +58,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectedTimeValue = '';
         let selectionObserver = null;
         let dateInputObserver = null;
-        let formScrollPosition = 0; // Для сохранения позиции прокрутки
 
         // Константы для ключей sessionStorage
         const STORAGE_KEYS = {
@@ -66,21 +65,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             TIME: 'selectedTimeValue',
             HAS_SUCCESS: 'hasSuccessRedirect'
         };
-
-        // Функция для сохранения позиции прокрутки
-        function saveScrollPosition() {
-            formScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-        }
-
-        // Функция для восстановления позиции прокрутки
-        function restoreScrollPosition() {
-            if (formScrollPosition > 0) {
-                window.scrollTo({
-                    top: formScrollPosition,
-                    behavior: 'auto'
-                });
-            }
-        }
 
         // Функция для сохранения данных в sessionStorage
         function saveToSessionStorage() {
@@ -664,24 +648,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return false;
         }
 
-        // Функция для предотвращения подпрыгивания при выборе времени
-        function preventTimeSlotJump() {
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (!slotsCalendar) return;
-
-            // Сохраняем позицию прокрутки перед выбором времени
-            const timeSlots = slotsCalendar.querySelectorAll('.availableslot a, .htmlUsed a');
-            timeSlots.forEach(slot => {
-                slot.addEventListener('click', function(e) {
-                    saveScrollPosition();
-                    // Восстанавливаем позицию после небольшой задержки
-                    setTimeout(() => {
-                        restoreScrollPosition();
-                    }, 50);
-                });
-            });
-        }
-
         // Наблюдатель за появлением .slots span и изменением .currentSelection
         function startSelectionObservation() {
             if (selectionObserver) {
@@ -1260,13 +1226,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         slotsCalendar.style.display = 'block';
                         console.log('Блок .slotsCalendarfieldname1_1 показан');
 
-                        // Сохраняем позицию прокрутки перед показом календаря
-                        saveScrollPosition();
-
-                        // Добавляем обработчики для предотвращения подпрыгивания
-                        setTimeout(() => {
-                            preventTimeSlotJump();
-                        }, 100);
+                        // Добавляем обработчик для предотвращения прокрутки при выборе времени
+                        addPreventScrollHandlers();
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1281,6 +1242,38 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return true;
         }
 
+        // Новая функция для предотвращения прокрутки при выборе времени
+        function addPreventScrollHandlers() {
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (!slotsCalendar) return;
+
+            // Получаем текущую позицию прокрутки
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Находим все слоты времени
+            const timeSlots = slotsCalendar.querySelectorAll('.availableslot a, .htmlUsed a');
+
+            timeSlots.forEach(slot => {
+                // Удаляем старые обработчики
+                slot.removeEventListener('click', handleTimeSlotClick);
+                // Добавляем новый обработчик
+                slot.addEventListener('click', handleTimeSlotClick);
+            });
+
+            function handleTimeSlotClick(e) {
+                // Сохраняем позицию прокрутки перед выбором времени
+                const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                // Восстанавливаем позицию прокрутки через короткую задержку
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: currentScrollTop,
+                        behavior: 'auto'
+                    });
+                }, 10);
+            }
+        }
+
         // Функция для добавления стилей для кнопки вызова
         function addCallButtonStyles() {
             // Проверяем, не добавлены ли уже стили
@@ -1288,17 +1281,39 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
-            style.textContent = ``;
+            style.textContent = `
+            .slotsCalendarfieldname1_1 {
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                z-index: 9999 !important;
+                background: white !important;
+                padding: 20px !important;
+                border-radius: 10px !important;
+                box-shadow: 0 5px 30px rgba(0,0,0,0.3) !important;
+                max-height: 80vh !important;
+                overflow-y: auto !important;
+                width: 90% !important;
+                max-width: 500px !important;
+            }
+
+            .slotsCalendarfieldname1_1 .slots-content {
+                max-height: 300px !important;
+                overflow-y: auto !important;
+                margin: 10px 0 !important;
+            }
+        `;
 
             document.head.appendChild(style);
             console.log('Стили для кнопки вызова добавлены');
         }
 
-        // Функция для проверки и инициализации календаря - ВОССТАНАВЛИВАЕМ ИСХОДНУЮ ЛОГИКУ
+        // Функция для проверки и инициализации календаря
         function initSlotsCalendar() {
             const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
             if (slotsCalendar) {
-                // ВОССТАНАВЛИВАЕМ ИСХОДНУЮ ЛОГИКУ: скрываем календарь по умолчанию
+                // Убедимся, что календарь скрыт по умолчанию
                 if (slotsCalendar.style.display !== 'none') {
                     slotsCalendar.style.display = 'none';
                     console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
@@ -1353,11 +1368,30 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = ``;
+            modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        `;
 
             // Создаем содержимое модального окно
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = ``;
+            modalContent.style.cssText = `
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        `;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
@@ -1370,21 +1404,40 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     msg += ` <span>${selectedTimeValue}</span>`;
                 }
             }
-            title.textContent = msg;
-            title.style.cssText = ``;
+            title.innerHTML = msg;
+            title.style.cssText = `
+            margin-bottom: 20px;
+            font-size: 20px;
+        `;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
-            messageElement.style.cssText = ``;
+            messageElement.style.cssText = `
+            margin-bottom: 20px;
+            font-size: 16px;
+        `;
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия
             const closeButton = document.createElement('div');
             closeButton.classList.add = ('closer');
-            closeButton.textContent = '';
-            closeButton.style.cssText = ``;
+            closeButton.textContent = '✕';
+            closeButton.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #f0f0f0;
+        `;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {
@@ -1530,7 +1583,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         if ((node.nodeType === 1 && node.classList && node.classList.contains('slotsCalendarfieldname1_1')) ||
                             (node.querySelector && node.querySelector('.slotsCalendarfieldname1_1'))) {
                             setTimeout(() => {
-                                initSlotsCalendar(); // ВАЖНО: вызываем initSlotsCalendar вместо startSelectionObservation
+                                initSlotsCalendar();
                                 startSelectionObservation();
                             }, 100);
                             changesMade = true;
@@ -1659,7 +1712,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     replaceInputWithTextarea();
                     addCallButtonStyles();
                     addCallButton();
-                    initSlotsCalendar(); // ВАЖНО: вызываем initSlotsCalendar
+                    initSlotsCalendar();
                     startSelectionObservation();
                     updateSelectedDate();
                     updateSelectedTime();
@@ -1693,7 +1746,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCalendarLegend();
             addCallButtonStyles();
             addCallButton();
-            initSlotsCalendar(); // ВАЖНО: вызываем initSlotsCalendar
+            initSlotsCalendar();
 
             // Запускаем наблюдение за выбором даты и времени
             startSelectionObservation();
