@@ -1352,11 +1352,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем второе модальное окно с просьбой о поддержке (под первым)
             const supportSection = document.createElement('div');
-            supportSection.style.cssText = `
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    `;
+            supportSection.classList.add('supportModalBlock');
+            supportSection.style.cssText = ``;
 
             const supportTitle = document.createElement('h3');
             supportTitle.textContent = 'Поддержите нас';
@@ -1753,7 +1750,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ4');
+        console.log('ТЕСТ5');
     </script>
 
 <?php
