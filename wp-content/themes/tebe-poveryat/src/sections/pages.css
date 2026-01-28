@@ -1118,6 +1118,7 @@ a.donation-adv span{
     }
     .slotsCalendar.slotsCalendarfieldname1_1{
         width:calc(100% - 40px);
+        min-width:calc(100% - 40px);
         left: 20px;
     }
     #fbuilder .donation-form__checkbox-text{
