@@ -1382,14 +1382,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const closeButton = document.createElement('div');
             closeButton.classList.add('closer');
             closeButton.textContent = '';
-            closeButton.style.cssText = `
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                width: 20px;
-                height: 20px;
-                cursor: pointer;
-            `;
+            closeButton.style.cssText = ``;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {

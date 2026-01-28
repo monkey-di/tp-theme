@@ -529,7 +529,7 @@
 #cp_appbooking_pform_1.ahb_m4 #fbuilder .slots div.htmlUsed{
     width: 100%;
 }
-.slotsCalendar .closer{
+.slotsCalendar .closer, #successModal .closer{
     z-index: 30;
     cursor: pointer;
     background-image: url(/wp-content/themes/tebe-poveryat/assets/images/close-icon.svg);
