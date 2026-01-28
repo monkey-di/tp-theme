@@ -199,7 +199,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return allValid;
         }
 
-        // Функция для проверки одного обязательного поля (без изменений, но добавим вызов валидации email при изменении)
+        // Функция для проверки одного обязательного поля
         function validateRequiredField(field) {
             let isValid = true;
 
@@ -328,12 +328,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
         }
 
-        // Функция для обработки отправки формы (перехват отправки)
+        // Функция для обработки отправки формы
         function setupFormSubmitHandler() {
             // Ищем основную кнопку отправки формы
             const mainSubmitButton = document.querySelector('.pbSubmit:not(.select-button .pbSubmit)');
             if (mainSubmitButton) {
-                mainSubmitButton.addEventListener('click', function(e) {
+                // Удаляем старые обработчики чтобы избежать дублирования
+                const newMainSubmitButton = mainSubmitButton.cloneNode(true);
+                mainSubmitButton.parentNode.replaceChild(newMainSubmitButton, mainSubmitButton);
+
+                newMainSubmitButton.addEventListener('click', function(e) {
                     console.log('Клик по основной кнопке отправки, проверяем валидацию');
 
                     // Проверяем все обязательные поля (включая email)
@@ -345,9 +349,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Добавляем флаг, что была отправка формы
                         sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
 
-                        // Позволяем форме отправиться
-                        // Не вызываем preventDefault()
-                        return true;
+                        // Отправляем форму
+                        const form = document.getElementById('cp_appbooking_pform_1');
+                        if (form) {
+                            form.submit();
+                        }
                     } else {
                         console.log('Валидация не прошла, отправка отменена');
                         e.preventDefault();
@@ -365,10 +371,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
 
             // Также перехватываем клик по кнопке в select-button
-            const selectSubmitButton = document.querySelector('.select-button .pbSubmit');
-            if (selectSubmitButton) {
-                selectSubmitButton.addEventListener('click', function(e) {
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.classList && e.target.classList.contains('pbSubmit') && e.target.closest('.select-button')) {
                     console.log('Клик по кнопке отправки в select-button, проверяем валидацию');
+                    e.preventDefault();
+                    e.stopPropagation();
 
                     // Проверяем все обязательные поля (включая email)
                     const allValid = validateAllRequiredFields();
@@ -379,19 +386,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         // Добавляем флаг, что была отправка формы
                         sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
 
-                        // Ищем основную кнопку отправки и кликаем по ней
+                        // Нажимаем основную кнопку отправки
                         const mainSubmitButton = document.querySelector('.pbSubmit:not(.select-button .pbSubmit)');
                         if (mainSubmitButton) {
                             mainSubmitButton.click();
                         }
-
-                        // Предотвращаем дальнейшую обработку, чтобы не было двойного клика
-                        e.preventDefault();
-                        e.stopPropagation();
                     } else {
                         console.log('Валидация не прошла, отправка отменена');
-                        e.preventDefault();
-                        e.stopPropagation();
 
                         // Прокручиваем к первой ошибке
                         const firstError = document.querySelector('.cpefb_error.message[style*="display: block"], .cpefb_error.message:not([style*="display: none"])');
@@ -399,29 +400,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }
                     }
-                });
-            }
+                }
+            });
 
             // Также перехватим саму отправку формы
             const form = document.getElementById('cp_appbooking_pform_1');
             if (form) {
-                // Сохраняем оригинальный обработчик
-                const originalSubmit = form.onsubmit;
-
                 form.addEventListener('submit', function(e) {
                     console.log('Событие submit формы, проверяем валидацию');
 
                     // Проверяем все обязательные поля (включая email)
                     const allValid = validateAllRequiredFields();
 
-                    if (allValid) {
-                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
-                        saveToSessionStorage();
-                        sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
-
-                        // Разрешаем отправку формы
-                        return true;
-                    } else {
+                    if (!allValid) {
                         console.log('Валидация не прошла, отменяем отправку формы');
                         e.preventDefault();
                         e.stopPropagation();
@@ -433,6 +424,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
 
                         return false;
+                    } else {
+                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
+                        saveToSessionStorage();
+                        sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
                     }
                 });
             }
@@ -684,18 +679,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
                     });
 
-                    // Обработчик клика на кнопку "Отправить запрос"
-                    submitButton.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        console.log('Клик по кнопке "Отправить запрос" в .select-button');
-
-                        // Ищем основную кнопку отправки в форме
-                        const mainSubmitButton = document.querySelector('.pbSubmit:not(.select-button .pbSubmit)');
-                        if (mainSubmitButton) {
-                            console.log('Вызываем клик на основной кнопке отправки');
-                            mainSubmitButton.click();
-                        }
-                    });
+                    // Обработчик клика на кнопку "Отправить запрос" - ОСТАВЛЯЕМ ПУСТЫМ
+                    // Обработчик будет добавлен через делегирование в setupFormSubmitHandler
 
                 } else {
                     // Если .select-button уже существует, проверяем наличие кнопки "Отправить запрос"
@@ -710,19 +695,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         selectButton.appendChild(submitButton);
 
                         console.log('Кнопка "Отправить запрос" добавлена в существующий .select-button');
-
-                        // Обработчик для новой кнопки
-                        submitButton.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            console.log('Клик по кнопке "Отправить запрос" в .select-button');
-
-                            // Ищем основную кнопку отправки в форме
-                            const mainSubmitButton = document.querySelector('.pbSubmit:not(.select-button .pbSubmit)');
-                            if (mainSubmitButton) {
-                                console.log('Вызываем клик на основной кнопке отправки');
-                                mainSubmitButton.click();
-                            }
-                        });
                     }
                 }
             });
@@ -1986,7 +1958,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ7');
+        console.log('ТЕСТ6');
     </script>
 
 <?php
