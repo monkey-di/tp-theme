@@ -746,7 +746,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
 
         // Функция для добавления обязательных чекбоксов в .anketa-col-1
-        // Функция для добавления обязательных чекбоксов в .anketa-col-1
         function addRequiredCheckboxes() {
             const anketaCol1 = document.querySelector('.anketa-col-1');
             if (!anketaCol1) return false;
@@ -757,8 +756,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Проверяем, не добавлены ли уже новые чекбоксы
             if (anketaCol1.querySelector('.donation-form__checkboxes')) {
-                // Если чекбоксы уже есть, инициализируем обработчики
-                initializeCheckboxHandlers();
                 return true;
             }
 
@@ -766,58 +763,27 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
-        <label class="donation-form__checkbox-label">
-            <input type="checkbox" class="hidden donation-form__checkbox-input" />
-            <span class="donation-form__checkbox-custom">
-                <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-            </span>
-            <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
-        </label>
-        <label class="donation-form__checkbox-label">
-            <input type="checkbox" class="hidden donation-form__checkbox-input" />
-            <span class="donation-form__checkbox-custom">
-                <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-            </span>
-            <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
-        </label>
-    `;
+                <label class="donation-form__checkbox-label">
+                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <span class="donation-form__checkbox-custom">
+                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </span>
+                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+                </label>
+                <label class="donation-form__checkbox-label">
+                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <span class="donation-form__checkbox-custom">
+                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </span>
+                    <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
+                </label>
+            `;
 
             // Добавляем контейнер в .anketa-col-1
             anketaCol1.appendChild(checkboxesContainer);
 
             console.log('Новые чекбоксы добавлены в .anketa-col-1');
-
-            // Инициализируем обработчики чекбоксов
-            initializeCheckboxHandlers();
-
             return true;
-        }
-
-        // Функция для инициализации обработчиков чекбоксов
-        function initializeCheckboxHandlers() {
-            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
-                // Удаляем существующие обработчики, чтобы избежать дублирования
-                const newCheckbox = checkbox.cloneNode(true);
-                checkbox.parentNode.replaceChild(newCheckbox, checkbox);
-
-                // Добавляем новый обработчик
-                newCheckbox.addEventListener('change', function() {
-                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-                    if (this.checked) {
-                        checkmark.classList.remove('hidden');
-                    } else {
-                        checkmark.classList.add('hidden');
-                    }
-                });
-
-                // Инициализируем начальное состояние (скрываем иконку, так как по умолчанию чекбокс не отмечен)
-                const checkmark = newCheckbox.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-                if (!newCheckbox.checked) {
-                    checkmark.classList.add('hidden');
-                }
-            });
-
-            console.log('Обработчики чекбоксов инициализированы');
         }
 
         // Функция для добавления текстового поля даты в .anketa-col-2
@@ -1731,7 +1697,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('555333zzz test 000111222333!');
+        console.log('333zzz test 000111222333!');
     </script>
 
 <?php
