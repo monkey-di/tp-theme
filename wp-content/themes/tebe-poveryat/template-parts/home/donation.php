@@ -73,7 +73,7 @@
 
             <!-- Contact Inputs -->
             <div class="flex flex-col gap-4 mb-8">
-                <input type="email" placeholder="<?php if( is_front_page() ) { ?>Почта*<?php } else {?>Почта для чеков*<?php } ?>" class="donation-form__input" />
+                <input type="email" placeholder="<?php if( is_front_page() ) { ?>Почта*<?php } else {?>Почта для чека*<?php } ?>" class="donation-form__input" />
                 <input type="text" placeholder="Ваше имя (не обязательно)" class="donation-form__input" />
             </div>
 
