@@ -898,7 +898,36 @@ a.donation-adv span{
     text-transform: uppercase;
     display: block;
 }
-.load-more-container{margin-top: 40px;}
+.load-more-container{
+    margin-top: 40px;
+}
+#successModal div:first-child{
+    position: relative;
+    border-radius:16px;
+    padding-right:48px;
+}
+#successModal p{
+    padding-top:16px;
+    margin: 0;
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 150%;
+    color: #1E1E1E;
+}
+#successModal .closer{
+    margin: 0;
+}
+#successModal h3{
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 100%;
+    color: #1E1E1E;
+}
+#successModal h3 span{
+    color:#6063A6;
+}
 @media(max-width: 1600px){
     .page-template-template-get-legal-assistance .page-head-col:nth-child(2) .page-head-btn{
         right: 20px;

@@ -1361,6 +1361,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (modal) {
                     document.body.removeChild(modal);
                     console.log('Модальное окно закрыто');
+
+                    // После закрытия первого модального окна показываем второе
+                    createAndShowSupportModal();
                 }
             });
 
@@ -1371,6 +1374,60 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             document.body.appendChild(modal);
 
             console.log('Модальное окно показано');
+        }
+
+        // Функция для создания и показа модального окна с просьбой о поддержке
+        function createAndShowSupportModal() {
+            // Проверяем, не существует ли уже модальное окно
+            if (document.getElementById('supportModal')) {
+                console.log('Модальное окно с поддержкой уже существует');
+                return;
+            }
+
+            console.log('Создаем модальное окно с просьбой о поддержке');
+
+            // Создаем модальное окно
+            const modal = document.createElement('div');
+            modal.id = 'supportModal';
+
+            // Создаем содержимое модального окно
+            const modalContent = document.createElement('div');
+
+            // Добавляем заголовок
+            const title = document.createElement('h3');
+            title.textContent = 'Поддержите нас';
+            modalContent.appendChild(title);
+
+            // Добавляем контент
+            const content = document.createElement('div');
+            content.innerHTML = `
+                <p>Консультации проводятся благодаря пожертвованиям и мы будем рады любой помощи.</p>
+                <p>Ваше участие позволяет нам каждый день поддерживать переживших</p>
+                <a href="/help/">Поддержать</a>
+            `;
+            modalContent.appendChild(content);
+
+            // Добавляем кнопку закрытия (closer)
+            const closeButton = document.createElement('div');
+            closeButton.classList.add('closer');
+            closeButton.textContent = '';
+
+            // Обработчик закрытия модального окна
+            closeButton.addEventListener('click', function() {
+                const modal = document.getElementById('supportModal');
+                if (modal) {
+                    document.body.removeChild(modal);
+                    console.log('Модальное окно с поддержкой закрыто');
+                }
+            });
+
+            modalContent.appendChild(closeButton);
+            modal.appendChild(modalContent);
+
+            // Добавляем модальное окно в body
+            document.body.appendChild(modal);
+
+            console.log('Модальное окно с поддержкой показано');
         }
 
         // Функция для формирования корректного сообщения
@@ -1731,7 +1788,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ2');
+        console.log('ТЕСТ3');
     </script>
 
 <?php
