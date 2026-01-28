@@ -1158,6 +1158,10 @@ a.donation-adv span{
     .posts-sort{
         padding-left: 20px;
     }
+    #supportModal, #supportModal{
+        width: calc(100% - 40px);
+        margin-left:20px;
+    }
 }
 /*Форма и календарь, страница "Получить юридическую помощь"*/
 .ahb_m4 #fbuilder .fields label {
