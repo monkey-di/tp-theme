@@ -580,6 +580,7 @@
     flex-wrap: wrap;
 }
 .slots-content{
+    height:50vh;
     max-height: 378px;
     overflow-y:auto;
     border-radius: 16px;
@@ -1115,7 +1116,7 @@ a.donation-adv span{
     .call-button{
         margin-top: 150px;
     }
-    .slotsCalendarfieldname1_1{
+    .slotsCalendar.slotsCalendarfieldname1_1{
         width:calc(100% - 40px);
         left: 20px;
     }
