@@ -1089,6 +1089,9 @@ a.donation-adv span{
     }
 }
 @media(max-width:520px){
+    #fbuilder .donation-form__checkbox-text{
+        padding-left: 10px;
+    }
     #fbuilder .calendar-col-1 input{
         min-width: 100%;
     }
