@@ -1075,14 +1075,18 @@ a.donation-adv span{
     .anketa-col-2 .fields{
         z-index: 90;
     }
+    .call-button{
+        order: 95;
+    }
+    #dateInputField{
+        width: 100% !important;
+    }
+
     .page-head-wrapper h1{
         font-size: 48px;
     }
     .page-head-wrapper{
         padding-bottom:0;
-    }
-    #dateInputField{
-        width: 100% !important;
     }
 }
 @media(max-width:520px){
