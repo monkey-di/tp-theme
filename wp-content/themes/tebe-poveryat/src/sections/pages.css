@@ -928,8 +928,48 @@ a.donation-adv span{
 #successModal h3 span{
     color:#6063A6;
 }
-.supportModalBlock{
-
+#supportModal{
+    position: fixed;
+    width: 454px;
+    background: #D98B99;
+    z-index: 999;
+    border-radius: 16px;
+    border: 1px solid #fff;
+    padding: 20px;
+    left: calc(50% - 454px / 2);
+    top: 266px;
+    color: #fff;
+}
+#supportModal h3{
+    font-family: "Akrobat";
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 100%;
+}
+#supportModal p{
+    font-family: Geologica;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 150%;
+    margin-top: 16px;
+}
+#supportModal a{
+    background: #6063A6;
+    text-align: center;
+    display: inline-block;
+    font-family: Geologica;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-transform: uppercase;
+    padding: 16px 0;
+    width: 100%;
+    border-radius: 40px;
+    margin-top: 16px;
+    border: 1px solid #fff;
+}
+#supportModal a:hover{
+    background: transparent;
 }
 @media(max-width: 1600px){
     .page-template-template-get-legal-assistance .page-head-col:nth-child(2) .page-head-btn{
