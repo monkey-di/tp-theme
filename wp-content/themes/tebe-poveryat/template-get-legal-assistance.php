@@ -1736,7 +1736,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ22');
+        console.log('ТЕСТ');
     </script>
 
 <?php
