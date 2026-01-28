@@ -1753,7 +1753,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ3');
+        console.log('ТЕСТ4');
     </script>
 
 <?php
