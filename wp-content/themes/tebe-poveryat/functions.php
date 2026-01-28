@@ -185,7 +185,7 @@ function customize_legal_menu_simple() {
         'Заявки на юр. консультацию',
         '→ Заявки на юр. консультацию',
         'edit_posts',
-        '/wp-admin/admin.php?page=cp_apphourbooking&cal=2&list=1',
+        'legal-consultation-requests',
         'redirect_to_legal_requests_simple',
         'dashicons-clipboard',
         26
@@ -195,8 +195,8 @@ function customize_legal_menu_simple() {
     add_menu_page(
         'Календарь юр. консультаций',
         '→ Календарь юр. консультаций',
-        'edit_others_posts',
-        '/wp-admin/admin.php?page=cp_apphourbooking&cal=2&schedule=1&calendarview=1',
+        'edit_posts',
+        'legal-consultation-calendar',
         'redirect_to_legal_calendar_simple',
         'dashicons-calendar-alt',
         27
