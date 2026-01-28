@@ -763,21 +763,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
-            <label class="donation-form__checkbox-label">
-                <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                <span class="donation-form__checkbox-custom">
-                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                </span>
-                <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
-            </label>
-            <label class="donation-form__checkbox-label">
-                <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                <span class="donation-form__checkbox-custom">
-                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                </span>
-                <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
-            </label>
-        `;
+                <label class="donation-form__checkbox-label">
+                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <span class="donation-form__checkbox-custom">
+                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </span>
+                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+                </label>
+                <label class="donation-form__checkbox-label">
+                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                    <span class="donation-form__checkbox-custom">
+                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                    </span>
+                    <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
+                </label>
+            `;
 
             // Добавляем контейнер в .anketa-col-1
             anketaCol1.appendChild(checkboxesContainer);
@@ -1225,9 +1225,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
                         console.log('Блок .slotsCalendarfieldname1_1 показан');
-
-                        // Добавляем обработчик для предотвращения прокрутки при выборе времени
-                        addPreventScrollHandlers();
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1242,38 +1239,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return true;
         }
 
-        // Новая функция для предотвращения прокрутки при выборе времени
-        function addPreventScrollHandlers() {
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (!slotsCalendar) return;
-
-            // Получаем текущую позицию прокрутки
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Находим все слоты времени
-            const timeSlots = slotsCalendar.querySelectorAll('.availableslot a, .htmlUsed a');
-
-            timeSlots.forEach(slot => {
-                // Удаляем старые обработчики
-                slot.removeEventListener('click', handleTimeSlotClick);
-                // Добавляем новый обработчик
-                slot.addEventListener('click', handleTimeSlotClick);
-            });
-
-            function handleTimeSlotClick(e) {
-                // Сохраняем позицию прокрутки перед выбором времени
-                const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-                // Восстанавливаем позицию прокрутки через короткую задержку
-                setTimeout(() => {
-                    window.scrollTo({
-                        top: currentScrollTop,
-                        behavior: 'auto'
-                    });
-                }, 10);
-            }
-        }
-
         // Функция для добавления стилей для кнопки вызова
         function addCallButtonStyles() {
             // Проверяем, не добавлены ли уже стили
@@ -1281,29 +1246,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             const style = document.createElement('style');
             style.setAttribute('data-call-button', 'true');
-            style.textContent = `
-            .slotsCalendarfieldname1_1 {
-                position: fixed !important;
-                top: 50% !important;
-                left: 50% !important;
-                transform: translate(-50%, -50%) !important;
-                z-index: 9999 !important;
-                background: white !important;
-                padding: 20px !important;
-                border-radius: 10px !important;
-                box-shadow: 0 5px 30px rgba(0,0,0,0.3) !important;
-                max-height: 80vh !important;
-                overflow-y: auto !important;
-                width: 90% !important;
-                max-width: 500px !important;
-            }
-
-            .slotsCalendarfieldname1_1 .slots-content {
-                max-height: 300px !important;
-                overflow-y: auto !important;
-                margin: 10px 0 !important;
-            }
-        `;
+            style.textContent = ``;
 
             document.head.appendChild(style);
             console.log('Стили для кнопки вызова добавлены');
@@ -1368,30 +1311,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-        `;
+            modal.style.cssText = ``;
 
             // Создаем содержимое модального окно
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        `;
+            modalContent.style.cssText = ``;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
@@ -1404,40 +1328,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     msg += ` <span>${selectedTimeValue}</span>`;
                 }
             }
-            title.innerHTML = msg;
-            title.style.cssText = `
-            margin-bottom: 20px;
-            font-size: 20px;
-        `;
+            title.textContent = msg;
+            title.style.cssText = ``;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
-            messageElement.style.cssText = `
-            margin-bottom: 20px;
-            font-size: 16px;
-        `;
+            messageElement.style.cssText = ``;
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия
             const closeButton = document.createElement('div');
             closeButton.classList.add = ('closer');
-            closeButton.textContent = '✕';
-            closeButton.style.cssText = `
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #f0f0f0;
-        `;
+            closeButton.textContent = '';
+            closeButton.style.cssText = ``;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {
@@ -1792,11 +1697,137 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ');
+        console.log('333zzz test 000111222333!');
     </script>
 
 <?php
     get_template_part( 'template-parts/home/donation' );
 ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Checkbox toggle
+            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                    if (this.checked) {
+                        checkmark.classList.remove('hidden');
+                    } else {
+                        checkmark.classList.add('hidden');
+                    }
+                });
+            });
+
+            // Donation type toggle (Разово/Ежемесячно)
+            const typeToggleContainer = document.querySelector('[data-type-toggle]');
+            const typeButtons = document.querySelectorAll('.donation-form__toggle-button');
+
+            if (typeToggleContainer) {
+                typeToggleContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('donation-form__toggle-button')) {
+                        // Remove active class from all buttons
+                        typeButtons.forEach(btn => {
+                            btn.classList.remove('donation-form__toggle-button--active');
+                            btn.classList.add('donation-form__toggle-button--inactive');
+                        });
+
+                        // Add active class to clicked button
+                        e.target.classList.remove('donation-form__toggle-button--inactive');
+                        e.target.classList.add('donation-form__toggle-button--active');
+                    }
+                });
+            }
+
+            // Amount buttons and custom input
+            const amountContainer = document.querySelector('[data-amount-container]');
+            const amountButtons = document.querySelectorAll('[data-amount]');
+            const customAmountInput = document.querySelector('[data-custom-amount]');
+
+            if (amountContainer && customAmountInput) {
+                // Handle amount button clicks
+                amountButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Remove selected class from all buttons
+                        amountButtons.forEach(btn => {
+                            btn.classList.remove('donation-form__amount-button--selected');
+                        });
+
+                        // Add selected class to clicked button
+                        button.classList.add('donation-form__amount-button--selected');
+
+                        // Clear custom input
+                        customAmountInput.value = '';
+                    });
+                });
+
+                // Handle custom input focus
+                customAmountInput.addEventListener('focus', () => {
+                    // Remove selected class from all amount buttons
+                    amountButtons.forEach(btn => {
+                        btn.classList.remove('donation-form__amount-button--selected');
+                    });
+                });
+
+                // Allow only numbers in custom input
+                customAmountInput.addEventListener('input', (e) => {
+                    // Remove all non-digit characters except for the first character if it's a minus sign (for negative numbers)
+                    let value = e.target.value;
+                    // Allow only digits
+                    value = value.replace(/[^\d]/g, '');
+                    e.target.value = value;
+                });
+
+                // Prevent non-numeric input on keydown (optional extra protection)
+                customAmountInput.addEventListener('keydown', (e) => {
+                    // Allow: backspace, delete, tab, escape, enter, decimal point
+                    if ([46, 8, 9, 27, 13, 110, 190].includes(e.keyCode) ||
+                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                        (e.keyCode === 65 && e.ctrlKey === true) ||
+                        (e.keyCode === 67 && e.ctrlKey === true) ||
+                        (e.keyCode === 86 && e.ctrlKey === true) ||
+                        (e.keyCode === 88 && e.ctrlKey === true) ||
+                        // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        return;
+                    }
+
+                    // Ensure that it's a number and stop the keypress if not
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <style>
+        /* Styles for toggle buttons */
+        .donation-form__toggle-button--active {
+            background-color: #6063A6 !important;
+            color: #fff !important;
+        }
+
+        .donation-form__toggle-button--inactive {
+            background-color: transparent !important;
+            color: inherit !important;
+        }
+
+        /* Styles for amount buttons */
+        .donation-form__amount-button--selected {
+            background-color: #6063A6 !important;
+            color: #fff !important;
+        }
+        .donation-form__toggle-button{
+            cursor: pointer;
+        }
+        .donation-form__amount-button{
+            cursor: pointer;
+        }
+        .donation-form__custom-amount:focus-visible {
+            border-color: #6063A6;
+            box-shadow: 0 0 0 3px #6063A6;
+            outline: none;
+            border: 2px solid #fff;
+        }
+    </style>
 <?php
 get_footer();
