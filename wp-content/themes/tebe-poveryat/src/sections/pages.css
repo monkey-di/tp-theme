@@ -1029,8 +1029,6 @@ a.donation-adv span{
     #fbuilder #dateInputField{
         width: 100% !important;
     }
-}
-@media(max-width:1200px){
     #fbuilder{
         padding:0 20px;
     }
