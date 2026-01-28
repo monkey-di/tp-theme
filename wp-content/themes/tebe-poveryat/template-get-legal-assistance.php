@@ -1327,29 +1327,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 10000;
-            `;
 
             // Создаем содержимое модального окно
             const modalContent = document.createElement('div');
-            modalContent.style.cssText = `
-                background: white;
-                padding: 20px;
-                border-radius: 5px;
-                max-width: 500px;
-                width: 90%;
-                position: relative;
-            `;
 
             // Добавляем заголовок
             const title = document.createElement('h3');
@@ -1363,26 +1343,17 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
             title.innerHTML = msg;
-            title.style.cssText = `
-                margin-top: 0;
-                color: #333;
-            `;
             modalContent.appendChild(title);
 
             // Добавляем сообщение
             const messageElement = document.createElement('p');
             messageElement.textContent = message;
-            messageElement.style.cssText = `
-                color: #666;
-                line-height: 1.5;
-            `;
             modalContent.appendChild(messageElement);
 
             // Добавляем кнопку закрытия (closer)
             const closeButton = document.createElement('div');
             closeButton.classList.add('closer');
             closeButton.textContent = '';
-            closeButton.style.cssText = ``;
 
             // Обработчик закрытия модального окна
             closeButton.addEventListener('click', function() {
