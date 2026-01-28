@@ -58,6 +58,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectedTimeValue = '';
         let selectionObserver = null;
         let dateInputObserver = null;
+        let formScrollPosition = 0; // Для сохранения позиции прокрутки
 
         // Константы для ключей sessionStorage
         const STORAGE_KEYS = {
@@ -65,6 +66,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             TIME: 'selectedTimeValue',
             HAS_SUCCESS: 'hasSuccessRedirect'
         };
+
+        // Функция для сохранения позиции прокрутки
+        function saveScrollPosition() {
+            formScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        }
+
+        // Функция для восстановления позиции прокрутки
+        function restoreScrollPosition() {
+            if (formScrollPosition > 0) {
+                window.scrollTo({
+                    top: formScrollPosition,
+                    behavior: 'auto'
+                });
+            }
+        }
 
         // Функция для сохранения данных в sessionStorage
         function saveToSessionStorage() {
@@ -648,6 +664,38 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return false;
         }
 
+        // Новая функция для предотвращения подпрыгивания при выборе времени
+        function preventTimeSlotJump() {
+            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+            if (!slotsCalendar) return;
+
+            // Обработчик для кликов на слоты времени
+            slotsCalendar.addEventListener('click', function(e) {
+                const target = e.target;
+
+                // Проверяем, кликнули ли на слот времени
+                if (target.tagName === 'A' &&
+                    (target.closest('.availableslot') || target.closest('.htmlUsed'))) {
+
+                    // Сохраняем текущую позицию прокрутки
+                    saveScrollPosition();
+
+                    // Отменяем стандартное поведение ссылки
+                    e.preventDefault();
+
+                    // Добавляем небольшую задержку перед восстановлением позиции прокрутки
+                    setTimeout(() => {
+                        restoreScrollPosition();
+                    }, 10);
+
+                    // Имитируем клик для работы плагина
+                    setTimeout(() => {
+                        target.click();
+                    }, 20);
+                }
+            });
+        }
+
         // Наблюдатель за появлением .slots span и изменением .currentSelection
         function startSelectionObservation() {
             if (selectionObserver) {
@@ -726,6 +774,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Обновляем начальные значения
                 updateSelectedDate();
                 updateSelectedTime();
+
+                // Добавляем обработчик для предотвращения подпрыгивания
+                preventTimeSlotJump();
             }
         }
 
@@ -763,21 +814,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
-                </label>
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
-                </label>
-            `;
+            <label class="donation-form__checkbox-label">
+                <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                <span class="donation-form__checkbox-custom">
+                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                </span>
+                <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+            </label>
+            <label class="donation-form__checkbox-label">
+                <input type="checkbox" class="hidden donation-form__checkbox-input" />
+                <span class="donation-form__checkbox-custom">
+                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                </span>
+                <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
+            </label>
+        `;
 
             // Добавляем контейнер в .anketa-col-1
             anketaCol1.appendChild(checkboxesContainer);
@@ -1225,6 +1276,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
                         console.log('Блок .slotsCalendarfieldname1_1 показан');
+
+                        // Сохраняем позицию прокрутки перед показом календаря
+                        saveScrollPosition();
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1449,6 +1503,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
                                 startSelectionObservation();
+                                preventTimeSlotJump(); // Добавляем предотвращение подпрыгивания
                             }, 100);
                             changesMade = true;
                         }
@@ -1473,8 +1528,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
 
                         // Проверяем, является ли узел или содержит ли .anketa-col-2
-                        if ((node.nodeType === 1 && node.classList && node.classList.contains('anketa-col-2')) ||
-                            (node.querySelector && node.querySelector('.anketa-col-2'))) {
+                        (node.querySelector && node.querySelector('.anketa-col-2'))) {
                             setTimeout(() => {
                                 addCallButtonStyles();
                                 addCallButton();
@@ -1490,6 +1544,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 initSlotsCalendar();
                                 startSelectionObservation();
+                                preventTimeSlotJump(); // Добавляем предотвращение подпрыгивания
                             }, 100);
                             changesMade = true;
                         }
@@ -1527,6 +1582,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             decorateSlotsCalendar();
                             wrapSlotsContent();
                             startSelectionObservation();
+                            preventTimeSlotJump(); // Добавляем предотвращение подпрыгивания
                         }, 50);
                         changesMade = true;
                     }
@@ -1619,6 +1675,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     addCallButton();
                     initSlotsCalendar();
                     startSelectionObservation();
+                    preventTimeSlotJump(); // Добавляем предотвращение подпрыгивания
                     updateSelectedDate();
                     updateSelectedTime();
                     addClassesToAhbM4();
@@ -1655,6 +1712,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Запускаем наблюдение за выбором даты и времени
             startSelectionObservation();
+
+            // Добавляем предотвращение подпрыгивания при выборе времени
+            preventTimeSlotJump();
 
             // Обновляем начальные значения
             updateSelectedDate();
@@ -1697,7 +1757,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('zzz test 000111222333!');
+        console.log('ТЕСТ');
     </script>
 
 <?php
