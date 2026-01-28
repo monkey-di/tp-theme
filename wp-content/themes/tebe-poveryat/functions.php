@@ -170,3 +170,65 @@ require_once get_template_directory() . '/inc/blog-ajax.php';
  * Custom blocks with ACF-fields for Gutenberg editor
  */
 require_once get_template_directory() . '/inc/custom-blocks.php';
+
+/**
+ Меню юр. консультаций
+ * */
+add_action('admin_menu', 'customize_legal_menu_simple', 100);
+
+function customize_legal_menu_simple() {
+    // скрыть оригинальный пункт
+    remove_menu_page('cp_apphourbooking');
+
+    // родительский пункт как разделитель
+    add_menu_page(
+        '',
+        'Юридическая консультация',
+        'manage_options',
+        'legal-consultation-divider',
+        '',
+        'dashicons-businesswoman',
+        25
+    );
+
+    global $menu;
+    foreach ($menu as $key => $item) {
+        if ($item[2] == 'legal-consultation-divider') {
+            $menu[$key][0] = '<span style="color: #fff; font-weight: 600; padding: 8px 0; display: block;">' . $item[0] . '</span>';
+            $menu[$key][4] = (isset($menu[$key][4]) ? $menu[$key][4] . ' ' : '') . 'wp-menu-separator';
+            break;
+        }
+    }
+
+    //  заявки
+    add_menu_page(
+        'Заявки на юр. консультацию',
+        '→ Заявки',
+        'manage_options',
+        'legal-consultation-requests',
+        'redirect_to_legal_requests_simple',
+        'dashicons-clipboard',
+        26
+    );
+
+    // календарь
+    add_menu_page(
+        'Календарь юр. консультаций',
+        '→ Календарь',
+        'manage_options',
+        'legal-consultation-calendar',
+        'redirect_to_legal_calendar_simple',
+        'dashicons-calendar-alt',
+        27
+    );
+}
+
+function redirect_to_legal_requests_simple() {
+    wp_redirect(admin_url('admin.php?page=cp_apphourbooking&cal=2&list=1'));
+    exit;
+}
+
+function redirect_to_legal_calendar_simple() {
+    wp_redirect(admin_url('admin.php?page=cp_apphourbooking&cal=2&schedule=1&calendarview=1'));
+    exit;
+}
