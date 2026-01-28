@@ -1081,6 +1081,9 @@ a.donation-adv span{
     .page-head-wrapper{
         padding-bottom:0;
     }
+    #dateInputField{
+        width: 100% !important;
+    }
 }
 @media(max-width:520px){
     .blog-single{
