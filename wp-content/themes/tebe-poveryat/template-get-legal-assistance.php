@@ -1311,7 +1311,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Создаем модальное окно
             const modal = document.createElement('div');
             modal.id = 'successModal';
-            modal.classList.add = ('closer');
             modal.style.cssText = ``;
 
             // Создаем содержимое модального окно
@@ -1322,11 +1321,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const title = document.createElement('h3');
             let msg = 'Вы записаны на юридическую консультацию';
             if (selectedDateValue) {
-                msg += ` ${selectedDateValue}`;
+                msg += ` <span>${selectedDateValue}</span>`;
 
                 // Добавляем время, если оно есть
                 if (selectedTimeValue) {
-                    msg += ` ${selectedTimeValue}`;
+                    msg += ` <span>${selectedTimeValue}</span>`;
                 }
             }
             title.textContent = msg;
@@ -1341,6 +1340,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Добавляем кнопку закрытия
             const closeButton = document.createElement('div');
+            closeButton.classList.add = ('closer');
             closeButton.textContent = '';
             closeButton.style.cssText = ``;
 
@@ -1350,14 +1350,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (modal) {
                     document.body.removeChild(modal);
                     console.log('Модальное окно закрыто');
-                }
-            });
-
-            // Также закрываем по клику на фон
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    document.body.removeChild(modal);
-                    console.log('Модальное окно закрыто по клику на фон');
                 }
             });
 
