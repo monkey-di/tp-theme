@@ -66,6 +66,194 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             HAS_SUCCESS: 'hasSuccessRedirect'
         };
 
+        // Функция для валидации email полей
+        function validateEmailFields() {
+            const email1 = document.getElementById('email_1');
+            const email2 = document.getElementById('fieldname7_1');
+            let isValid = true;
+
+            // Если хотя бы одно поле пустое - не проверяем совпадение (это сделает валидация обязательных полей)
+            if (!email1 || !email2 || !email1.value.trim() || !email2.value.trim()) {
+                // Убираем ошибки совпадения email, если они есть
+                hideEmailMismatchError();
+                return true;
+            }
+
+            // Проверяем совпадение email
+            if (email1.value.trim() !== email2.value.trim()) {
+                // Показываем ошибку под вторым email полем
+                showEmailMismatchError();
+                isValid = false;
+            } else {
+                // Убираем ошибку, если email совпадают
+                hideEmailMismatchError();
+            }
+
+            return isValid;
+        }
+
+        // Функция для показа ошибки несовпадения email
+        function showEmailMismatchError() {
+            const email2 = document.getElementById('fieldname7_1');
+            if (!email2) return;
+
+            const errorId = 'fieldname7_1-email-mismatch';
+            let errorElement = document.getElementById(errorId);
+
+            if (!errorElement) {
+                // Создаем элемент ошибки
+                errorElement = document.createElement('div');
+                errorElement.id = errorId;
+                errorElement.className = 'cpefb_error message';
+                errorElement.textContent = 'Электронная почта не совпадает';
+                errorElement.style.color = '#ff0000';
+                errorElement.style.fontSize = '12px';
+                errorElement.style.marginTop = '5px';
+
+                // Вставляем ошибку после поля
+                const fieldContainer = email2.closest('.fields') || email2.parentNode;
+                // Ищем существующую ошибку обязательного поля и вставляем перед ней или после нее
+                const existingError = fieldContainer.querySelector('#fieldname7_1-error');
+                if (existingError) {
+                    fieldContainer.insertBefore(errorElement, existingError);
+                } else {
+                    fieldContainer.appendChild(errorElement);
+                }
+
+                // Добавляем красную рамку полю
+                email2.style.borderColor = '#ff0000';
+            } else {
+                errorElement.style.display = 'block';
+                email2.style.borderColor = '#ff0000';
+            }
+        }
+
+        // Функция для скрытия ошибки несовпадения email
+        function hideEmailMismatchError() {
+            const errorId = 'fieldname7_1-email-mismatch';
+            const errorElement = document.getElementById(errorId);
+            const email2 = document.getElementById('fieldname7_1');
+
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+
+            // Восстанавливаем цвет рамки только если нет других ошибок
+            if (email2) {
+                const requiredError = document.getElementById('fieldname7_1-error');
+                if (!requiredError || requiredError.style.display === 'none') {
+                    email2.style.borderColor = '';
+                }
+            }
+        }
+
+        // Обновленная функция для проверки всех обязательных полей (включая email валидацию)
+        function validateAllRequiredFields() {
+            const requiredFields = document.querySelectorAll('.required');
+            let allValid = true;
+
+            // Сначала проверяем все обязательные поля
+            requiredFields.forEach(field => {
+                // Пропускаем скрытые поля
+                if (field.type === 'hidden') {
+                    return;
+                }
+
+                const isValid = validateRequiredField(field);
+                if (!isValid) {
+                    allValid = false;
+                }
+            });
+
+            // Затем проверяем совпадение email
+            const emailValid = validateEmailFields();
+            if (!emailValid) {
+                allValid = false;
+            }
+
+            return allValid;
+        }
+
+        // Функция для проверки одного обязательного поля (без изменений, но добавим вызов валидации email при изменении)
+        function validateRequiredField(field) {
+            let isValid = true;
+
+            // Пропускаем скрытые поля
+            if (field.type === 'hidden') {
+                return true;
+            }
+
+            // Проверяем текстовые поля и textarea
+            if ((field.tagName === 'INPUT' && field.type === 'text') ||
+                field.tagName === 'TEXTAREA' ||
+                field.tagName === 'SELECT') {
+                if (!field.value || field.value.trim() === '') {
+                    isValid = false;
+                }
+            }
+
+            // Для checkbox проверяем checked
+            if (field.type === 'checkbox') {
+                if (!field.checked) {
+                    isValid = false;
+                }
+            }
+
+            // Для радио-кнопок проверяем хотя бы одну выбранную
+            if (field.type === 'radio') {
+                const name = field.name;
+                const group = document.querySelectorAll(`[name="${name}"]`);
+                let groupChecked = false;
+
+                group.forEach(item => {
+                    if (item.checked) {
+                        groupChecked = true;
+                    }
+                });
+
+                if (!groupChecked) {
+                    isValid = false;
+                }
+            }
+
+            // Показываем или скрываем ошибку
+            const errorId = field.id + '-error';
+            let errorElement = document.getElementById(errorId);
+
+            if (!isValid) {
+                if (!errorElement) {
+                    // Создаем элемент ошибки
+                    errorElement = document.createElement('div');
+                    errorElement.id = errorId;
+                    errorElement.className = 'cpefb_error message';
+                    errorElement.textContent = 'Обязательное поле';
+                    errorElement.style.color = '#ff0000';
+                    errorElement.style.fontSize = '12px';
+                    errorElement.style.marginTop = '5px';
+
+                    // Вставляем ошибку после поля
+                    const fieldContainer = field.closest('.fields') || field.parentNode;
+                    fieldContainer.appendChild(errorElement);
+
+                    // Добавляем красную рамку полю
+                    field.style.borderColor = '#ff0000';
+                } else {
+                    errorElement.style.display = 'block';
+                    field.style.borderColor = '#ff0000';
+                }
+            } else if (errorElement) {
+                errorElement.style.display = 'none';
+                field.style.borderColor = '';
+            }
+
+            // Если это email поле, дополнительно проверяем совпадение email
+            if (field.id === 'email_1' || field.id === 'fieldname7_1') {
+                validateEmailFields();
+            }
+
+            return isValid;
+        }
+
         // Функция для сохранения данных в sessionStorage
         function saveToSessionStorage() {
             try {
@@ -144,6 +332,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (form) {
                 const originalSubmit = form.onsubmit;
                 form.onsubmit = function(e) {
+                    // Проверяем валидность перед отправкой
+                    if (!validateAllRequiredFields()) {
+                        e.preventDefault();
+                        console.log('Форма не отправлена: не все поля валидны');
+                        return false;
+                    }
+
                     console.log('Форма отправляется, сохраняем данные в sessionStorage');
                     saveToSessionStorage();
                     sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
@@ -153,6 +348,24 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         return originalSubmit.call(this, e);
                     }
                 };
+            }
+        }
+
+        // Функция для настройки валидации email полей в реальном времени
+        function setupEmailValidation() {
+            const email1 = document.getElementById('email_1');
+            const email2 = document.getElementById('fieldname7_1');
+
+            if (email1 && email2) {
+                // Добавляем обработчики для проверки совпадения при вводе
+                email1.addEventListener('input', validateEmailFields);
+                email2.addEventListener('input', validateEmailFields);
+
+                // Также добавляем обработчики для blur события
+                email1.addEventListener('blur', validateEmailFields);
+                email2.addEventListener('blur', validateEmailFields);
+
+                console.log('Обработчики валидации email установлены');
             }
         }
 
@@ -486,101 +699,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             });
 
             return uiWidgets.length > 0;
-        }
-
-        // Функция для проверки одного обязательного поля
-        function validateRequiredField(field) {
-            let isValid = true;
-
-            // Пропускаем скрытые поля
-            if (field.type === 'hidden') {
-                return true;
-            }
-
-            // Проверяем текстовые поля и textarea
-            if ((field.tagName === 'INPUT' && field.type === 'text') ||
-                field.tagName === 'TEXTAREA' ||
-                field.tagName === 'SELECT') {
-                if (!field.value || field.value.trim() === '') {
-                    isValid = false;
-                }
-            }
-
-            // Для checkbox проверяем checked
-            if (field.type === 'checkbox') {
-                if (!field.checked) {
-                    isValid = false;
-                }
-            }
-
-            // Для радио-кнопок проверяем хотя бы одну выбранную
-            if (field.type === 'radio') {
-                const name = field.name;
-                const group = document.querySelectorAll(`[name="${name}"]`);
-                let groupChecked = false;
-
-                group.forEach(item => {
-                    if (item.checked) {
-                        groupChecked = true;
-                    }
-                });
-
-                if (!groupChecked) {
-                    isValid = false;
-                }
-            }
-
-            // Показываем или скрываем ошибку
-            const errorId = field.id + '-error';
-            let errorElement = document.getElementById(errorId);
-
-            if (!isValid) {
-                if (!errorElement) {
-                    // Создаем элемент ошибки
-                    errorElement = document.createElement('div');
-                    errorElement.id = errorId;
-                    errorElement.className = 'cpefb_error message';
-                    errorElement.textContent = 'Обязательное поле';
-                    errorElement.style.color = '#ff0000';
-                    errorElement.style.fontSize = '12px';
-                    errorElement.style.marginTop = '5px';
-
-                    // Вставляем ошибку после поля
-                    const fieldContainer = field.closest('.fields') || field.parentNode;
-                    fieldContainer.appendChild(errorElement);
-
-                    // Добавляем красную рамку полю
-                    field.style.borderColor = '#ff0000';
-                } else {
-                    errorElement.style.display = 'block';
-                    field.style.borderColor = '#ff0000';
-                }
-            } else if (errorElement) {
-                errorElement.style.display = 'none';
-                field.style.borderColor = '';
-            }
-
-            return isValid;
-        }
-
-        // Функция для проверки всех обязательных полей
-        function validateAllRequiredFields() {
-            const requiredFields = document.querySelectorAll('.required');
-            let allValid = true;
-
-            requiredFields.forEach(field => {
-                // Пропускаем скрытые поля
-                if (field.type === 'hidden') {
-                    return;
-                }
-
-                const isValid = validateRequiredField(field);
-                if (!isValid) {
-                    allValid = false;
-                }
-            });
-
-            return allValid;
         }
 
         // Функция для обновления выбранной даты из .slots span
@@ -1232,7 +1350,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 e.stopPropagation();
                 console.log('Клик по кнопке "Отправить заявку"');
 
-                // Проверяем все обязательные поля
+                // Проверяем все обязательные поля (включая email валидацию)
                 const allValid = validateAllRequiredFields();
 
                 if (allValid) {
@@ -1559,6 +1677,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }, 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, является ли узел или содержит ли email поля
+                        if ((node.nodeType === 1 && (node.id === 'email_1' || node.id === 'fieldname7_1')) ||
+                            (node.querySelector && (node.querySelector('#email_1') || node.querySelector('#fieldname7_1')))) {
+                            setTimeout(() => {
+                                setupEmailValidation();
+                            }, 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -1652,6 +1779,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }, 50);
                         changesMade = true;
                     }
+
+                    // Проверяем, появились ли email поля
+                    if (mutation.target.querySelector &&
+                        (mutation.target.querySelector('#email_1') || mutation.target.querySelector('#fieldname7_1'))) {
+                        setTimeout(() => {
+                            setupEmailValidation();
+                        }, 50);
+                        changesMade = true;
+                    }
                 }
 
                 // Отслеживаем изменения классов для выбора времени
@@ -1686,6 +1822,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     startDateInputObservation();
                     updateDateInputFromCalendar();
                     setupFormSubmitHandler();
+                    setupEmailValidation();
                 }, 100);
             }
         });
@@ -1741,6 +1878,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Настраиваем обработчик отправки формы
             setupFormSubmitHandler();
 
+            // Настраиваем валидацию email полей
+            setupEmailValidation();
+
             // Проверяем и показываем модальное окно, если нужно
             checkAndShowSuccessModal();
         }
@@ -1759,7 +1899,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ6');
+        console.log('ТЕСТ7');
     </script>
 
 <?php
