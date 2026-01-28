@@ -1012,6 +1012,23 @@ a.donation-adv span{
         position: relative;
         z-index: 8;
     }
+
+    #fbuilder{
+        padding:0 20px;
+    }
+    .fieldCalendar{
+        max-width: 100%;
+    }
+    .anketa-col-2{
+        display: flex;
+        flex-direction: column;
+    }
+    .anketa-col-2 .fields{
+        z-index: 90;
+    }
+    #fbuilder #dateInputField{
+        width: 100% !important;
+    }
 }
 @media(max-width:1200px){
     #fbuilder{
