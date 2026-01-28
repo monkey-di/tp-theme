@@ -195,7 +195,7 @@ function customize_legal_menu_simple() {
     add_menu_page(
         'Календарь юр. консультаций',
         '→ Календарь юр. консультаций',
-        'edit_posts',
+        'edit_others_posts',
         '/wp-admin/admin.php?page=cp_apphourbooking&cal=2&schedule=1&calendarview=1',
         'redirect_to_legal_calendar_simple',
         'dashicons-calendar-alt',
