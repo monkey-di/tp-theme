@@ -118,6 +118,8 @@
 .post-content{
     padding: 16px;
     background: #fff;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 .post-thumbnail img{
     border-top-left-radius: 20px;
