@@ -50,7 +50,7 @@
 .block-slider-text_slider-inner .swiper-pagination{
     bottom: 0;
     position: absolute;
-    top: auto;
+    top: auto !important;
     background: #fff;
     border-radius: 40px;
 }
