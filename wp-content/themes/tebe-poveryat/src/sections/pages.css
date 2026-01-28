@@ -773,7 +773,7 @@
     backdrop-filter: blur(10px);
 }
 #successModal div{
-    margin-top: 20vh;
+    margin-top: 120px;
     width: 454px;
     margin-left: calc(50% - 454px / 2);
     background: #FEF1EC;
