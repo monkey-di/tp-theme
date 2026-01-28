@@ -69,9 +69,10 @@
     height: 40px;
     margin-left: 8px;
     margin-right: 24px;
+    transform: rotate(180deg);
 }
 .faq-spoiler-content details[open] summary:after{
-    transform: rotate(180deg);
+    transform: rotate(0);
 }
 .faq-spoiler-button{
     text-align: center;

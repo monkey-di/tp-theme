@@ -1111,6 +1111,10 @@ a.donation-adv span{
     }
 }
 @media(max-width:520px){
+    .load-more-btn{
+        padding: 16px 0;
+        width: 100%;
+    }
     #fbuilder .donation-form__checkboxes{
         padding-bottom: 100px;
         bottom: -50px;
