@@ -746,6 +746,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
 
         // Функция для добавления обязательных чекбоксов в .anketa-col-1
+        // Функция для добавления обязательных чекбоксов в .anketa-col-1
         function addRequiredCheckboxes() {
             const anketaCol1 = document.querySelector('.anketa-col-1');
             if (!anketaCol1) return false;
@@ -756,6 +757,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             // Проверяем, не добавлены ли уже новые чекбоксы
             if (anketaCol1.querySelector('.donation-form__checkboxes')) {
+                // Если чекбоксы уже есть, инициализируем обработчики
+                initializeCheckboxHandlers();
                 return true;
             }
 
@@ -763,27 +766,58 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
-                </label>
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" class="hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
-                </label>
-            `;
+        <label class="donation-form__checkbox-label">
+            <input type="checkbox" class="hidden donation-form__checkbox-input" />
+            <span class="donation-form__checkbox-custom">
+                <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+        </label>
+        <label class="donation-form__checkbox-label">
+            <input type="checkbox" class="hidden donation-form__checkbox-input" />
+            <span class="donation-form__checkbox-custom">
+                <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            </span>
+            <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
+        </label>
+    `;
 
             // Добавляем контейнер в .anketa-col-1
             anketaCol1.appendChild(checkboxesContainer);
 
             console.log('Новые чекбоксы добавлены в .anketa-col-1');
+
+            // Инициализируем обработчики чекбоксов
+            initializeCheckboxHandlers();
+
             return true;
+        }
+
+        // Функция для инициализации обработчиков чекбоксов
+        function initializeCheckboxHandlers() {
+            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
+                // Удаляем существующие обработчики, чтобы избежать дублирования
+                const newCheckbox = checkbox.cloneNode(true);
+                checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+
+                // Добавляем новый обработчик
+                newCheckbox.addEventListener('change', function() {
+                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                    if (this.checked) {
+                        checkmark.classList.remove('hidden');
+                    } else {
+                        checkmark.classList.add('hidden');
+                    }
+                });
+
+                // Инициализируем начальное состояние (скрываем иконку, так как по умолчанию чекбокс не отмечен)
+                const checkmark = newCheckbox.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                if (!newCheckbox.checked) {
+                    checkmark.classList.add('hidden');
+                }
+            });
+
+            console.log('Обработчики чекбоксов инициализированы');
         }
 
         // Функция для добавления текстового поля даты в .anketa-col-2
@@ -1703,131 +1737,5 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 <?php
     get_template_part( 'template-parts/home/donation' );
 ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Checkbox toggle
-            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
-                    if (this.checked) {
-                        checkmark.classList.remove('hidden');
-                    } else {
-                        checkmark.classList.add('hidden');
-                    }
-                });
-            });
-
-            // Donation type toggle (Разово/Ежемесячно)
-            const typeToggleContainer = document.querySelector('[data-type-toggle]');
-            const typeButtons = document.querySelectorAll('.donation-form__toggle-button');
-
-            if (typeToggleContainer) {
-                typeToggleContainer.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('donation-form__toggle-button')) {
-                        // Remove active class from all buttons
-                        typeButtons.forEach(btn => {
-                            btn.classList.remove('donation-form__toggle-button--active');
-                            btn.classList.add('donation-form__toggle-button--inactive');
-                        });
-
-                        // Add active class to clicked button
-                        e.target.classList.remove('donation-form__toggle-button--inactive');
-                        e.target.classList.add('donation-form__toggle-button--active');
-                    }
-                });
-            }
-
-            // Amount buttons and custom input
-            const amountContainer = document.querySelector('[data-amount-container]');
-            const amountButtons = document.querySelectorAll('[data-amount]');
-            const customAmountInput = document.querySelector('[data-custom-amount]');
-
-            if (amountContainer && customAmountInput) {
-                // Handle amount button clicks
-                amountButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        // Remove selected class from all buttons
-                        amountButtons.forEach(btn => {
-                            btn.classList.remove('donation-form__amount-button--selected');
-                        });
-
-                        // Add selected class to clicked button
-                        button.classList.add('donation-form__amount-button--selected');
-
-                        // Clear custom input
-                        customAmountInput.value = '';
-                    });
-                });
-
-                // Handle custom input focus
-                customAmountInput.addEventListener('focus', () => {
-                    // Remove selected class from all amount buttons
-                    amountButtons.forEach(btn => {
-                        btn.classList.remove('donation-form__amount-button--selected');
-                    });
-                });
-
-                // Allow only numbers in custom input
-                customAmountInput.addEventListener('input', (e) => {
-                    // Remove all non-digit characters except for the first character if it's a minus sign (for negative numbers)
-                    let value = e.target.value;
-                    // Allow only digits
-                    value = value.replace(/[^\d]/g, '');
-                    e.target.value = value;
-                });
-
-                // Prevent non-numeric input on keydown (optional extra protection)
-                customAmountInput.addEventListener('keydown', (e) => {
-                    // Allow: backspace, delete, tab, escape, enter, decimal point
-                    if ([46, 8, 9, 27, 13, 110, 190].includes(e.keyCode) ||
-                        // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-                        (e.keyCode === 65 && e.ctrlKey === true) ||
-                        (e.keyCode === 67 && e.ctrlKey === true) ||
-                        (e.keyCode === 86 && e.ctrlKey === true) ||
-                        (e.keyCode === 88 && e.ctrlKey === true) ||
-                        // Allow: home, end, left, right
-                        (e.keyCode >= 35 && e.keyCode <= 39)) {
-                        return;
-                    }
-
-                    // Ensure that it's a number and stop the keypress if not
-                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                        e.preventDefault();
-                    }
-                });
-            }
-        });
-    </script>
-
-    <style>
-        /* Styles for toggle buttons */
-        .donation-form__toggle-button--active {
-            background-color: #6063A6 !important;
-            color: #fff !important;
-        }
-
-        .donation-form__toggle-button--inactive {
-            background-color: transparent !important;
-            color: inherit !important;
-        }
-
-        /* Styles for amount buttons */
-        .donation-form__amount-button--selected {
-            background-color: #6063A6 !important;
-            color: #fff !important;
-        }
-        .donation-form__toggle-button{
-            cursor: pointer;
-        }
-        .donation-form__amount-button{
-            cursor: pointer;
-        }
-        .donation-form__custom-amount:focus-visible {
-            border-color: #6063A6;
-            box-shadow: 0 0 0 3px #6063A6;
-            outline: none;
-            border: 2px solid #fff;
-        }
-    </style>
 <?php
 get_footer();
