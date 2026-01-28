@@ -786,6 +786,27 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return true;
         }
 
+        function initializeCheckboxHandlers() {
+            document.querySelectorAll('.donation-form__checkbox-input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const checkmark = this.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                    if (this.checked) {
+                        checkmark.classList.remove('hidden');
+                    } else {
+                        checkmark.classList.add('hidden');
+                    }
+                });
+
+                // Инициализируем начальное состояние
+                const checkmark = checkbox.nextElementSibling.querySelector('.donation-form__checkbox-icon');
+                if (!checkbox.checked) {
+                    checkmark.classList.add('hidden');
+                }
+            });
+
+            console.log('Обработчики чекбоксов инициализированы');
+        }
+
         // Функция для добавления текстового поля даты в .anketa-col-2
         function addDateInputField() {
             const anketaCol2 = document.querySelector('.anketa-col-2');
