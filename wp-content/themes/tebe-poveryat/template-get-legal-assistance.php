@@ -1867,65 +1867,30 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
         })();
 //хардресет для починки прыгающего контенера времени
-        function hardResetSlotsContent() {
+        function temporarilyDisableScroll() {
             const slotsContent = document.querySelector('.slots-content');
             if (!slotsContent) return;
 
-            // 1. Сохраняем ВСЁ содержимое и позицию прокрутки
-            const contentHtml = slotsContent.innerHTML;
-            const scrollPos = slotsContent.scrollTop;
-            const parent = slotsContent.parentNode;
+            // Сохраняем текущий стиль
+            const originalStyle = slotsContent.getAttribute('style') || '';
 
-            // 2. Удаляем оригинальный элемент из DOM
-            slotsContent.remove();
+            // Блокируем ВСЕ возможные взаимодействия и прокрутку
+            slotsContent.style.cssText = `
+        pointer-events: none !important;
+        overflow: hidden !important;
+        scroll-behavior: auto !important;
+        ${originalStyle}
+    `;
 
-            // 3. Создаем идеальную копию
-            const newSlotsContent = document.createElement('div');
-            newSlotsContent.className = 'slots-content';
-            newSlotsContent.innerHTML = contentHtml;
-
-            // 4. Восстанавливаем в DOM
-            parent.appendChild(newSlotsContent);
-
-            // 5. Восстанавливаем позицию прокрутки мгновенно и с задержкой
-            newSlotsContent.scrollTop = scrollPos;
-            setTimeout(() => { newSlotsContent.scrollTop = scrollPos; }, 0);
-            setTimeout(() => { newSlotsContent.scrollTop = scrollPos; }, 50);
-
-            console.log('Hard reset .slots-content выполнен');
-            return newSlotsContent;
+            // Включаем обратно через короткое время
+            setTimeout(() => {
+                slotsContent.style.cssText = originalStyle;
+                // Принудительно восстанавливаем прокрутку
+                if (savedScrollPosition) {
+                    slotsContent.scrollTop = savedScrollPosition;
+                }
+            }, 150); // Время, достаточное для завершения всех анимаций плагина
         }
-
-        // Интегрируем функцию в обработчик кликов
-        (function() {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initHardReset);
-            } else {
-                initHardReset();
-            }
-
-            function initHardReset() {
-                document.addEventListener('click', function(e) {
-                    // Если клик по слоту времени
-                    if (e.target.closest('.availableslot, .htmlUsed')) {
-                        //console.log('Клик по слоту, запускаем hard reset');
-                        // Даем плагину мгновение на реакцию, затем сбрасываем
-                        setTimeout(() => {
-                            const newContainer = hardResetSlotsContent();
-                            // Важно: нужно повторно привязать обработчики к новым элементам
-                            if (newContainer) {
-                                reattachSlotHandlers(newContainer);
-                            }
-                        }, 10); // Меньшая задержка
-                    }
-                }, true); // Используем фазу захвата
-            }
-
-            function reattachSlotHandlers(container) {
-                // Если вам нужны особые обработчики на слотах, добавьте их здесь
-                console.log('Обработчики перепривязаны к новому контейнеру');
-            }
-        })();
         console.log('хр');
     </script>
     <script>
