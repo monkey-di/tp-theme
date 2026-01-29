@@ -1613,19 +1613,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
         // Функция для формирования корректного сообщения
         function getSuccessMessage() {
-            let message = 'Вы записаны на юридическую консультацию';
-
-            // Добавляем дату, если она есть
-            if (selectedDateValue) {
-                message += ` ${selectedDateValue}`;
-
-                // Добавляем время, если оно есть
-                if (selectedTimeValue) {
-                    message += ` в ${selectedTimeValue}`;
-                }
-            } else {
-                message += '.';
-            }
+            let message = 'Специалист свяжется с вами для уточнения деталей.';
 
             return message;
         }
