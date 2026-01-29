@@ -549,6 +549,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для оборачивания availableslot и htmlUsed в slots-content
         function wrapSlotsContent() {
+            // Ищем все блоки .slots
             const slotsBlocks = document.querySelectorAll('.slots');
 
             slotsBlocks.forEach(slotsBlock => {
@@ -563,6 +564,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         slotsContent.className = 'slots-content';
 
                         // Находим элемент после которого нужно вставить .slots-content
+                        // Это будет либо <br>, либо <span>, если <br> нет
                         let insertAfterElement = slotsBlock.querySelector('br');
                         if (!insertAfterElement) {
                             insertAfterElement = slotsBlock.querySelector('span');
@@ -579,6 +581,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         // Перемещаем все найденные элементы в slotsContent
                         slotsToWrap.forEach(slot => {
+                            // Проверяем, что элемент еще не находится внутри другого slots-content
+                            // (на случай, если уже обернуты в другом месте)
                             if (!slot.closest('.slots-content')) {
                                 slotsContent.appendChild(slot);
                             }
@@ -586,12 +590,25 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         console.log('.availableslot и .htmlUsed обернуты в .slots-content');
                     }
+                } else {
+                    // Если slots-content уже существует, проверяем, не появились ли новые элементы вне его
+                    const slotsContent = slotsBlock.querySelector('.slots-content');
+                    const slotsToWrap = slotsBlock.querySelectorAll('.availableslot:not(.slots-content .availableslot), .htmlUsed:not(.slots-content .htmlUsed)');
+
+                    if (slotsToWrap.length > 0) {
+                        slotsToWrap.forEach(slot => {
+                            if (!slot.closest('.slots-content')) {
+                                slotsContent.appendChild(slot);
+                                console.log('Новый слот добавлен в существующий .slots-content');
+                            }
+                        });
+                    }
                 }
             });
 
             return slotsBlocks.length > 0;
         }
-//стабилизатор формы
+        //стабилизатор формы
 
         // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
@@ -1367,7 +1384,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         }
 
         // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
-        // Функция для добавления кнопки "Отправить заявку" (обновленная)
         function addCallButton() {
             const anketaCol2 = document.querySelector('.anketa-col-2');
             if (!anketaCol2) return false;
@@ -1381,19 +1397,22 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 callButton.type = 'button';
                 callButton.className = 'call-button';
                 callButton.textContent = 'Отправить заявку';
-                callButton.disabled = false;
+                callButton.disabled = false; // Кнопка всегда активна
 
                 // Добавляем кнопку в конец блока .anketa-col-2
                 anketaCol2.appendChild(callButton);
+
                 console.log('Кнопка "Отправить заявку" добавлена');
             }
 
-            // Обработчик клика для кнопки - ИСПРАВЛЕННАЯ ВЕРСИЯ
-            callButton.onclick = null; // Очищаем старые обработчики
+            // Обработчик клика для кнопки - ФИКСИРУЕМ ПРОБЛЕМУ С ВСПЛЫТИЕМ
+            const originalClickHandler = callButton.onclick;
+            callButton.onclick = null;
 
             callButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
 
                 console.log('Клик по кнопке "Отправить заявку"');
 
@@ -1404,35 +1423,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     // Если все поля заполнены, показываем блок .slotsCalendarfieldname1_1
                     const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
                     if (slotsCalendar) {
-                        console.log('Показываем блок календаря');
-
-                        // Используем несколько методов для надежного показа
-                        // 1. Устанавливаем стиль напрямую
                         slotsCalendar.style.display = 'block';
+                        console.log('Блок .slotsCalendarfieldname1_1 показан');
 
-                        // 2. Добавляем важный стиль, чтобы переопределить другие правила
-                        slotsCalendar.style.setProperty('display', 'block', 'important');
-
-                        // 3. Добавляем класс для дополнительного контроля
-                        slotsCalendar.classList.add('force-show');
-
-                        // 4. Удаляем классы, которые могут скрывать блок
-                        slotsCalendar.classList.remove('ahb-hidden', 'hidden');
-
-                        console.log('Блок .slotsCalendarfieldname1_1 показан с приоритетом');
-
-                        // Дополнительная защита: восстанавливаем отображение через небольшой таймаут
+                        // Дополнительно предотвращаем скрытие через другие обработчики
                         setTimeout(() => {
-                            if (slotsCalendar.style.display !== 'block' &&
-                                slotsCalendar.style.display !== '') {
+                            if (slotsCalendar.style.display !== 'block') {
                                 slotsCalendar.style.display = 'block';
-                                slotsCalendar.style.setProperty('display', 'block', 'important');
-                                console.log('Восстановлен display блока после таймаута');
+                                console.log('Восстановлен display блока .slotsCalendarfieldname1_1');
                             }
-                        }, 100);
-
-                        // Добавляем обработчик клика на документ для скрытия блока при клике вне его
-                        document.addEventListener('click', handleDocumentClickForCalendar);
+                        }, 50);
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1442,43 +1442,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
-            }, true); // Используем capture phase
+            }, true); // Используем capture phase чтобы перехватить событие раньше других обработчиков
 
             return true;
-        }
-
-        // Новая функция для обработки кликов вне календаря
-        function handleDocumentClickForCalendar(e) {
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            const callButton = document.querySelector('.call-button');
-            const closer = document.querySelector('.closer');
-            const selectButtonSpan = document.querySelector('.select-button span');
-
-            if (!slotsCalendar) return;
-
-            // Проверяем, был ли клик по элементам, которые должны скрывать календарь
-            const isClickOnCloser = closer && (closer === e.target || closer.contains(e.target));
-            const isClickOnSelectSpan = selectButtonSpan && (selectButtonSpan === e.target || selectButtonSpan.contains(e.target));
-            const isClickOnCloseElements = isClickOnCloser || isClickOnSelectSpan;
-
-            // Проверяем, был ли клик внутри календаря или по кнопке вызова
-            const isClickInsideCalendar = slotsCalendar === e.target || slotsCalendar.contains(e.target);
-            const isClickOnCallButton = callButton && (callButton === e.target || callButton.contains(e.target));
-
-            // Если клик был по элементам закрытия - скрываем календарь
-            if (isClickOnCloseElements) {
-                slotsCalendar.style.display = 'none';
-                slotsCalendar.classList.remove('force-show');
-                console.log('Календарь скрыт через элементы закрытия');
-                return;
-            }
-
-            // Если клик был вне календаря И не по кнопке вызова - скрываем календарь
-            if (!isClickInsideCalendar && !isClickOnCallButton) {
-                slotsCalendar.style.display = 'none';
-                slotsCalendar.classList.remove('force-show');
-                console.log('Календарь скрыт при клике вне его области');
-            }
         }
 
         // Функция для добавления стилей для кнопки вызова
