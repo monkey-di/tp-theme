@@ -1423,7 +1423,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
-                        console.log('str1373');
+                        console.log('str1426');
                         console.log('Блок .slotsCalendarfieldname1_1 показан');
 
                         // Дополнительно предотвращаем скрытие через другие обработчики
