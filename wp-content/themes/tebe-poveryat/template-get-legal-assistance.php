@@ -1878,89 +1878,65 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     get_template_part( 'template-parts/home/donation' );
 ?>
     <script>
-        console.log('WTF2');
-        // === 1. ПОЛНАЯ ИЗОЛЯЦИЯ КЛИКОВ В SLOTS-CONTENT ===
+        console.log('WTF3');
         (function() {
-            // Находим контейнер слотов
-            const slotsContainer = document.querySelector('.slots-content');
-            if (!slotsContainer) {
-                console.log('Контейнер .slots-content не найден');
-                return;
+            // Ждём полной готовности DOM
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initIsolation);
+            } else {
+                initIsolation();
             }
 
-            // Сохраняем ссылку на оригинальный прототип addEventListener
-            const originalAddEventListener = EventTarget.prototype.addEventListener;
+            function initIsolation() {
+                const container = document.querySelector('.slots-content');
+                if (!container) {
+                    console.error('❌ Контейнер .slots-content не найден!');
+                    return;
+                }
+                console.log('✅ Контейнер найден, начинаем изоляцию...');
 
-            // Переопределяем addEventListener для ВСЕХ элементов ВНУТРИ контейнера
-            function hijackEventListenersInsideContainer(container) {
-                // Рекурсивно обходим все элементы внутри контейнера
-                const allElements = container.querySelectorAll('*');
+                // 1. НЕМЕДЛЕННО вешаем наш обработчик С ПЕРВЫМ ПРИОРИТЕТОМ
+                container.addEventListener('click', handleSlotClick, true);
 
-                allElements.forEach(element => {
-                    // "Замораживаем" оригинальный addEventListener для этого элемента
-                    element._originalAddEventListener = element.addEventListener;
-                    element.addEventListener = function(type, listener, options) {
-                        // Блокируем добавление ЛЮБЫХ обработчиков клика
-                        if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
-                            console.log('🚫 Заблокирован обработчик', type, 'для', element);
-                            return; // Не добавляем обработчик
-                        }
-                        // Для других событий — работаем как обычно
-                        return originalAddEventListener.call(this, type, listener, options);
-                    };
-                });
+                // 2. Делаем контейнер "немым" для других скриптов через 100мс
+                setTimeout(() => {
+                    const clone = container.cloneNode(true);
+                    container.parentNode.replaceChild(clone, container);
+                    console.log('🔄 Контейнер заменён чистым клоном');
 
-                // Также перехватываем addEventListener самого контейнера
-                container._originalAddEventListener = container.addEventListener;
-                container.addEventListener = function(type, listener, options) {
-                    if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
-                        console.log('🚫 Заблокирован обработчик', type, 'для контейнера');
-                        return;
-                    }
-                    return originalAddEventListener.call(this, type, listener, options);
-                };
+                    // 3. Вешаем обработчик на клон
+                    clone.addEventListener('click', handleSlotClick, true);
+                }, 100);
             }
 
-            // Запускаем изоляцию
-            hijackEventListenersInsideContainer(slotsContainer);
-            console.log('🛡️ Изоляция .slots-content активирована');
-
-            // === 2. НАШ ОБРАБОТЧИК ДЛЯ ВЫБОРА ВРЕМЕНИ ===
-            slotsContainer.addEventListener('click', function(event) {
-                // Находим ближайший слот времени
+            function handleSlotClick(event) {
                 const slot = event.target.closest('.availableslot, .htmlUsed');
                 if (!slot) return;
 
-                console.log('✅ Наш обработчик: клик на слот', slot);
+                console.log('🔵 НАШ обработчик сработал для:', slot);
 
-                // 1. Немедленно останавливаем всплытие события
+                // КРИТИЧЕСКИ ВАЖНО: останавливаем ВСЁ
                 event.stopImmediatePropagation();
                 event.stopPropagation();
                 event.preventDefault();
 
-                // 2. Снимаем выделение со всех слотов
+                // Ваша логика выбора времени...
+                // Например:
                 document.querySelectorAll('.currentSelection, .choosen').forEach(el => {
                     el.classList.remove('currentSelection', 'choosen');
                 });
+                slot.classList.add('currentSelection');
 
-                // 3. Добавляем выделение к выбранному слоту
-                slot.classList.add('my-selected-time');
+                // Обновляем переменные
+                selectedTimeValue = slot.textContent.trim();
+                if (selectedDateValue) saveToSessionStorage();
 
-                // 4. Получаем текст времени
-                const timeText = slot.querySelector('a')?.textContent;
-                if (!timeText) return;
-
-                console.log('Выбрано время:', timeText);
-
-                // 5. Обновляем переменные и sessionStorage
-                selectedTimeValue = timeText;
-                if (selectedDateValue) {
-                    saveToSessionStorage();
-                }
-
-                // 6. Стабилизируем прокрутку (если нужно)
-                stabilizeScroll();
-            }, true); // Используем фазу захвата для приоритета
+                // Стабилизация прокрутки
+                setTimeout(() => {
+                    const container = document.querySelector('.slots-content');
+                    if (container) container.scrollTop = container.scrollTop;
+                }, 0);
+            }
         })();
     </script>
 <?php
