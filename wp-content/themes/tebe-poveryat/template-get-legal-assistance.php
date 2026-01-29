@@ -1436,6 +1436,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
+                    console.log('str1439');
                     // Прокручиваем к первой ошибке
                     const firstError = document.querySelector('.cpefb_error.message[style*="display: block"], .cpefb_error.message:not([style*="display: none"])');
                     if (firstError) {
