@@ -451,6 +451,23 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
         }
 
+        // Функция для скрытия стандартной кнопки плагина
+        function hidePluginSubmitButton() {
+            const pluginSubmitButtons = document.querySelectorAll('.pbSubmit:not(.call-button)');
+
+            pluginSubmitButtons.forEach(button => {
+                if (!button.closest('.select-button') && !button.classList.contains('call-button')) {
+                    // Скрываем стандартную кнопку плагина
+                    button.style.display = 'none';
+                    button.style.visibility = 'hidden';
+                    button.style.opacity = '0';
+                    button.style.position = 'absolute';
+                    button.style.zIndex = '-1000';
+                    console.log('Стандартная кнопка плагина скрыта');
+                }
+            });
+        }
+
         function restructureForm() {
             const parentContainer = document.querySelector('.pb0.pbreak');
             if (!parentContainer) return false;
@@ -1661,7 +1678,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (restructureForm()) changesMade = true;
             }
 
-            // Проверка на появление элементов
+            // Проверка на появление стандартных кнопок плагина
+            if (document.querySelector('.pbSubmit:not(.call-button):not(.select-button .pbSubmit)')) {
+                setTimeout(() => hidePluginSubmitButton(), 50);
+                changesMade = true;
+            }
+
+            // Проверяем добавленные ноды
             mutations.forEach(function(mutation) {
                 // Проверяем добавленные ноды
                 if (mutation.addedNodes && mutation.addedNodes.length > 0) {
@@ -1713,6 +1736,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 addCallButton();
                                 addDateInputField();
                                 startDateInputObservation();
+                                hidePluginSubmitButton(); // Скрываем стандартные кнопки
                             }, 100);
                             changesMade = true;
                         }
@@ -1761,6 +1785,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }, 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, является ли узел или содержит ли стандартные кнопки плагина
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('pbSubmit') && !node.classList.contains('call-button') && !node.closest('.select-button')) ||
+                            (node.querySelector && node.querySelector('.pbSubmit:not(.call-button):not(.select-button .pbSubmit)'))) {
+                            setTimeout(() => hidePluginSubmitButton(), 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -1807,6 +1838,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             addCallButton();
                             addDateInputField();
                             startDateInputObservation();
+                            hidePluginSubmitButton();
                         }, 50);
                         changesMade = true;
                     }
@@ -1863,6 +1895,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }, 50);
                         changesMade = true;
                     }
+
+                    // Проверяем, появились ли стандартные кнопки плагина
+                    if (mutation.target.querySelector && mutation.target.querySelector('.pbSubmit:not(.call-button):not(.select-button .pbSubmit)')) {
+                        setTimeout(() => hidePluginSubmitButton(), 50);
+                        changesMade = true;
+                    }
                 }
 
                 // Отслеживаем изменения классов для выбора времени
@@ -1898,6 +1936,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     updateDateInputFromCalendar();
                     setupFormSubmitHandler();
                     setupEmailValidation();
+                    hidePluginSubmitButton(); // Скрываем стандартные кнопки при инициализации
                 }, 100);
             }
         });
@@ -1923,6 +1962,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             addCallButtonStyles();
             addCallButton();
             initSlotsCalendar();
+
+            // Скрываем стандартные кнопки плагина
+            hidePluginSubmitButton();
 
             // Запускаем наблюдение за выбором даты и времени
             startSelectionObservation();
@@ -1976,7 +2018,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
     </script>
     <script>
-        console.log('Скрипт работает 06:55, но форма мигает');
+        console.log('Тестовый прогон! Скрипт работает 06:55, но форма мигает');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
