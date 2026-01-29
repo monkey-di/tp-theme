@@ -1165,10 +1165,11 @@ a.donation-adv span{
         padding-left: 20px;
     }
     #supportModal{
-        width: calc(100% - 40px);
-        margin-left:30px;
+        max-width: calc(100% - 40px);
+        margin-left:20px;
     }
     #successModal div{
+        max-width: calc(100% - 40px);
         margin-left: 20px;
     }
 }
