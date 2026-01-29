@@ -53,6 +53,65 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
+        // ==================== ДИАГНОСТИКА ====================
+        console.log('=== ЗАПУСК ДИАГНОСТИКИ ПРОКРУТКИ ===');
+
+        // 1. Ловим ВСЕ изменения атрибутов и стилей у .slots-content
+        const diagnosticObserver = new MutationObserver(function(mutations) {
+            mutations.forEach(mutation => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    console.log('🔴 Плагин изменил STYLE .slots-content:', mutation.target.style.cssText);
+                }
+                if (mutation.type === 'attributes') {
+                    console.log('🔴 Изменен атрибут', mutation.attributeName, 'на', mutation.target.getAttribute(mutation.attributeName));
+                }
+            });
+        });
+
+        // 2. Ловим события scroll
+        const slotsContent = document.querySelector('.slots-content');
+        if (slotsContent) {
+            // Запускаем наблюдение за ВСЕМИ атрибутами
+            diagnosticObserver.observe(slotsContent, {
+                attributes: true,
+                attributeFilter: ['style', 'class', 'id'] // Можно добавить другие
+            });
+
+            // Отслеживаем скролл
+            slotsContent.addEventListener('scroll', function(e) {
+                console.log('🟡 Сработал scroll event. scrollTop =', this.scrollTop, 'Высота =', this.scrollHeight);
+            }, true);
+        }
+
+        // 3. Перехватываем window.scrollTo и element.scrollTo
+        const originalWindowScrollTo = window.scrollTo;
+        window.scrollTo = function(...args) {
+            console.log('🔴 Кто-то вызвал window.scrollTo с аргументами:', args);
+            return originalWindowScrollTo.apply(this, args);
+        };
+
+        const originalElementScrollTo = Element.prototype.scrollTo;
+        Element.prototype.scrollTo = function(...args) {
+            if (this.classList && this.classList.contains('slots-content')) {
+                console.log('🔴 Кто-то вызвал scrollTo на .slots-content! Аргументы:', args, 'Стек вызова:', new Error().stack);
+                // Здесь можно заблокировать вызов, закомментировав следующую строку
+                // return;
+            }
+            return originalElementScrollTo.apply(this, args);
+        };
+
+        // 4. Перехватываем scrollIntoView
+        const originalScrollIntoView = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function(...args) {
+            if (this.closest && this.closest('.slots-content')) {
+                console.log('🔴 Кто-то вызвал scrollIntoView на элементе внутри .slots-content!', this, args);
+                // Можно заблокировать: return;
+            }
+            return originalScrollIntoView.apply(this, args);
+        };
+
+    </script>
+    <script>
         // Переменные для хранения выбранной даты и времени
         let selectedDateValue = '';
         let selectedTimeValue = '';
@@ -1866,67 +1925,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             }
         })();
-//хардресет для починки прыгающего контенера времени
-        function hardResetSlotsContent() {
-            const slotsContent = document.querySelector('.slots-content');
-            if (!slotsContent) return;
-
-            // 1. Сохраняем ВСЁ содержимое и позицию прокрутки
-            const contentHtml = slotsContent.innerHTML;
-            const scrollPos = slotsContent.scrollTop;
-            const parent = slotsContent.parentNode;
-
-            // 2. Удаляем оригинальный элемент из DOM
-            slotsContent.remove();
-
-            // 3. Создаем идеальную копию
-            const newSlotsContent = document.createElement('div');
-            newSlotsContent.className = 'slots-content';
-            newSlotsContent.innerHTML = contentHtml;
-
-            // 4. Восстанавливаем в DOM
-            parent.appendChild(newSlotsContent);
-
-            // 5. Восстанавливаем позицию прокрутки мгновенно и с задержкой
-            newSlotsContent.scrollTop = scrollPos;
-            setTimeout(() => { newSlotsContent.scrollTop = scrollPos; }, 0);
-            setTimeout(() => { newSlotsContent.scrollTop = scrollPos; }, 50);
-
-            console.log('Hard reset .slots-content выполнен');
-            return newSlotsContent;
-        }
-
-        // Интегрируем функцию в обработчик кликов
-        (function() {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initHardReset);
-            } else {
-                initHardReset();
-            }
-
-            function initHardReset() {
-                document.addEventListener('click', function(e) {
-                    // Если клик по слоту времени
-                    if (e.target.closest('.availableslot, .htmlUsed')) {
-                        console.log('Клик по слоту, запускаем hard reset');
-                        // Даем плагину мгновение на реакцию, затем сбрасываем
-                        setTimeout(() => {
-                            const newContainer = hardResetSlotsContent();
-                            // Важно: нужно повторно привязать обработчики к новым элементам
-                            if (newContainer) {
-                                reattachSlotHandlers(newContainer);
-                            }
-                        }, 10); // Меньшая задержка
-                    }
-                }, true); // Используем фазу захвата
-            }
-
-            function reattachSlotHandlers(container) {
-                // Если вам нужны особые обработчики на слотах, добавьте их здесь
-                console.log('Обработчики перепривязаны к новому контейнеру');
-            }
-        })();
-        console.log('hard reset block');
     </script>
     <script>
         console.log('Обновлённый скрипт. Прокрутка времени: ф-я updateSelectedTime');
