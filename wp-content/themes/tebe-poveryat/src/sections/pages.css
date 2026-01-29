@@ -588,6 +588,12 @@
     border-radius: 16px;
     scrollbar-gutter: stable  !important;
 }
+.cp_appbooking .slots,
+.availableslot,
+.htmlUsed {
+    scroll-behavior: auto !important; /* Отключает плавную прокрутку */
+    overflow-anchor: none !important; /* Отключает авто-коррекцию прокрутки в некоторых браузерах */
+}
 #cp_appbooking_pform_1{
     padding-bottom:144px;
 }
