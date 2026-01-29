@@ -2026,6 +2026,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
+        console.log('test');
     </script>
 
 <?php
