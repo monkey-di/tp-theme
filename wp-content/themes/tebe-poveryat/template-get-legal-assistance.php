@@ -811,7 +811,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             console.log('Поле ввода даты обновлено из selectedDateValue:', selectedDateValue);
         }
 
-        // Функция для обновления выбранного времени при изменении
         function updateSelectedTime() {
             const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
             if (slotsCalendar) {
@@ -821,9 +820,8 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     selectedTimeValue = currentSelection.textContent.trim();
                     console.log('Время обновлено (currentSelection):', selectedTimeValue);
 
-                    // Сохраняем в sessionStorage при каждом изменении
                     saveToSessionStorage();
-
+                    stabilizeScroll(); // ← Вызов стабилизации
                     return true;
                 }
 
@@ -833,13 +831,25 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     selectedTimeValue = choosenSelection.textContent.trim();
                     console.log('Время обновлено (choosen):', selectedTimeValue);
 
-                    // Сохраняем в sessionStorage при каждом изменении
                     saveToSessionStorage();
-
+                    stabilizeScroll(); // ← Вызов стабилизации
                     return true;
                 }
             }
+
+            stabilizeScroll(); // ← Вызов, даже если время не найдено
             return false;
+        }
+
+        // Функция стабилизации (можно оставить внутри или вынести наружу)
+        function stabilizeScroll() {
+            const slotsContent = document.querySelector('.slots-content');
+            if (slotsContent) {
+                const scrollTop = slotsContent.scrollTop;
+                setTimeout(() => {
+                    slotsContent.scrollTop = scrollTop;
+                }, 10);
+            }
         }
 
         // Наблюдатель за появлением .slots span и изменением .currentSelection
