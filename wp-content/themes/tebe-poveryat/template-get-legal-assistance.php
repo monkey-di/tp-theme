@@ -53,62 +53,49 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         ?>
     </main>
     <script>
-        // ==================== ДИАГНОСТИКА ====================
-        console.log('=== ЗАПУСК ДИАГНОСТИКИ ПРОКРУТКИ ===');
+        // ==================== ПЕРЕХВАТ ФУНКЦИЙ ПЛАГИНА ====================
+        (function() {
+            console.log('Устанавливаем перехват функций плагина...');
 
-        // 1. Ловим ВСЕ изменения атрибутов и стилей у .slots-content
-        const diagnosticObserver = new MutationObserver(function(mutations) {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-                    console.log('🔴 Плагин изменил STYLE .slots-content:', mutation.target.style.cssText);
-                }
-                if (mutation.type === 'attributes') {
-                    console.log('🔴 Изменен атрибут', mutation.attributeName, 'на', mutation.target.getAttribute(mutation.attributeName));
-                }
-            });
-        });
-
-        // 2. Ловим события scroll
-        const slotsContent = document.querySelector('.slots-content');
-        if (slotsContent) {
-            // Запускаем наблюдение за ВСЕМИ атрибутами
-            diagnosticObserver.observe(slotsContent, {
-                attributes: true,
-                attributeFilter: ['style', 'class', 'id'] // Можно добавить другие
-            });
-
-            // Отслеживаем скролл
-            slotsContent.addEventListener('scroll', function(e) {
-                console.log('🟡 Сработал scroll event. scrollTop =', this.scrollTop, 'Высота =', this.scrollHeight);
-            }, true);
-        }
-
-        // 3. Перехватываем window.scrollTo и element.scrollTo
-        const originalWindowScrollTo = window.scrollTo;
-        window.scrollTo = function(...args) {
-            console.log('🔴 Кто-то вызвал window.scrollTo с аргументами:', args);
-            return originalWindowScrollTo.apply(this, args);
-        };
-
-        const originalElementScrollTo = Element.prototype.scrollTo;
-        Element.prototype.scrollTo = function(...args) {
-            if (this.classList && this.classList.contains('slots-content')) {
-                console.log('🔴 Кто-то вызвал scrollTo на .slots-content! Аргументы:', args, 'Стек вызова:', new Error().stack);
-                // Здесь можно заблокировать вызов, закомментировав следующую строку
-                // return;
+            // 1. Перехватываем корневой метод, который запускает цепочку
+            const originalGetExtras = window.getExtras; // Функция может быть в глобальной области
+            if (typeof originalGetExtras === 'function') {
+                window.getExtras = function(...args) {
+                    console.log('✅ getExtras вызван, но мы его блокируем!', args);
+                    // Возвращаем пустые или фиктивные данные, чтобы плагин не сломался
+                    return {
+                        // Подставьте здесь структуру, которую ожидает плагин
+                        // Чтобы узнать её, можно сначала сделать console.log(originalGetExtras(...args))
+                        cost: 0,
+                        extras_html: '',
+                        validated: true
+                    };
+                };
+                console.log('Перехват getExtras установлен');
             }
-            return originalElementScrollTo.apply(this, args);
-        };
 
-        // 4. Перехватываем scrollIntoView
-        const originalScrollIntoView = Element.prototype.scrollIntoView;
-        Element.prototype.scrollIntoView = function(...args) {
-            if (this.closest && this.closest('.slots-content')) {
-                console.log('🔴 Кто-то вызвал scrollIntoView на элементе внутри .slots-content!', this, args);
-                // Можно заблокировать: return;
+            // 2. Альтернативно, можно перехватить jQuery trigger, который запускает процесс
+            const originalTrigger = jQuery.fn.trigger;
+            jQuery.fn.trigger = function(eventName, data) {
+                // Блокируем конкретное событие, которое ведет к перерасчету стилей
+                if (eventName === 'cp_apphourbooking_change' ||
+                    (typeof eventName === 'string' && eventName.includes('changeDate'))) {
+                    console.log('🔴 Блокируем событие плагина:', eventName);
+                    return this; // Прерываем выполнение
+                }
+                return originalTrigger.call(this, eventName, data);
+            };
+
+            // 3. Перехватываем прямой вызов getSlots (если он доступен глобально)
+            if (window.getSlots && typeof window.getSlots === 'function') {
+                const originalGetSlots = window.getSlots;
+                window.getSlots = function(...args) {
+                    console.log('Вызов getSlots заблокирован для стабильности');
+                    // Можно вернуть промис, который никогда не разрешится, или фиктивные слоты
+                    return Promise.resolve([]);
+                };
             }
-            return originalScrollIntoView.apply(this, args);
-        };
+        })();
 
     </script>
     <script>
