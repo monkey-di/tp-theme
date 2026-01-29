@@ -96,3 +96,12 @@
     background: #fff;
     border-color: #6063A6;
 }
+@media(max-width: 768px){
+    .faq-spoiler-content h2{
+        color:#6063a6;
+        text-align:left;
+    }
+    .faq-spoiler-content h2 br{
+        display: none;
+    }
+}
