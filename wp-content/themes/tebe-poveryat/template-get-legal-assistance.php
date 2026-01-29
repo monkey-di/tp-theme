@@ -1974,9 +1974,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
+    </script>
+    <script>
         console.log('Скрипт работает 06:55, но форма мигает');
     </script>
-
 <?php
     get_template_part( 'template-parts/home/donation' );
 ?>
