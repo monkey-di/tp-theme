@@ -618,7 +618,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Проверяем, не добавлен ли уже closer
                 if (!block.querySelector('.closer')) {
                     // Создаем closer
-                    const closer = document.createElement('div');
+                    const closer = document.createElement('span');
                     closer.className = 'closer';
                     closer.innerHTML = '';
 
