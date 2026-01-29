@@ -582,10 +582,11 @@
     flex-wrap: wrap;
 }
 .slots-content{
-    height:50vh;
-    max-height: 378px;
-    overflow-y:auto;
+    height:378px !important;
+    max-height: 378px !important;
+    overflow-y:auto !important;
     border-radius: 16px;
+    scrollbar-gutter: stable  !important;
 }
 #cp_appbooking_pform_1{
     padding-bottom:144px;
