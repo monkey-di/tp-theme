@@ -344,15 +344,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const allValid = validateAllRequiredFields();
 
                     if (allValid) {
-                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
-                        saveToSessionStorage();
-                        // Добавляем флаг, что была отправка формы
-                        sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
-
-                        // Отправляем форму
-                        const form = document.getElementById('cp_appbooking_pform_1');
-                        if (form) {
-                            form.submit();
+                        // Если все поля заполнены, показываем блок .slotsCalendarfieldname1_1
+                        const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
+                        if (slotsCalendar) {
+                            // Используем setTimeout, чтобы отложить показ до следующего цикла событий
+                            setTimeout(() => {
+                                slotsCalendar.style.display = 'block';
+                                console.log('Блок .slotsCalendarfieldname1_1 показан (через setTimeout)');
+                            }, 0);
                         }
                     } else {
                         console.log('Валидация не прошла, отправка отменена');
