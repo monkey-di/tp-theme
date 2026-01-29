@@ -843,10 +843,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             if (node.nodeType === 1 && node.classList && node.classList.contains('slots')) {
                                 setTimeout(() => {
                                     updateSelectedDate();
-                                    // Стабилизируем прокрутку после обновления слотов
-                                    setTimeout(() => {
-                                        stabilizeSlotsScrolling();
-                                    }, 100);
                                 }, 100);
                                 dateUpdated = true;
                             }
@@ -864,10 +860,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 setTimeout(() => {
                                     updateSelectedDate();
                                     updateSelectedTime();
-                                    // Стабилизируем прокрутку
-                                    setTimeout(() => {
-                                        stabilizeSlotsScrolling();
-                                    }, 100);
                                 }, 100);
                                 dateUpdated = true;
                                 timeUpdated = true;
@@ -883,10 +875,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 target.classList.contains('availableslot') || target.classList.contains('htmlUsed'))) {
                             setTimeout(() => {
                                 updateSelectedTime();
-                                // Стабилизируем прокрутку после выбора времени
-                                setTimeout(() => {
-                                    stabilizeSlotsScrolling();
-                                }, 50);
                             }, 100);
                             timeUpdated = true;
                         }
@@ -911,15 +899,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     attributes: true,
                     attributeFilter: ['class']
                 });
+                //console.log('Наблюдение за выбором даты и времени начато');
 
                 // Обновляем начальные значения
                 updateSelectedDate();
                 updateSelectedTime();
-
-                // Стабилизируем начальную прокрутку
-                setTimeout(() => {
-                    stabilizeSlotsScrolling();
-                }, 500);
             }
         }
 
@@ -1477,50 +1461,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             document.head.appendChild(style);
             //console.log('Стили для кнопки вызова добавлены');
         }
-// Стабилизация выбора времени
-        function stabilizeSlotsScrolling() {
-            const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
-            if (!slotsCalendar) return;
 
-            // Сохраняем позицию прокрутки перед любыми изменениями
-            let lastScrollTop = 0;
-            const slotsContent = slotsCalendar.querySelector('.slots-content');
-
-            if (slotsContent) {
-                // Запоминаем текущую позицию прокрутки
-                lastScrollTop = slotsContent.scrollTop;
-
-                // Наблюдаем за изменениями в .slots-content
-                const slotsObserver = new MutationObserver(function(mutations) {
-                    // Восстанавливаем позицию прокрутки после изменений
-                    setTimeout(() => {
-                        if (slotsContent && lastScrollTop > 0) {
-                            slotsContent.scrollTop = lastScrollTop;
-                        }
-                    }, 50);
-                });
-
-                // Начинаем наблюдение
-                slotsObserver.observe(slotsContent, {
-                    childList: true,
-                    subtree: true,
-                    attributes: true,
-                    attributeFilter: ['class']
-                });
-
-                // Также обновляем позицию прокрутки при клике на слот
-                slotsContent.addEventListener('click', function(e) {
-                    if (e.target.closest('.availableslot')) {
-                        lastScrollTop = slotsContent.scrollTop;
-                    }
-                });
-
-                // Сохраняем позицию прокрутки при скролле
-                slotsContent.addEventListener('scroll', function() {
-                    lastScrollTop = slotsContent.scrollTop;
-                });
-            }
-        }
         // Функция для проверки и инициализации календаря
         function initSlotsCalendar() {
             const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
@@ -1528,17 +1469,13 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Убедимся, что календарь скрыт по умолчанию
                 if (slotsCalendar.style.display !== 'none') {
                     slotsCalendar.style.display = 'none';
+                    //console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
                 }
 
                 // Проверяем, не добавлены ли уже элементы
                 if (!slotsCalendar.querySelector('.closer')) {
                     decorateSlotsCalendar();
                 }
-
-                // Запускаем стабилизацию прокрутки
-                setTimeout(() => {
-                    stabilizeSlotsScrolling();
-                }, 300); // Даем время на полную загрузку
 
                 // Запускаем наблюдение за выбором даты и времени
                 startSelectionObservation();
@@ -2038,7 +1975,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        //console.log('ТЕСТ7');
+        console.log('ТЕСТ7');
     </script>
 
 <?php
