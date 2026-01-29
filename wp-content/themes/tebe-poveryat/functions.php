@@ -180,7 +180,7 @@ function customize_legal_menu_links() {
     if (!current_user_can('edit_posts')) {
         return;
     }
-    remove_menu_page('cp_apphourbooking');
+    //remove_menu_page('cp_apphourbooking');
 
     // родительский пункт меню с заглушкой
     add_menu_page(
