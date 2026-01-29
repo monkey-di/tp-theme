@@ -2016,7 +2016,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
     </script>
     <script>
-        console.log('Прокрутка времени');
+        console.log('Прокрутка времени: ф-я updateSelectedTime');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
