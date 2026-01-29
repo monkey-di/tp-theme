@@ -59,6 +59,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectionObserver = null;
         let dateInputObserver = null;
 
+        // Флаг для блокировки обработки прокрутки плагином
+        let isManualScrollControl = false;
+        // Переменная для хранения позиции прокрутки
+        let savedScrollPosition = 0;
+
         // Константы для ключей sessionStorage
         const STORAGE_KEYS = {
             DATE: 'selectedDateValue',
@@ -66,15 +71,65 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             HAS_SUCCESS: 'hasSuccessRedirect'
         };
 
-        // ==================== ФУНКЦИЯ СТАБИЛИЗАЦИИ ПРОКРУТКИ ====================
+        // ==================== УЛУЧШЕННАЯ ФУНКЦИЯ СТАБИЛИЗАЦИИ ПРОКРУТКИ ====================
         function stabilizeScroll() {
+            isManualScrollControl = true;
             const slotsContent = document.querySelector('.slots-content');
+
             if (slotsContent) {
-                const scrollTop = slotsContent.scrollTop;
+                // Сохраняем текущую позицию
+                savedScrollPosition = slotsContent.scrollTop;
+
+                // Восстанавливаем позицию немедленно
+                slotsContent.scrollTop = savedScrollPosition;
+
+                // Дополнительные попытки восстановления
                 setTimeout(() => {
-                    slotsContent.scrollTop = scrollTop;
-                }, 10);
+                    slotsContent.scrollTop = savedScrollPosition;
+                }, 50);
+
+                setTimeout(() => {
+                    slotsContent.scrollTop = savedScrollPosition;
+                    isManualScrollControl = false;
+                }, 150);
             }
+        }
+
+        // ==================== ПЕРЕХВАТ УПРАВЛЕНИЯ ПРОКРУТКОЙ ====================
+        function setupScrollControl() {
+            const slotsContent = document.querySelector('.slots-content');
+            if (!slotsContent) return;
+
+            // Сохраняем оригинальный scrollTop setter/getter
+            const originalScrollTop = Object.getOwnPropertyDescriptor(
+                Element.prototype,
+                'scrollTop'
+            );
+
+            // Переопределяем scrollTop для этого элемента
+            Object.defineProperty(slotsContent, 'scrollTop', {
+                get: function() {
+                    if (isManualScrollControl) {
+                        return savedScrollPosition;
+                    }
+                    return originalScrollTop.get.call(this);
+                },
+                set: function(value) {
+                    if (isManualScrollControl) {
+                        // Игнорируем попытки плагина изменить прокрутку
+                        originalScrollTop.set.call(this, savedScrollPosition);
+                        return savedScrollPosition;
+                    }
+                    return originalScrollTop.set.call(this, value);
+                },
+                configurable: true
+            });
+
+            // Отключаем все возможные анимации прокрутки
+            slotsContent.style.scrollBehavior = 'auto';
+            slotsContent.style.overflowAnchor = 'none';
+
+            console.log('Управление прокруткой перехвачено');
         }
 
         // Функция для валидации email полей
@@ -734,7 +789,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     console.log('Время обновлено (currentSelection):', selectedTimeValue);
 
                     saveToSessionStorage();
-                    stabilizeScroll(); // ← Вызов стабилизации прокрутки
+                    stabilizeScroll();
                     return true;
                 }
 
@@ -744,11 +799,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     console.log('Время обновлено (choosen):', selectedTimeValue);
 
                     saveToSessionStorage();
-                    stabilizeScroll(); // ← Вызов стабилизации прокрутки
+                    stabilizeScroll();
                     return true;
                 }
             }
-            stabilizeScroll(); // ← Вызов стабилизации даже если время не найдено
+            stabilizeScroll();
             return false;
         }
 
@@ -1374,7 +1429,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             messageElement.textContent = message;
             modalContent1.appendChild(messageElement);
 
-            // ЗДЕСЬ ИСПРАВЛЕНИЕ: closer создается как span, а не div
             const closeButton = document.createElement('span');
             closeButton.classList.add('closer');
             closeButton.textContent = '';
@@ -1486,6 +1540,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
                                 startSelectionObservation();
+                                setupScrollControl(); // Добавляем контроль прокрутки
                             }, 100);
                             changesMade = true;
                         }
@@ -1525,6 +1580,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 initSlotsCalendar();
                                 startSelectionObservation();
+                                setupScrollControl(); // Добавляем контроль прокрутки
                             }, 100);
                             changesMade = true;
                         }
@@ -1579,6 +1635,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             decorateSlotsCalendar();
                             wrapSlotsContent();
                             startSelectionObservation();
+                            setupScrollControl();
                         }, 50);
                         changesMade = true;
                     }
@@ -1693,6 +1750,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     setupFormSubmitHandler();
                     setupEmailValidation();
                     hidePluginSubmitButton();
+                    setupScrollControl(); // Добавляем контроль прокрутки
                 }, 100);
             }
         });
@@ -1744,6 +1802,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             setupEmailValidation();
 
             checkAndShowSuccessModal();
+
+            // Добавляем контроль прокрутки при инициализации
+            setTimeout(() => {
+                setupScrollControl();
+            }, 500);
         }
 
         // Запускаем начальную проверку
@@ -1762,9 +1825,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
 
         // ==================== ДОБАВЛЕНИЕ ОБРАБОТЧИКА КЛИКОВ ДЛЯ СТАБИЛИЗАЦИИ ====================
-        // Этот код нужно добавить в конец скрипта
         (function() {
-            // Ждем полной загрузки DOM
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', addScrollStabilization);
             } else {
@@ -1774,17 +1835,39 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             function addScrollStabilization() {
                 const slotsContent = document.querySelector('.slots-content');
                 if (slotsContent) {
+                    // Предотвращаем клики, которые могут вызвать скроллинг плагина
                     slotsContent.addEventListener('click', function(e) {
                         if (e.target.closest('.availableslot, .htmlUsed')) {
-                            setTimeout(() => stabilizeScroll(), 50);
+                            // Включаем ручное управление прокруткой
+                            isManualScrollControl = true;
+                            savedScrollPosition = slotsContent.scrollTop;
+
+                            setTimeout(() => {
+                                slotsContent.scrollTop = savedScrollPosition;
+                                isManualScrollControl = false;
+                            }, 100);
+
+                            setTimeout(() => {
+                                slotsContent.scrollTop = savedScrollPosition;
+                            }, 300);
                         }
                     });
+
+                    // Отлавливаем события скролла
+                    slotsContent.addEventListener('scroll', function(e) {
+                        if (isManualScrollControl) {
+                            this.scrollTop = savedScrollPosition;
+                        } else {
+                            savedScrollPosition = this.scrollTop;
+                        }
+                    });
+
                     console.log('Обработчик кликов для стабилизации прокрутки установлен');
                 }
             }
         })();
 
-        console.log('ТЕСТ179');
+        console.log('0000ТЕСТ179');
     </script>
     <script>
         console.log('Обновлённый скрипт. Прокрутка времени: ф-я updateSelectedTime');
