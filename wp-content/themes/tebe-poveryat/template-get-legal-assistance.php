@@ -10,92 +10,7 @@
 <?php
 get_header();
 ?>
-    <script>
-        console.log('WTF');
-        // === 1. ПОЛНАЯ ИЗОЛЯЦИЯ КЛИКОВ В SLOTS-CONTENT ===
-        (function() {
-            // Находим контейнер слотов
-            const slotsContainer = document.querySelector('.slots-content');
-            if (!slotsContainer) {
-                console.log('Контейнер .slots-content не найден');
-                return;
-            }
 
-            // Сохраняем ссылку на оригинальный прототип addEventListener
-            const originalAddEventListener = EventTarget.prototype.addEventListener;
-
-            // Переопределяем addEventListener для ВСЕХ элементов ВНУТРИ контейнера
-            function hijackEventListenersInsideContainer(container) {
-                // Рекурсивно обходим все элементы внутри контейнера
-                const allElements = container.querySelectorAll('*');
-
-                allElements.forEach(element => {
-                    // "Замораживаем" оригинальный addEventListener для этого элемента
-                    element._originalAddEventListener = element.addEventListener;
-                    element.addEventListener = function(type, listener, options) {
-                        // Блокируем добавление ЛЮБЫХ обработчиков клика
-                        if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
-                            console.log('🚫 Заблокирован обработчик', type, 'для', element);
-                            return; // Не добавляем обработчик
-                        }
-                        // Для других событий — работаем как обычно
-                        return originalAddEventListener.call(this, type, listener, options);
-                    };
-                });
-
-                // Также перехватываем addEventListener самого контейнера
-                container._originalAddEventListener = container.addEventListener;
-                container.addEventListener = function(type, listener, options) {
-                    if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
-                        console.log('🚫 Заблокирован обработчик', type, 'для контейнера');
-                        return;
-                    }
-                    return originalAddEventListener.call(this, type, listener, options);
-                };
-            }
-
-            // Запускаем изоляцию
-            hijackEventListenersInsideContainer(slotsContainer);
-            console.log('🛡️ Изоляция .slots-content активирована');
-
-            // === 2. НАШ ОБРАБОТЧИК ДЛЯ ВЫБОРА ВРЕМЕНИ ===
-            slotsContainer.addEventListener('click', function(event) {
-                // Находим ближайший слот времени
-                const slot = event.target.closest('.availableslot, .htmlUsed');
-                if (!slot) return;
-
-                console.log('✅ Наш обработчик: клик на слот', slot);
-
-                // 1. Немедленно останавливаем всплытие события
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                event.preventDefault();
-
-                // 2. Снимаем выделение со всех слотов
-                document.querySelectorAll('.currentSelection, .choosen').forEach(el => {
-                    el.classList.remove('currentSelection', 'choosen');
-                });
-
-                // 3. Добавляем выделение к выбранному слоту
-                slot.classList.add('my-selected-time');
-
-                // 4. Получаем текст времени
-                const timeText = slot.querySelector('a')?.textContent;
-                if (!timeText) return;
-
-                console.log('Выбрано время:', timeText);
-
-                // 5. Обновляем переменные и sessionStorage
-                selectedTimeValue = timeText;
-                if (selectedDateValue) {
-                    saveToSessionStorage();
-                }
-
-                // 6. Стабилизируем прокрутку (если нужно)
-                stabilizeScroll();
-            }, true); // Используем фазу захвата для приоритета
-        })();
-    </script>
 <?php
 if ( tp_is_english() ) {
     $pagehead_title = get_field('headpage-title_en'); // ACF заголовок
@@ -1962,5 +1877,91 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 <?php
     get_template_part( 'template-parts/home/donation' );
 ?>
+    <script>
+        console.log('WTF2');
+        // === 1. ПОЛНАЯ ИЗОЛЯЦИЯ КЛИКОВ В SLOTS-CONTENT ===
+        (function() {
+            // Находим контейнер слотов
+            const slotsContainer = document.querySelector('.slots-content');
+            if (!slotsContainer) {
+                console.log('Контейнер .slots-content не найден');
+                return;
+            }
+
+            // Сохраняем ссылку на оригинальный прототип addEventListener
+            const originalAddEventListener = EventTarget.prototype.addEventListener;
+
+            // Переопределяем addEventListener для ВСЕХ элементов ВНУТРИ контейнера
+            function hijackEventListenersInsideContainer(container) {
+                // Рекурсивно обходим все элементы внутри контейнера
+                const allElements = container.querySelectorAll('*');
+
+                allElements.forEach(element => {
+                    // "Замораживаем" оригинальный addEventListener для этого элемента
+                    element._originalAddEventListener = element.addEventListener;
+                    element.addEventListener = function(type, listener, options) {
+                        // Блокируем добавление ЛЮБЫХ обработчиков клика
+                        if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
+                            console.log('🚫 Заблокирован обработчик', type, 'для', element);
+                            return; // Не добавляем обработчик
+                        }
+                        // Для других событий — работаем как обычно
+                        return originalAddEventListener.call(this, type, listener, options);
+                    };
+                });
+
+                // Также перехватываем addEventListener самого контейнера
+                container._originalAddEventListener = container.addEventListener;
+                container.addEventListener = function(type, listener, options) {
+                    if (type === 'click' || type === 'mousedown' || type === 'mouseup') {
+                        console.log('🚫 Заблокирован обработчик', type, 'для контейнера');
+                        return;
+                    }
+                    return originalAddEventListener.call(this, type, listener, options);
+                };
+            }
+
+            // Запускаем изоляцию
+            hijackEventListenersInsideContainer(slotsContainer);
+            console.log('🛡️ Изоляция .slots-content активирована');
+
+            // === 2. НАШ ОБРАБОТЧИК ДЛЯ ВЫБОРА ВРЕМЕНИ ===
+            slotsContainer.addEventListener('click', function(event) {
+                // Находим ближайший слот времени
+                const slot = event.target.closest('.availableslot, .htmlUsed');
+                if (!slot) return;
+
+                console.log('✅ Наш обработчик: клик на слот', slot);
+
+                // 1. Немедленно останавливаем всплытие события
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                event.preventDefault();
+
+                // 2. Снимаем выделение со всех слотов
+                document.querySelectorAll('.currentSelection, .choosen').forEach(el => {
+                    el.classList.remove('currentSelection', 'choosen');
+                });
+
+                // 3. Добавляем выделение к выбранному слоту
+                slot.classList.add('my-selected-time');
+
+                // 4. Получаем текст времени
+                const timeText = slot.querySelector('a')?.textContent;
+                if (!timeText) return;
+
+                console.log('Выбрано время:', timeText);
+
+                // 5. Обновляем переменные и sessionStorage
+                selectedTimeValue = timeText;
+                if (selectedDateValue) {
+                    saveToSessionStorage();
+                }
+
+                // 6. Стабилизируем прокрутку (если нужно)
+                stabilizeScroll();
+            }, true); // Используем фазу захвата для приоритета
+        })();
+    </script>
 <?php
 get_footer();
