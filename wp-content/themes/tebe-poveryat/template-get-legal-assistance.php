@@ -1561,7 +1561,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             modalContent1.appendChild(messageElement);
 
             // Добавляем кнопку закрытия (closer)
-            const closeButton = document.createElement('div');
+            const closeButton = document.createElement('span');
             closeButton.classList.add('closer');
             closeButton.textContent = '';
 
