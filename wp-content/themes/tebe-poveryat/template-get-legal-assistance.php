@@ -1878,65 +1878,106 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     get_template_part( 'template-parts/home/donation' );
 ?>
     <script>
-        console.log('WTF3');
+        console.log('WTF4');
         (function() {
-            // Ждём полной готовности DOM
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initIsolation);
-            } else {
-                initIsolation();
-            }
+            'use strict';
 
-            function initIsolation() {
-                const container = document.querySelector('.slots-content');
-                if (!container) {
-                    console.error('❌ Контейнер .slots-content не найден!');
-                    return;
+            console.log('🔍 Наблюдатель за .slots-content активирован');
+
+            // === 1. ГЛАВНАЯ ФУНКЦИЯ: ПОЛНАЯ ИЗОЛЯЦИЯ КОНТЕЙНЕРА ===
+            function isolateSlotsContainer(container) {
+                console.log('🎯 Контейнер найден! Начинаем изоляцию...', container);
+
+                // A. КЛОНИРУЕМ и ЗАМЕНЯЕМ (самый надёжный способ сбросить обработчики)
+                const cleanClone = container.cloneNode(true);
+                container.parentNode.replaceChild(cleanClone, container);
+                console.log('🔄 Контейнер заменён чистым клоном');
+
+                // B. ВЕШАЕМ ЕДИНСТВЕННЫЙ НАШ ОБРАБОТЧИК с ВЫСШИМ ПРИОРИТЕТОМ
+                cleanClone.addEventListener('click', function(event) {
+                    const slot = event.target.closest('.availableslot, .htmlUsed');
+                    if (!slot) return;
+
+                    // НЕМЕДЛЕННАЯ ОСТАНОВКА
+                    event.stopImmediatePropagation();
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    console.log('✅ Наш обработчик заблокировал клик на:', slot.textContent);
+
+                    // --- ВАША ЛОГИКА ВЫБОРА ВРЕМЕНИ (НАСТРОЙТЕ ПОД СВОЙ СКРИПТ) ---
+                    // 1. Снимаем старое выделение
+                    document.querySelectorAll('.currentSelection, .choosen').forEach(el => {
+                        el.classList.remove('currentSelection', 'choosen');
+                    });
+                    // 2. Добавляем новое (можно свой класс)
+                    slot.classList.add('currentSelection', 'choosen');
+                    // 3. Получаем время
+                    const timeText = slot.textContent.trim();
+                    // 4. Обновляем глобальные переменные (если они у вас есть)
+                    if (window.selectedTimeValue !== undefined) {
+                        window.selectedTimeValue = timeText;
+                    }
+                    // 5. Вызываем стабилизацию прокрутки (если функция есть)
+                    if (typeof stabilizeScroll === 'function') {
+                        stabilizeScroll();
+                    }
+                    // ---------------------------------------------------------------
+
+                }, true); // true = Фаза ЗАХВАТА (максимальный приоритет)
+
+                // C. ДОПОЛНИТЕЛЬНАЯ ЗАЩИТА: Делаем контейнер "невидимым" для jQuery
+                if (window.jQuery) {
+                    const $container = jQuery(cleanClone);
+                    const originalTrigger = $container.trigger;
+                    $container.trigger = function(eventName) {
+                        if (eventName && eventName.indexOf('change') > -1) {
+                            console.log('🚫 Заблокирован триггер jQuery:', eventName);
+                            return $container;
+                        }
+                        return originalTrigger.apply(this, arguments);
+                    };
                 }
-                console.log('✅ Контейнер найден, начинаем изоляцию...');
 
-                // 1. НЕМЕДЛЕННО вешаем наш обработчик С ПЕРВЫМ ПРИОРИТЕТОМ
-                container.addEventListener('click', handleSlotClick, true);
-
-                // 2. Делаем контейнер "немым" для других скриптов через 100мс
-                setTimeout(() => {
-                    const clone = container.cloneNode(true);
-                    container.parentNode.replaceChild(clone, container);
-                    console.log('🔄 Контейнер заменён чистым клоном');
-
-                    // 3. Вешаем обработчик на клон
-                    clone.addEventListener('click', handleSlotClick, true);
-                }, 100);
+                console.log('🛡️ Изоляция завершена. Контейнер под контролем.');
+                return cleanClone; // Возвращаем ссылку на новый контейнер
             }
 
-            function handleSlotClick(event) {
-                const slot = event.target.closest('.availableslot, .htmlUsed');
-                if (!slot) return;
+            // === 2. НАБЛЮДАТЕЛЬ: ИЩЕТ .slots-content ВО ВСЁМ DOM ===
+            const observer = new MutationObserver(function(mutations) {
+                for (let mutation of mutations) {
+                    // Проверяем добавленные узлы
+                    for (let node of mutation.addedNodes) {
+                        if (node.nodeType === 1) { // Это элемент
+                            // Ищем контейнер в добавленном элементе
+                            const container = node.querySelector ? node.querySelector('.slots-content') : null;
+                            if (container) {
+                                isolateSlotsContainer(container);
+                                return;
+                            }
+                            // Или, может, сам добавленный узел - это контейнер?
+                            if (node.matches && node.matches('.slots-content')) {
+                                isolateSlotsContainer(node);
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
 
-                console.log('🔵 НАШ обработчик сработал для:', slot);
+            // === 3. ЗАПУСК: Начинаем наблюдать за ВСЕМИ изменениями в body ===
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
 
-                // КРИТИЧЕСКИ ВАЖНО: останавливаем ВСЁ
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                event.preventDefault();
-
-                // Ваша логика выбора времени...
-                // Например:
-                document.querySelectorAll('.currentSelection, .choosen').forEach(el => {
-                    el.classList.remove('currentSelection', 'choosen');
-                });
-                slot.classList.add('currentSelection');
-
-                // Обновляем переменные
-                selectedTimeValue = slot.textContent.trim();
-                if (selectedDateValue) saveToSessionStorage();
-
-                // Стабилизация прокрутки
-                setTimeout(() => {
-                    const container = document.querySelector('.slots-content');
-                    if (container) container.scrollTop = container.scrollTop;
-                }, 0);
+            // === 4. ПРОВЕРКА: Если контейнер уже есть (например, после обновления страницы) ===
+            const existingContainer = document.querySelector('.slots-content');
+            if (existingContainer) {
+                console.log('Контейнер уже на странице, изолируем...');
+                isolateSlotsContainer(existingContainer);
             }
+
         })();
     </script>
 <?php
