@@ -58,6 +58,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectedTimeValue = '';
         let selectionObserver = null;
         let dateInputObserver = null;
+        let slotsContentObservers = new Map(); // Для наблюдения за каждым slots-content
 
         // Константы для ключей sessionStorage
         const STORAGE_KEYS = {
@@ -65,6 +66,137 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             TIME: 'selectedTimeValue',
             HAS_SUCCESS: 'hasSuccessRedirect'
         };
+
+        // Функция для стабилизации slots-content (УСТРАНЕНИЕ ДЕРГАНИЯ)
+        function stabilizeSlotsContent() {
+            const slotsContents = document.querySelectorAll('.slots-content');
+
+            slotsContents.forEach(container => {
+                // Если уже есть наблюдатель для этого контейнера - пропускаем
+                if (container.dataset.stabilized === 'true') {
+                    return;
+                }
+
+                console.log('Стабилизируем slots-content:', container);
+
+                // 1. Фиксируем текущие размеры контейнера
+                const computedStyle = window.getComputedStyle(container);
+                const containerWidth = container.offsetWidth;
+                const containerHeight = container.offsetHeight;
+
+                // Запоминаем исходные стили для восстановления при необходимости
+                container.dataset.originalWidth = container.style.width || '';
+                container.dataset.originalMinWidth = container.style.minWidth || '';
+                container.dataset.originalMaxWidth = container.style.maxWidth || '';
+                container.dataset.originalHeight = container.style.height || '';
+                container.dataset.originalMinHeight = container.style.minHeight || '';
+                container.dataset.originalMaxHeight = container.style.maxHeight || '';
+
+                // Устанавливаем явные размеры
+                container.style.width = containerWidth + 'px';
+                container.style.minWidth = containerWidth + 'px';
+                container.style.maxWidth = containerWidth + 'px';
+
+                // Для высоты: если есть max-height, используем ее
+                const maxHeight = computedStyle.maxHeight;
+                if (maxHeight && maxHeight !== 'none') {
+                    container.style.maxHeight = maxHeight;
+                } else {
+                    // Иначе устанавливаем явную высоту
+                    container.style.height = containerHeight + 'px';
+                    container.style.minHeight = containerHeight + 'px';
+                    container.style.maxHeight = containerHeight + 'px';
+                }
+
+                container.style.boxSizing = 'border-box';
+                container.style.overflowY = 'auto';
+                container.style.flexShrink = '0'; // Предотвращает сжатие в flex-контейнерах
+
+                // 2. Фиксируем размеры внутренних элементов
+                const slotElements = container.querySelectorAll('.availableslot, .htmlUsed');
+                slotElements.forEach(slot => {
+                    slot.style.flexShrink = '0';
+                    slot.style.boxSizing = 'border-box';
+
+                    // Если элемент блочный, фиксируем ширину
+                    const slotStyle = window.getComputedStyle(slot);
+                    if (slotStyle.display === 'block' || slotStyle.display === 'inline-block') {
+                        const slotWidth = slot.offsetWidth;
+                        if (slotWidth > 0) {
+                            slot.style.width = slotWidth + 'px';
+                            slot.style.minWidth = slotWidth + 'px';
+                            slot.style.maxWidth = slotWidth + 'px';
+                        }
+                    }
+                });
+
+                // 3. Наблюдаем за изменениями и сохраняем скролл
+                const observer = new MutationObserver(function(mutations) {
+                    // Сохраняем позицию скролла перед обработкой изменений
+                    const scrollTop = container.scrollTop;
+
+                    // Используем requestAnimationFrame для восстановления скролла
+                    requestAnimationFrame(() => {
+                        // Восстанавливаем скролл
+                        if (container.scrollTop !== scrollTop) {
+                            container.scrollTop = scrollTop;
+                        }
+
+                        // Восстанавливаем размеры контейнера, если они сбились
+                        if (container.offsetWidth !== containerWidth) {
+                            container.style.width = containerWidth + 'px';
+                            container.style.minWidth = containerWidth + 'px';
+                            container.style.maxWidth = containerWidth + 'px';
+                        }
+                    });
+                });
+
+                // Начинаем наблюдение
+                observer.observe(container, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class', 'style']
+                });
+
+                // Сохраняем наблюдатель для возможности отключения
+                if (!slotsContentObservers.has(container)) {
+                    slotsContentObservers.set(container, observer);
+                }
+
+                // 4. Обработчик клика для сохранения скролла
+                container.addEventListener('click', function(e) {
+                    if (e.target.closest('.availableslot, .htmlUsed')) {
+                        // Сохраняем текущую позицию скролла
+                        const currentScroll = container.scrollTop;
+
+                        // Восстанавливаем после возможных изменений
+                        setTimeout(() => {
+                            if (container.scrollTop !== currentScroll) {
+                                container.scrollTop = currentScroll;
+                            }
+                        }, 10);
+                    }
+                }, { passive: true });
+
+                // 5. Обработчик изменения размера окна
+                const resizeHandler = () => {
+                    // При изменении размера окна обновляем фиксированные размеры
+                    const newWidth = container.offsetWidth;
+                    if (newWidth > 0 && newWidth !== containerWidth) {
+                        container.style.width = newWidth + 'px';
+                        container.style.minWidth = newWidth + 'px';
+                        container.style.maxWidth = newWidth + 'px';
+                    }
+                };
+
+                window.addEventListener('resize', resizeHandler);
+                container.dataset.resizeHandler = 'true';
+
+                // Помечаем контейнер как стабилизированный
+                container.dataset.stabilized = 'true';
+            });
+        }
 
         // Функция для валидации email полей
         function validateEmailFields() {
@@ -403,7 +535,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
             });
 
-            // Также перехватим саму отправку формы
+            // Также перехват и м саму отправку формы
             const form = document.getElementById('cp_appbooking_pform_1');
             if (form) {
                 form.addEventListener('submit', function(e) {
@@ -589,6 +721,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         });
 
                         console.log('.availableslot и .htmlUsed обернуты в .slots-content');
+
+                        // После создания slots-content стабилизируем его
+                        setTimeout(() => stabilizeSlotsContent(), 50);
                     }
                 } else {
                     // Если slots-content уже существует, проверяем, не появились ли новые элементы вне его
@@ -602,6 +737,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 console.log('Новый слот добавлен в существующий .slots-content');
                             }
                         });
+
+                        // Стабилизируем после добавления новых элементов
+                        setTimeout(() => stabilizeSlotsContent(), 50);
+                    }
+
+                    // Стабилизируем существующий slots-content
+                    if (slotsContent && slotsContent.dataset.stabilized !== 'true') {
+                        setTimeout(() => stabilizeSlotsContent(), 50);
                     }
                 }
             });
@@ -956,21 +1099,21 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const checkboxesContainer = document.createElement('div');
             checkboxesContainer.className = 'donation-form__checkboxes mb-8';
             checkboxesContainer.innerHTML = `
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
-                </label>
-                <label class="donation-form__checkbox-label">
-                    <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
-                    <span class="donation-form__checkbox-custom">
-                        <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                    </span>
-                    <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
-                </label>
-            `;
+            <label class="donation-form__checkbox-label">
+                <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
+                <span class="donation-form__checkbox-custom">
+                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                </span>
+                <span class="donation-form__checkbox-text">Я соглашаюсь на обработку моих <a href="#">персональных данных</a></span>
+            </label>
+            <label class="donation-form__checkbox-label">
+                <input type="checkbox" required="required" class="required hidden donation-form__checkbox-input" />
+                <span class="donation-form__checkbox-custom">
+                    <svg class="donation-form__checkbox-icon hidden w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                </span>
+                <span class="donation-form__checkbox-text">Я соглашаюсь с <a href="#">условиями оферты</a></span>
+            </label>
+        `;
 
             // Добавляем контейнер в .anketa-col-1
             anketaCol1.appendChild(checkboxesContainer);
@@ -1578,10 +1721,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Добавляем контент
             const supportContent = document.createElement('div');
             supportContent.innerHTML = `
-        <p>Консультации проводятся благодаря пожертвованиям и мы будем рады любой помощи.</p>
-        <p>Ваше участие позволяет нам каждый день поддерживать переживших</p>
-        <a href="/help/">Поддержать</a>
-    `;
+    <p>Консультации проводятся благодаря пожертвованиям и мы будем рады любой помощи.</p>
+    <p>Ваше участие позволяет нам каждый день поддерживать переживших</p>
+    <a href="/help/">Поддержать</a>
+`;
             modalContent2.appendChild(supportContent);
 
             modal2.appendChild(modalContent2);
@@ -1679,6 +1822,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                                 decorateSlotsCalendar();
                                 wrapSlotsContent();
                                 startSelectionObservation();
+                                stabilizeSlotsContent(); // Добавляем стабилизацию
                             }, 100);
                             changesMade = true;
                         }
@@ -1689,6 +1833,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 wrapSlotsContent();
                                 updateSelectedDate();
+                                stabilizeSlotsContent(); // Добавляем стабилизацию
                             }, 100);
                             changesMade = true;
                         }
@@ -1721,6 +1866,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             setTimeout(() => {
                                 initSlotsCalendar();
                                 startSelectionObservation();
+                                stabilizeSlotsContent(); // Добавляем стабилизацию
                             }, 100);
                             changesMade = true;
                         }
@@ -1759,6 +1905,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }, 100);
                             changesMade = true;
                         }
+
+                        // Проверяем, является ли узел или содержит ли .slots-content
+                        if ((node.nodeType === 1 && node.classList && node.classList.contains('slots-content')) ||
+                            (node.querySelector && node.querySelector('.slots-content'))) {
+                            setTimeout(() => {
+                                stabilizeSlotsContent(); // Добавляем стабилизацию
+                            }, 100);
+                            changesMade = true;
+                        }
                     }
                 }
 
@@ -1776,6 +1931,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             decorateSlotsCalendar();
                             wrapSlotsContent();
                             startSelectionObservation();
+                            stabilizeSlotsContent(); // Добавляем стабилизацию
                         }, 50);
                         changesMade = true;
                     }
@@ -1785,6 +1941,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         setTimeout(() => {
                             wrapSlotsContent();
                             updateSelectedDate();
+                            stabilizeSlotsContent(); // Добавляем стабилизацию
                         }, 50);
                         changesMade = true;
                     }
@@ -1836,6 +1993,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         // Обновляем время при изменении слотов
                         setTimeout(() => updateSelectedTime(), 50);
+
+                        // Стабилизируем slots-content при изменении слотов
+                        setTimeout(() => stabilizeSlotsContent(), 50);
                     }
 
                     // Проверка для поля textarea
@@ -1861,6 +2021,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }, 50);
                         changesMade = true;
                     }
+
+                    // Проверяем, появился ли .slots-content
+                    if (mutation.target.querySelector && mutation.target.querySelector('.slots-content')) {
+                        setTimeout(() => {
+                            stabilizeSlotsContent(); // Добавляем стабилизацию
+                        }, 50);
+                        changesMade = true;
+                    }
                 }
 
                 // Отслеживаем изменения классов для выбора времени
@@ -1871,6 +2039,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             target.classList.contains('availableslot') || target.classList.contains('htmlUsed'))) {
                         setTimeout(() => updateSelectedTime(), 50);
                         changesMade = true;
+
+                        // При изменении классов слотов также стабилизируем контейнер
+                        if (target.closest('.slots-content')) {
+                            setTimeout(() => stabilizeSlotsContent(), 50);
+                        }
                     }
                 }
             });
@@ -1896,6 +2069,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     updateDateInputFromCalendar();
                     setupFormSubmitHandler();
                     setupEmailValidation();
+                    stabilizeSlotsContent(); // Добавляем стабилизацию
                 }, 100);
             }
         });
@@ -1954,6 +2128,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Настраиваем валидацию email полей
             setupEmailValidation();
 
+            // Стабилизируем slots-content
+            stabilizeSlotsContent();
+
             // Проверяем и показываем модальное окно, если нужно
             checkAndShowSuccessModal();
         }
@@ -1972,7 +2149,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ7');
+        console.log('ТЕСТ77');
     </script>
 
 <?php

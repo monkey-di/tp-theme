@@ -1179,25 +1179,3 @@ a.donation-adv span{
     padding: 0;
     font-family: "Geologica";
 }
-/* 1. Фиксируем ширину и высоту контейнера со слотами */
-.slots-content {
-    width: 100% !important; /* Или явная ширина, например 320px */
-    min-height: 200px !important; /* Подберите значение под ваш дизайн */
-    max-height: 300px !important; /* Ограничиваем максимальную высоту */
-    box-sizing: border-box !important; /* Чтобы padding не влиял на размеры */
-    overflow-y: auto !important; /* Прокрутка остается */
-}
-
-/* 2. Фиксируем размеры внутренних элементов слотов */
-.slots-content .availableslot,
-.slots-content .htmlUsed {
-    display: inline-block; /* или block, в зависимости от вашего дизайна */
-    width: 100% !important;
-    box-sizing: border-box !important;
-    /* Убедитесь, что у этих элементов нет transition/animations на width/height */
-}
-
-/* 3. Отключаем возможные анимации, влияющие на размеры (если они есть) */
-.slots-content * {
-    transition: none !important;
-}
