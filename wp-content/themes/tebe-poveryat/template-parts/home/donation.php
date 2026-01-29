@@ -49,8 +49,8 @@
         <div class="max-w-[711px] mx-auto flex flex-col justify-center">
             <!-- Toggle Button Group (Разово/Ежемесячно) -->
             <div class="donation-form__toggle mb-8 w-full" data-type-toggle>
-                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--active" data-donation-type="one-time">Разово</button>
-                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--inactive" data-donation-type="monthly">Ежемесячно</button>
+                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--inactive" data-donation-type="one-time">Разово</button>
+                <button type="button" class="donation-form__toggle-button donation-form__toggle-button--active" data-donation-type="monthly">Ежемесячно</button>
             </div>
         </div>
         <?php if( !is_front_page() ) { ?>
