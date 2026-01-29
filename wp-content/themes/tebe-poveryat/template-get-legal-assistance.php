@@ -1973,7 +1973,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ7');
+        console.log('ТЕСТ79');
     </script>
 
 <?php
