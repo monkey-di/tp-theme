@@ -1404,9 +1404,15 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 console.log('Кнопка "Отправить заявку" добавлена');
             }
 
-            // Обработчик клика для кнопки
+            // Обработчик клика для кнопки - ФИКСИРУЕМ ПРОБЛЕМУ С ВСПЛЫТИЕМ
+            const originalClickHandler = callButton.onclick;
+            callButton.onclick = null;
+
             callButton.addEventListener('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
+
                 console.log('Клик по кнопке "Отправить заявку"');
 
                 // Проверяем все обязательные поля (включая email валидацию)
@@ -1418,6 +1424,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
                         console.log('Блок .slotsCalendarfieldname1_1 показан');
+
+                        // Дополнительно предотвращаем скрытие через другие обработчики
+                        setTimeout(() => {
+                            if (slotsCalendar.style.display !== 'block') {
+                                slotsCalendar.style.display = 'block';
+                                console.log('Восстановлен display блока .slotsCalendarfieldname1_1');
+                            }
+                        }, 50);
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1427,7 +1441,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
-            });
+            }, true); // Используем capture phase чтобы перехватить событие раньше других обработчиков
 
             return true;
         }
@@ -1958,7 +1972,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ6');
+        console.log('ТЕСТ7');
     </script>
 
 <?php
