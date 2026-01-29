@@ -6,6 +6,10 @@
  */
 ?>
 
+
+<?php
+get_header();
+?>
     <script>
         // ==================== ПЕРЕХВАТ ФУНКЦИЙ ПЛАГИНА ====================
         (function() {
@@ -52,9 +56,6 @@
         })();
 
     </script>
-<?php
-get_header();
-?>
 <?php
 if ( tp_is_english() ) {
     $pagehead_title = get_field('headpage-title_en'); // ACF заголовок
