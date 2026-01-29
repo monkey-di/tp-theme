@@ -1464,10 +1464,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
             if (slotsCalendar) {
                 // Убедимся, что календарь скрыт по умолчанию
-                if (slotsCalendar.style.display !== 'none') {
+                /*if (slotsCalendar.style.display !== 'none') {
                     slotsCalendar.style.display = 'none';
                     console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
-                }
+                }*/
 
                 // Проверяем, не добавлены ли уже элементы
                 if (!slotsCalendar.querySelector('.closer')) {
@@ -1972,7 +1972,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ7');
+        console.log('ТЕСТ8');
     </script>
 
 <?php
