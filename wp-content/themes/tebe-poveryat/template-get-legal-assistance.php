@@ -122,28 +122,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     }, 100);
                 }
             });
-
-            // Также предотвращаем прокрутку при AJAX-обновлении
-            const originalInnerHTML = slotsContent.innerHTML;
-            const checkAndStabilize = function() {
-                if (slotsContent.innerHTML !== originalInnerHTML) {
-                    // Сохраняем текущую позицию прокрутки
-                    const currentScroll = slotsContent.scrollTop;
-                    const selectedElement = slotsContent.querySelector('.currentSelection, .choosen');
-
-                    // Восстанавливаем после обновления
-                    setTimeout(() => {
-                        if (selectedElement) {
-                            selectedElement.scrollIntoView({ block: 'center', behavior: 'instant' });
-                        } else if (currentScroll > 0) {
-                            slotsContent.scrollTop = currentScroll;
-                        }
-                    }, 150);
-                }
-            };
-
-            // Периодическая проверка (на случай AJAX-обновлений, не уловленных MutationObserver)
-            setInterval(checkAndStabilize, 300);
         }
 
         // Функция для валидации email полей
@@ -254,15 +232,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Обновленная функция для проверки всех обязательных полей (включая email валидацию)
         function validateAllRequiredFields() {
-            const requiredFields = document.querySelectorAll('.required');
+            // Ищем только поля ввода с классом required
+            const requiredFields = document.querySelectorAll('input.required, textarea.required, select.required');
             let allValid = true;
 
             // Сначала проверяем все обязательные поля
             requiredFields.forEach(field => {
-                // Пропускаем скрытые поля
-                if (field.type === 'hidden') {
-                    return;
-                }
+                // Проверяем, что поле существует
+                if (!field) return;
 
                 const isValid = validateRequiredField(field);
                 if (!isValid) {
@@ -281,6 +258,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для проверки одного обязательного поля
         function validateRequiredField(field) {
+            // Проверяем, что поле существует
+            if (!field || !field.tagName) {
+                return true;
+            }
+
             let isValid = true;
 
             // Пропускаем скрытые поля
@@ -307,7 +289,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             // Для радио-кнопок проверяем хотя бы одну выбранную
             if (field.type === 'radio') {
                 const name = field.name;
-                const group = document.querySelectorAll(`[name="${name}"]`);
+                const group = document.querySelectorAll(`input[type="radio"][name="${name}"]`);
                 let groupChecked = false;
 
                 group.forEach(item => {
@@ -338,7 +320,9 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     // Вставляем ошибку после поля
                     const fieldContainer = field.closest('.fields') || field.parentNode;
-                    fieldContainer.appendChild(errorElement);
+                    if (fieldContainer) {
+                        fieldContainer.appendChild(errorElement);
+                    }
 
                     // Добавляем красную рамку полю
                     field.style.borderColor = '#ff0000';
@@ -444,7 +428,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 });
             }
 
-            // Также перехватываем клик по кнопке в select-button
+            // Исправляем обработчик для кнопки в .select-button
             document.addEventListener('click', function(e) {
                 if (e.target && e.target.classList && e.target.classList.contains('pbSubmit') && e.target.closest('.select-button')) {
                     e.preventDefault();
@@ -681,7 +665,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 // Проверяем, не добавлен ли уже closer
                 if (!block.querySelector('.closer')) {
                     // Создаем closer
-                    const closer = document.createElement('span');
+                    const closer = document.createElement('div');
                     closer.className = 'closer';
                     closer.innerHTML = '';
 
@@ -1634,7 +1618,20 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
         // Функция для формирования корректного сообщения
         function getSuccessMessage() {
-            let message = 'Специалист свяжется с вами для уточнения деталей.';
+            let message = 'Вы записаны на юридическую консультацию';
+
+            // Добавляем дату, если она есть
+            if (selectedDateValue) {
+                message += ` ${selectedDateValue}`;
+
+                // Добавляем время, если оно есть
+                if (selectedTimeValue) {
+                    message += ` в ${selectedTimeValue}`;
+                }
+            } else {
+                message += '.';
+            }
+
             return message;
         }
 
