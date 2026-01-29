@@ -1874,6 +1874,54 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
     <script>
         console.log('Обновлённый скрипт. Прокрутка времени: ф-я updateSelectedTime');
     </script>
+<script>
+
+    function createVirtualSlotsInterface() {
+        const originalContainer = document.querySelector('.slots-content');
+        if (!originalContainer || document.getElementById('virtual-slots-container')) return;
+
+        // 1. Клонируем содержимое
+        const virtualContainer = originalContainer.cloneNode(true);
+        virtualContainer.id = 'virtual-slots-container';
+
+        // 2. Удаляем все обработчики событий с клона
+        const allElements = virtualContainer.querySelectorAll('*');
+        allElements.forEach(el => {
+            const newEl = el.cloneNode(true);
+            el.parentNode.replaceChild(newEl, el);
+        });
+
+        // 3. Вешаем свои чистые обработчики
+        virtualContainer.addEventListener('click', function(e) {
+            const slot = e.target.closest('.availableslot, .htmlUsed');
+            if (!slot) return;
+
+            e.stopImmediatePropagation();
+            e.preventDefault();
+
+            // Ваша логика выбора времени...
+            console.log('Выбор в виртуальном интерфейсе:', slot.textContent);
+
+            // Синхронизируем с оригинальным (скрытым) полем плагина
+            const timeText = slot.querySelector('a')?.textContent;
+            if (timeText) {
+                const originalInput = document.querySelector('input[name="fieldname1_1"]');
+                if (originalInput) originalInput.value = timeText;
+            }
+
+            // Прокрутка никогда не прыгнет, т.к. это наш независимый контейнер
+            setTimeout(() => this.scrollTop = this.scrollTop, 0);
+        });
+
+        // 4. Скрываем оригинальный блок, показываем наш
+        originalContainer.style.opacity = '0.1'; // Не display:none, чтобы плагин мог читать значения
+        originalContainer.style.pointerEvents = 'none';
+        originalContainer.parentNode.insertBefore(virtualContainer, originalContainer.nextSibling);
+
+        console.log('Виртуальный интерфейс слотов создан');
+    }
+    // Вызовите эту функцию после загрузки календаря
+</script>
 <?php
     get_template_part( 'template-parts/home/donation' );
 ?>
