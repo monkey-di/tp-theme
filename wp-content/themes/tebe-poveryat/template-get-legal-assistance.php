@@ -1926,7 +1926,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 console.log('Обработчики перепривязаны к новому контейнеру');
             }
         })();
-        console.log('0000ТЕСТ179');
+        console.log('хр');
     </script>
     <script>
         console.log('Обновлённый скрипт. Прокрутка времени: ф-я updateSelectedTime');
