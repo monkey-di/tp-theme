@@ -1164,7 +1164,7 @@ a.donation-adv span{
     .posts-sort{
         padding-left: 20px;
     }
-    #supportModal, #supportModal{
+    #successModal div, #supportModal{
         width: calc(100% - 40px);
         margin-left:20px;
     }
