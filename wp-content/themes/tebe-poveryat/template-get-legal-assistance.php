@@ -129,7 +129,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             slotsContent.style.scrollBehavior = 'auto';
             slotsContent.style.overflowAnchor = 'none';
 
-            console.log('Управление прокруткой перехвачено');
+            //console.log('Управление прокруткой перехвачено');
         }
 
         // Функция для валидации email полей
@@ -332,7 +332,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (selectedTimeValue) {
                     sessionStorage.setItem(STORAGE_KEYS.TIME, selectedTimeValue);
                 }
-                console.log('Данные сохранены в sessionStorage:', { selectedDateValue, selectedTimeValue });
+                //console.log('Данные сохранены в sessionStorage:', { selectedDateValue, selectedTimeValue });
             } catch (e) {
                 console.error('Ошибка при сохранении в sessionStorage:', e);
             }
@@ -346,11 +346,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 if (savedDate) {
                     selectedDateValue = savedDate;
-                    console.log('Дата загружена из sessionStorage:', selectedDateValue);
+                    //console.log('Дата загружена из sessionStorage:', selectedDateValue);
                 }
                 if (savedTime) {
                     selectedTimeValue = savedTime;
-                    console.log('Время загружено из sessionStorage:', selectedTimeValue);
+                    //console.log('Время загружено из sessionStorage:', selectedTimeValue);
                 }
 
                 return { savedDate, savedTime };
@@ -366,7 +366,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 sessionStorage.removeItem(STORAGE_KEYS.DATE);
                 sessionStorage.removeItem(STORAGE_KEYS.TIME);
                 sessionStorage.removeItem(STORAGE_KEYS.HAS_SUCCESS);
-                console.log('sessionStorage очищен');
+                //console.log('sessionStorage очищен');
             } catch (e) {
                 console.error('Ошибка при очистке sessionStorage:', e);
             }
@@ -380,12 +380,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 mainSubmitButton.parentNode.replaceChild(newMainSubmitButton, mainSubmitButton);
 
                 newMainSubmitButton.addEventListener('click', function(e) {
-                    console.log('Клик по основной кнопке отправки, проверяем валидацию');
+                    //console.log('Клик по основной кнопке отправки, проверяем валидацию');
 
                     const allValid = validateAllRequiredFields();
 
                     if (allValid) {
-                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
+                        //console.log('Валидация прошла, сохраняем данные в sessionStorage');
                         saveToSessionStorage();
                         sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
 
@@ -394,7 +394,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             form.submit();
                         }
                     } else {
-                        console.log('Валидация не прошла, отправка отменена');
+                        //console.log('Валидация не прошла, отправка отменена');
                         e.preventDefault();
                         e.stopPropagation();
 
@@ -410,14 +410,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             document.addEventListener('click', function(e) {
                 if (e.target && e.target.classList && e.target.classList.contains('pbSubmit') && e.target.closest('.select-button')) {
-                    console.log('Клик по кнопке отправки в select-button, проверяем валидацию');
+                    //console.log('Клик по кнопке отправки в select-button, проверяем валидацию');
                     e.preventDefault();
                     e.stopPropagation();
 
                     const allValid = validateAllRequiredFields();
 
                     if (allValid) {
-                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
+                        //console.log('Валидация прошла, сохраняем данные в sessionStorage');
                         saveToSessionStorage();
                         sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
 
@@ -426,7 +426,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             mainSubmitButton.click();
                         }
                     } else {
-                        console.log('Валидация не прошла, отправка отменена');
+                        //console.log('Валидация не прошла, отправка отменена');
 
                         const firstError = document.querySelector('.cpefb_error.message[style*="display: block"], .cpefb_error.message:not([style*="display: none"])');
                         if (firstError) {
@@ -439,12 +439,12 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const form = document.getElementById('cp_appbooking_pform_1');
             if (form) {
                 form.addEventListener('submit', function(e) {
-                    console.log('Событие submit формы, проверяем валидацию');
+                    //console.log('Событие submit формы, проверяем валидацию');
 
                     const allValid = validateAllRequiredFields();
 
                     if (!allValid) {
-                        console.log('Валидация не прошла, отменяем отправку формы');
+                        //console.log('Валидация не прошла, отменяем отправку формы');
                         e.preventDefault();
                         e.stopPropagation();
 
@@ -455,7 +455,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         return false;
                     } else {
-                        console.log('Валидация прошла, сохраняем данные в sessionStorage');
+                        //console.log('Валидация прошла, сохраняем данные в sessionStorage');
                         saveToSessionStorage();
                         sessionStorage.setItem(STORAGE_KEYS.HAS_SUCCESS, 'true');
                     }
@@ -475,7 +475,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 email1.addEventListener('blur', validateEmailFields);
                 email2.addEventListener('blur', validateEmailFields);
 
-                console.log('Обработчики валидации email установлены');
+                //console.log('Обработчики валидации email установлены');
             }
         }
 
@@ -490,7 +490,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     button.style.opacity = '0';
                     button.style.position = 'absolute';
                     button.style.zIndex = '-1000';
-                    console.log('Стандартная кнопка плагина скрыта');
+                    //console.log('Стандартная кнопка плагина скрыта');
                 }
             });
         }
@@ -526,7 +526,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             parentContainer.appendChild(col1);
             parentContainer.appendChild(col2);
 
-            console.log('Форма реструктурирована');
+            //console.log('Форма реструктурирована');
             return true;
         }
 
@@ -560,7 +560,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
 
                 input.parentNode.replaceChild(textarea, input);
-                console.log('Input заменен на textarea с классом required');
+                //console.log('Input заменен на textarea с классом required');
                 return true;
             }
 
@@ -571,7 +571,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     if (!existingTextarea.hasAttribute('required')) {
                         existingTextarea.setAttribute('required', 'required');
                     }
-                    console.log('Класс required добавлен к существующему textarea');
+                    //console.log('Класс required добавлен к существующему textarea');
                 }
                 return true;
             }
@@ -608,7 +608,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }
                         });
 
-                        console.log('.availableslot и .htmlUsed обернуты в .slots-content');
+                        //console.log('.availableslot и .htmlUsed обернуты в .slots-content');
                     }
                 } else {
                     const slotsContent = slotsBlock.querySelector('.slots-content');
@@ -618,7 +618,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         slotsToWrap.forEach(slot => {
                             if (!slot.closest('.slots-content')) {
                                 slotsContent.appendChild(slot);
-                                console.log('Новый слот добавлен в существующий .slots-content');
+                                //console.log('Новый слот добавлен в существующий .slots-content');
                             }
                         });
                     }
@@ -640,16 +640,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     block.insertBefore(closer, block.firstChild);
 
-                    console.log('Closer добавлен в .slotsCalendar');
+                    //console.log('Closer добавлен в .slotsCalendar');
 
                     closer.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        console.log('Клик по closer');
+                        //console.log('Клик по closer');
 
                         const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
                         if (targetBlock) {
                             targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт');
+                            //console.log('Блок .slotsCalendarfieldname1_1 скрыт');
                         }
                     });
                 }
@@ -672,16 +672,16 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     block.appendChild(selectButton);
 
-                    console.log('Блок .select-button создан с двумя кнопками');
+                    //console.log('Блок .select-button создан с двумя кнопками');
 
                     span.addEventListener('click', function(e) {
                         e.stopPropagation();
-                        console.log('Клик по span "Выбрать"');
+                        //console.log('Клик по span "Выбрать"');
 
                         const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
                         if (targetBlock) {
                             targetBlock.style.display = 'none';
-                            console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
+                            //console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
                         }
                     });
 
@@ -694,7 +694,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         selectButton.appendChild(submitButton);
 
-                        console.log('Кнопка "Отправить запрос" добавлена в существующий .select-button');
+                        //console.log('Кнопка "Отправить запрос" добавлена в существующий .select-button');
                     }
                 }
             });
@@ -742,7 +742,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     });
 
                     uiWidget.appendChild(calendarLegend);
-                    console.log('Календарная легенда добавлена в .ui-widget');
+                    //console.log('Календарная легенда добавлена в .ui-widget');
                 }
             });
 
@@ -758,7 +758,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const dateSpan = slotsContainer.querySelector('span');
                     if (dateSpan) {
                         selectedDateValue = dateSpan.textContent.trim();
-                        console.log('Дата обновлена:', selectedDateValue);
+                        //console.log('Дата обновлена:', selectedDateValue);
 
                         saveToSessionStorage();
 
@@ -776,7 +776,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (!dateInput || !selectedDateValue) return;
 
             dateInput.value = selectedDateValue;
-            console.log('Поле ввода даты обновлено из selectedDateValue:', selectedDateValue);
+            //console.log('Поле ввода даты обновлено из selectedDateValue:', selectedDateValue);
         }
 
         // Функция для обновления выбранного времени при изменении
@@ -786,7 +786,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 const currentSelection = slotsCalendar.querySelector('.currentSelection a');
                 if (currentSelection) {
                     selectedTimeValue = currentSelection.textContent.trim();
-                    console.log('Время обновлено (currentSelection):', selectedTimeValue);
+                    //console.log('Время обновлено (currentSelection):', selectedTimeValue);
 
                     saveToSessionStorage();
                     stabilizeScroll();
@@ -796,7 +796,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 const choosenSelection = slotsCalendar.querySelector('.choosen a');
                 if (choosenSelection) {
                     selectedTimeValue = choosenSelection.textContent.trim();
-                    console.log('Время обновлено (choosen):', selectedTimeValue);
+                    //console.log('Время обновлено (choosen):', selectedTimeValue);
 
                     saveToSessionStorage();
                     stabilizeScroll();
@@ -876,7 +876,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     attributes: true,
                     attributeFilter: ['class']
                 });
-                console.log('Наблюдение за выбором даты и времени начато');
+                //console.log('Наблюдение за выбором даты и времени начато');
 
                 updateSelectedDate();
                 updateSelectedTime();
@@ -911,7 +911,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 });
             });
 
-            console.log('Обработчики чекбоксов инициализированы');
+            //console.log('Обработчики чекбоксов инициализированы');
         }
 
         // Функция для добавления обязательных чекбоксов в .anketa-col-1
@@ -947,7 +947,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             anketaCol1.appendChild(checkboxesContainer);
 
-            console.log('Новые чекбоксы добавлены в .anketa-col-1');
+            //console.log('Новые чекбоксы добавлены в .anketa-col-1');
             return true;
         }
 
@@ -1004,7 +1004,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     selectDateInCalendar(day, month, year);
                 } else {
-                    console.log('Неверный формат даты');
+                    //console.log('Неверный формат даты');
                 }
             });
 
@@ -1023,7 +1023,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
             anketaCol2.insertBefore(dateInputContainer, anketaCol2.firstChild);
 
-            console.log('Поле ввода даты добавлено в начало .anketa-col-2');
+            //console.log('Поле ввода даты добавлено в начало .anketa-col-2');
             return true;
         }
 
@@ -1070,7 +1070,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
 
                 dateElement.click();
-                console.log('Дата выбрана в календаре:', dateStr);
+                //console.log('Дата выбрана в календаре:', dateStr);
 
                 selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
 
@@ -1080,7 +1080,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 return true;
             } else {
-                console.log('Дата не найдена в текущем месяце:', dateStr);
+                //console.log('Дата не найдена в текущем месяце:', dateStr);
 
                 return trySwitchCalendarMonth(day, month, year);
             }
@@ -1113,7 +1113,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const targetYear = parseInt(year);
 
             if (currentMonthIndex === -1) {
-                console.log('Не удалось определить текущий месяц');
+                //console.log('Не удалось определить текущий месяц');
                 return false;
             }
 
@@ -1121,10 +1121,10 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const targetTotalMonths = targetYear * 12 + targetMonthIndex;
             const monthDiff = targetTotalMonths - currentTotalMonths;
 
-            console.log(`Разница в месяцах: ${monthDiff} (текущий: ${currentMonthIndex+1}.${currentYear}, целевой: ${month}.${year})`);
+            //console.log(`Разница в месяцах: ${monthDiff} (текущий: ${currentMonthIndex+1}.${currentYear}, целевой: ${month}.${year})`);
 
             if (monthDiff === 0) {
-                console.log('Месяц совпадает, но дата не найдена');
+                //console.log('Месяц совпадает, но дата не найдена');
                 return false;
             }
 
@@ -1133,7 +1133,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const switchButton = calendar.querySelector(buttonClass);
 
             if (!switchButton) {
-                console.log('Кнопка переключения месяца не найдена');
+                //console.log('Кнопка переключения месяца не найдена');
                 return false;
             }
 
@@ -1158,7 +1158,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                             }
 
                             dateElement.click();
-                            console.log('Дата выбрана в календаре после переключения месяца:', dateStr);
+                            //console.log('Дата выбрана в календаре после переключения месяца:', dateStr);
 
                             selectedDateValue = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
 
@@ -1168,7 +1168,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                             success = true;
                         } else {
-                            console.log('Дата не найдена даже после переключения месяца');
+                            //console.log('Дата не найдена даже после переключения месяца');
                             success = false;
                         }
                     }, 500);
@@ -1176,7 +1176,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 }
 
                 switchButton.click();
-                console.log(`Переключение месяца (осталось попыток: ${remainingAttempts - 1})`);
+                //console.log(`Переключение месяца (осталось попыток: ${remainingAttempts - 1})`);
 
                 setTimeout(function() {
                     switchMonth(remainingAttempts - 1);
@@ -1209,7 +1209,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                             saveToSessionStorage();
 
-                            console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
+                            //console.log('Поле ввода даты обновлено из календаря:', selectedDateValue);
                             return;
                         }
                     }
@@ -1226,7 +1226,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     saveToSessionStorage();
 
-                    console.log('Поле ввода даты обновлено из календаря (через атрибуты):', selectedDateValue);
+                    //console.log('Поле ввода даты обновлено из календаря (через атрибуты):', selectedDateValue);
                     return;
                 }
             } else {
@@ -1244,7 +1244,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                         saveToSessionStorage();
 
-                        console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
+                        //console.log('Поле ввода даты обновлено (сегодня):', selectedDateValue);
                         return;
                     }
                 } else {
@@ -1253,7 +1253,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                     saveToSessionStorage();
 
-                    console.log('Нет активной даты в календаре, поле очищено');
+                    //console.log('Нет активной даты в календаре, поле очищено');
                 }
             }
         }
@@ -1282,7 +1282,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     subtree: true,
                     attributes: true
                 });
-                console.log('Наблюдение за календарем для поля ввода даты начато');
+                //console.log('Наблюдение за календарем для поля ввода даты начато');
 
                 setTimeout(() => updateDateInputFromCalendar(), 200);
             }
@@ -1304,7 +1304,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
 
                 anketaCol2.appendChild(callButton);
 
-                console.log('Кнопка "Отправить заявку" добавлена');
+                //console.log('Кнопка "Отправить заявку" добавлена');
             }
 
             const originalClickHandler = callButton.onclick;
@@ -1315,7 +1315,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 e.stopPropagation();
                 e.stopImmediatePropagation();
 
-                console.log('Клик по кнопке "Отправить заявку"');
+                //console.log('Клик по кнопке "Отправить заявку"');
 
                 const allValid = validateAllRequiredFields();
 
@@ -1323,19 +1323,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
-                        console.log('str1426');
-                        console.log('Блок .slotsCalendarfieldname1_1 показан');
+                        //console.log('str1426');
+                        //console.log('Блок .slotsCalendarfieldname1_1 показан');
 
                         setTimeout(() => {
                             if (slotsCalendar.style.display !== 'block') {
                                 slotsCalendar.style.display = 'block';
-                                console.log('Восстановлен display блока .slotsCalendarfieldname1_1');
+                                //console.log('Восстановлен display блока .slotsCalendarfieldname1_1');
                             }
                         }, 50);
                     }
                 } else {
-                    console.log('Не все обязательные поля заполнены');
-                    console.log('str1439');
+                    //console.log('Не все обязательные поля заполнены');
+                    //console.log('str1439');
                     const firstError = document.querySelector('.cpefb_error.message[style*="display: block"], .cpefb_error.message:not([style*="display: none"])');
                     if (firstError) {
                         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1355,7 +1355,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             style.textContent = ``;
 
             document.head.appendChild(style);
-            console.log('Стили для кнопки вызова добавлены');
+            //console.log('Стили для кнопки вызова добавлены');
         }
 
         // Функция для проверки и инициализации календаря
@@ -1364,7 +1364,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (slotsCalendar) {
                 if (slotsCalendar.style.display !== 'none') {
                     slotsCalendar.style.display = 'none';
-                    console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
+                    //console.log('Блок .slotsCalendarfieldname1_1 скрыт по умолчанию');
                 }
 
                 if (!slotsCalendar.querySelector('.closer')) {
@@ -1392,7 +1392,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         'lg:[border-radius:0_0_50%_50%_/_0_0_80px_80px]'
                     );
 
-                    console.log('Классы добавлены к элементу .ahb_m4');
+                    //console.log('Классы добавлены к элементу .ahb_m4');
                 }
             });
 
@@ -1402,11 +1402,11 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Функция для создания и показа модального окна с корректными данными
         function createAndShowModal(message) {
             if (document.getElementById('successModal') || document.getElementById('supportModal')) {
-                console.log('Модальные окна уже существуют');
+                //console.log('Модальные окна уже существуют');
                 return;
             }
 
-            console.log('Создаем модальные окна с сообщением:', message);
+            //console.log('Создаем модальные окна с сообщением:', message);
 
             const modal1 = document.createElement('div');
             modal1.id = 'successModal';
@@ -1442,7 +1442,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (modal2) {
                     document.body.removeChild(modal2);
                 }
-                console.log('Оба модальных окна закрыты');
+                //console.log('Оба модальных окна закрыты');
             });
 
             modalContent1.appendChild(closeButton);
@@ -1471,7 +1471,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             document.body.appendChild(modal1);
             document.body.appendChild(modal2);
 
-            console.log('Оба модальных окна показаны');
+            //console.log('Оба модальных окна показаны');
         }
 
         // Функция для формирования корректного сообщения
@@ -1488,7 +1488,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             const hasSuccessHash = window.location.hash === '#success';
 
             if (hasSuccessRedirect || hasSuccessHash) {
-                console.log('Обнаружена успешная отправка формы');
+                //console.log('Обнаружена успешная отправка формы');
 
                 const { savedDate, savedTime } = loadFromSessionStorage();
 
@@ -1496,7 +1496,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 if (savedTime) selectedTimeValue = savedTime;
 
                 const message = getSuccessMessage();
-                console.log('Показываем модальное окно с данными из sessionStorage:', message);
+                //console.log('Показываем модальное окно с данными из sessionStorage:', message);
 
                 createAndShowModal(message);
 
@@ -1819,7 +1819,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         // Слушатель hashchange
         window.addEventListener('hashchange', function() {
             if (window.location.hash === '#success') {
-                console.log('Обнаружен #success через hashchange');
+                //console.log('Обнаружен #success через hashchange');
                 checkAndShowSuccessModal();
             }
         });
@@ -1862,7 +1862,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         }
                     });
 
-                    console.log('Обработчик кликов для стабилизации прокрутки установлен');
+                    //console.log('Обработчик кликов для стабилизации прокрутки установлен');
                 }
             }
         })();
@@ -1908,7 +1908,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 document.addEventListener('click', function(e) {
                     // Если клик по слоту времени
                     if (e.target.closest('.availableslot, .htmlUsed')) {
-                        console.log('Клик по слоту, запускаем hard reset');
+                        //console.log('Клик по слоту, запускаем hard reset');
                         // Даем плагину мгновение на реакцию, затем сбрасываем
                         setTimeout(() => {
                             const newContainer = hardResetSlotsContent();
