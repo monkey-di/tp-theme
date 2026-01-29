@@ -58,7 +58,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         let selectedTimeValue = '';
         let selectionObserver = null;
         let dateInputObserver = null;
-        let blockJustShown = false; // Флаг для отслеживания только что показанного блока
 
         // Константы для ключей sessionStorage
         const STORAGE_KEYS = {
@@ -483,7 +482,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             if (captchaElement) col2.appendChild(captchaElement);
             if (buttonElement) col2.appendChild(buttonElement);
 
-            // очистка и добавление контейнеры
+            // очистка и добавление контейнеров
             parentContainer.innerHTML = '';
             parentContainer.appendChild(col1);
             parentContainer.appendChild(col2);
@@ -610,7 +609,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             return slotsBlocks.length > 0;
         }
 
-        // Функция для добавления элементов в .slotsCalendar (с исправлением мигания)
+        // Функция для добавления элементов в .slotsCalendar
         function decorateSlotsCalendar() {
             // Ищем все блоки .slotsCalendar
             const calendarBlocks = document.querySelectorAll('.slotsCalendar');
@@ -632,12 +631,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                     closer.addEventListener('click', function(e) {
                         e.stopPropagation();
                         console.log('Клик по closer');
-
-                        // Проверяем, не был ли блок только что показан
-                        if (blockJustShown) {
-                            console.log('Блок только что показан, игнорируем клик по closer');
-                            return;
-                        }
 
                         // Находим и скрываем блок .slotsCalendarfieldname1_1
                         const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
@@ -678,12 +671,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         e.stopPropagation();
                         console.log('Клик по span "Выбрать"');
 
-                        // Проверяем, не был ли блок только что показан
-                        if (blockJustShown) {
-                            console.log('Блок только что показан, игнорируем клик по span "Выбрать"');
-                            return;
-                        }
-
                         // Находим и скрываем блок .slotsCalendarfieldname1_1
                         const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
                         if (targetBlock) {
@@ -708,32 +695,6 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         selectButton.appendChild(submitButton);
 
                         console.log('Кнопка "Отправить запрос" добавлена в существующий .select-button');
-                    }
-
-                    // Обновляем обработчики для существующего span "Выбрать"
-                    const existingSpan = selectButton.querySelector('span');
-                    if (existingSpan) {
-                        // Удаляем старые обработчики
-                        const newSpan = existingSpan.cloneNode(true);
-                        existingSpan.parentNode.replaceChild(newSpan, existingSpan);
-
-                        newSpan.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            console.log('Клик по span "Выбрать" (обновленный обработчик)');
-
-                            // Проверяем, не был ли блок только что показан
-                            if (blockJustShown) {
-                                console.log('Блок только что показан, игнорируем клик по span "Выбрать"');
-                                return;
-                            }
-
-                            // Находим и скрываем блок .slotsCalendarfieldname1_1
-                            const targetBlock = document.querySelector('.slotsCalendarfieldname1_1');
-                            if (targetBlock) {
-                                targetBlock.style.display = 'none';
-                                console.log('Блок .slotsCalendarfieldname1_1 скрыт через span');
-                            }
-                        });
                     }
                 }
             });
@@ -1421,7 +1382,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
             }
         }
 
-        // Функция для добавления кнопки "КНОПКА ВЫЗОВА" (исправлено мигание)
+        // Функция для добавления кнопки "КНОПКА ВЫЗОВА"
         function addCallButton() {
             const anketaCol2 = document.querySelector('.anketa-col-2');
             if (!anketaCol2) return false;
@@ -1443,14 +1404,14 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 console.log('Кнопка "Отправить заявку" добавлена');
             }
 
-            // Удаляем старые обработчики и добавляем новый с защитой от мигания
-            const newCallButton = callButton.cloneNode(true);
-            callButton.parentNode.replaceChild(newCallButton, callButton);
+            // Обработчик клика для кнопки - ФИКСИРУЕМ ПРОБЛЕМУ С ВСПЛЫТИЕМ
+            const originalClickHandler = callButton.onclick;
+            callButton.onclick = null;
 
-            // Обработчик клика для кнопки с защитой от мигания
-            newCallButton.addEventListener('click', function(e) {
+            callButton.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                e.stopImmediatePropagation();
 
                 console.log('Клик по кнопке "Отправить заявку"');
 
@@ -1458,20 +1419,19 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 const allValid = validateAllRequiredFields();
 
                 if (allValid) {
-                    // Устанавливаем флаг, что блок только что показан
-                    blockJustShown = true;
-
                     // Если все поля заполнены, показываем блок .slotsCalendarfieldname1_1
                     const slotsCalendar = document.querySelector('.slotsCalendarfieldname1_1');
                     if (slotsCalendar) {
                         slotsCalendar.style.display = 'block';
-                        console.log('Блок .slotsCalendarfieldname1_1 показан (blockJustShown = true)');
+                        console.log('Блок .slotsCalendarfieldname1_1 показан');
 
-                        // Сбрасываем флаг через 500 мс
+                        // Дополнительно предотвращаем скрытие через другие обработчики
                         setTimeout(() => {
-                            blockJustShown = false;
-                            console.log('Флаг blockJustShown сброшен');
-                        }, 500);
+                            if (slotsCalendar.style.display !== 'block') {
+                                slotsCalendar.style.display = 'block';
+                                console.log('Восстановлен display блока .slotsCalendarfieldname1_1');
+                            }
+                        }, 50);
                     }
                 } else {
                     console.log('Не все обязательные поля заполнены');
@@ -1481,7 +1441,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                         firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                 }
-            });
+            }, true); // Используем capture phase чтобы перехватить событие раньше других обработчиков
 
             return true;
         }
@@ -2012,7 +1972,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
                 checkAndShowSuccessModal();
             }
         });
-        console.log('ТЕСТ6');
+        console.log('ТЕСТ7');
     </script>
 
 <?php
