@@ -2006,7 +2006,7 @@ $pagehead_pic = get_field('headpage-pic');  // ACF картинка
         });
     </script>
     <script>
-        console.log('Тестовый прогон! Скрипт работает 06:55, но форма мигает');
+        console.log('Прокрутка времени');
     </script>
 <?php
     get_template_part( 'template-parts/home/donation' );
